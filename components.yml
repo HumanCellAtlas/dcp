@@ -1,0 +1,11 @@
+---
+#
+# HCA DCP Component Manifest
+#
+# Please ensure you are on the correct deployment branch before changing this file.
+# Do not change the version on the master branch.
+#
+deployed_component_versions:
+  # component-identifier: component-version
+  # e.g.
+  # ingest: v0.1.2
