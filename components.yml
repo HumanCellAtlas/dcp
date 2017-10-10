@@ -9,3 +9,4 @@ deployed_component_versions:
   # component-identifier: component-version
   # e.g.
   # ingest: v0.1.2
+  staging: staging-20170922T190345Z
