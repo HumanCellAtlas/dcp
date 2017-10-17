@@ -157,8 +157,9 @@ class BundleRunner:
 
     def _get_staging_area_credentials(self, envelope):
         progress("WAITING FOR STAGING AREA...")
-        credentials = WaitFor.function_to_return_a_value_other_than(self._staging_area_credentials, envelope,
-                                                                    other_than_value=None, timeout_seconds=60)
+        credentials = WaitFor(
+            self._staging_area_credentials, envelope
+        ).to_return_a_value_other_than(other_than_value=None, timeout_seconds=60)
         progress(" credentials received.\n")
         return credentials
 
@@ -173,7 +174,7 @@ class BundleRunner:
 
     def _wait_for_envelope_to_be_validated(self, envelope):
         progress("WAIT FOR VALIDATION...")
-        WaitFor.function_to_return_value(self._envelope_is_valid, envelope, value=True, timeout_seconds=5*60)
+        WaitFor(self._envelope_is_valid, envelope).to_return_value(value=True, timeout_seconds=5 * 60)
         progress(" envelope is valid.\n")
 
     def _envelope_is_valid(self, envelope):
@@ -188,8 +189,7 @@ class BundleRunner:
 
     def _wait_for_bundle_to_be_created(self, envelope):
         progress("WAITING FOR PRIMARY BUNDLE UUID...")
-        bundles = WaitFor.function_to_return_a_value_other_than(envelope.bundles,
-                                                                other_than_value=[], timeout_seconds=5*60)
+        bundles = WaitFor(envelope.bundles).to_return_a_value_other_than(other_than_value=[], timeout_seconds=5*60)
         assert len(bundles) == 1
         primary_bundle_uuid = bundles[0]
         progress(f" {primary_bundle_uuid}\n")
@@ -197,9 +197,9 @@ class BundleRunner:
 
     def _wait_for_results_bundle_to_be_created(self, primary_bundle_uuid):
         progress("WAIT FOR RESULTS BUNDLE...")
-        secondary_bundle_uuid = WaitFor.function_to_return_a_value_other_than(self._results_bundle, primary_bundle_uuid,
-                                                                              other_than_value=None,
-                                                                              timeout_seconds=60*60)
+        secondary_bundle_uuid = WaitFor(
+            self._results_bundle, primary_bundle_uuid
+        ).to_return_a_value_other_than(other_than_value=None, timeout_seconds=90*60)
         progress(f" {secondary_bundle_uuid}\n")
         return secondary_bundle_uuid
 
