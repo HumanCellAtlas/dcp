@@ -1,3 +1,3 @@
 
 test:
-	python -m unittest discover
+	PYTHONWARNINGS=ignore:ResourceWarning python -m unittest discover

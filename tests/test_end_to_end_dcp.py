@@ -3,6 +3,7 @@
 import glob
 import json
 import os
+import re
 import subprocess
 import unittest
 
@@ -131,6 +132,36 @@ class DataStoreAgent:
         logger.debug(json.dumps(response.json(), indent=4))
         return response.json()['results']
 
+    def download_bundle(self, bundle_uuid, target_folder):
+        progress(f"Downloading bundle {bundle_uuid}:\n")
+        manifest = self.bundle_manifest(bundle_uuid)
+        bundle_folder = os.path.join(target_folder, bundle_uuid)
+        try:
+            os.makedirs(bundle_folder)
+        except FileExistsError:
+            pass
+
+        for f in manifest['bundle']['files']:
+            self.download_file(f['uuid'], save_as=os.path.join(bundle_folder, f['name']))
+        return bundle_folder
+
+    def bundle_manifest(self, bundle_uuid, replica='aws'):
+        url = f"{self.dss_url}/bundles/{bundle_uuid}?replica={replica}"
+        response = requests.get(url)
+        assert response.ok
+        assert response.headers['Content-type'] == 'application/json'
+        return json.loads(response.content)
+
+    def download_file(self, file_uuid, save_as, replica='aws'):
+        url = f"{self.dss_url}/files/{file_uuid}?replica={replica}"
+        progress(f"Downloading file {file_uuid} to {save_as}\n")
+        response = requests.get(url, stream=True)
+        assert response.ok
+        with open(save_as, 'wb') as f:
+            for chunk in response.iter_content(chunk_size=1024):
+                if chunk:  # filter out keep-alive new chunks
+                    f.write(chunk)
+
 
 class BundleRunner:
 
@@ -232,6 +263,18 @@ class BundleRunner:
 class TestEndToEndDCP(unittest.TestCase):
 
     SMARTSEQ2_BUNDLE_PATH = 'tests/fixtures/bundles/Smart-seq2'
+    EXPECTED_FILES_IN_SS2_RESULT_BUNDLE_REGEXES = [
+        re.compile('^Aligned\.sortedByCoord\.out\.bam$'),
+        re.compile('^Aligned\.toTranscriptome\.out\.bam$'),
+        re.compile('^.+_rna_metrics$'),
+        re.compile('^.+_alignment_metrics$'),
+        re.compile('^.+\.genes\.results$'),
+        re.compile('^.+\.isoforms\.results$'),
+        re.compile('^.+\.gene\.expected_counts$'),
+        re.compile('^.+\.gene\.counts\.txt$'),
+        re.compile('^.+\.exon\.counts\.txt$'),
+        re.compile('^.+\.transcripts\.counts\.txt$')
+    ]
 
     def setUp(self):
         self.deployment = os.environ.get('TRAVIS_BRANCH', None)
@@ -240,10 +283,19 @@ class TestEndToEndDCP(unittest.TestCase):
 
     def test_smartseq2(self):
         bundle_fixture = LocalBundle(self.SMARTSEQ2_BUNDLE_PATH)
-        secondary_bundle_uuid = BundleRunner(deployment=self.deployment).run(bundle_fixture)
-        # TODO: download results - need hca cli to support staging
-        # TODO: verify results - need gold results
-        self.assertTrue(True)
+        results_bundle_uuid = BundleRunner(deployment=self.deployment).run(bundle_fixture)
+        bundle_manifest = DataStoreAgent(deployment='staging').bundle_manifest(results_bundle_uuid)
+        self.check_ss2_results_bundle_manifest(bundle_manifest)
+
+    def check_ss2_results_bundle_manifest(self, manifest):
+        files = manifest['bundle']['files']
+        self.assertEqual(len(files), len(self.EXPECTED_FILES_IN_SS2_RESULT_BUNDLE_REGEXES))
+        for filename_regex in self.EXPECTED_FILES_IN_SS2_RESULT_BUNDLE_REGEXES:
+            try:
+                file_data = next((entry for entry in files if filename_regex.match(entry["name"])))
+            except StopIteration:
+                self.fail(f"couldn't find {filename_regex.pattern} in {list((f['name'] for f in files))}")
+            self.assertGreater(file_data['size'], 0)
 
 
 if __name__ == '__main__':
