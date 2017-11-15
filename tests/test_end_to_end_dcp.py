@@ -169,77 +169,82 @@ class BundleRunner:
         self.ingest_broker = IngestBrokerAgent(deployment=deployment)
         self.ingest_api = IngestApiAgent(deployment=deployment)
         self.data_store = DataStoreAgent(deployment=deployment)
+        self.submission_id = None
+        self.submission_envelope = None
+        self.upload_credentials = None
+        self.primary_bundle_uuid = None
+        self.secondary_bundle_uuid = None
 
     def run(self, bundle):
-        envelope = self._upload_spreadsheet_and_create_submission(bundle)
-        credentials = self._get_staging_area_credentials(envelope)
-        self._stage_data_files(bundle, credentials)
-        self._wait_for_envelope_to_be_validated(envelope)
-        self._complete_submission(envelope)
-        primary_bundle_uuid = self._wait_for_bundle_to_be_created(envelope)
-        secondary_bundle_uuid = self._wait_for_results_bundle_to_be_created(primary_bundle_uuid)
-        return secondary_bundle_uuid
+        self.upload_spreadsheet_and_create_submission(bundle)
+        self.get_staging_area_credentials()
+        self.stage_data_files(bundle)
+        self.wait_for_envelope_to_be_validated()
+        self.complete_submission()
+        self.wait_for_bundle_to_be_created()
+        self.wait_for_results_bundle_to_be_created()
+        return self.secondary_bundle_uuid
 
-    def _upload_spreadsheet_and_create_submission(self, bundle):
+    def upload_spreadsheet_and_create_submission(self, bundle):
         progress("CREATING SUBMISSION...")
-        envelope_id = self.ingest_broker.upload(bundle.metadata_spreadsheet_path())
-        progress(f" submission ID is {envelope_id}\n")
-        return self.ingest_api.envelope(envelope_id)
+        self.submission_id = self.ingest_broker.upload(bundle.metadata_spreadsheet_path())
+        progress(f" submission ID is {self.submission_id}\n")
+        self.submission_envelope = self.ingest_api.envelope(self.submission_id)
 
-    def _get_staging_area_credentials(self, envelope):
+    def get_staging_area_credentials(self):
         progress("WAITING FOR STAGING AREA...")
-        credentials = WaitFor(
-            self._staging_area_credentials, envelope
+        self.upload_credentials = WaitFor(
+            self._get_staging_area_credentials
         ).to_return_a_value_other_than(other_than_value=None, timeout_seconds=60)
         progress(" credentials received.\n")
-        return credentials
 
-    def _staging_area_credentials(self, envelope):
-        return envelope.reload().staging_credentials()
+    def _get_staging_area_credentials(self):
+        return self.submission_envelope.reload().staging_credentials()
 
-    def _stage_data_files(self, bundle, credentials):
+    def stage_data_files(self, bundle):
         progress("STAGING FILES...\n")
-        self._run_command(['hca', 'upload', 'select', credentials])
+        self._run_command(['hca', 'upload', 'select', self.upload_credentials])
         for file_path in bundle.data_files_paths():
             self._run_command(['hca', 'upload', 'file', file_path])
 
-    def _wait_for_envelope_to_be_validated(self, envelope):
+    def wait_for_envelope_to_be_validated(self):
         progress("WAIT FOR VALIDATION...")
-        WaitFor(self._envelope_is_valid, envelope).to_return_value(value=True, timeout_seconds=5 * 60)
+        WaitFor(self._envelope_is_valid).to_return_value(value=True, timeout_seconds=5 * 60)
         progress(" envelope is valid.\n")
 
-    def _envelope_is_valid(self, envelope):
-        return envelope.reload().status() in ['Valid', 'Submitted']
+    def _envelope_is_valid(self):
+        return self.submission_envelope.reload().status() in ['Valid', 'Submitted']
 
-    def _complete_submission(self, envelope):
+    def complete_submission(self):
         progress("COMPLETING SUBMISSION...")
-        submit_url = envelope.data['_links']['submit']['href']
+        submit_url = self.submission_envelope.data['_links']['submit']['href']
         response = requests.put(submit_url)
         assert response.status_code == 202
         progress(" done.\n")
 
-    def _wait_for_bundle_to_be_created(self, envelope):
+    def wait_for_bundle_to_be_created(self):
         progress("WAITING FOR PRIMARY BUNDLE UUID...")
-        bundles = WaitFor(envelope.bundles).to_return_a_value_other_than(other_than_value=[], timeout_seconds=5*60)
+        bundles = WaitFor(
+            self.submission_envelope.bundles
+        ).to_return_a_value_other_than(other_than_value=[], timeout_seconds=5*60)
         assert len(bundles) == 1
-        primary_bundle_uuid = bundles[0]
-        progress(f" {primary_bundle_uuid}\n")
-        return primary_bundle_uuid
+        self.primary_bundle_uuid = bundles[0]
+        progress(f" {self.primary_bundle_uuid}\n")
 
-    def _wait_for_results_bundle_to_be_created(self, primary_bundle_uuid):
+    def wait_for_results_bundle_to_be_created(self):
         progress("WAIT FOR RESULTS BUNDLE...")
-        secondary_bundle_uuid = WaitFor(
-            self._results_bundle, primary_bundle_uuid
+        secondary_bundle_id = WaitFor(
+            self._results_bundle
         ).to_return_a_value_other_than(other_than_value=None, timeout_seconds=90*60)
-        progress(f" {secondary_bundle_uuid}\n")
-        return secondary_bundle_uuid
+        progress(f" {secondary_bundle_id}\n")
+        self.secondary_bundle_uuid = secondary_bundle_id.split('.')[0]
 
-    def _results_bundle(self, primary_bundle_uuid):
+    def _results_bundle(self):
         results = self.data_store.search(
             {
                 "query": {
                     "match": {
-                        "files.analysis_json.input_bundles": primary_bundle_uuid
+                        "files.analysis_json.input_bundles": self.primary_bundle_uuid
                     }
                 }
             }
@@ -263,7 +268,7 @@ class BundleRunner:
 class TestEndToEndDCP(unittest.TestCase):
 
     SMARTSEQ2_BUNDLE_PATH = 'tests/fixtures/bundles/Smart-seq2'
-    EXPECTED_FILES_IN_SS2_RESULT_BUNDLE_REGEXES = [
+    SS2_ANALYSIS_OUTPUT_FILES_REGEXES = [
         re.compile('^Aligned\.sortedByCoord\.out\.bam$'),
         re.compile('^Aligned\.toTranscriptome\.out\.bam$'),
         re.compile('^.+_rna_metrics$'),
@@ -280,22 +285,35 @@ class TestEndToEndDCP(unittest.TestCase):
         self.deployment = os.environ.get('TRAVIS_BRANCH', None)
         if self.deployment not in DEPLOYMENTS:
             raise RuntimeError(f"TRAVIS_BRANCH environment variable must be one of {DEPLOYMENTS}")
+        self.data_store = DataStoreAgent(deployment=self.deployment)
 
     def test_smartseq2(self):
         bundle_fixture = LocalBundle(self.SMARTSEQ2_BUNDLE_PATH)
-        results_bundle_uuid = BundleRunner(deployment=self.deployment).run(bundle_fixture)
-        bundle_manifest = DataStoreAgent(deployment='staging').bundle_manifest(results_bundle_uuid)
-        self.check_ss2_results_bundle_manifest(bundle_manifest)
+        runner = BundleRunner(deployment=self.deployment)
+        runner.run(bundle_fixture)
 
-    def check_ss2_results_bundle_manifest(self, manifest):
-        files = manifest['bundle']['files']
-        self.assertEqual(len(files), len(self.EXPECTED_FILES_IN_SS2_RESULT_BUNDLE_REGEXES))
-        for filename_regex in self.EXPECTED_FILES_IN_SS2_RESULT_BUNDLE_REGEXES:
+        primary_bundle_manifest = self.data_store.bundle_manifest(runner.primary_bundle_uuid)
+        primary_files_names = (file['name'] for file in primary_bundle_manifest['bundle']['files'])
+        primary_files_regexes = (re.compile(f"^{re.escape(filename)}$") for filename in primary_files_names)
+
+        expected_files_regexes = list(primary_files_regexes)
+        expected_files_regexes += self.SS2_ANALYSIS_OUTPUT_FILES_REGEXES
+        expected_files_regexes.append(re.compile('^analysis\.json$'))
+
+        results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuid)
+
+        self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files_regexes)
+
+    def check_manifest_contains_exactly_these_files(self, bundle_manifest, filename_regexes):
+        files = bundle_manifest['bundle']['files']
+        for filename_regex in filename_regexes:
             try:
-                file_data = next((entry for entry in files if filename_regex.match(entry["name"])))
+                file_index = next(index for (index, file) in enumerate(files) if filename_regex.match(file["name"]))
+                self.assertGreater(files[file_index]['size'], 0)
+                del(files[file_index])
             except StopIteration:
                 self.fail(f"couldn't find {filename_regex.pattern} in {list((f['name'] for f in files))}")
-            self.assertGreater(file_data['size'], 0)
+        self.assertEqual(len(files), 0, f"Found extra file(s) in bundle: {list((f['name'] for f in files))}")
 
 
 if __name__ == '__main__':
