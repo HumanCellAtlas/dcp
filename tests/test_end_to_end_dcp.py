@@ -177,8 +177,9 @@ class BundleRunner:
 
     def run(self, bundle):
         self.upload_spreadsheet_and_create_submission(bundle)
-        self.get_staging_area_credentials()
+        self.get_upload_area_credentials()
         self.stage_data_files(bundle)
+        self.forget_about_upload_area()
         self.wait_for_envelope_to_be_validated()
         self.complete_submission()
         self.wait_for_bundle_to_be_created()
@@ -191,14 +192,14 @@ class BundleRunner:
         Progress.report(f" submission ID is {self.submission_id}\n")
         self.submission_envelope = self.ingest_api.envelope(self.submission_id)
 
-    def get_staging_area_credentials(self):
+    def get_upload_area_credentials(self):
         Progress.report("WAITING FOR STAGING AREA...")
         self.upload_credentials = WaitFor(
-            self._get_staging_area_credentials
+            self._get_upload_area_credentials
         ).to_return_a_value_other_than(other_than_value=None, timeout_seconds=60)
         Progress.report(" credentials received.\n")
 
-    def _get_staging_area_credentials(self):
+    def _get_upload_area_credentials(self):
         return self.submission_envelope.reload().staging_credentials()
 
     def stage_data_files(self, bundle):
@@ -206,6 +207,10 @@ class BundleRunner:
         self._run_command(['hca', 'upload', 'select', self.upload_credentials])
         for file_path in bundle.data_files_paths():
             self._run_command(['hca', 'upload', 'file', file_path])
+
+    def forget_about_upload_area(self):
+        upload_area_uuid = self.upload_credentials.split(':')[4]
+        self._run_command(['hca', 'upload', 'forget', upload_area_uuid])
 
     def wait_for_envelope_to_be_validated(self):
         Progress.report("WAIT FOR VALIDATION...")
