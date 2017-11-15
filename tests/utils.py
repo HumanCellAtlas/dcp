@@ -20,7 +20,8 @@ class Progress:
 
     @classmethod
     def jump_to_start_of_line_print_time_jump_back(cls):
-        sys.stdout.write(f"\r{cls.elapsed_time()}\r" + cls.ANSI_MOVE_CURSOR_RIGHT.format(count=cls.cursor_column))
+        if sys.stdout.isatty():
+            sys.stdout.write(f"\r{cls.elapsed_time()}\r" + cls.ANSI_MOVE_CURSOR_RIGHT.format(count=cls.cursor_column))
 
     @classmethod
     def elapsed_time(cls):
