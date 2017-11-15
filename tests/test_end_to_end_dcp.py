@@ -273,7 +273,46 @@ class BundleRunner:
 
 class TestEndToEndDCP(unittest.TestCase):
 
-    SMARTSEQ2_BUNDLE_PATH = 'tests/fixtures/bundles/Smart-seq2'
+    def setUp(self):
+        self.deployment = os.environ.get('TRAVIS_BRANCH', None)
+        if self.deployment not in DEPLOYMENTS:
+            raise RuntimeError(f"TRAVIS_BRANCH environment variable must be one of {DEPLOYMENTS}")
+        self.data_store = DataStoreAgent(deployment=self.deployment)
+
+    def ingest_store_and_analyze_bundle(self, bundle_fixture_path):
+        bundle_fixture = LocalBundle(bundle_fixture_path)
+        runner = BundleRunner(deployment=self.deployment)
+        runner.run(bundle_fixture)
+        return runner
+
+    def expected_results_bundle_files(self, primary_bundle_uuid, analysis_results_files_regexes):
+        primary_bundle_manifest = self.data_store.bundle_manifest(primary_bundle_uuid)
+        primary_files_names = (file['name'] for file in primary_bundle_manifest['bundle']['files'])
+        primary_files_regexes = (re.compile(f"^{re.escape(filename)}$") for filename in primary_files_names)
+
+        expected_files_regexes = list(primary_files_regexes)
+        expected_files_regexes += analysis_results_files_regexes
+        expected_files_regexes.append(re.compile('^analysis\.json$'))
+        return expected_files_regexes
+
+    def check_manifest_contains_exactly_these_files(self, bundle_manifest, filename_regexes):
+        Progress.report("CHECKING RESULTS...\n")
+        files = bundle_manifest['bundle']['files']
+        for filename_regex in filename_regexes:
+            Progress.report(f"Checking for \"{filename_regex.pattern}...\" ")
+            try:
+                file_index = next(index for (index, file) in enumerate(files) if filename_regex.match(file["name"]))
+                Progress.report(f"found {files[file_index]['name']}\n")
+                self.assertGreater(files[file_index]['size'], 0)
+                del(files[file_index])
+            except StopIteration:
+                self.fail(f"couldn't find {filename_regex.pattern} in {list((f['name'] for f in files))}")
+        self.assertEqual(len(files), 0, f"Found extra file(s) in bundle: {list((f['name'] for f in files))}")
+
+
+class TestSmartSeq2Run(TestEndToEndDCP):
+
+    SMARTSEQ2_BUNDLE_FIXTURE_PATH = 'tests/fixtures/bundles/Smart-seq2'
     SS2_ANALYSIS_OUTPUT_FILES_REGEXES = [
         re.compile('^Aligned\.sortedByCoord\.out\.bam$'),
         re.compile('^Aligned\.toTranscriptome\.out\.bam$'),
@@ -287,42 +326,13 @@ class TestEndToEndDCP(unittest.TestCase):
         re.compile('^.+\.transcripts\.counts\.txt$')
     ]
 
-    def setUp(self):
-        self.deployment = os.environ.get('TRAVIS_BRANCH', None)
-        if self.deployment not in DEPLOYMENTS:
-            raise RuntimeError(f"TRAVIS_BRANCH environment variable must be one of {DEPLOYMENTS}")
-        self.data_store = DataStoreAgent(deployment=self.deployment)
-
-    def test_smartseq2(self):
-        bundle_fixture = LocalBundle(self.SMARTSEQ2_BUNDLE_PATH)
-        runner = BundleRunner(deployment=self.deployment)
-        runner.run(bundle_fixture)
-
-        Progress.report("CHECKING RESULTS...\n")
-        primary_bundle_manifest = self.data_store.bundle_manifest(runner.primary_bundle_uuid)
-        primary_files_names = (file['name'] for file in primary_bundle_manifest['bundle']['files'])
-        primary_files_regexes = (re.compile(f"^{re.escape(filename)}$") for filename in primary_files_names)
-
-        expected_files_regexes = list(primary_files_regexes)
-        expected_files_regexes += self.SS2_ANALYSIS_OUTPUT_FILES_REGEXES
-        expected_files_regexes.append(re.compile('^analysis\.json$'))
-
+    def test_smartseq2_run(self):
+        runner = self.ingest_store_and_analyze_bundle(self.SMARTSEQ2_BUNDLE_FIXTURE_PATH)
+        expected_files = self.expected_results_bundle_files(runner.primary_bundle_uuid,
+                                                            self.SS2_ANALYSIS_OUTPUT_FILES_REGEXES)
         results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuid)
 
-        self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files_regexes)
-
-    def check_manifest_contains_exactly_these_files(self, bundle_manifest, filename_regexes):
-        files = bundle_manifest['bundle']['files']
-        for filename_regex in filename_regexes:
-            Progress.report(f"Checking for \"{filename_regex.pattern}...\" ")
-            try:
-                file_index = next(index for (index, file) in enumerate(files) if filename_regex.match(file["name"]))
-                Progress.report(f"found {files[file_index]['name']}\n")
-                self.assertGreater(files[file_index]['size'], 0)
-                del(files[file_index])
-            except StopIteration:
-                self.fail(f"couldn't find {filename_regex.pattern} in {list((f['name'] for f in files))}")
-        self.assertEqual(len(files), 0, f"Found extra file(s) in bundle: {list((f['name'] for f in files))}")
+        self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
 
 
 if __name__ == '__main__':
