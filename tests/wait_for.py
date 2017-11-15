@@ -1,15 +1,12 @@
 import time
 
 from . import logger
-from .utils import progress
+from .utils import Progress
 
 
 class WaitFor:
 
     EXPONENTIAL_BACKOFF_FACTOR = 1.618
-    DURATION_DISPLAY_WIDTH = 7  # "0:00:00"
-    ASCII_MOVE_CURSOR_LEFT = "\x1b[{count}D"
-    ASCII_MOVE_CURSOR_RIGHT = "\x1b[{count}C"
 
     def __init__(self, func, *args):
         self.func = func
@@ -25,9 +22,8 @@ class WaitFor:
         while time.time() < timeout_at:
             retval = self.func(*self.func_args)
             if retval == value:
-                progress(self.ASCII_MOVE_CURSOR_RIGHT.format(count=self.DURATION_DISPLAY_WIDTH))
                 return retval
-            progress(".")
+            Progress.report(".")
             self._display_duration_until_next_check_time()
         else:
             raise RuntimeError(f"Function {self.func.__name__} did not return value {value} " +
@@ -40,9 +36,8 @@ class WaitFor:
         while time.time() < timeout_at:
             retval = self.func(*self.func_args)
             if not retval == other_than_value:
-                progress(self.ASCII_MOVE_CURSOR_RIGHT.format(count=self.DURATION_DISPLAY_WIDTH))
                 return retval
-            progress(".")
+            Progress.report(".")
             self._display_duration_until_next_check_time()
         else:
             raise RuntimeError(f"Function {self.func.__name__} did not return a non-{other_than_value} value " +
@@ -52,17 +47,5 @@ class WaitFor:
         next_check_at = time.time() + self.backoff_seconds
         while time.time() < next_check_at:
             time.sleep(1)
-            self._display_duration()
+            Progress.report("")  # update clock
         self.backoff_seconds = min(60.0, self.backoff_seconds * self.EXPONENTIAL_BACKOFF_FACTOR)
-
-    def _display_duration(self):
-        duration = time.time() - self.start_time
-        message = self._duration_h_mm_ss(duration)
-        message += self.ASCII_MOVE_CURSOR_LEFT.format(count=self.DURATION_DISPLAY_WIDTH)
-        progress(message)
-
-    @staticmethod
-    def _duration_h_mm_ss(duration_secs):
-        m, s = divmod(duration_secs, 60)
-        h, m = divmod(m, 60)
-        return "%d:%02d:%02d" % (h, m, s)

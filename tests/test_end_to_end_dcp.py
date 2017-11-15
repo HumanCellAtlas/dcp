@@ -12,7 +12,7 @@ import requests
 from urllib3.util import parse_url
 
 from . import logger
-from .utils import progress
+from .utils import Progress
 from .wait_for import WaitFor
 
 DEPLOYMENTS = ('dev', 'staging', 'prod')
@@ -133,7 +133,7 @@ class DataStoreAgent:
         return response.json()['results']
 
     def download_bundle(self, bundle_uuid, target_folder):
-        progress(f"Downloading bundle {bundle_uuid}:\n")
+        Progress.report(f"Downloading bundle {bundle_uuid}:\n")
         manifest = self.bundle_manifest(bundle_uuid)
         bundle_folder = os.path.join(target_folder, bundle_uuid)
         try:
@@ -154,7 +154,7 @@ class DataStoreAgent:
 
     def download_file(self, file_uuid, save_as, replica='aws'):
         url = f"{self.dss_url}/files/{file_uuid}?replica={replica}"
-        progress(f"Downloading file {file_uuid} to {save_as}\n")
+        Progress.report(f"Downloading file {file_uuid} to {save_as}\n")
         response = requests.get(url, stream=True)
         assert response.ok
         with open(save_as, 'wb') as f:
@@ -186,57 +186,57 @@ class BundleRunner:
         return self.secondary_bundle_uuid
 
     def upload_spreadsheet_and_create_submission(self, bundle):
-        progress("CREATING SUBMISSION...")
+        Progress.report("CREATING SUBMISSION...")
         self.submission_id = self.ingest_broker.upload(bundle.metadata_spreadsheet_path())
-        progress(f" submission ID is {self.submission_id}\n")
+        Progress.report(f" submission ID is {self.submission_id}\n")
         self.submission_envelope = self.ingest_api.envelope(self.submission_id)
 
     def get_staging_area_credentials(self):
-        progress("WAITING FOR STAGING AREA...")
+        Progress.report("WAITING FOR STAGING AREA...")
         self.upload_credentials = WaitFor(
             self._get_staging_area_credentials
         ).to_return_a_value_other_than(other_than_value=None, timeout_seconds=60)
-        progress(" credentials received.\n")
+        Progress.report(" credentials received.\n")
 
     def _get_staging_area_credentials(self):
         return self.submission_envelope.reload().staging_credentials()
 
     def stage_data_files(self, bundle):
-        progress("STAGING FILES...\n")
+        Progress.report("STAGING FILES...\n")
         self._run_command(['hca', 'upload', 'select', self.upload_credentials])
         for file_path in bundle.data_files_paths():
             self._run_command(['hca', 'upload', 'file', file_path])
 
     def wait_for_envelope_to_be_validated(self):
-        progress("WAIT FOR VALIDATION...")
+        Progress.report("WAIT FOR VALIDATION...")
         WaitFor(self._envelope_is_valid).to_return_value(value=True, timeout_seconds=5 * 60)
-        progress(" envelope is valid.\n")
+        Progress.report(" envelope is valid.\n")
 
     def _envelope_is_valid(self):
         return self.submission_envelope.reload().status() in ['Valid', 'Submitted']
 
     def complete_submission(self):
-        progress("COMPLETING SUBMISSION...")
+        Progress.report("COMPLETING SUBMISSION...")
         submit_url = self.submission_envelope.data['_links']['submit']['href']
         response = requests.put(submit_url)
         assert response.status_code == 202
-        progress(" done.\n")
+        Progress.report(" done.\n")
 
     def wait_for_bundle_to_be_created(self):
-        progress("WAITING FOR PRIMARY BUNDLE UUID...")
+        Progress.report("WAITING FOR PRIMARY BUNDLE UUID...")
         bundles = WaitFor(
             self.submission_envelope.bundles
         ).to_return_a_value_other_than(other_than_value=[], timeout_seconds=5*60)
         assert len(bundles) == 1
         self.primary_bundle_uuid = bundles[0]
-        progress(f" {self.primary_bundle_uuid}\n")
+        Progress.report(f" {self.primary_bundle_uuid}\n")
 
     def wait_for_results_bundle_to_be_created(self):
-        progress("WAIT FOR RESULTS BUNDLE...")
+        Progress.report("WAIT FOR RESULTS BUNDLE...")
         secondary_bundle_id = WaitFor(
             self._results_bundle
         ).to_return_a_value_other_than(other_than_value=None, timeout_seconds=90*60)
-        progress(f" {secondary_bundle_id}\n")
+        Progress.report(f" {secondary_bundle_id}\n")
         self.secondary_bundle_uuid = secondary_bundle_id.split('.')[0]
 
     def _results_bundle(self):
@@ -250,7 +250,8 @@ class BundleRunner:
             }
         )
         if len(results) == 1:
-            return results[0]['bundle_id']
+            # "bundle_id": "61f2f401-de4b-4918-89bc-7cfd7f381c6e.2017-11-15T182943.100876Z"
+            return results[0]['bundle_id'].split('.')[0]
         else:
             return None
 
@@ -292,6 +293,7 @@ class TestEndToEndDCP(unittest.TestCase):
         runner = BundleRunner(deployment=self.deployment)
         runner.run(bundle_fixture)
 
+        Progress.report("CHECKING RESULTS...\n")
         primary_bundle_manifest = self.data_store.bundle_manifest(runner.primary_bundle_uuid)
         primary_files_names = (file['name'] for file in primary_bundle_manifest['bundle']['files'])
         primary_files_regexes = (re.compile(f"^{re.escape(filename)}$") for filename in primary_files_names)
@@ -307,8 +309,10 @@ class TestEndToEndDCP(unittest.TestCase):
     def check_manifest_contains_exactly_these_files(self, bundle_manifest, filename_regexes):
         files = bundle_manifest['bundle']['files']
         for filename_regex in filename_regexes:
+            Progress.report(f"Checking for \"{filename_regex.pattern}...\" ")
             try:
                 file_index = next(index for (index, file) in enumerate(files) if filename_regex.match(file["name"]))
+                Progress.report(f"found {files[file_index]['name']}\n")
                 self.assertGreater(files[file_index]['size'], 0)
                 del(files[file_index])
             except StopIteration:
