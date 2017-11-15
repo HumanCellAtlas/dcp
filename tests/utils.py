@@ -1,4 +1,5 @@
 from datetime import datetime
+import os
 import sys
 
 
@@ -11,25 +12,38 @@ class Progress:
 
     @classmethod
     def report(cls, message):
-        if cls.cursor_column == 0:
-            cls.output_and_record_new_cursor_column(cls.elapsed_time() + " ")
+        if 'TRAVIS' in os.environ:
+            cls._simple_output(message)
         else:
-            cls.jump_to_start_of_line_print_time_jump_back()
-        cls.output_and_record_new_cursor_column(message)
-        sys.stdout.flush()
+            if cls.cursor_column == 0:
+                cls._output_and_record_new_cursor_column(cls._elapsed_time() + " ")
+            else:
+                cls._jump_to_start_of_line_print_time_jump_back()
+            cls._output_and_record_new_cursor_column(message)
 
     @classmethod
-    def jump_to_start_of_line_print_time_jump_back(cls):
+    def _simple_output(cls, message):
+        """
+        Travis does weird things with output, so do dumb line-oriented output only.  No ANSI escape sequences.
+        """
+        if not message == "":
+            sys.stdout.write(cls._elapsed_time() + " " + message)
+            if not message.endswith("\n"):
+                sys.stdout.write("\n")
+            sys.stdout.flush()
+
+    @classmethod
+    def _jump_to_start_of_line_print_time_jump_back(cls):
         if sys.stdout.isatty():
-            sys.stdout.write(f"\r{cls.elapsed_time()}\r" + cls.ANSI_MOVE_CURSOR_RIGHT.format(count=cls.cursor_column))
+            sys.stdout.write(f"\r{cls._elapsed_time()}\r" + cls.ANSI_MOVE_CURSOR_RIGHT.format(count=cls.cursor_column))
 
     @classmethod
-    def elapsed_time(cls):
+    def _elapsed_time(cls):
         elapsed_delta = datetime.now() - cls.start_time
         return cls._duration_h_mm_ss(elapsed_delta.seconds)
 
     @classmethod
-    def output_and_record_new_cursor_column(cls, message):
+    def _output_and_record_new_cursor_column(cls, message):
         sys.stdout.write(message)
         sys.stdout.flush()
         if message.find("\n") == -1:
