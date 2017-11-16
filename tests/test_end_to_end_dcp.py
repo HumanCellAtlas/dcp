@@ -1,172 +1,25 @@
 #!/usr/bin/env python3
 
-import glob
-import json
 import os
 import re
 import subprocess
 import unittest
 
-import iso8601
 import requests
-from urllib3.util import parse_url
 
-from . import logger
 from .utils import Progress
 from .wait_for import WaitFor
+from .ingest_agents import IngestUIAgent, IngestApiAgent
+from .data_store_agent import DataStoreAgent
+from .bundle_fixture import BundleFixture
 
 DEPLOYMENTS = ('dev', 'staging', 'prod')
-
-
-class LocalBundle:
-
-    """
-    Local test fixture bundles must be laid out as follows:
-        bundle-folder/
-            <some-spreadsheet>.xlsx
-            data-files/
-                <data_file_1>
-                <data_file_2>
-                ...
-    """
-
-    def __init__(self, bundle_path):
-        self.bundle_path = bundle_path
-
-    def metadata_spreadsheet_path(self):
-        xlsx_files = glob.glob(f"{self.bundle_path}/*.xlsx")
-        assert len(xlsx_files) == 1, f"There is more than 1 .xlsx file in {self.bundle_path}"
-        return xlsx_files[0]
-
-    def data_files_paths(self):
-        return glob.glob(f"{self.bundle_path}/data-files/*")
-
-
-class IngestBrokerAgent:
-
-    INGEST_BROKER_URL_TEMPLATE = "http://ingest.{}.data.humancellatlas.org"
-
-    def __init__(self, deployment):
-        self.deployment = deployment
-        self.ingest_broker_url = self.INGEST_BROKER_URL_TEMPLATE.format(self.deployment)
-
-    def upload(self, metadata_spreadsheet_path):
-        url = self.ingest_broker_url + '/upload'
-        files = {'file': open(metadata_spreadsheet_path, 'rb')}
-        response = requests.post(url, files=files, allow_redirects=False)
-        assert response.status_code == 302
-        # Eventually this response will be a redirect that contains the submssion ID as a query param.
-        # Meanwhile, let's do it the hard way:
-        return self._get_most_recent_draft_submission_envelope_id()
-
-    def _get_most_recent_draft_submission_envelope_id(self):
-        submissions = IngestApiAgent(self.deployment).submissions()
-        draft_submissions = [subm for subm in submissions if subm['submissionState'] == 'Draft']
-        sorted_submissions = sorted(draft_submissions,
-                                    key=lambda submission: iso8601.parse_date(submission['submissionDate']))
-        newest_draft_submission = sorted_submissions[-1]
-        submission_url = newest_draft_submission['_links']['self']['href']
-        return parse_url(submission_url).path.split('/')[-1]
-
-
-class IngestApiAgent:
-
-    INGEST_API_URL_TEMPLATE = "http://api.ingest.{}.data.humancellatlas.org"
-
-    def __init__(self, deployment):
-        self.deployment = deployment
-        self.ingest_api_url = self.INGEST_API_URL_TEMPLATE.format(self.deployment)
-
-    def submissions(self):
-        url = self.ingest_api_url + '/submissionEnvelopes?size=1000'
-        response = requests.get(url)
-        return response.json()['_embedded']['submissionEnvelopes']
-
-    def envelope(self, envelope_id=None):
-        return IngestApiAgent.SubmissionEnvelope(envelope_id=envelope_id, ingest_api_url=self.ingest_api_url)
-
-    class SubmissionEnvelope:
-
-        def __init__(self, envelope_id=None, ingest_api_url=None):
-            self.envelope_id = envelope_id
-            self.ingest_api_url = ingest_api_url
-            self.data = None
-            if envelope_id:
-                self._load()
-
-        def staging_credentials(self):
-            """ Return staging area credentials or None if this envelope doesn't have a staging area yet """
-            staging_details = self.data.get('stagingDetails', None)
-            if staging_details and 'stagingAreaLocation' in staging_details:
-                return staging_details.get('stagingAreaLocation', {}).get('value', None)
-            return None
-
-        def reload(self):
-            self._load()
-            return self
-
-        def status(self):
-            return self.data['submissionState']
-
-        def bundles(self):
-            url = self.data['_links']['bundleManifests']['href']
-            response = requests.get(url).json()
-            return [bundleManifest['bundleUuid'] for bundleManifest in response['_embedded']['bundleManifests']]
-
-        def _load(self):
-            url = self.ingest_api_url + f'/submissionEnvelopes/{self.envelope_id}'
-            self.data = requests.get(url).json()
-
-
-class DataStoreAgent:
-
-    DSS_API_URL_TEMPLATE = "http://dss.{deployment}.data.humancellatlas.org/v1"
-
-    def __init__(self, deployment):
-        self.deployment = deployment
-        self.dss_url = self.DSS_API_URL_TEMPLATE.format(deployment=deployment)
-
-    def search(self, query, replica='aws'):
-        url = f"{self.dss_url}/search?replica={replica}"
-        response = requests.post(url, json={"es_query": query})
-        logger.debug(json.dumps(response.json(), indent=4))
-        return response.json()['results']
-
-    def download_bundle(self, bundle_uuid, target_folder):
-        Progress.report(f"Downloading bundle {bundle_uuid}:\n")
-        manifest = self.bundle_manifest(bundle_uuid)
-        bundle_folder = os.path.join(target_folder, bundle_uuid)
-        try:
-            os.makedirs(bundle_folder)
-        except FileExistsError:
-            pass
-
-        for f in manifest['bundle']['files']:
-            self.download_file(f['uuid'], save_as=os.path.join(bundle_folder, f['name']))
-        return bundle_folder
-
-    def bundle_manifest(self, bundle_uuid, replica='aws'):
-        url = f"{self.dss_url}/bundles/{bundle_uuid}?replica={replica}"
-        response = requests.get(url)
-        assert response.ok
-        assert response.headers['Content-type'] == 'application/json'
-        return json.loads(response.content)
-
-    def download_file(self, file_uuid, save_as, replica='aws'):
-        url = f"{self.dss_url}/files/{file_uuid}?replica={replica}"
-        Progress.report(f"Downloading file {file_uuid} to {save_as}\n")
-        response = requests.get(url, stream=True)
-        assert response.ok
-        with open(save_as, 'wb') as f:
-            for chunk in response.iter_content(chunk_size=1024):
-                if chunk:  # filter out keep-alive new chunks
-                    f.write(chunk)
 
 
 class BundleRunner:
 
     def __init__(self, deployment):
-        self.ingest_broker = IngestBrokerAgent(deployment=deployment)
+        self.ingest_broker = IngestUIAgent(deployment=deployment)
         self.ingest_api = IngestApiAgent(deployment=deployment)
         self.data_store = DataStoreAgent(deployment=deployment)
         self.submission_id = None
@@ -200,7 +53,7 @@ class BundleRunner:
         Progress.report(" credentials received.\n")
 
     def _get_upload_area_credentials(self):
-        return self.submission_envelope.reload().staging_credentials()
+        return self.submission_envelope.reload().upload_credentials()
 
     def stage_data_files(self, bundle):
         Progress.report("STAGING FILES...\n")
@@ -280,7 +133,7 @@ class TestEndToEndDCP(unittest.TestCase):
         self.data_store = DataStoreAgent(deployment=self.deployment)
 
     def ingest_store_and_analyze_bundle(self, bundle_fixture_path):
-        bundle_fixture = LocalBundle(bundle_fixture_path)
+        bundle_fixture = BundleFixture(bundle_fixture_path)
         runner = BundleRunner(deployment=self.deployment)
         runner.run(bundle_fixture)
         return runner
