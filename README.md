@@ -6,3 +6,10 @@ This repository servers two purposes.
    are deployed to each environment.
 2. It is the home of system-wide integration tests.
 
+To run the tests locally, use Python 3.6:
+
+    pip install -r requirements.txt
+    TRAVIS_BRANCH=staging make
+
+Be aware that you will be uploading bundles to the staging deployment of the DCP and running secondary analysis.
+The test currently takes about 18 minutes to run.
