@@ -1,11 +1,16 @@
 language: python
 python:
-  - 3.6
+- 3.6
 dist: trusty
 install:
-  - pip install -r requirements.txt
+- pip install -r requirements.txt
 script:
-  - make test
+- make test
 branches:
   only:
   - staging
+notifications:
+  slack:
+    on_success: change # default: always
+    on_failure: always # default: always
+    secure: k44U2AqXqmBRk6CM8RlJlBW4iw97PMHOyN9XG0jfvBZPnF3fHxt5OTLeQUiI358564/s1YTfwWnyf91Q8hfJ/Y7ROX+oXt1sZgf/TJ98U2kZWkpVOil4eSvjrTR45twv36GP1mtDMyj9WZp6kNPMxuhXrsZUytSCtNE3ocj4i3I37X710kyNsgTjBMo67OzgpTjvNb7WH7tRX6UtN+XEFw+5vzY4qg/4HZAeHCm4fNvuyV6rf5VzWn4Bba5KvO9sm227Hmx3x0dz/zfJwSsbLCvSRpmOOY9Yra/FnOdANzyJHTwXkjdwRpXpZVmdH+Is+k2lkmJbXr1mBl/NAfVoxNEr05aIBRevpiexLZi1VjeTDZnDl7od6yaaz4HVufb0LK44As2xBPr6t95SiL6DqKohjLMvZNjZ9JkHYLKunFNX0Bl4CstCgrPTrQOS7hd2PYlnAJAd5N9kjHg/J1nGUF2/t3zHXv8c++h06hbFfaXsxEq/vNwa+JeSA4jW0cSFMzoR31vq0b9c4qAyArTDHwkRbtxsrz58Ym5eOKEMGnu+sjVz8OyxmB6ok4Ss1Iqhu4kDgfi8kPKBIAt1kRdAGr7DTBs9nt0mKVKIiYkjQqEDPG1MCwd4lHUiYqyt43+H1/ECfnXTxyVr8JCMEeK7SfH3LAZuCb6jpROWQuCQ/BU=
