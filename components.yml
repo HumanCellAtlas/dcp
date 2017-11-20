@@ -10,3 +10,4 @@ deployed_component_versions:
   # e.g.
   # ingest: v0.1.2
   staging: staging-20171108T045448Z
+  pipelines: 0.2.0
