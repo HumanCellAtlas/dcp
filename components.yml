@@ -9,5 +9,5 @@ deployed_component_versions:
   # component-identifier: component-version
   # e.g.
   # ingest: v0.1.2
-  staging: staging-20171108T045448Z
+  upload: staging-20171207T234521Z
   pipelines: 0.2.0
