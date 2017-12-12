@@ -10,4 +10,4 @@ deployed_component_versions:
   # e.g.
   # ingest: v0.1.2
   upload: staging-20171207T234521Z
-  pipelines: 0.2.0
+  green_box_listener: 0.2.1
