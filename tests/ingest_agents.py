@@ -15,7 +15,8 @@ class IngestUIAgent:
         url = self.ingest_broker_url + '/upload'
         files = {'file': open(metadata_spreadsheet_path, 'rb')}
         response = requests.post(url, files=files, allow_redirects=False)
-        assert response.status_code == 302
+        if response.status_code != requests.codes.found:
+            raise RuntimeError(f"POST {url} response was {response.status_code}: {response.content}")
         # Eventually this response will be a redirect that contains the submssion ID as a query param.
         # Meanwhile, let's do it the hard way:
         return self._get_most_recent_draft_submission_envelope_id()

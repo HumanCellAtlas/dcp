@@ -77,7 +77,8 @@ class BundleRunner:
         Progress.report("COMPLETING SUBMISSION...")
         submit_url = self.submission_envelope.data['_links']['submit']['href']
         response = requests.put(submit_url)
-        assert response.status_code == 202
+        if response.status_code != requests.codes.accepted:
+            raise RuntimeError(f"PUT {submit_url} returned {response.status_code}: {response.content}")
         Progress.report(" done.\n")
 
     def wait_for_bundle_to_be_created(self):
