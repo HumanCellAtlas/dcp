@@ -11,3 +11,12 @@ deployed_component_versions:
   # ingest: v0.1.2
   upload: staging-20171207T234521Z
   green_box_listener: 0.2.1
+  metadata-schema: 4.4.0
+  ingest:
+    ingest-broker: 0.1.2
+    ingest-exporter: 0.1.2
+    ingest-validator: 0.1.1
+    ingest-core: 0.1.1
+    ingest-accesioner: 0.1.1
+    ingest-archiver: 0.1.1
+    ingest-staging-manager: 0.1.1
