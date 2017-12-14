@@ -1,11 +1,18 @@
 language: python
 python:
-- 3.6
+  - 3.6
 dist: trusty
 install:
-- pip install -r requirements.txt
+  - pip install -r requirements.txt
+addons:
+  apt:
+    packages:
+      - jq
 script:
-- make test
+  - export SWAGGER_URL="https://dss.staging.data.humancellatlas.org/v1/swagger.json"
+  - jq -n .DSSClient.swagger_url=env.SWAGGER_URL > ~/.config/hca/config.staging.json
+  - export HCA_CONFIG_FILE=~/.config/hca/config.staging.json
+  - make test
 branches:
   only:
   - staging
