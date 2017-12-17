@@ -21,3 +21,4 @@ deployed_component_versions:
     ingest-staging-manager: 0.1.1
   greenbox:
     greenbox-listener: 0.2.1
+    greenbox-pipeline-tools: 0.1.5
