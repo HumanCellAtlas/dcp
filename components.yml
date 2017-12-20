@@ -22,3 +22,4 @@ deployed_component_versions:
   greenbox:
     greenbox-listener: 0.2.1
     greenbox-pipeline-tools: 0.1.5
+    greenbox-cromwell: 29-3be5b8c
