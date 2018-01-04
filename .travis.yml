@@ -17,7 +17,6 @@ script:
 branches:
   only:
   - staging
-  - update_to_support_auth_endpoints
 notifications:
   slack:
     on_success: change # default: always
