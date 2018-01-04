@@ -10,14 +10,12 @@ class IngestUIAgent:
     def __init__(self, deployment):
         self.deployment = deployment
         self.ingest_broker_url = self.INGEST_UI_URL_TEMPLATE.format(self.deployment)
-        self.ingest_auth_agent = IngestAuthAgent()
-        self.auth_headers = self.ingest_auth_agent.make_auth_header()
 
 
     def upload(self, metadata_spreadsheet_path):
         url = self.ingest_broker_url + '/upload'
         files = {'file': open(metadata_spreadsheet_path, 'rb')}
-        response = requests.post(url, files=files, allow_redirects=False, headers=self.auth_headers)
+        response = requests.post(url, files=files, allow_redirects=False)
         if response.status_code != requests.codes.found:
             raise RuntimeError(f"POST {url} response was {response.status_code}: {response.content}")
         # Eventually this response will be a redirect that contains the submssion ID as a query param.
@@ -95,7 +93,8 @@ class IngestAuthAgent:
                  audience="http://localhost:8080",
                  grant_type="client_credentials"):
         """This class controls the authentication actions with Ingest Service, including retrieving the token,
-            store the token and make authenticated headers.
+            store the token and make authenticated headers. Note: The parameters and credentials here are
+            meant to be hard coded, the authentication is purely for identifying a user it doesn't give any permissions.
 
         :param str url: The url to the Auth0 domain oauth endpoint.
         :param str client_id: The value of the Client ID field of the Non Interactive Client of Auth0.
@@ -111,8 +110,7 @@ class IngestAuthAgent:
         self.auth_token = self._get_auth_token()
 
     def _get_auth_token(self):
-        """Request and get the access token for a trusted client from Auth0. Note: The parameters and credentials here are
-            meant to be hard coded, the authentication is purely for identifying a user it doesn't give and permissions.
+        """Request and get the access token for a trusted client from Auth0.
 
         :return dict auth_token: JSON response of the signed JWT (JSON Web Token), with when it expires (24h by default),
             the scopes granted, and the token type.
