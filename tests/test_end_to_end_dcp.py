@@ -76,7 +76,7 @@ class BundleRunner:
     def complete_submission(self):
         Progress.report("COMPLETING SUBMISSION...")
         submit_url = self.submission_envelope.data['_links']['submit']['href']
-        response = requests.put(submit_url)
+        response = requests.put(submit_url, headers=self.ingest_api.auth_headers)
         if response.status_code != requests.codes.accepted:
             raise RuntimeError(f"PUT {submit_url} returned {response.status_code}: {response.content}")
         Progress.report(" done.\n")
