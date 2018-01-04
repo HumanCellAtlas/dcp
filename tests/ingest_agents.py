@@ -17,7 +17,7 @@ class IngestUIAgent:
     def upload(self, metadata_spreadsheet_path):
         url = self.ingest_broker_url + '/upload'
         files = {'file': open(metadata_spreadsheet_path, 'rb')}
-        response = requests.post(url, files=files, allow_redirects=False, headers = self.auth_headers)
+        response = requests.post(url, files=files, allow_redirects=False, headers=self.auth_headers)
         if response.status_code != requests.codes.found:
             raise RuntimeError(f"POST {url} response was {response.status_code}: {response.content}")
         # Eventually this response will be a redirect that contains the submssion ID as a query param.
@@ -46,12 +46,12 @@ class IngestApiAgent:
 
     def submissions(self):
         url = self.ingest_api_url + '/submissionEnvelopes?size=1000'
-        response = requests.get(url, headers = self.auth_headers)
+        response = requests.get(url, headers=self.auth_headers)
         return response.json()['_embedded']['submissionEnvelopes']
 
     def envelope(self, envelope_id=None):
         return IngestApiAgent.SubmissionEnvelope(envelope_id=envelope_id, ingest_api_url=self.ingest_api_url,
-                                                 auth_headers = self.auth_headers)
+                                                 auth_headers=self.auth_headers)
 
     class SubmissionEnvelope:
 
@@ -79,12 +79,12 @@ class IngestApiAgent:
 
         def bundles(self):
             url = self.data['_links']['bundleManifests']['href']
-            response = requests.get(url, headers = self.auth_headers).json()
+            response = requests.get(url, headers=self.auth_headers).json()
             return [bundleManifest['bundleUuid'] for bundleManifest in response['_embedded']['bundleManifests']]
 
         def _load(self):
             url = self.ingest_api_url + f'/submissionEnvelopes/{self.envelope_id}'
-            self.data = requests.get(url, headers = self.auth_headers).json()
+            self.data = requests.get(url, headers=self.auth_headers).json()
 
 
 class IngestAuthAgent:
