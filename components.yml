@@ -9,3 +9,17 @@ deployed_component_versions:
   # component-identifier: component-version
   # e.g.
   # ingest: v0.1.2
+  upload: staging-20171207T234521Z
+  metadata-schema: 4.4.0
+  ingest:
+    ingest-broker: 0.1.3
+    ingest-exporter: 0.1.5
+    ingest-validator: 0.1.4
+    ingest-core: 0.1.2
+    ingest-accesioner: 0.1.1
+    ingest-archiver: 0.1.1
+    ingest-staging-manager: 0.1.1
+  greenbox:
+    greenbox-listener: 0.2.1
+    greenbox-pipeline-tools: 0.1.5
+    greenbox-cromwell: 29-3be5b8c
