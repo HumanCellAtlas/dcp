@@ -12,7 +12,7 @@ class IngestUIAgent:
         self.ingest_broker_url = self.INGEST_UI_URL_TEMPLATE.format(self.deployment)
 
     def upload(self, metadata_spreadsheet_path):
-        url = self.ingest_broker_url + '/upload'
+        url = self.ingest_broker_url + '/api_upload'
         files = {'file': open(metadata_spreadsheet_path, 'rb')}
         response = requests.post(url, files=files, allow_redirects=False)
         if response.status_code != requests.codes.found:
