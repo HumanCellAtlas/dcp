@@ -110,7 +110,9 @@ class BundleRunner:
         )
         if len(results) == 1:
             # "bundle_id": "61f2f401-de4b-4918-89bc-7cfd7f381c6e.2017-11-15T182943.100876Z"
-            return results[0]['bundle_id'].split('.')[0]
+            # Blue Box has standardized their naming, so "bundle_id" became "bundle_fqid" now.
+            # "bundle_fqid": "21597770-bfbd-4b77-9eb8-a20dcbb42cec.2018-01-05T164438.271840Z"
+            return results[0]['bundle_fqid'].split('.')[0]
         else:
             return None
 
