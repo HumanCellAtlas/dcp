@@ -141,7 +141,6 @@ class IngestAuthAgent:
         access_token = self.auth_token['access_token']
 
         headers = {
-            "Content-type": "application/json",
             "Authorization": f"{token_type} {access_token}"
         }
         return headers
