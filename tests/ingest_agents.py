@@ -18,7 +18,7 @@ class IngestUIAgent:
         url = self.ingest_broker_url + '/api_upload'
         files = {'file': open(metadata_spreadsheet_path, 'rb')}
         response = requests.post(url, files=files, allow_redirects=False, headers=self.auth_headers)
-        if response.status_code != requests.codes.found:
+        if response.status_code != requests.codes.found and response.status_code != requests.codes.created:
             raise RuntimeError(f"POST {url} response was {response.status_code}: {response.content}")
         # Eventually this response will be a redirect that contains the submssion ID as a query param.
         # Meanwhile, let's do it the hard way:
