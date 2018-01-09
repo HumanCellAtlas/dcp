@@ -20,6 +20,8 @@ deployed_component_versions:
     ingest-archiver: 0.1.1
     ingest-staging-manager: 0.1.1
   greenbox:
-    greenbox-listener: 0.2.1
+    greenbox-cromwell-tools: 0.1.0
+    greenbox-cromwell: 30-047d48f
+    greenbox-lira: 0.4.0
     greenbox-pipeline-tools: 0.1.5
-    greenbox-cromwell: 29-3be5b8c
+    greenbox-skylab: 0.2.1
