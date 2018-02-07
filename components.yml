@@ -21,7 +21,7 @@ deployed_component_versions:
     ingest-staging-manager: 0.1.1
   greenbox:
     greenbox-cromwell-tools: 0.1.0
-    greenbox-cromwell: 30-047d48f
+    greenbox-cromwell: 30-4fa75da
     greenbox-lira: v0.4.3
     greenbox-pipeline-tools: v0.1.7
     greenbox-skylab: 0.2.1
