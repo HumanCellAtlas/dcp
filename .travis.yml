@@ -9,10 +9,10 @@ addons:
     packages:
       - jq
 script:
-  - export SWAGGER_URL="https://dss.staging.data.humancellatlas.org/v1/swagger.json"
+  - export SWAGGER_URL="https://dss.${TRAVIS_BRANCH}.data.humancellatlas.org/v1/swagger.json"
   - mkdir -p ~/.config/hca
-  - jq -n .DSSClient.swagger_url=env.SWAGGER_URL > ~/.config/hca/config.staging.json
-  - export HCA_CONFIG_FILE=~/.config/hca/config.staging.json
+  - jq -n .DSSClient.swagger_url=env.SWAGGER_URL > ~/.config/hca/config.${TRAVIS_BRANCH}.json
+  - export HCA_CONFIG_FILE=~/.config/hca/config.${TRAVIS_BRANCH}.json
   - make test
 branches:
   only:
