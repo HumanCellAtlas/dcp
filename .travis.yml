@@ -16,7 +16,8 @@ script:
   - make test
 branches:
   only:
-  - staging
+    - staging
+    - integration
 notifications:
   slack:
     on_success: change # default: always

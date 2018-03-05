@@ -13,7 +13,7 @@ from .ingest_agents import IngestUIAgent, IngestApiAgent
 from .data_store_agent import DataStoreAgent
 from .bundle_fixture import BundleFixture
 
-DEPLOYMENTS = ('dev', 'staging', 'prod')
+DEPLOYMENTS = ('dev', 'staging', 'integration', 'prod')
 
 
 class BundleRunner:
