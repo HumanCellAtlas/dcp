@@ -28,10 +28,10 @@ class BundleRunner:
         self.primary_bundle_uuid = None
         self.secondary_bundle_uuid = None
 
-    def run(self, bundle):
-        self.upload_spreadsheet_and_create_submission(bundle)
+    def run(self, bundle_fixture):
+        self.upload_spreadsheet_and_create_submission(bundle_fixture)
         self.get_upload_area_credentials()
-        self.stage_data_files(bundle)
+        self.stage_data_files(bundle_fixture)
         self.forget_about_upload_area()
         self.wait_for_envelope_to_be_validated()
         self.complete_submission()
@@ -39,9 +39,10 @@ class BundleRunner:
         self.wait_for_results_bundle_to_be_created()
         return self.secondary_bundle_uuid
 
-    def upload_spreadsheet_and_create_submission(self, bundle):
-        Progress.report("CREATING SUBMISSION...")
-        self.submission_id = self.ingest_broker.upload(bundle.metadata_spreadsheet_path())
+    def upload_spreadsheet_and_create_submission(self, bundle_fixture):
+        spreadhseet_filename = os.path.basename(bundle_fixture.metadata_spreadsheet_path)
+        Progress.report(f"CREATING SUBMISSION with {spreadhseet_filename}...")
+        self.submission_id = self.ingest_broker.upload(bundle_fixture.metadata_spreadsheet_path)
         Progress.report(f" submission ID is {self.submission_id}\n")
         self.submission_envelope = self.ingest_api.envelope(self.submission_id)
 
@@ -67,7 +68,7 @@ class BundleRunner:
 
     def wait_for_envelope_to_be_validated(self):
         Progress.report("WAIT FOR VALIDATION...")
-        WaitFor(self._envelope_is_valid).to_return_value(value=True, timeout_seconds=15 * 60)
+        WaitFor(self._envelope_is_valid).to_return_value(value=True, timeout_seconds=30 * 60)
         Progress.report(" envelope is valid.\n")
 
     def _envelope_is_valid(self):
