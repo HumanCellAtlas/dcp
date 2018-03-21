@@ -72,7 +72,9 @@ class BundleRunner:
         Progress.report(" envelope is valid.\n")
 
     def _envelope_is_valid(self):
-        return self.submission_envelope.reload().status() in ['Valid', 'Submitted']
+        envelope_status = self.submission_envelope.reload().status()
+        Progress.report(f"envelope status is {envelope_status}")
+        return envelope_status in ['Valid', 'Submitted']
 
     def complete_submission(self):
         Progress.report("COMPLETING SUBMISSION...")
