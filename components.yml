@@ -22,6 +22,6 @@ deployed_component_versions:
   greenbox:
     greenbox-cromwell-tools: 0.1.0
     greenbox-cromwell: 30-4fa75da
-    greenbox-lira: v0.6.0
-    greenbox-pipeline-tools: v0.1.10
+    greenbox-lira: v0.6.2
+    greenbox-pipeline-tools: v0.14.0
     greenbox-skylab: 0.3.0
