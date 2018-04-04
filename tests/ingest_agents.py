@@ -3,6 +3,8 @@ import json
 import iso8601
 import requests
 from urllib3.util import parse_url
+import time
+from . import logger
 
 
 class IngestUIAgent:
@@ -69,6 +71,8 @@ class IngestApiAgent:
 
         def bundles(self):
             url = self.data['_links']['bundleManifests']['href']
+            time.sleep(60)  #FIX ME: remove this hacky work around by tuning the backend
+            logger.debug('Wait for 60 seconds until "_embedded" field is updated.')
             response = requests.get(url, headers=self.auth_headers).json()
             return [bundleManifest['bundleUuid'] for bundleManifest in response['_embedded']['bundleManifests']]
 
