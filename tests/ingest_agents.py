@@ -70,7 +70,10 @@ class IngestApiAgent:
         def bundles(self):
             url = self.data['_links']['bundleManifests']['href']
             response = requests.get(url, headers=self.auth_headers).json()
-            return [bundleManifest['bundleUuid'] for bundleManifest in response['_embedded']['bundleManifests']]
+            if '_embedded' in response:
+                return [bundleManifest['bundleUuid'] for bundleManifest in response['_embedded']['bundleManifests']]
+            else:
+                return []
 
         def _load(self):
             url = self.ingest_api_url + f'/submissionEnvelopes/{self.envelope_id}'
