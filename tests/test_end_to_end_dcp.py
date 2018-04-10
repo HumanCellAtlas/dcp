@@ -106,7 +106,7 @@ class BundleRunner:
             {
                 "query": {
                     "match": {
-                        "files.analysis_json.content.input_bundles": self.primary_bundle_uuid
+                        "files.process_json.processes.content.input_bundles": self.primary_bundle_uuid
                     }
                 }
             }
