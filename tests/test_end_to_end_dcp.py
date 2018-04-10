@@ -151,7 +151,6 @@ class TestEndToEndDCP(unittest.TestCase):
 
         expected_files_regexes = list(primary_files_regexes)
         expected_files_regexes += analysis_results_files_regexes
-        expected_files_regexes.append(re.compile('^analysis\.json$'))
         return expected_files_regexes
 
     def check_manifest_contains_exactly_these_files(self, bundle_manifest, filename_regexes):
