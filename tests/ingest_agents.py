@@ -1,6 +1,10 @@
+import json
+
 import iso8601
 import requests
 from urllib3.util import parse_url
+import time
+from . import logger
 
 
 class IngestUIAgent:
@@ -13,25 +17,13 @@ class IngestUIAgent:
         self.ingest_auth_agent = IngestAuthAgent()
         self.auth_headers = self.ingest_auth_agent.make_auth_header()
 
-
     def upload(self, metadata_spreadsheet_path):
         url = self.ingest_broker_url + '/api_upload'
         files = {'file': open(metadata_spreadsheet_path, 'rb')}
         response = requests.post(url, files=files, allow_redirects=False, headers=self.auth_headers)
         if response.status_code != requests.codes.found and response.status_code != requests.codes.created:
             raise RuntimeError(f"POST {url} response was {response.status_code}: {response.content}")
-        # Eventually this response will be a redirect that contains the submssion ID as a query param.
-        # Meanwhile, let's do it the hard way:
-        return self._get_most_recent_draft_submission_envelope_id()
-
-    def _get_most_recent_draft_submission_envelope_id(self):
-        submissions = IngestApiAgent(self.deployment).submissions()
-        draft_submissions = [subm for subm in submissions if subm['submissionState'] == 'Draft']
-        sorted_submissions = sorted(draft_submissions,
-                                    key=lambda submission: iso8601.parse_date(submission['submissionDate']))
-        newest_draft_submission = sorted_submissions[-1]
-        submission_url = newest_draft_submission['_links']['self']['href']
-        return parse_url(submission_url).path.split('/')[-1]
+        return json.loads(response.content)['details']['submission_id']
 
 
 class IngestApiAgent:
@@ -79,6 +71,8 @@ class IngestApiAgent:
 
         def bundles(self):
             url = self.data['_links']['bundleManifests']['href']
+            time.sleep(60)  #FIX ME: remove this hacky work around by tuning the backend
+            logger.debug('Wait for 60 seconds until "_embedded" field is updated.')
             response = requests.get(url, headers=self.auth_headers).json()
             return [bundleManifest['bundleUuid'] for bundleManifest in response['_embedded']['bundleManifests']]
 
