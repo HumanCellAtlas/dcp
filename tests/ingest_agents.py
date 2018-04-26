@@ -74,7 +74,10 @@ class IngestApiAgent:
             time.sleep(60)  #FIX ME: remove this hacky work around by tuning the backend
             logger.debug('Wait for 60 seconds until "_embedded" field is updated.')
             response = requests.get(url, headers=self.auth_headers).json()
-            return [bundleManifest['bundleUuid'] for bundleManifest in response['_embedded']['bundleManifests']]
+            if '_embedded' in response:
+                return [bundleManifest['bundleUuid'] for bundleManifest in response['_embedded']['bundleManifests']]
+            else:
+                return []
 
         def _load(self):
             url = self.ingest_api_url + f'/submissionEnvelopes/{self.envelope_id}'
