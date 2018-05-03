@@ -1,5 +1,4 @@
 iso8601
 requests
 urllib3
-# FIXME: Remove once CLI is released to PyPI (hannes)
-git+git://github.com/HumanCellAtlas/dcp-cli.git@61270914a803230be4d9d3b667cd95a4c5cedec1#egg=hca
+hca
