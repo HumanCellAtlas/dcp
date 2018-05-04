@@ -25,4 +25,4 @@ deployed_component_versions:
     greenbox-lira: v0.9.1
     greenbox-pipeline-tools: v0.16.0
     greenbox-skylab: v0.3.0
-  data-store: integration-2018-05-02-20-35-59.release
+  data-store: https://github.com/HumanCellAtlas/data-store/commit/fc45e2d5d18ed9ae9f160dec53477ec7df2c6882
