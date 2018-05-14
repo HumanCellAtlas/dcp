@@ -23,6 +23,6 @@ deployed_component_versions:
     greenbox-cromwell-tools: v0.3.1
     greenbox-cromwell: 30-16f3632
     greenbox-lira: v0.9.1
-    greenbox-pipeline-tools: v0.16.0
+    greenbox-pipeline-tools: v0.18.0
     greenbox-skylab: v0.3.0
   data-store: staging-2018-05-09-17-44-02.release
