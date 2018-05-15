@@ -9,7 +9,7 @@ from .utils import Progress
 
 class DataStoreAgent:
 
-    DSS_API_URL_TEMPLATE = "http://dss.{deployment}.data.humancellatlas.org/v1"
+    DSS_API_URL_TEMPLATE = "https://dss.{deployment}.data.humancellatlas.org/v1"
 
     def __init__(self, deployment):
         self.deployment = deployment
