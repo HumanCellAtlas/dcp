@@ -25,4 +25,4 @@ deployed_component_versions:
     greenbox-lira: v0.9.1
     greenbox-pipeline-tools: v0.18.0
     greenbox-skylab: v0.3.0
-  data-store: eb47eedde71279975d6aabbd344e93f623d3bd94
+  data-store: 4e9e1e52375a59bfcbddc72137a9694a1ffd6367
