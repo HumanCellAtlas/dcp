@@ -11,12 +11,12 @@ from ..utils import Progress
 from ..wait_for import WaitFor
 from ..ingest_agents import IngestUIAgent, IngestApiAgent
 from ..data_store_agent import DataStoreAgent
-from ..bundle_fixture import BundleFixture
+from ..dataset_fixture import DatasetFixture
 
 DEPLOYMENTS = ('dev', 'staging', 'integration', 'prod')
 
 
-class BundleRunner:
+class DatasetRunner:
 
     def __init__(self, deployment):
         self.ingest_broker = IngestUIAgent(deployment=deployment)
@@ -28,10 +28,10 @@ class BundleRunner:
         self.primary_bundle_uuid = None
         self.secondary_bundle_uuid = None
 
-    def run(self, bundle_fixture):
-        self.upload_spreadsheet_and_create_submission(bundle_fixture)
+    def run(self, dataset):
+        self.upload_spreadsheet_and_create_submission(dataset)
         self.get_upload_area_credentials()
-        self.stage_data_files(bundle_fixture)
+        self.stage_data_files(dataset)
         self.forget_about_upload_area()
         self.wait_for_envelope_to_be_validated()
         self.complete_submission()
@@ -39,10 +39,10 @@ class BundleRunner:
         self.wait_for_results_bundle_to_be_created()
         return self.secondary_bundle_uuid
 
-    def upload_spreadsheet_and_create_submission(self, bundle_fixture):
-        spreadhseet_filename = os.path.basename(bundle_fixture.metadata_spreadsheet_path)
+    def upload_spreadsheet_and_create_submission(self, dataset):
+        spreadhseet_filename = os.path.basename(dataset.metadata_spreadsheet_path)
         Progress.report(f"CREATING SUBMISSION with {spreadhseet_filename}...")
-        self.submission_id = self.ingest_broker.upload(bundle_fixture.metadata_spreadsheet_path)
+        self.submission_id = self.ingest_broker.upload(dataset.metadata_spreadsheet_path)
         Progress.report(f" submission ID is {self.submission_id}\n")
         self.submission_envelope = self.ingest_api.envelope(self.submission_id)
 
@@ -56,10 +56,10 @@ class BundleRunner:
     def _get_upload_area_credentials(self):
         return self.submission_envelope.reload().upload_credentials()
 
-    def stage_data_files(self, bundle):
+    def stage_data_files(self, dataset):
         Progress.report("STAGING FILES...\n")
         self._run_command(['hca', 'upload', 'select', self.upload_credentials])
-        for file_path in bundle.data_files_paths():
+        for file_path in dataset.data_files_paths():
             self._run_command(['hca', 'upload', 'file', file_path])
 
     def forget_about_upload_area(self):
@@ -138,10 +138,10 @@ class TestEndToEndDCP(unittest.TestCase):
             raise RuntimeError(f"TRAVIS_BRANCH environment variable must be one of {DEPLOYMENTS}")
         self.data_store = DataStoreAgent(deployment=self.deployment)
 
-    def ingest_store_and_analyze_bundle(self, bundle_fixture_path):
-        bundle_fixture = BundleFixture(bundle_fixture_path)
-        runner = BundleRunner(deployment=self.deployment)
-        runner.run(bundle_fixture)
+    def ingest_store_and_analyze_dataset(self, dataset_fixture_path):
+        dataset = DatasetFixture(dataset_fixture_path)
+        runner = DatasetRunner(deployment=self.deployment)
+        runner.run(dataset)
         return runner
 
     def expected_results_bundle_files(self, primary_bundle_uuid, analysis_results_files_regexes):
@@ -170,7 +170,7 @@ class TestEndToEndDCP(unittest.TestCase):
 
 class TestSmartSeq2Run(TestEndToEndDCP):
 
-    SMARTSEQ2_BUNDLE_FIXTURE_PATH = 'tests/fixtures/bundles/Smart-seq2'
+    SMARTSEQ2_DATASET_FIXTURE_PATH = 'tests/fixtures/bundles/Smart-seq2'
     SS2_ANALYSIS_OUTPUT_FILES_REGEXES = [
         re.compile('^.+\_qc\.bam$'),  # aligned_bam
         re.compile('^.+\_qc\.alignment\_summary\_metrics\.txt$'),  # alignment_summary_metrics
@@ -206,7 +206,7 @@ class TestSmartSeq2Run(TestEndToEndDCP):
     ]
 
     def test_smartseq2_run(self):
-        runner = self.ingest_store_and_analyze_bundle(self.SMARTSEQ2_BUNDLE_FIXTURE_PATH)
+        runner = self.ingest_store_and_analyze_dataset(self.SMARTSEQ2_DATASET_FIXTURE_PATH)
         expected_files = self.expected_results_bundle_files(runner.primary_bundle_uuid,
                                                             self.SS2_ANALYSIS_OUTPUT_FILES_REGEXES)
         results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuid)
