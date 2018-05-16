@@ -7,11 +7,11 @@ import unittest
 
 import requests
 
-from .utils import Progress
-from .wait_for import WaitFor
-from .ingest_agents import IngestUIAgent, IngestApiAgent
-from .data_store_agent import DataStoreAgent
-from .bundle_fixture import BundleFixture
+from ..utils import Progress
+from ..wait_for import WaitFor
+from ..ingest_agents import IngestUIAgent, IngestApiAgent
+from ..data_store_agent import DataStoreAgent
+from ..bundle_fixture import BundleFixture
 
 DEPLOYMENTS = ('dev', 'staging', 'integration', 'prod')
 
