@@ -138,8 +138,8 @@ class TestEndToEndDCP(unittest.TestCase):
             raise RuntimeError(f"TRAVIS_BRANCH environment variable must be one of {DEPLOYMENTS}")
         self.data_store = DataStoreAgent(deployment=self.deployment)
 
-    def ingest_store_and_analyze_dataset(self, dataset_fixture_path):
-        dataset = DatasetFixture(dataset_fixture_path)
+    def ingest_store_and_analyze_dataset(self, dataset_fixture):
+        dataset = DatasetFixture(dataset_fixture)
         runner = DatasetRunner(deployment=self.deployment)
         runner.run(dataset)
         return runner
@@ -170,7 +170,6 @@ class TestEndToEndDCP(unittest.TestCase):
 
 class TestSmartSeq2Run(TestEndToEndDCP):
 
-    SMARTSEQ2_DATASET_FIXTURE_PATH = 'tests/fixtures/bundles/Smart-seq2'
     SS2_ANALYSIS_OUTPUT_FILES_REGEXES = [
         re.compile('^.+\_qc\.bam$'),  # aligned_bam
         re.compile('^.+\_qc\.alignment\_summary\_metrics\.txt$'),  # alignment_summary_metrics
@@ -206,7 +205,7 @@ class TestSmartSeq2Run(TestEndToEndDCP):
     ]
 
     def test_smartseq2_run(self):
-        runner = self.ingest_store_and_analyze_dataset(self.SMARTSEQ2_DATASET_FIXTURE_PATH)
+        runner = self.ingest_store_and_analyze_dataset(dataset_fixture='Smart-seq2')
         expected_files = self.expected_results_bundle_files(runner.primary_bundle_uuid,
                                                             self.SS2_ANALYSIS_OUTPUT_FILES_REGEXES)
         results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuid)
