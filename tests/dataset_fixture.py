@@ -1,3 +1,4 @@
+import json
 import os
 import glob
 
@@ -17,7 +18,18 @@ class DatasetFixture:
     """
 
     def __init__(self, dataset_name):
+        self.config = {}
         self.dataset_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'fixtures/datasets', dataset_name))
+        readme_json_path = os.path.join(self.dataset_path, 'README.json')
+        if os.path.isfile(readme_json_path):
+            with open(readme_json_path) as json_data:
+                self.config = json.load(json_data)
+
+    def data_files_are_local(self):
+        return not self.data_files_are_in_s3()
+
+    def data_files_are_in_s3(self):
+        return self.config.get('data_files_location', '').startswith('s3://')
 
     @property
     def metadata_spreadsheet_path(self, metadata_version="5"):

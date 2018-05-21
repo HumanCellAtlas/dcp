@@ -12,6 +12,7 @@ from .wait_for import WaitFor
 class DatasetRunner:
 
     def __init__(self, deployment):
+        self.deployment = deployment
         self.ingest_broker = IngestUIAgent(deployment=deployment)
         self.ingest_api = IngestApiAgent(deployment=deployment)
         self.data_store = DataStoreAgent(deployment=deployment)
@@ -25,7 +26,6 @@ class DatasetRunner:
         self.upload_spreadsheet_and_create_submission(dataset)
         self.get_upload_area_credentials()
         self.stage_data_files(dataset)
-        self.forget_about_upload_area()
         self.wait_for_envelope_to_be_validated()
         self.complete_submission()
         self.wait_for_bundle_to_be_created()
@@ -36,7 +36,7 @@ class DatasetRunner:
         spreadhseet_filename = os.path.basename(dataset.metadata_spreadsheet_path)
         Progress.report(f"CREATING SUBMISSION with {spreadhseet_filename}...")
         self.submission_id = self.ingest_broker.upload(dataset.metadata_spreadsheet_path)
-        Progress.report(f" submission ID is {self.submission_id}\n")
+        Progress.report(f"  submission ID is {self.submission_id}\n")
         self.submission_envelope = self.ingest_api.envelope(self.submission_id)
 
     def get_upload_area_credentials(self):
@@ -44,16 +44,32 @@ class DatasetRunner:
         self.upload_credentials = WaitFor(
             self._get_upload_area_credentials
         ).to_return_a_value_other_than(other_than_value=None, timeout_seconds=60)
-        Progress.report(" credentials received.\n")
+        Progress.report("  credentials received.\n")
 
     def _get_upload_area_credentials(self):
         return self.submission_envelope.reload().upload_credentials()
 
     def stage_data_files(self, dataset):
-        Progress.report("STAGING FILES...\n")
+        if dataset.data_files_are_in_s3():
+            self._stage_data_files_using_s3_sync(dataset)
+        else:
+            self._stage_data_files_using_hca_cli(dataset)
+
+    def _stage_data_files_using_hca_cli(self, dataset):
+        Progress.report("STAGING FILES using hca cli...")
         self._run_command(['hca', 'upload', 'select', self.upload_credentials])
         for file_path in dataset.data_files_paths():
             self._run_command(['hca', 'upload', 'file', file_path])
+        self.forget_about_upload_area()
+
+    def _stage_data_files_using_s3_sync(self, dataset):
+        Progress.report("STAGING FILES using aws s3 sync...")
+        upload_area_uuid = self.upload_credentials.split(':')[4]
+        upload_area_s3_location = f"s3://org-humancellatlas-upload-{self.deployment}/{upload_area_uuid}"
+        command = ['aws', 's3', 'sync', '--content-type', 'application/gzip; dcp-type=data',
+                   dataset.config['data_files_location'],
+                   upload_area_s3_location]
+        self._run_command(command)
 
     def forget_about_upload_area(self):
         upload_area_uuid = self.upload_credentials.split(':')[4]
@@ -66,7 +82,7 @@ class DatasetRunner:
 
     def _envelope_is_valid(self):
         envelope_status = self.submission_envelope.reload().status()
-        Progress.report(f"envelope status is {envelope_status}")
+        Progress.report(f"  envelope status is {envelope_status}")
         return envelope_status in ['Valid', 'Submitted']
 
     def complete_submission(self):
@@ -75,7 +91,7 @@ class DatasetRunner:
         response = requests.put(submit_url, headers=self.ingest_api.auth_headers)
         if response.status_code != requests.codes.accepted:
             raise RuntimeError(f"PUT {submit_url} returned {response.status_code}: {response.content}")
-        Progress.report(" done.\n")
+        Progress.report("  done.\n")
 
     def wait_for_bundle_to_be_created(self):
         Progress.report("WAITING FOR PRIMARY BUNDLE UUID...")
@@ -84,14 +100,14 @@ class DatasetRunner:
         ).to_return_a_value_other_than(other_than_value=[], timeout_seconds=5*60)
         assert len(bundles) == 1
         self.primary_bundle_uuid = bundles[0]
-        Progress.report(f" {self.primary_bundle_uuid}\n")
+        Progress.report(f"  {self.primary_bundle_uuid}\n")
 
     def wait_for_results_bundle_to_be_created(self):
         Progress.report("WAIT FOR RESULTS BUNDLE...")
         secondary_bundle_id = WaitFor(
             self._results_bundle
         ).to_return_a_value_other_than(other_than_value=None, timeout_seconds=90*60)
-        Progress.report(f" {secondary_bundle_id}\n")
+        Progress.report(f"  {secondary_bundle_id}\n")
         self.secondary_bundle_uuid = secondary_bundle_id.split('.')[0]
 
     def _results_bundle(self):
