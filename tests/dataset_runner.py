@@ -7,7 +7,9 @@ import openpyxl
 from .data_store_agent import DataStoreAgent
 from .ingest_agents import IngestUIAgent, IngestApiAgent
 from .utils import Progress
-from .wait_for import WaitFor
+from .wait_for import WaitFor, TimedOut
+
+MINUTE = 60
 
 
 class DatasetRunner:
@@ -22,6 +24,7 @@ class DatasetRunner:
         self.submission_envelope = None
         self.upload_credentials = None
         self.primary_to_results_bundles_map = {}
+        self.failure_reason = None
 
     @property
     def primary_bundle_uuids(self):
@@ -40,6 +43,8 @@ class DatasetRunner:
         self.complete_submission()
         self.wait_for_primary_bundles_to_be_created()
         self.wait_for_results_bundle_to_be_created()
+        if self.failure_reason:
+            raise RuntimeError(self.failure_reason)
 
     def upload_spreadsheet_and_create_submission(self):
         spreadsheet_filename = os.path.basename(self.dataset.metadata_spreadsheet_path)
@@ -52,7 +57,7 @@ class DatasetRunner:
         Progress.report("WAITING FOR STAGING AREA...")
         self.upload_credentials = WaitFor(
             self._get_upload_area_credentials
-        ).to_return_a_value_other_than(other_than_value=None, timeout_seconds=60)
+        ).to_return_a_value_other_than(other_than_value=None, timeout_seconds=2 * MINUTE)
         Progress.report("  credentials received.\n")
 
     def _get_upload_area_credentials(self):
@@ -86,8 +91,8 @@ class DatasetRunner:
 
     def wait_for_envelope_to_be_validated(self):
         Progress.report("WAIT FOR VALIDATION...")
-        WaitFor(self._envelope_is_valid).to_return_value(value=True, timeout_seconds=30 * 60)
-        Progress.report(" envelope is valid.\n")
+        WaitFor(self._envelope_is_valid).to_return_value(value=True, timeout_seconds=15 * MINUTE)
+        Progress.report("  envelope is valid.\n")
 
     def _envelope_is_valid(self):
         envelope_status = self.submission_envelope.reload().status()
@@ -106,10 +111,17 @@ class DatasetRunner:
         Progress.report("WAITING FOR PRIMARY BUNDLE(s) TO BE CREATED...")
         expected_primary_bundle_count = self._how_many_primary_bundles_do_we_expect()
         Progress.report(f"  expecting {expected_primary_bundle_count} primary bundles")
-        WaitFor(
-            self._primary_bundle_count
-        ).to_return_value(value=expected_primary_bundle_count)
+        try:
+            WaitFor(
+                self._primary_bundle_count
+            ).to_return_value(value=expected_primary_bundle_count, timeout_seconds=15 * MINUTE)
+        except TimedOut:
+            Progress.report("  We did not get all the primary bundles we expected, "
+                            "but let us continue and see how many results bundles we get.")
+            self.failure_reason = f"Only received {self._primary_bundle_count()} " \
+                                  f"of {expected_primary_bundle_count} primary bundles"
         bundle_uuids = self.submission_envelope.bundles()
+
         Progress.report(f"  {bundle_uuids}\n")
         for bundle_uuid in bundle_uuids:
             self.primary_to_results_bundles_map[bundle_uuid] = None
@@ -119,7 +131,7 @@ class DatasetRunner:
         Progress.report(f"  waiting for {len(self.primary_to_results_bundles_map)} secondary bundles")
         WaitFor(
             self._results_bundles_count
-        ).to_return_value(value=len(self.primary_to_results_bundles_map))
+        ).to_return_value(value=len(self.primary_to_results_bundles_map), timeout_seconds=60 * MINUTE)
         Progress.report(f"  done.\n")
 
     def _how_many_primary_bundles_do_we_expect(self):
