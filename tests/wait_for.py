@@ -4,6 +4,10 @@ from . import logger
 from .utils import Progress
 
 
+class TimedOut(RuntimeError):
+    pass
+
+
 class WaitFor:
 
     EXPONENTIAL_BACKOFF_FACTOR = 1.618
@@ -25,8 +29,8 @@ class WaitFor:
             if retval == value:
                 return retval
             if timeout_at and time.time() > timeout_at:
-                raise RuntimeError(f"Function {self.func.__name__} did not return value {value} " +
-                                   f" within {timeout_seconds} seconds")
+                raise TimedOut(f"Function {self.func.__name__} did not return value {value} " +
+                               f" within {timeout_seconds} seconds")
             self._sleep_until_next_check_time()
 
     def to_return_a_value_other_than(self, other_than_value=None, timeout_seconds=None):
@@ -39,8 +43,8 @@ class WaitFor:
             if not retval == other_than_value:
                 return retval
             if timeout_at and time.time() > timeout_at:
-                raise RuntimeError(f"Function {self.func.__name__} did not return a non-{other_than_value} value " +
-                                   f"within {timeout_seconds} seconds")
+                raise TimedOut(f"Function {self.func.__name__} did not return a non-{other_than_value} value " +
+                               f"within {timeout_seconds} seconds")
             self._sleep_until_next_check_time()
 
     def _sleep_until_next_check_time(self):

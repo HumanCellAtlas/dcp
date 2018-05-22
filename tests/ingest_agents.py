@@ -69,15 +69,28 @@ class IngestApiAgent:
 
         def bundles(self):
             url = self.data['_links']['bundleManifests']['href']
-            response = requests.get(url, headers=self.auth_headers).json()
-            if '_embedded' in response:
-                return [bundleManifest['bundleUuid'] for bundleManifest in response['_embedded']['bundleManifests']]
-            else:
-                return []
+            manifests = self._get_all_handling_pagination(url, 'bundleManifests')
+            return [manifest['bundleUuid'] for manifest in manifests]
 
         def _load(self):
             url = self.ingest_api_url + f'/submissionEnvelopes/{self.envelope_id}'
             self.data = requests.get(url, headers=self.auth_headers).json()
+
+        def _get_all_handling_pagination(self, url, result_element_we_are_interested_in):
+            results = []
+            while True:
+                response = requests.get(url, headers=self.auth_headers)
+                data = json.loads(response.content)
+                if '_embedded' not in data:
+                    break
+
+                results += data['_embedded'][result_element_we_are_interested_in]
+
+                if 'next' in data['_links']:
+                    url = data['_links']['next']['href']
+                else:
+                    break
+            return results
 
 
 class IngestAuthAgent:
