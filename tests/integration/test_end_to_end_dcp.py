@@ -88,9 +88,11 @@ class TestSmartSeq2Run(TestEndToEndDCP):
 
     def test_smartseq2_run(self):
         runner = self.ingest_store_and_analyze_dataset(dataset_fixture='Smart-seq2')
-        expected_files = self.expected_results_bundle_files(runner.primary_bundle_uuid,
+        self.assertEqual(1, len(runner.primary_bundle_uuids))
+        self.assertEqual(1, len(runner.secondary_bundle_uuids))
+        expected_files = self.expected_results_bundle_files(runner.primary_bundle_uuids[0],
                                                             self.SS2_ANALYSIS_OUTPUT_FILES_REGEXES)
-        results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuid)
+        results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuids[0])
 
         self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
 
