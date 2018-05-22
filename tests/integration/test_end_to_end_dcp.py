@@ -9,7 +9,7 @@ from ..data_store_agent import DataStoreAgent
 from ..dataset_fixture import DatasetFixture
 from ..dataset_runner import DatasetRunner
 
-DEPLOYMENTS = ('dev', 'staging', 'integration', 'prod')
+DEPLOYMENTS = ('dev', 'staging', 'integration')
 
 
 class TestEndToEndDCP(unittest.TestCase):
