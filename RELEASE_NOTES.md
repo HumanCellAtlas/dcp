@@ -17,14 +17,15 @@ No manual steps or migrations required.
 
 ### Data Store
 Make notifier timeout configurable
-Secondary Analysis
+
+### Secondary Analysis
 Version endpoint: https://pipelines.staging.data.humancellatlas.org/version
 
-### Lira and subscriptions
+#### Lira and subscriptions
 1) Lira is now starting workflows in Cromwell-as-a-Service dev version.
 2) Add options to include additional metadata fields in the notification when creating a subscription to the data store. This version now has project_shortname, sample_id and submitter_id information in the notifications.
 
-### Pipeline-tools
+#### Pipeline-tools
 1) Added the ability to optionally record HTTP requests and responses made by pipeline-tools code.
 2) Retry logic has been centralized and all retry parameters like timeout and max interval are now exposed as workflow parameters in the Smart-seq2 WDL. A timeout for individual requests has been added and exposed as a workflow parameter for Smart-seq2.
 3) ConnectionErrors are now get retried. 4xx errors are no longer retried.
