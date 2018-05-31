@@ -91,7 +91,7 @@ class DatasetRunner:
 
     def wait_for_envelope_to_be_validated(self):
         Progress.report("WAIT FOR VALIDATION...")
-        WaitFor(self._envelope_is_valid).to_return_value(value=True, timeout_seconds=15 * MINUTE)
+        WaitFor(self._envelope_is_valid).to_return_value(value=True)
         Progress.report("  envelope is valid.\n")
 
     def _envelope_is_valid(self):
@@ -114,7 +114,7 @@ class DatasetRunner:
         try:
             WaitFor(
                 self._primary_bundle_count
-            ).to_return_value(value=expected_primary_bundle_count, timeout_seconds=15 * MINUTE)
+            ).to_return_value(value=expected_primary_bundle_count)
         except TimedOut:
             Progress.report("  We did not get all the primary bundles we expected, "
                             "but let us continue and see how many results bundles we get.")
@@ -131,7 +131,7 @@ class DatasetRunner:
         Progress.report(f"  waiting for {len(self.primary_to_results_bundles_map)} secondary bundles")
         WaitFor(
             self._results_bundles_count
-        ).to_return_value(value=len(self.primary_to_results_bundles_map), timeout_seconds=60 * MINUTE)
+        ).to_return_value(value=len(self.primary_to_results_bundles_map))
         Progress.report(f"  done.\n")
 
     def _how_many_primary_bundles_do_we_expect(self):
