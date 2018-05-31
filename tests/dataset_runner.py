@@ -51,7 +51,7 @@ class DatasetRunner:
         Progress.report(f"CREATING SUBMISSION with {spreadsheet_filename}...")
         self.submission_id = self.ingest_broker.upload(self.dataset.metadata_spreadsheet_path)
         Progress.report(f"  submission ID is {self.submission_id}\n")
-        self.submission_envelope = self.ingest_api.envelope(self.submission_id)
+        self.submission_envelope = self.ingest_api.submission(self.submission_id)
 
     def get_upload_area_credentials(self):
         Progress.report("WAITING FOR STAGING AREA...")
@@ -95,7 +95,7 @@ class DatasetRunner:
         Progress.report("  envelope is valid.\n")
 
     def _envelope_is_valid(self):
-        envelope_status = self.submission_envelope.reload().status()
+        envelope_status = self.submission_envelope.reload().status
         Progress.report(f"  envelope status is {envelope_status}")
         return envelope_status in ['Valid', 'Submitted']
 
