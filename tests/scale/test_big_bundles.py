@@ -12,3 +12,9 @@ class TestBigBundles(unittest.TestCase):
         dataset = DatasetFixture('gliob_100')
         runner = DatasetRunner(deployment=os.environ['TRAVIS_BRANCH'])
         runner.run(dataset_fixture=dataset)
+
+    def test_one_submission_with_1000_bundles(self):
+        print("")
+        dataset = DatasetFixture('gliob_1000')
+        runner = DatasetRunner(deployment=os.environ['TRAVIS_BRANCH'])
+        runner.run(dataset_fixture=dataset)
