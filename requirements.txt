@@ -3,3 +3,5 @@ requests
 urllib3
 hca
 openpyxl
+awscli
+
