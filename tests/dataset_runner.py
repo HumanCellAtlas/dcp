@@ -2,7 +2,6 @@ import os
 import subprocess
 
 import requests
-import openpyxl
 
 from .data_store_agent import DataStoreAgent
 from .ingest_agents import IngestUIAgent, IngestApiAgent
@@ -37,6 +36,7 @@ class DatasetRunner:
     def run(self, dataset_fixture):
         self.dataset = dataset_fixture
         self.upload_spreadsheet_and_create_submission()
+        self.wait_for_ingest_to_process_spreadsheet_files_tab()
         self.get_upload_area_credentials()
         self.stage_data_files()
         self.wait_for_envelope_to_be_validated()
@@ -52,6 +52,19 @@ class DatasetRunner:
         self.submission_id = self.ingest_broker.upload(self.dataset.metadata_spreadsheet_path)
         Progress.report(f"  submission ID is {self.submission_id}\n")
         self.submission_envelope = self.ingest_api.submission(self.submission_id)
+
+    def wait_for_ingest_to_process_spreadsheet_files_tab(self):
+        file_count = self._how_many_files_do_we_expect()
+        Progress.report(f"WAIT FOR INGEST TO PROCESS {file_count} SPREADSHEET FILE ROWS...")
+        self.upload_credentials = WaitFor(
+            self._submission_files_count
+        ).to_return_value(value=file_count)
+
+    def _how_many_files_do_we_expect(self):
+        return self.dataset.count_of_rows_in_spreadsheet_tab('sequence_file')
+
+    def _submission_files_count(self):
+        return len(self.submission_envelope.reload().files())
 
     def get_upload_area_credentials(self):
         Progress.report("WAITING FOR STAGING AREA...")
@@ -139,12 +152,7 @@ class DatasetRunner:
         Count how many rows there are in the sequencing_process sheet of the spreadsheet.
         This will be the number of bundles created.
         """
-        wb = openpyxl.load_workbook(self.dataset.metadata_spreadsheet_path)
-        ws = wb['sequencing_process']
-        row = 4  # Sequencing processes start below headers
-        while ws.cell(row=row, column=1).value:
-            row += 1
-        return row - 4
+        return self.dataset.count_of_rows_in_spreadsheet_tab('sequencing_process')
 
     def _primary_bundle_count(self):
         return len(self.submission_envelope.bundles())
