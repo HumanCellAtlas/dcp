@@ -13,6 +13,8 @@ MINUTE = 60
 
 class DatasetRunner:
 
+    FASTQ_CONTENT_TYPE = 'application/gzip; dcp-type=data'
+
     def __init__(self, deployment):
         self.deployment = deployment
         self.ingest_broker = IngestUIAgent(deployment=deployment)
@@ -22,6 +24,7 @@ class DatasetRunner:
         self.submission_id = None
         self.submission_envelope = None
         self.upload_credentials = None
+        self.upload_area_uuid = None
         self.primary_to_results_bundles_map = {}
         self.failure_reason = None
 
@@ -91,16 +94,35 @@ class DatasetRunner:
 
     def _stage_data_files_using_s3_sync(self):
         Progress.report("STAGING FILES using aws s3 sync...")
-        upload_area_uuid = self.upload_credentials.split(':')[4]
-        upload_area_s3_location = f"s3://org-humancellatlas-upload-{self.deployment}/{upload_area_uuid}"
-        command = ['aws', 's3', 'sync', '--content-type', 'application/gzip; dcp-type=data',
+        self.upload_area_uuid = self.upload_credentials.split(':')[4]
+        upload_area_s3_location = f"s3://org-humancellatlas-upload-{self.deployment}/{self.upload_area_uuid}"
+        command = ['aws', 's3', 'sync', '--content-type', self.FASTQ_CONTENT_TYPE,
                    self.dataset.config['data_files_location'],
                    upload_area_s3_location]
         self._run_command(command)
+        self._band_aid_to_fix_wrong_content_types()
+
+    def _band_aid_to_fix_wrong_content_types(self):
+        """
+        BAND AID:
+        AWS S3 sync fails to set content-type sometimes.
+        Examine all the files in the upload area, and for the ones with an incorrect content type,
+        re-copy them over themselves with the correct content-type.
+        """
+        Progress.report("FIXING UPLOADED FILE CONTENT-TYPEs...")
+        import boto3
+        s3r = boto3.resource('s3')
+        bucket = s3r.Bucket(f"org-humancellatlas-upload-{self.deployment}")
+        for object_summary in bucket.objects.filter(Prefix=self.upload_area_uuid):
+            obj = bucket.Object(object_summary.key)
+            if obj.content_type != self.FASTQ_CONTENT_TYPE:
+                Progress.report(f"  fixing {obj.key}")
+                obj.copy_from(CopySource={'Bucket': bucket.name, 'Key': obj.key},
+                              MetadataDirective="REPLACE",
+                              ContentType=self.FASTQ_CONTENT_TYPE)
 
     def forget_about_upload_area(self):
-        upload_area_uuid = self.upload_credentials.split(':')[4]
-        self._run_command(['hca', 'upload', 'forget', upload_area_uuid])
+        self._run_command(['hca', 'upload', 'forget', self.upload_area_uuid])
 
     def wait_for_envelope_to_be_validated(self):
         Progress.report("WAIT FOR VALIDATION...")
