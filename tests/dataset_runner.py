@@ -25,6 +25,7 @@ class DatasetRunner:
         self.submission_envelope = None
         self.upload_credentials = None
         self.upload_area_uuid = None
+        self.expected_bundle_count = None
         self.primary_to_results_bundles_map = {}
         self.failure_reason = None
 
@@ -44,8 +45,7 @@ class DatasetRunner:
         self.stage_data_files()
         self.wait_for_envelope_to_be_validated()
         self.complete_submission()
-        self.wait_for_primary_bundles_to_be_created()
-        self.wait_for_results_bundle_to_be_created()
+        self.wait_for_primary_and_results_bundles()
         if self.failure_reason:
             raise RuntimeError(self.failure_reason)
 
@@ -142,32 +142,35 @@ class DatasetRunner:
             raise RuntimeError(f"PUT {submit_url} returned {response.status_code}: {response.content}")
         Progress.report("  done.\n")
 
-    def wait_for_primary_bundles_to_be_created(self):
-        Progress.report("WAITING FOR PRIMARY BUNDLE(s) TO BE CREATED...")
-        expected_primary_bundle_count = self._how_many_primary_bundles_do_we_expect()
-        Progress.report(f"  expecting {expected_primary_bundle_count} primary bundles")
-        try:
-            WaitFor(
-                self._primary_bundle_count
-            ).to_return_value(value=expected_primary_bundle_count)
-        except TimedOut:
-            Progress.report("  We did not get all the primary bundles we expected, "
-                            "but let us continue and see how many results bundles we get.")
-            self.failure_reason = f"Only received {self._primary_bundle_count()} " \
-                                  f"of {expected_primary_bundle_count} primary bundles"
-        bundle_uuids = self.submission_envelope.bundles()
-
-        Progress.report(f"  {bundle_uuids}\n")
-        for bundle_uuid in bundle_uuids:
-            self.primary_to_results_bundles_map[bundle_uuid] = None
-
-    def wait_for_results_bundle_to_be_created(self):
-        Progress.report("WAIT FOR RESULTS BUNDLE(s)...")
-        Progress.report(f"  waiting for {len(self.primary_to_results_bundles_map)} secondary bundles")
+    def wait_for_primary_and_results_bundles(self):
+        """
+        We used to wait for all primary bundles to be created before starting to look for results.
+        It appears that with large submissions, results can start to appear before bundle export is finished,
+        so we now monitor both kinds of bundles simultaneously.
+        """
+        Progress.report("WAITING FOR PRIMARY AND RESULTS BUNDLE(s) TO BE CREATED...")
+        self.expected_bundle_count = self._how_many_primary_bundles_do_we_expect()
         WaitFor(
-            self._results_bundles_count
-        ).to_return_value(value=len(self.primary_to_results_bundles_map))
-        Progress.report(f"  done.\n")
+            self._count_primary_and_secondary_bundles
+        ).to_return_value(value=self.expected_bundle_count)
+
+    def _count_primary_and_secondary_bundles(self):
+        if self._primary_bundle_count() < self.expected_bundle_count:
+            self._count_primary_bundles()
+        if self._results_bundles_count() < self.expected_bundle_count:
+            self._count_results_bundles()
+        Progress.report("  bundles: primary: {}/{}, results: {}/{}".format(
+            self._primary_bundle_count(),
+            self.expected_bundle_count,
+            self._results_bundles_count(),
+            self._primary_bundle_count()
+        ))
+        return self._results_bundles_count()
+
+    def _count_primary_bundles(self):
+        for bundle_uuid in self.submission_envelope.bundles():
+            if bundle_uuid not in self.primary_to_results_bundles_map:
+                self.primary_to_results_bundles_map[bundle_uuid] = None
 
     def _how_many_primary_bundles_do_we_expect(self):
         """
@@ -180,22 +183,22 @@ class DatasetRunner:
         return len(self.submission_envelope.bundles())
 
     def _results_bundles_count(self):
-        self._search_for_results_bundles()
         return len(list(v for v in self.primary_to_results_bundles_map.values() if v))
 
-    def _search_for_results_bundles(self):
-        for primary_bundle_uuid in self.primary_to_results_bundles_map.keys():
-            query = {
-                "query": {
-                    "match": {
-                        "files.process_json.processes.content.input_bundles": primary_bundle_uuid
+    def _count_results_bundles(self):
+        for primary_bundle_uuid, secondary_bundle_uuid in self.primary_to_results_bundles_map.items():
+            if secondary_bundle_uuid is None:
+                query = {
+                    "query": {
+                        "match": {
+                            "files.process_json.processes.content.input_bundles": primary_bundle_uuid
+                            }
                         }
                     }
-                }
-            results = self.data_store.search(query)
-            if len(results) > 0:
-                results_bundle_uuid = results[0]['bundle_fqid'].split('.')[0]
-                self.primary_to_results_bundles_map[primary_bundle_uuid] = results_bundle_uuid
+                results = self.data_store.search(query)
+                if len(results) > 0:
+                    results_bundle_uuid = results[0]['bundle_fqid'].split('.')[0]
+                    self.primary_to_results_bundles_map[primary_bundle_uuid] = results_bundle_uuid
 
     @staticmethod
     def _run_command(cmd_and_args_list, expected_retcode=0):
