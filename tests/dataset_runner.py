@@ -1,12 +1,13 @@
 import os
 import subprocess
+from datetime import datetime
 
 import requests
 
 from .data_store_agent import DataStoreAgent
 from .ingest_agents import IngestUIAgent, IngestApiAgent
 from .utils import Progress
-from .wait_for import WaitFor, TimedOut
+from .wait_for import WaitFor
 
 MINUTE = 60
 
@@ -37,8 +38,10 @@ class DatasetRunner:
     def secondary_bundle_uuids(self):
         return list(self.primary_to_results_bundles_map.values())
 
-    def run(self, dataset_fixture):
+    def run(self, dataset_fixture, run_name_prefix="test"):
         self.dataset = dataset_fixture
+        run_name = f"{run_name_prefix}/{self.dataset.name}/{datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')}"
+        self.dataset.update_spreadsheet_project_shortname(run_name)
         self.upload_spreadsheet_and_create_submission()
         self.wait_for_ingest_to_process_spreadsheet_files_tab()
         self.get_upload_area_credentials()
