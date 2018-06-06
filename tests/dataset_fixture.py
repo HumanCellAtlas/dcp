@@ -36,7 +36,7 @@ class DatasetFixture:
         return self.config.get('data_files_location', '').startswith('s3://')
 
     def update_spreadsheet_project_shortname(self, new_shortname):
-        project_tab = self.spreadsheet['project']
+        project_tab = self.spreadsheet['Project']
         if project_tab['A3'].value != "project_core.project_shortname":
             raise RuntimeError("project_core.project_shortname is no longer in cell project!A3")
         project_tab['A4'] = new_shortname

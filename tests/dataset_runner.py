@@ -180,7 +180,7 @@ class DatasetRunner:
         Count how many rows there are in the sequencing_process sheet of the spreadsheet.
         This will be the number of bundles created.
         """
-        return self.dataset.count_of_rows_in_spreadsheet_tab('sequencing_process')
+        return self.dataset.count_of_rows_in_spreadsheet_tab('Sequencing protocol', header_rows=4)
 
     def _primary_bundle_count(self):
         return len(self.submission_envelope.bundles())
