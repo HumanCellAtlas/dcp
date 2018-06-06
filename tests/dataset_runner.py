@@ -67,7 +67,7 @@ class DatasetRunner:
         ).to_return_value(value=file_count)
 
     def _how_many_files_do_we_expect(self):
-        return self.dataset.count_of_rows_in_spreadsheet_tab('sequence_file')
+        return self.dataset.count_of_rows_in_spreadsheet_tab('Sequence file')
 
     def _submission_files_count(self):
         return len(self.submission_envelope.reload().files())
