@@ -36,10 +36,10 @@ class DatasetFixture:
         return self.config.get('data_files_location', '').startswith('s3://')
 
     def update_spreadsheet_project_shortname(self, new_shortname):
-        project_tab = self.spreadsheet['project']
-        if project_tab['A3'].value != "project_core.project_shortname":
-            raise RuntimeError("project_core.project_shortname is no longer in cell project!A3")
-        project_tab['A4'] = new_shortname
+        project_tab = self.spreadsheet['Project']
+        if project_tab['A2'].value != "Project shortname":
+            raise RuntimeError("Project shortname is no longer in cell project!A2")
+        project_tab['A6'] = new_shortname
         self.spreadsheet.save(filename=self.metadata_spreadsheet_path)
 
     @property
@@ -54,7 +54,7 @@ class DatasetFixture:
             self._spreadsheet = openpyxl.load_workbook(self.metadata_spreadsheet_path)
         return self._spreadsheet
 
-    def count_of_rows_in_spreadsheet_tab(self, tab_name, header_rows=3):
+    def count_of_rows_in_spreadsheet_tab(self, tab_name, header_rows=5):
         ws = self.spreadsheet[tab_name]
         rows_with_content = 0
         row = header_rows + 1

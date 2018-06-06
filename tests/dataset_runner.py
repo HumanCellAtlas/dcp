@@ -67,7 +67,7 @@ class DatasetRunner:
         ).to_return_value(value=file_count)
 
     def _how_many_files_do_we_expect(self):
-        return self.dataset.count_of_rows_in_spreadsheet_tab('sequence_file')
+        return self.dataset.count_of_rows_in_spreadsheet_tab('Sequence file')
 
     def _submission_files_count(self):
         return len(self.submission_envelope.reload().files())
@@ -83,6 +83,7 @@ class DatasetRunner:
         return self.submission_envelope.reload().upload_credentials()
 
     def stage_data_files(self):
+        self.upload_area_uuid = self.upload_credentials.split(':')[4]
         if self.dataset.data_files_are_in_s3():
             self._stage_data_files_using_s3_sync()
         else:
@@ -97,7 +98,6 @@ class DatasetRunner:
 
     def _stage_data_files_using_s3_sync(self):
         Progress.report("STAGING FILES using aws s3 sync...")
-        self.upload_area_uuid = self.upload_credentials.split(':')[4]
         upload_area_s3_location = f"s3://org-humancellatlas-upload-{self.deployment}/{self.upload_area_uuid}"
         command = ['aws', 's3', 'sync', '--content-type', self.FASTQ_CONTENT_TYPE,
                    self.dataset.config['data_files_location'],
@@ -180,7 +180,7 @@ class DatasetRunner:
         Count how many rows there are in the Sequencing protocol sheet of the spreadsheet.
         This will be the number of bundles created.
         """
-        return self.dataset.count_of_rows_in_spreadsheet_tab('sequencing_process')
+        return self.dataset.count_of_rows_in_spreadsheet_tab('Sequencing protocol', header_rows=5)
 
     def _primary_bundle_count(self):
         return len(self.submission_envelope.bundles())
