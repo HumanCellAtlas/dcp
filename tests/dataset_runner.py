@@ -136,15 +136,15 @@ class DatasetRunner:
 
     def _how_many_primary_bundles_do_we_expect(self):
         """
-        Count how many rows there are in the sequencing_process sheet of the spreadsheet.
+        Count how many rows there are in the Sequencing protocol sheet of the spreadsheet.
         This will be the number of bundles created.
         """
         wb = openpyxl.load_workbook(self.dataset.metadata_spreadsheet_path)
-        ws = wb['sequencing_process']
-        row = 4  # Sequencing processes start below headers
+        ws = wb['Sequencing protocol']
+        row = 5  # Sequencing protocol start below headers
         while ws.cell(row=row, column=1).value:
             row += 1
-        return row - 4
+        return row - 5
 
     def _primary_bundle_count(self):
         return len(self.submission_envelope.bundles())
