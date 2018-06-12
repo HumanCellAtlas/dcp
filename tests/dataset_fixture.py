@@ -44,7 +44,7 @@ class DatasetFixture:
 
     @property
     def metadata_spreadsheet_path(self, metadata_version="5"):
-        xlsx_files = glob.glob(f"{self.dataset_path}/*_v{metadata_version}_*.xlsx")
+        xlsx_files = glob.glob(f"{self.dataset_path}/*_integration_test_*.xlsx")
         assert len(xlsx_files) == 1, f"There is more than 1 .xlsx file in {self.dataset_path}"
         return xlsx_files[0]
 
