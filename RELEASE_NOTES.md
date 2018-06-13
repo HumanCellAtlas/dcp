@@ -5,7 +5,7 @@
 ## Prod 2018/06/13
 
 ### Ingest
-See https://github.com/HumanCellAtlas/ingest-kube-deployment/blob/prod-release/prod/changelog.md
+See https://github.com/HumanCellAtlas/ingest-kube-deployment/blob/prod-2018-06-13/prod/changelog.md
 
 ### Upload Service
 Version: 1.3.1
