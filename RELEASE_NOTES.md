@@ -1,6 +1,39 @@
 # Release Notes
 
-(newest release at the top plase)
+(newest release at the top please)
+
+## Prod 2018/06/13
+
+### Ingest
+See https://github.com/HumanCellAtlas/ingest-kube-deployment/blob/prod-release/prod/changelog.md
+
+### Upload Service
+Version: 1.3.1
+
+- Upload Database
+- Pgbouncer
+- Return of inline checksumming
+- Batch retry and definition changes
+- L1 health check endpoint
+
+### Data Store
+Version: 4e9e1e52375a59bfcbddc72137a9694a1ffd6367
+
+- Remove backlink from file to bundle
+- Support for notification attachments
+- The Big Red Button: Script for an emergency halt of the DSS
+- Add reliable and asynchronous notifications
+- Offer more content types and HTTP methods for notifications
+- Add an L1 health check endpoint
+- new PUT /bundle error incorrect_file_bundle_uuid
+- Make email optional for checkout service API
+- add API gateway metrics to dashboard
+
+### Secondary Analysis
+N/A
+
+### Data Portal
+N/A
 
 ## Staging 2018/05/31
 
