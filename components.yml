@@ -12,13 +12,14 @@ deployed_component_versions:
   upload: v1.3.1
   metadata-schema: 4.4.0
   ingest:
-    ingest-broker: 0.1.3
-    ingest-exporter: 0.1.5
-    ingest-validator: 0.1.4
-    ingest-core: 0.2.1.rc
-    ingest-accesioner: 0.1.1
+    ingest-broker: v0.5.1.rc
+    ingest-exporter: v0.5.0.rc
+    ingest-validator: v0.5.0.rc
+    ingest-core: v0.5.0.rc
+    ingest-accesioner: v0.4.0.rc
     ingest-archiver: 0.1.1
-    ingest-staging-manager: 0.1.1
+    ingest-staging-manager: v0.4.0.rc
+    ingest-ui: v0.5.0.rc
   greenbox:
     greenbox-cromwell: 33-076b2ff-SNAP
     greenbox-lira: v0.9.1
