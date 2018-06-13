@@ -20,9 +20,4 @@ deployed_component_versions:
     ingest-archiver: 0.1.1
     ingest-staging-manager: v0.4.0.rc
     ingest-ui: v0.5.0.rc
-  greenbox:
-    greenbox-cromwell: 33-076b2ff-SNAP
-    greenbox-lira: v0.9.1
-    greenbox-pipeline-tools: v0.19.0
-    greenbox-skylab: v0.3.0
   data-store: 4e9e1e52375a59bfcbddc72137a9694a1ffd6367
