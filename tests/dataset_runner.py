@@ -183,7 +183,8 @@ class DatasetRunner:
         return self.dataset.count_of_rows_in_spreadsheet_tab('Sequencing protocol', header_rows=5)
 
     def _primary_bundle_count(self):
-        return len(self.submission_envelope.bundles())
+        self._count_primary_bundles()
+        return len(self.primary_to_results_bundles_map)
 
     def _results_bundles_count(self):
         return len(list(v for v in self.primary_to_results_bundles_map.values() if v))
