@@ -50,9 +50,9 @@ No changes
 Version endpoint: https://pipelines.staging.data.humancellatlas.org/version
 Lira and subscriptions
 1) Scalability and stability Improvements:
-Increasing the number of Gunicorn workers.
-Increasing the timeout and graceful timeout of Gunicorn workers.
-Replacing the sync workers with gevent workers.
+    - Increasing the number of Gunicorn workers.
+    - Increasing the timeout and graceful timeout of Gunicorn workers.
+    - Replacing the sync workers with gevent workers.
 2) Adds the option to include additional metadata in notifications to the utility script when it is making subscriptions.
 3) Enables Lira to on hold workflows when it is submitting to Cromwell.
 4) Add "v6" subscription queries for SmartSeq2 and 10x data
@@ -74,9 +74,9 @@ Pipeline-tools
 4) Submit workflow now has separate and sorted stage_files and confirm_submission tasks, this decoupled structure helps debugging and workflow management.
 5) Some documentation style fixes.
 6) Pass Cromwell automated retries parameter to analysis wdl
-7) Add support for changes to the latest HCA metadata schema
-Update the analysis json file to follow the "process" to "protocol" schema changes
-Update getting the sample id from links_json
+7) Add support for changes to the latest HCA metadata schema:
+    - Update the analysis json file to follow the "process" to "protocol" schema changes
+    - Update getting the sample id from links_json
 8) Fix stub submission wdl to include analysis_file_version parameter
 
 
