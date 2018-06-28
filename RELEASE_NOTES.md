@@ -6,29 +6,82 @@
 
 ### Ingest
 
-See https://github.com/HumanCellAtlas/ingest-kube-deployment/blob/staging-2018-05-31/staging/changelog.md
+ingest-core
+- metadata schemas in schema.humancellatlas.org tracked and searchable under /schemas
+- find envelopes by UUID and state
+- added /submissionManifests, which track the expected number of documents in a submission
+- using jvm garbage collector to optimize release of memory back to the OS
+- fixed bug where file upload before File resource creation resulted in discrepent submission UX
+- fixed optimistic lock exceptions on add input bundle
+- bug fix for unknown staging area UUIDs
+
+ingest-broker
+- using the shared ingest-client libs with PyPi
+- submissions not created if there is an error parsing the spreadsheet
+- updated title page
+- using Importer V2
+- endpoint for generating a submission summary and project summary
+- simplified directory layout
+
+ingest-exporter
+- using python 3
+- using shared ingest client libs
+
+ingest-validator
+- non existent schemas no longer throw a critical error, instead ask user to refer to their broker
+
+ingest-state-tracking
+- using persistent Redis storage for state machines
+- misc bug fixes
+
+
+ingest-staging-manager
+- using python 3
+- using shared ingest-libs
+
 
 ### Upload Service
-No manual steps or migrations required.
-1) Inline checksumming of files
-2) PGBouncer setup for transaction based db connection pooling
-3) Retry for all AWS Batch API calls and db queries
-4) Allow checksum daemon to respond to ObjectCreated::Copy events
+No changes
 
 ### Data Store
-Make notifier timeout configurable
+No changes
 
 ### Secondary Analysis
 Version endpoint: https://pipelines.staging.data.humancellatlas.org/version
+Lira and subscriptions
+1) Scalability and stability Improvements:
+    - Increasing the number of Gunicorn workers.
+    - Increasing the timeout and graceful timeout of Gunicorn workers.
+    - Replacing the sync workers with gevent workers.
+2) Adds the option to include additional metadata in notifications to the utility script when it is making subscriptions.
+3) Enables Lira to on hold workflows when it is submitting to Cromwell.
+4) Add "v6" subscription queries for SmartSeq2 and 10x data
+5) Include the fields in notification metadata attachments as workflow labels
+6) Set max_cromwell_retries in workflow inputs (defaults to 0)
+7) Support HMAC auth for notifications
+8) Fix url for registering service account in FireCloud.
+9) Move dss_url, ingest_url and Cromwell-as-a-Service params into Lira config for greater flexibility.
+10) Hard code kubernetes cluster name to "listener" in lira-deploy Jenkins job to prevent error when multiple clusters are present.
+11) Require both user and password when not using Cromwell-as-a-Service
+Improve instructions for updating a certificate
+12) Update subscriptions to use v1.0.0 Pipeline for all SmartSeq2 data.
 
-#### Lira and subscriptions
-1) Lira is now starting workflows in Cromwell-as-a-Service dev version.
-2) Add options to include additional metadata fields in the notification when creating a subscription to the data store. This version now has project_shortname, sample_id and submitter_id information in the notifications.
 
-#### Pipeline-tools
-1) Added the ability to optionally record HTTP requests and responses made by pipeline-tools code.
-2) Retry logic has been centralized and all retry parameters like timeout and max interval are now exposed as workflow parameters in the Smart-seq2 WDL. A timeout for individual requests has been added and exposed as a workflow parameter for Smart-seq2.
-3) ConnectionErrors are now get retried. 4xx errors are no longer retried.
+Pipeline-tools
+1) The Python codes in adapter workflows are not using buffering anymore, so the stdout won't run into some intermittent-empty problems.
+2) The stub submit workflow now uses a slim version of Python docker image for efficiency.
+3) All the requests to Ingest now will retry on ReadTimeout exception by default, in case Ingest is unavailable.
+4) Submit workflow now has separate and sorted stage_files and confirm_submission tasks, this decoupled structure helps debugging and workflow management.
+5) Some documentation style fixes.
+6) Pass Cromwell automated retries parameter to analysis wdl
+7) Add support for changes to the latest HCA metadata schema:
+    - Update the analysis json file to follow the "process" to "protocol" schema changes
+    - Update getting the sample id from links_json
+8) Fix stub submission wdl to include analysis_file_version parameter
+
+
+Cromwell-tools
+1) Add on_hold parameter to start_workflow
 
 ### Data Portal
 N/a
