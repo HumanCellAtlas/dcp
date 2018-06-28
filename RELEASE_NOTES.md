@@ -1,8 +1,6 @@
 # Release Notes
 
-(newest release at the top plase)
-
-## Staging 2018/05/31
+## Staging 2018/06/28
 
 ### Ingest
 
