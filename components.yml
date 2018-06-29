@@ -9,7 +9,7 @@ deployed_component_versions:
   # component-identifier: component-version
   # e.g.
   # ingest: v0.1.2
-  upload: v1.3.1
+  upload: v2.0.0
   metadata-schema: 4.4.0
   ingest:
     ingest-broker: 0.1.3
