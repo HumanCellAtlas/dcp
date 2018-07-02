@@ -1,5 +1,6 @@
 import os
 import subprocess
+from urllib.parse import urlparse
 from datetime import datetime
 
 import requests
@@ -83,7 +84,7 @@ class DatasetRunner:
         return self.submission_envelope.reload().upload_credentials()
 
     def stage_data_files(self):
-        self.upload_area_uuid = self.upload_credentials.split(':')[4]
+        self.upload_area_uuid = urlparse(self.upload_credentials).path.split('/')[1]
         if self.dataset.data_files_are_in_s3():
             self._stage_data_files_using_s3_sync()
         else:
