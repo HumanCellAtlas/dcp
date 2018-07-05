@@ -15,6 +15,6 @@ class TestBigBundles(unittest.TestCase):
 
     def _run(self, fixture_name):
         print("")
-        dataset = DatasetFixture(fixture_name)
+        dataset = DatasetFixture(fixture_name, deployment=os.environ['TRAVIS_BRANCH'])
         runner = DatasetRunner(deployment=os.environ['TRAVIS_BRANCH'])
         runner.run(dataset_fixture=dataset, run_name_prefix="scale")
