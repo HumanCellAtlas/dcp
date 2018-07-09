@@ -34,8 +34,7 @@ class DatasetFixture:
 
     def _download_spreadsheet(self):
         response = requests.get(self.config["spreadsheet_location"])
-        filepath = self.metadata_spreadsheet_path()
-        with open(filepath, 'wb') as f:
+        with open(self.metadata_spreadsheet_path, 'wb') as f:
             f.write(response.content)
 
     def update_spreadsheet_project_shortname(self, new_shortname):
