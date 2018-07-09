@@ -2,7 +2,6 @@ import os
 import subprocess
 from urllib.parse import urlparse
 from datetime import datetime
-
 import requests
 
 from .data_store_agent import DataStoreAgent
@@ -17,8 +16,9 @@ class DatasetRunner:
 
     FASTQ_CONTENT_TYPE = 'application/gzip; dcp-type=data'
 
-    def __init__(self, deployment):
+    def __init__(self, deployment, export_bundles=True):
         self.deployment = deployment
+        self.export_bundles = export_bundles
         self.ingest_broker = IngestUIAgent(deployment=deployment)
         self.ingest_api = IngestApiAgent(deployment=deployment)
         self.data_store = DataStoreAgent(deployment=deployment)
@@ -48,8 +48,9 @@ class DatasetRunner:
         self.get_upload_area_credentials()
         self.stage_data_files()
         self.wait_for_envelope_to_be_validated()
-        self.complete_submission()
-        self.wait_for_primary_and_results_bundles()
+        if self.export_bundles:
+            self.complete_submission()
+            self.wait_for_primary_and_results_bundles()
         if self.failure_reason:
             raise RuntimeError(self.failure_reason)
 
@@ -197,5 +198,3 @@ class DatasetRunner:
                     command=" ".join(cmd_and_args_list), expected_retcode=expected_retcode, actual_retcode=retcode
                 )
             )
-
-
