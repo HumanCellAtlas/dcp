@@ -21,7 +21,7 @@ class TestEndToEndDCP(unittest.TestCase):
         self.data_store = DataStoreAgent(deployment=self.deployment)
 
     def ingest_store_and_analyze_dataset(self, dataset_fixture):
-        dataset = DatasetFixture(dataset_fixture)
+        dataset = DatasetFixture(dataset_fixture, deployment=os.environ['TRAVIS_BRANCH'])
         runner = DatasetRunner(deployment=self.deployment)
         runner.run(dataset, run_name_prefix="integration")
         return runner
