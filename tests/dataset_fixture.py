@@ -1,6 +1,7 @@
 import json
 import os
 import glob
+
 import openpyxl
 import requests
 
@@ -23,7 +24,7 @@ class DatasetFixture:
         self.name = dataset_name
         self.deployment = deployment
         self.config = {}
-        self.dataset_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'dataset_configs', self.name))
+        self.dataset_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'fixtures/datasets', self.name))
         self._spreadsheet = None
         readme_json_path = os.path.join(self.dataset_path, 'README.json')
         with open(readme_json_path) as json_data:
@@ -33,8 +34,7 @@ class DatasetFixture:
 
     def _download_spreadsheet(self):
         response = requests.get(self.config["spreadsheet_location"])
-        filename = self.name + '.xlsx'
-        filepath = os.path.join(self.dataset_path, filename)
+        filepath = self.metadata_spreadsheet_path()
         with open(filepath, 'wb') as f:
             f.write(response.content)
 
@@ -46,10 +46,9 @@ class DatasetFixture:
         self.spreadsheet.save(filename=self.metadata_spreadsheet_path)
 
     @property
-    def metadata_spreadsheet_path(self, metadata_version="5"):
-        xlsx_files = glob.glob(f"{self.dataset_path}/*.xlsx")
-        assert len(xlsx_files) == 1, f"There is more than 1 .xlsx file in {self.dataset_path}"
-        return xlsx_files[0]
+    def metadata_spreadsheet_path(self):
+        filename = self.name + '.xlsx'
+        return os.path.join(self.dataset_path, filename)
 
     @property
     def spreadsheet(self):
