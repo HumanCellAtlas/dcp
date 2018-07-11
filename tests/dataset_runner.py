@@ -1,5 +1,6 @@
 import os
 import subprocess
+from urllib.parse import urlparse
 from datetime import datetime
 
 import requests
