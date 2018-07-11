@@ -1,6 +1,7 @@
 iso8601
 requests
 urllib3
-hca>=4.0.0
+hca==v3.5.2
 openpyxl
 awscli
+

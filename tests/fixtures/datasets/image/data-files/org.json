@@ -1,0 +1,104 @@
+{
+    "aux": [
+        {
+            "type": "dapi",
+            "file": "fov_0_dapi.tiff"
+        },
+        {
+            "type": "dots",
+            "file": "fov_0_dots.tiff"
+        }
+    ],
+    "metadata": {
+        "format": "tiff",
+        "is_volume": false,
+        "shape": [
+            980,
+            1330
+        ],
+        "num_hybs": 4,
+        "num_chs": 4
+    },
+    "data": [
+        {
+            "hyb": 0,
+            "file": "fov_0_H_0_C_0.tiff",
+            "ch": 0
+        },
+        {
+            "hyb": 0,
+            "file": "fov_0_H_0_C_1.tiff",
+            "ch": 1
+        },
+        {
+            "hyb": 0,
+            "file": "fov_0_H_0_C_2.tiff",
+            "ch": 2
+        },
+        {
+            "hyb": 0,
+            "file": "fov_0_H_0_C_3.tiff",
+            "ch": 3
+        },
+        {
+            "hyb": 1,
+            "file": "fov_0_H_1_C_0.tiff",
+            "ch": 0
+        },
+        {
+            "hyb": 1,
+            "file": "fov_0_H_1_C_1.tiff",
+            "ch": 1
+        },
+        {
+            "hyb": 1,
+            "file": "fov_0_H_1_C_2.tiff",
+            "ch": 2
+        },
+        {
+            "hyb": 1,
+            "file": "fov_0_H_1_C_3.tiff",
+            "ch": 3
+        },
+        {
+            "hyb": 2,
+            "file": "fov_0_H_2_C_0.tiff",
+            "ch": 0
+        },
+        {
+            "hyb": 2,
+            "file": "fov_0_H_2_C_1.tiff",
+            "ch": 1
+        },
+        {
+            "hyb": 2,
+            "file": "fov_0_H_2_C_2.tiff",
+            "ch": 2
+        },
+        {
+            "hyb": 2,
+            "file": "fov_0_H_2_C_3.tiff",
+            "ch": 3
+        },
+        {
+            "hyb": 3,
+            "file": "fov_0_H_3_C_0.tiff",
+            "ch": 0
+        },
+        {
+            "hyb": 3,
+            "file": "fov_0_H_3_C_1.tiff",
+            "ch": 1
+        },
+        {
+            "hyb": 3,
+            "file": "fov_0_H_3_C_2.tiff",
+            "ch": 2
+        },
+        {
+            "hyb": 3,
+            "file": "fov_0_H_3_C_3.tiff",
+            "ch": 3
+        }
+    ]
+}
