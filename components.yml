@@ -24,7 +24,7 @@ deployed_component_versions:
   greenbox:
     greenbox-lira: v0.11.2
     greenbox-pipeline-tools: v0.22.0
-    greenbox-cromwell: 34-70f2ed4-SNAP,
+    greenbox-cromwell: 34-66c0fa6-SNAP,
     cromwell_tools_version: v0.3.2,
   data-store: staging-2018-07-11-16-08-27.release
 
