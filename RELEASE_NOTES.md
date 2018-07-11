@@ -1,5 +1,55 @@
 # Release Notes
 
+## Staging 2018/07/11
+
+### Ingest
+
+Ingest Core
+- Data File UUID
+- Find Process by input Bundle UUID
+- Idempotent Analysis File reference
+- UUID index for Submission Envelope collection in Ingest database
+
+Ingest Broker
+- Process details support
+- Submission summary
+- Fix for phantom entries in Spreadsheets during import
+
+Staging Manager
+- Processing credentials
+
+State Tracking
+- Minor changes to state transition rules
+
+
+### Upload Service
+
+Remove reliance on individual IAM users for upload area access (“IAM-Not” feature).
+
+
+### Data Store
+
+- checkout functionality is now in `GET /v1/bundles`
+- collections API
+- internal changes resulting from scale testing
+
+
+### Secondary Analysis
+
+Lira:
+- Increase Lira deployment replicas
+- Make the Gunicorn parameter more portable
+- Update dependencies' version and refactor the version endpoint
+- Exclude results bundles in subscription query
+
+Pipeline-tools:
+- Update to use v4 hca cli
+- Restrict dependencies to a single major version
+- Add logging related to http request retries
+- Fix bug in parsing analysis workflow id from Cromwell metadata
+
+
+
 ## Staging 2018/06/28
 
 ### Ingest
