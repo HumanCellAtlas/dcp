@@ -1,7 +1,7 @@
 import os
 import subprocess
+from urllib.parse import urlparse
 from datetime import datetime
-
 import requests
 
 from .data_store_agent import DataStoreAgent
@@ -16,8 +16,9 @@ class DatasetRunner:
 
     FASTQ_CONTENT_TYPE = 'application/gzip; dcp-type=data'
 
-    def __init__(self, deployment):
+    def __init__(self, deployment, export_bundles=True):
         self.deployment = deployment
+        self.export_bundles = export_bundles
         self.ingest_broker = IngestUIAgent(deployment=deployment)
         self.ingest_api = IngestApiAgent(deployment=deployment)
         self.data_store = DataStoreAgent(deployment=deployment)
@@ -47,8 +48,9 @@ class DatasetRunner:
         self.get_upload_area_credentials()
         self.stage_data_files()
         self.wait_for_envelope_to_be_validated()
-        self.complete_submission()
-        self.wait_for_primary_and_results_bundles()
+        if self.export_bundles:
+            self.complete_submission()
+            self.wait_for_primary_and_results_bundles()
         if self.failure_reason:
             raise RuntimeError(self.failure_reason)
 
@@ -83,18 +85,8 @@ class DatasetRunner:
         return self.submission_envelope.reload().upload_credentials()
 
     def stage_data_files(self):
-        self.upload_area_uuid = self.upload_credentials.split(':')[4]
-        if self.dataset.data_files_are_in_s3():
-            self._stage_data_files_using_s3_sync()
-        else:
-            self._stage_data_files_using_hca_cli()
-
-    def _stage_data_files_using_hca_cli(self):
-        Progress.report("STAGING FILES using hca cli...")
-        self._run_command(['hca', 'upload', 'select', self.upload_credentials])
-        for file_path in self.dataset.data_files_paths():
-            self._run_command(['hca', 'upload', 'file', file_path])
-        self.forget_about_upload_area()
+        self.upload_area_uuid = urlparse(self.upload_credentials).path.split('/')[1]
+        self._stage_data_files_using_s3_sync()
 
     def _stage_data_files_using_s3_sync(self):
         Progress.report("STAGING FILES using aws s3 sync...")
@@ -152,7 +144,7 @@ class DatasetRunner:
         so we now monitor both kinds of bundles simultaneously.
         """
         Progress.report("WAITING FOR PRIMARY AND RESULTS BUNDLE(s) TO BE CREATED...")
-        self.expected_bundle_count = self._how_many_primary_bundles_do_we_expect()
+        self.expected_bundle_count = self.dataset.config["expected_bundle_count"]
         WaitFor(
             self._count_primary_and_secondary_bundles
         ).to_return_value(value=self.expected_bundle_count)
@@ -174,13 +166,6 @@ class DatasetRunner:
         for bundle_uuid in self.submission_envelope.bundles():
             if bundle_uuid not in self.primary_to_results_bundles_map:
                 self.primary_to_results_bundles_map[bundle_uuid] = None
-
-    def _how_many_primary_bundles_do_we_expect(self):
-        """
-        Count how many rows there are in the Sequencing protocol sheet of the spreadsheet.
-        This will be the number of bundles created.
-        """
-        return self.dataset.count_of_rows_in_spreadsheet_tab('Sequencing protocol', header_rows=5)
 
     def _primary_bundle_count(self):
         self._count_primary_bundles()
@@ -213,5 +198,3 @@ class DatasetRunner:
                     command=" ".join(cmd_and_args_list), expected_retcode=expected_retcode, actual_retcode=retcode
                 )
             )
-
-
