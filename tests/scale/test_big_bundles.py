@@ -13,6 +13,9 @@ class TestBigBundles(unittest.TestCase):
     def test_one_submission_with_200_bundles(self):
         self._run(fixture_name='gliob_200')
 
+    def test_one_submission_with_400_bundles(self):
+        self._run(fixture_name='gliob_400')
+
     def test_one_submission_with_1000_bundles(self):
         self._run(fixture_name='gliob_1000')
 
