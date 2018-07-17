@@ -1,6 +1,6 @@
 # Release Notes
 
-(newest release at the top please)
+<!-- newest release at the top please) -->
 
 ## Prod 2018/07/17
 
@@ -109,6 +109,7 @@ N/A
 
 ### Data Portal
 N/A
+
 
 ## Staging 2018/05/31
 
