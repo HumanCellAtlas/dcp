@@ -9,15 +9,14 @@ deployed_component_versions:
   # component-identifier: component-version
   # e.g.
   # ingest: v0.1.2
-  upload: v1.3.1
+  upload: v2.0.1
   metadata-schema: 4.4.0
   ingest:
-    ingest-broker: v0.5.1.rc
-    ingest-exporter: v0.5.0.rc
-    ingest-validator: v0.5.0.rc
-    ingest-core: v0.5.0.rc
-    ingest-accesioner: v0.4.0.rc
-    ingest-archiver: 0.1.1
-    ingest-staging-manager: v0.4.0.rc
-    ingest-ui: v0.5.0.rc
-  data-store: 4e9e1e52375a59bfcbddc72137a9694a1ffd6367
+    ingest-accessioner: v0.4.0
+    ingest-broker: v0.7.0
+    ingest-core: v0.6.0
+    ingest-exporter: v0.6.2
+    ingest-staging-manager: v0.5.0
+    ingest-state-tracking: v0.6.0
+    ingest-validator: v0.5.1
+  data-store: prod-2018-07-17-15-37-03.release
