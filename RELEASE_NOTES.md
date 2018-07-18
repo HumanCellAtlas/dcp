@@ -1,6 +1,81 @@
 # Release Notes
 
-(newest release at the top please)
+<!-- newest release at the top please) -->
+
+## Prod 2018/07/17
+
+### Ingest
+
+#### Ingest-core
+- Metadata schemas in schema.humancellatlas.org tracked and searchable under /schemas
+- Find envelopes by UUID and state
+- Added /submissionManifests, which track the expected number of documents in a submission
+- Using jvm garbage collector to optimize release of memory back to the OS
+- Fixed bug where file upload before File resource creation
+- Fixed optimistic lock exceptions on add input bundle
+- Bug fix for unknown staging area UUIDs
+- Data File UUID
+- Find Process by input Bundle UUID
+- Idempotent Analysis File reference
+- UUID index for Submission Envelope collection in Ingest database
+- hotfix: Updated hca-ingest library to use the hca 4.1.0
+
+#### ingest-broker
+- Using the shared ingest-client libs with PyPi
+- Submissions not created if there is an error parsing the spreadsheet
+- Updated title page
+- Using Importer V2
+- Endpoint for generating a submission summary and project summary
+- Simplified directory layout
+- Process details support
+- Submission summary
+- Fix for phantom entries in Spreadsheets during import
+
+#### ingest-exporter
+- using python 3
+- using shared ingest client libs
+
+#### ingest-validator
+- Non existent schemas no longer throw a critical error, instead ask user to refer to their broker
+
+#### ingest-state-tracking
+- Using persistent Redis storage for state machines
+- Misc bug fixes
+- Minor changes to state transition rules
+
+#### ingest-staging-manager
+- Using python 3
+- Using shared ingest-libs
+- Processing credentials
+
+#### ingest-ui
+- Angular Material components conversion
+- Filtering metadata by state
+- Display the expected count for each entity type in the metadata table
+- Ability to specify page in the url in submissions dashboard
+- Display of UUIDs
+- User must be redirected to login page when session expires
+- Fix to disappearing loading icon when doing a submission upload
+
+
+### Upload Service
+
+Remove reliance on individual IAM users for upload area access [“IAM-Not” feature](http://docs.google.com/document/d/1JFO75A9OR1gnCT1nYHH5p-vEaf0-TdOtOme3M3b9g3A/edit)
+
+### Data Store
+
+- Collections API added
+- Distributed tracing added to API with AWS X-Ray
+- Artifact fully compiled to python bytecode
+- Adding retries for failed GCP requests
+- Make typing declaration uniform for config variables.
+
+### Secondary Analysis
+N/A
+
+### Data Portal
+N/A
+
 
 ## Prod 2018/06/13
 
@@ -34,6 +109,7 @@ N/A
 
 ### Data Portal
 N/A
+
 
 ## Staging 2018/05/31
 
