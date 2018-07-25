@@ -1,5 +1,27 @@
 # Release Notes
 
+## Staging 2018/07/25
+
+### Ingest
+No Changes
+
+### Upload Service
+- Api endpoint to check validation statuses
+- Scripts to schedule and retrieve validation statuses
+- Fix to upload area sync and create scripts to account for new credentials format
+
+### Data Portal
+No Changes
+
+### Data Store
+No Changes
+
+### Secondary Analysis
+Pipeline-tools:
+- Respect Retry-After headers when following redirects
+- Submit real md5 checksums along with pipeline outputs
+- Make submission tasks idempotent
+
 ## Staging 2018/07/11
 
 ### Ingest
