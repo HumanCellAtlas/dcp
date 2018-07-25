@@ -9,7 +9,7 @@ deployed_component_versions:
   # component-identifier: component-version
   # e.g.
   # ingest: v0.1.2
-  upload: v2.0.1
+  upload: v2.1.0
   metadata-schema: 4.4.0
   ingest:
     ingest-broker: v0.7.0.rc
@@ -23,7 +23,7 @@ deployed_component_versions:
     ingest-ui: v0.5.0.rc
   greenbox:
     greenbox-lira: v0.11.2
-    greenbox-pipeline-tools: v0.22.0
+    greenbox-pipeline-tools: v0.23.0
     greenbox-cromwell: 34-66c0fa6-SNAP,
     cromwell_tools_version: v0.3.2,
   data-store: staging-2018-07-11-16-08-27.release
