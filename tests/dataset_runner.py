@@ -127,6 +127,8 @@ class DatasetRunner:
     def _envelope_is_valid(self):
         envelope_status = self.submission_envelope.reload().status
         Progress.report(f"  envelope status is {envelope_status}")
+        if envelope_status == 'Invalid':
+            raise Exception("envelope status is Invalid")
         return envelope_status in ['Valid', 'Submitted']
 
     def complete_submission(self):
