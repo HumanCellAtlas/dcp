@@ -1,9 +1,12 @@
 import os
+import requests
 import subprocess
+
+from typing import Set
 from urllib.parse import urlparse
 from datetime import datetime
-import requests
 
+from .azul_agent import AzulAgent
 from .data_store_agent import DataStoreAgent
 from .ingest_agents import IngestUIAgent, IngestApiAgent
 from .utils import Progress
@@ -22,6 +25,7 @@ class DatasetRunner:
         self.ingest_broker = IngestUIAgent(deployment=deployment)
         self.ingest_api = IngestApiAgent(deployment=deployment)
         self.data_store = DataStoreAgent(deployment=deployment)
+        self.azul_agent = AzulAgent(deployment=deployment)
         self.dataset = None
         self.submission_id = None
         self.submission_envelope = None
@@ -51,6 +55,7 @@ class DatasetRunner:
         if self.export_bundles:
             self.complete_submission()
             self.wait_for_primary_and_results_bundles()
+            self.assert_data_browser_bundles(run_name)
         if self.failure_reason:
             raise RuntimeError(self.failure_reason)
 
@@ -200,3 +205,21 @@ class DatasetRunner:
                     command=" ".join(cmd_and_args_list), expected_retcode=expected_retcode, actual_retcode=retcode
                 )
             )
+
+    def assert_data_browser_bundles(self, project_shortname):
+        WaitFor(
+            self._assert_data_browser_bundles, project_shortname
+        ).to_return_value(value=True)
+
+    def _assert_data_browser_bundles(self, project_shortname):
+        try:
+            response_json = self.azul_agent.get_specimen_by_project(project_shortname)
+            orange_uuids = {bundle["bundleUuid"] for hit in response_json["hits"] for bundle in hit["bundles"]}
+            assert orange_uuids == set(self.primary_bundle_uuids)
+            orange_shortnames = {project["projectShortname"] for hit in response_json["hits"] for project in hit["projects"]}
+            assert orange_shortnames == {project_shortname}
+        except AssertionError as e:
+            Progress.report(f"Exception occurred: {e}")
+            return False
+        else:
+            return True
