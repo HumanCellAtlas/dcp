@@ -1,7 +1,7 @@
 .PHONY: test integration-tests scale-tests
 
-ifndef TRAVIS_BRANCH
-$(error Please set environment variable TRAVIS_BRANCH before running make commands)
+ifndef CI_COMMIT_REF_NAME
+$(error Please set environment variable CI_COMMIT_REF_NAME before running make commands)
 endif
 
 test: integration-tests
