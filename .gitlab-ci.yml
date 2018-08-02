@@ -1,0 +1,21 @@
+image: python:3.6
+
+stages:
+  - dcp_wide_test
+
+before_script:
+  - apt-get -y update
+  - apt-get -y install jq
+  - pip install -r requirements.txt
+  - export SWAGGER_URL="https://dss.$CI_COMMIT_REF_NAME.data.humancellatlas.org/v1/swagger.json"
+  - mkdir -p ~/.config/hca
+  - jq -n .DSSClient.swagger_url=env.SWAGGER_URL > ~/.config/hca/config.$CI_COMMIT_REF_NAME.json
+  - export HCA_CONFIG_FILE=~/.config/hca/config.$CI_COMMIT_REF_NAME.json
+
+dcp_wide_test:
+  stage: dcp_wide_test
+  only:
+    - integration
+    - staging
+  script:
+    - make test
