@@ -9,7 +9,7 @@ This repository servers two purposes.
 To run the tests locally, use Python 3.6:
 
     pip install -r requirements.txt
-    TRAVIS_BRANCH=staging make
+    CI_COMMIT_REF_NAME=staging make
 
 Be aware that you will be uploading bundles to the staging deployment of the DCP and running secondary analysis.
 The test currently takes about 18 minutes to run.

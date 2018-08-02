@@ -15,13 +15,13 @@ DEPLOYMENTS = ('dev', 'staging', 'integration')
 class TestEndToEndDCP(unittest.TestCase):
 
     def setUp(self):
-        self.deployment = os.environ.get('TRAVIS_BRANCH', None)
+        self.deployment = os.environ.get('CI_COMMIT_REF_NAME', None)
         if self.deployment not in DEPLOYMENTS:
-            raise RuntimeError(f"TRAVIS_BRANCH environment variable must be one of {DEPLOYMENTS}")
+            raise RuntimeError(f"CI_COMMIT_REF_NAME environment variable must be one of {DEPLOYMENTS}")
         self.data_store = DataStoreAgent(deployment=self.deployment)
 
     def ingest_store_and_analyze_dataset(self, dataset_fixture):
-        dataset = DatasetFixture(dataset_fixture, deployment=os.environ['TRAVIS_BRANCH'])
+        dataset = DatasetFixture(dataset_fixture, deployment=os.environ['CI_COMMIT_REF_NAME'])
         runner = DatasetRunner(deployment=self.deployment)
         runner.run(dataset, run_name_prefix="integration")
         return runner
