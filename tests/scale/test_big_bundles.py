@@ -24,6 +24,6 @@ class TestBigBundles(unittest.TestCase):
 
     def _run(self, fixture_name, export_bundles=True):
         print("")
-        dataset = DatasetFixture(fixture_name, deployment=os.environ['TRAVIS_BRANCH'])
-        runner = DatasetRunner(deployment=os.environ['TRAVIS_BRANCH'], export_bundles=export_bundles)
+        dataset = DatasetFixture(fixture_name, deployment=os.environ['CI_COMMIT_REF_NAME'])
+        runner = DatasetRunner(deployment=os.environ['CI_COMMIT_REF_NAME'], export_bundles=export_bundles)
         runner.run(dataset_fixture=dataset, run_name_prefix="scale")
