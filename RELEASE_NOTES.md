@@ -1,5 +1,19 @@
 # Release Notes
 
+## Staging 2018/08/15
+
+**Special Circumstances:** The integration build is currently red which would normally
+preclude a promotion to staging.  This is a special release to unblock data wrangers working with large
+files.
+
+### Upload Service
+Version: v2.2.2
+- Gitlab deployment setup and general deployment config cleanup
+- Update to checksum lambda infra
+- Update to Upload API's token logic triggered by hca client file upload
+- Return error when attempting to schedule validation for file larger than 1tb
+- Fix for ChecksummingSink() method call with upgrade of dcplib package
+
 ## Staging 2018/07/25
 
 ### Ingest
