@@ -187,7 +187,7 @@ class DatasetRunner:
                 query = {
                     "query": {
                         "match": {
-                            "files.process_json.processes.content.input_bundles": primary_bundle_uuid
+                            "files.analysis_process_json.input_bundles": primary_bundle_uuid
                             }
                         }
                     }
