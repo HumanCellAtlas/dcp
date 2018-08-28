@@ -42,7 +42,7 @@ class TestEndToEndDCP(unittest.TestCase):
         analysis_process_regex = re.compile(f"^analysis_process_0\.json$")
 
         expected_files_regexes += result_file_schemas_regexes
-        expected_files_regexes += analysis_process_regex
+        expected_files_regexes.append(analysis_process_regex)
 
         return expected_files_regexes
 
