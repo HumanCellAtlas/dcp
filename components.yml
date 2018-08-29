@@ -10,20 +10,23 @@ deployed_component_versions:
   # e.g.
   # ingest: v0.1.2
   upload: v2.2.2
-  metadata-schema: 4.4.0
+  metadata-schema: http://api.ingest.staging.data.humancellatlas.org/schemas/search/latestSchemas
   ingest:
-    ingest-broker: v0.7.0.rc
-    ingest-exporter: v0.6.0.rc
+    ingest-broker: v0.7.2.rc
+    ingest-exporter: v0.7.0.rc
     ingest-validator: v0.5.1.rc
-    ingest-core: v0.6.0.rc
+    ingest-core: v0.7.0.rc
     ingest-accesioner: v0.4.0.rc
     ingest-archiver: 0.1.1
-    ingest-staging-manager: v0.5.0.rc
+    ingest-staging-manager: v0.5.1.rc
     ingest-state-tracking: v0.6.0.rc
     ingest-ui: v0.5.0.rc
   greenbox:
-    greenbox-lira: v0.11.2
-    greenbox-pipeline-tools: v0.23.0
-    greenbox-cromwell: 34-66c0fa6-SNAP,
-    cromwell_tools_version: v0.3.2,
-  data-store: staging-2018-07-11-16-08-27.release
+    greenbox-cromwell: 35-0a01d91-SNAP
+    greenbox-falcon: v0.1.2
+    greenbox-lira: v0.11.3
+    greenbox-pipeline-tools: v0.25.0
+    greenbox-skylab:
+      smartseq2: smartseq2_v1.0.0
+  data-store: ddc0864d37697e753ba040341fc33bbab8e79494
+  azul: 8a9be436100bab455b312daf95b0fbc4b1ae2151

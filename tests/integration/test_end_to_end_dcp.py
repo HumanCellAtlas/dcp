@@ -33,6 +33,17 @@ class TestEndToEndDCP(unittest.TestCase):
 
         expected_files_regexes = list(primary_files_regexes)
         expected_files_regexes += analysis_results_files_regexes
+
+        # Bundle structure creates file schema for each analysis output file
+        result_file_schemas_regexes = [re.compile(f"^analysis_file_{re.escape(str(num))}\.json")
+                                          for num in range(len(analysis_results_files_regexes))]
+
+        # Metadata schema requires a new analysis_process between runs
+        analysis_process_regex = re.compile(f"^analysis_process_0\.json$")
+
+        expected_files_regexes += result_file_schemas_regexes
+        expected_files_regexes.append(analysis_process_regex)
+
         return expected_files_regexes
 
     def check_manifest_contains_exactly_these_files(self, bundle_manifest, filename_regexes):

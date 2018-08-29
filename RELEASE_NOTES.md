@@ -1,5 +1,141 @@
 # Release Notes
 
+## Staging 2018/08/29
+
+### Ingest
+
+Ingest Core
+
+- Fixed bug when adding input bundle manifests for restructured bundles to processes.
+- Added Submission Error entity and endpoints
+- State tracker optimizations
+- Core messaging optimizations
+- Added DRAFT transition controller methods for each metadata resource
+- Fixed schemas endpoint to correctly fetch latest schema
+- Addressed concurrency issues when sending messages in the core 
+- Modified schema parser to use URI directly.
+- Set script to assemble package when running locally
+- Added SCHEMA_BASE_URI in docker compose script
+- Added triggersAnalysis flag in submission envelope
+- Replaced embedded web server to improve stability
+- Point schema url to s3 bucket url to get the xml file
+- Replaced embedded Tomcat server with Jetty
+- Set up to enable performance testing
+
+Ingest Broker
+
+- Handling schema /system links during spreadsheet upload
+- Upgraded dependencies for hca-ingest module
+- Using hca-ingest v0.5
+- Fix bug in Schema template api to point to correct schema environment
+
+Staging Manager
+
+- Now waits for  for Ingest Core to come online before consuming messages
+
+Exporter
+
+- Using latest version of input data files in secondary bundle export
+- Bundles now contain supplementary files
+- Using latest version of links.json schema
+- Respecting the “triggerAnalysis” flag on envelopes to toggle triggering of analysis on primary submissions
+- Bundle restructure
+- Fixed bug when fetching documents from ingest-core
+- Remove hca dependency on the exporter listener and use the ingest-client version which uses hca v0.5
+
+### Upload Service
+
+No updates due to an out of band promotion last week.
+
+### Data Store
+
+- Removed dss-chalice script
+- Refreshed all requirements. (#1476) Tue Aug 7 10:36:41 2018 -0700
+- Explicitly catch a malformed version error for PATCH /collections (#1485)
+- Supporting new bundle layout (#1469)
+- Changed illegal version to a 400 response (#1483)
+- Also changed missing file in a bundle to a 400 response not a 409.
+- Bumped cryptography lib to 2.3 (#1466) to resolve  https://nvd.nist.gov/vuln/detail/CVE-2018-10903
+- Add Index Design and search limitations documentation (#1461)
+- Reject bundles containing duplicate file names (#1454)
+- Fixed bug preventing the upload of files 64MB in size  (#1456)
+- Admin repair's default is to not send notifications (#1450)
+- Promote to integration immediately given CI status (#1437)
+- Add DSS HTTP client best practices docs (#1419)
+- Add roles/cloudfunctions.developer to gcp service account (#1431)
+- Add missing 301 response to GET /v1/bundles/{uuid} swagger (#1418)
+- Update README.md deployment instructions (#1413)
+- Shorten the expiration on the dev checkout bucket (#1405)
+- Prunes incomplete multipart uploads.
+- Version mandatory for PUT Files and Bundles (#1390)
+- Added CI-CD Deployment scripting for GitLab (#1388)
+- Allow Terra Form to work with assumed roles (#1392)
+- Moving badges to the top of readme (#1382)
+
+### Secondary Analysis
+
+Falcon
+
+- V0.1.0 (This release is the first iter tion of this new service):
+    - Implement the queue-handler component of the Falcon.
+    - Implement the igniter component of the Falcon.
+    - Initialize the Falcon repository with config files, readme, and dockerfile.
+    - Add Quay.io docker image build status badge.
+    - Add kubernetes YAML file and corresponding deploy script for Falcon.
+    - Add Travis CI build status badge to the readme :)
+    - Add config file for Travis CI.
+    - Add test coverage report to the pytest outputs.
+    - Implement unit test cases for the queue_handler component.
+    - Implement unit test cases for the igniter component.
+    - Add and use mock data for testing.
+    - Implement unit test cases for the settings module.
+    - Implement the basic unit tests and a Cromwell simulator for testing purposes.
+    - Implement the settings helper function and the main function for Falcon.
+    - Implement the queue-handler component of the Falcon.
+    - Implement the igniter component of the Falcon.
+- v0.1.1:
+    - Fixes an issue with the deployment YAML template file, which causes a validation error during the deployment process.
+    - Fixes an issue with the deploy script, which throws warnings if certain input parameters are missing.
+- v0.1.2:
+    - Fix a bug with the settings loader which can potentially prevent falcon from accessing to Cromwell-as-a-Service
+
+Lira and subscriptions
+
+- Update the subscription query so it matches the latest HCA metadata schema.
+- Update the subscription metadata attachment query, so it matches the latest HCA metadata schema.
+- Extend the `lira_utils` so both `schema_url` and `cromwell_url` are configurable and controlled by lira config, which are input parameters to adapter workflows.
+- Refactor the Jenkins deploy script of Lira so the Kubernetes cluster name is configurable now.
+
+Pipeline-tools
+
+- v0.24.0:
+    - Add `schema_url` parameter to configure with HCA metadata schemas to use when constructing the analysis JSON
+- v0.25.0:
+    - [Breaking Change] Update to the latest HCA metadata-schema:
+        - `analysis_json` now is split into `analysis_process` and `analysis_protocol`, the former varies between runs, while the latter remains almost static given a specific version of the analysis pipeline.
+        - Link `analysis_protocol` to `analysis_process` during the process of creating the submission envelope.
+        - Update the testing data.
+        - Update both SmartSeq2 and Optimus adapter workflows accordingly.
+    - [Breaking Change] Update to the latest Bundle structure proposed by Ingest service, which breaks metadata file into smaller separate files.
+    - [Breaking Change] Migrate to use the centralized `metadata-api` library to prepare inputs for SmartSeq2 pipeline. 
+    - [Breaking Change] Migrate to Python3 and drop support for Python 2.x, update the dockerfile accordingly.
+    - Migrate from unittest to pytest throughout the code base, update most of the testing cases, introduce a set of new testing fixtures.
+    - Remove the redundant 10x adapter workflows.
+    - Update the cromwell-metadata docker image.
+
+### Azul
+
+- Support for new bundle structure
+- Internal build infrastructure improvements (unit tests, CI)
+
+### Data Browser
+This time’s release process does not include the Data Browser. DCP will figure out how to coordinate with the Data Browser team to work on the process before next release.
+
+### Metadata Schema
+
+No changes. DCP-wide integration test spreadsheet promoted from integration to staging branch.
+
+
 ## Staging 2018/08/15
 
 **Special Circumstances:** The integration build is currently red which would normally
