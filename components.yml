@@ -28,5 +28,5 @@ deployed_component_versions:
     greenbox-pipeline-tools: v0.25.0
     greenbox-skylab:
       smartseq2: smartseq2_v1.0.0
-  data-store: integration-2018-08-15-05-55-50.release
+  data-store: ddc0864d37697e753ba040341fc33bbab8e79494
   azul: 8a9be436100bab455b312daf95b0fbc4b1ae2151
