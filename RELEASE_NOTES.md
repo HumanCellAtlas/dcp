@@ -49,7 +49,28 @@ No updates due to an out of band promotion last week.
 
 ### Data Store
 
-To be added.
+- Removed dss-chalice script
+- Refreshed all requirements. (#1476) Tue Aug 7 10:36:41 2018 -0700
+- Explicitly catch a malformed version error for PATCH /collections (#1485)
+- Supporting new bundle layout (#1469)
+- Changed illegal version to a 400 response (#1483)
+- Also changed missing file in a bundle to a 400 response not a 409.
+- Bumped cryptography lib to 2.3 (#1466) to resolve  https://nvd.nist.gov/vuln/detail/CVE-2018-10903
+- Add Index Design and search limitations documentation (#1461)
+- Reject bundles containing duplicate file names (#1454)
+- Fixed bug preventing the upload of files 64MB in size  (#1456)
+- Admin repair's default is to not send notifications (#1450)
+- Promote to integration immediately given CI status (#1437)
+- Add DSS HTTP client best practices docs (#1419)
+- Add roles/cloudfunctions.developer to gcp service account (#1431)
+- Add missing 301 response to GET /v1/bundles/{uuid} swagger (#1418)
+- Update README.md deployment instructions (#1413)
+- Shorten the expiration on the dev checkout bucket (#1405)
+- Prunes incomplete multipart uploads.
+- Version mandatory for PUT Files and Bundles (#1390)
+- Added CI-CD Deployment scripting for GitLab (#1388)
+- Allow Terra Form to work with assumed roles (#1392)
+- Moving badges to the top of readme (#1382)
 
 ### Secondary Analysis
 
