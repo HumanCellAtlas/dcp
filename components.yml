@@ -29,3 +29,4 @@ deployed_component_versions:
     greenbox-skylab:
       smartseq2: smartseq2_v1.0.0
   data-store: integration-2018-08-15-05-55-50.release
+  azul: 8a9be436100bab455b312daf95b0fbc4b1ae2151
