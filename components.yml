@@ -24,7 +24,7 @@ deployed_component_versions:
   greenbox:
     greenbox-cromwell: 35-0a01d91-SNAP
     greenbox-falcon: v0.1.2
-    greenbox-lira: v0.11.3
+    greenbox-lira: v0.12.1
     greenbox-pipeline-tools: v0.25.0
     greenbox-skylab:
       smartseq2: smartseq2_v1.0.0
