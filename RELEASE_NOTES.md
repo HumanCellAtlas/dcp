@@ -1,5 +1,41 @@
 # Release Notes
 
+## Staging 2018/09/05
+
+### Ingest
+No changes.
+
+### Upload Service
+Version: v2.3.0
+
+* Fix: allow filenames to have a hash in them
+* Add SQS queue between S3 object creation and checksum Lambda function (better scalability)
+* Stop using Chalice to deploy checksum Lambda.  Package it ourselves.  Allow Terraform to deploy it.
+* Terraform: move Upload Service deployment to its own VPC
+* Terraform: manage RDS security group
+* Terraform: unlink Makefile and hard-code deployment stage
+
+### Data Store
+Version: staging-2018-09-05-22-09-40.release
+
+* Improve error response documentation for PATCH /collections (#1490)
+* Interpolate cli endpoint (#1502)
+* Using Auth0 for authentication (#1542)
+
+### Secondary Analysis
+
+* Lira v0.12.1:
+    * Fix an issue with the subscription queries which allows result bundles to trigger notifications
+
+* Falcon v0.1.3:
+    * Make query for Cromwell workflows configurable
+
+### Data Portal
+No changes.
+
+### Metadata Schema
+No changes.
+
 ## Staging 2018/08/29
 
 ### Ingest
@@ -12,7 +48,7 @@ Ingest Core
 - Core messaging optimizations
 - Added DRAFT transition controller methods for each metadata resource
 - Fixed schemas endpoint to correctly fetch latest schema
-- Addressed concurrency issues when sending messages in the core 
+- Addressed concurrency issues when sending messages in the core
 - Modified schema parser to use URI directly.
 - Set script to assemble package when running locally
 - Added SCHEMA_BASE_URI in docker compose script
@@ -117,7 +153,7 @@ Pipeline-tools
         - Update the testing data.
         - Update both SmartSeq2 and Optimus adapter workflows accordingly.
     - [Breaking Change] Update to the latest Bundle structure proposed by Ingest service, which breaks metadata file into smaller separate files.
-    - [Breaking Change] Migrate to use the centralized `metadata-api` library to prepare inputs for SmartSeq2 pipeline. 
+    - [Breaking Change] Migrate to use the centralized `metadata-api` library to prepare inputs for SmartSeq2 pipeline.
     - [Breaking Change] Migrate to Python3 and drop support for Python 2.x, update the dockerfile accordingly.
     - Migrate from unittest to pytest throughout the code base, update most of the testing cases, introduce a set of new testing fixtures.
     - Remove the redundant 10x adapter workflows.
