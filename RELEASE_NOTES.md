@@ -1,5 +1,181 @@
 # Release Notes
 
+## Staging 2018/09/07
+
+### Ingest
+Version:
+* State Tracking v0.6.1.rc
+* Core v0.7.1.rc
+* Broker v0.8.0.rc
+* Accessioner v0.5.0.rc
+* Validator v0.6.0.rc
+Unchanged:
+* Staging v0.5.1.rc
+* Exporter v0.7.0.rc
+* UI v0.5.2.rc
+
+Changes:
+
+* Accessioner v0.5.0.rc
+    * New Accessioner using Node.js
+* Core v0.7.1.rc
+    * Endpoint in monitoring state transitions of submission envelope
+    * Added File indices in mongo for faster uploading of files metadata
+* Broker v0.8.0.rc
+    * Ability to upload supplementary files
+    * Ability to Link entity to entity with same concrete type in the spreadsheet
+    * Changes Submission report format
+    * Configurable submission report
+    * Error handling changes during spreadsheet upload
+    * Support for additional project modules in spreadsheet
+* State Tracker v0.6.1.rc
+    * Optimizations in sending state tracker messages
+    * Fix to race condition when processing state tracker messages
+* Validator v0.6.0.rc
+    * New JavaScript Validator
+    * Support for Draft-07 JSON schema
+* UI v0.5.2.rc
+    * Fix submission dashboard pagination
+
+
+### Upload Service
+
+Version: 2.3.1
+
+* Notify ingest if an identical file is re-uploaded, even if it has already been checksummed (#168)
+
+### Data Store
+No changes.
+
+### Secondary Analysis
+No changes.
+
+### Data Portal
+No changes.
+
+### Metadata Schema
+
+Version(s):
+* biomaterial_core: 7.0.3
+* file_core: 5.2.4
+* process_core: 9.0.2
+* project_core: 7.0.3
+* protocol_core: 5.2.4
+* cell_morphology: 6.1.3
+* death: 5.3.3
+* familial_relationship: 6.0.2
+* growth_conditions: 6.4.1
+* human_specific: 1.0.5
+* medical_history: 5.2.4
+* mouse_specific: 1.0.4
+* preservation_storage: 5.3.3
+* state_of_specimen: 5.2.6
+* timecourse: 1.1.3
+* biological_macromolecule_ontology: 5.3.2
+* cell_cycle_ontology: 5.3.2
+* cell_type_ontology: 5.3.2
+* cellular_component_ontology: 1.0.2
+* development_stage_ontology: 5.3.2
+* disease_ontology: 5.3.3
+* enrichment_ontology: 1.2.3
+* ethnicity_ontology: 5.3.4
+* instrument_ontology: 5.3.2
+* length_unit_ontology: 5.3.2
+* library_amplification_ontology: 1.2.2
+* library_construction_ontology: 1.2.2
+* mass_unit_ontology: 5.3.2
+* microscopy_ontology: 1.0.1
+* organ_ontology: 5.3.3
+* organ_part_ontology: 5.3.2
+* process_type_ontology: 5.3.2
+* protocol_type_ontology: 5.3.2
+* sequencing_ontology: 1.1.2
+* species_ontology: 5.3.2
+* strain_ontology: 5.3.3
+* time_unit_ontology: 5.3.2
+* purchased_reagents: 6.0.3
+* 10x: 1.0.3
+* barcode: 5.2.4
+* insdc_experiment: 1.1.4
+* plate_based_sequencing: 1.0.3
+* contact: 6.1.3
+* funder: 1.0.3
+* publication: 5.2.4
+* channel: 1.0.1
+* imaging_target: 1.0.2
+* links: 1.1.3
+* provenance: 1.0.3
+* cell_line: 8.6.2
+* cell_suspension: 8.6.1
+* donor_organism: 10.1.1
+* imaged_specimen: 1.0.1
+* organoid: 8.3.6
+* specimen_from_organism: 6.3.1
+* analysis_file: 5.3.4
+* image_file: 1.0.1
+* reference_file: 2.2.5
+* sequence_file: 6.5.2
+* supplementary_file: 1.1.5
+* analysis_process: 8.0.3
+* process: 6.0.2
+* project: 9.0.2
+* analysis_protocol: 8.0.3
+* aggregate_generation_protocol: 1.1.5
+* collection_protocol: 8.2.6
+* differentiation_protocol: 1.3.0
+* dissociation_protocol: 5.0.3
+* enrichment_protocol: 2.2.5
+* ipsc_induction_protocol: 2.0.1
+* imaging_preparation_protocol: 1.0.1
+* imaging_protocol: 8.0.2
+* protocol: 6.3.5
+* library_preparation_protocol: 4.3.2
+* sequencing_protocol: 9.0.2
+
+Changes:
+* Schema changes
+    * migrated from draft-04 to draft-07 JSON
+    * title attribute changed to sentence case schema name
+    * name attribute added as programmatic schema name
+    * New schemas: cellular_component_ontology.json, channel.json, imaging_target.json, imaged_specimen.json, image_file.json, imaging_preparation_protocol.json, microscopy_ontology.json
+* Field changes
+    * “stem cell” added to enum for `cell_line.cell_line_type` field
+    * New required field: `imaging_protocol.channel`
+    * New required field: `imaging_protocol.imaging_target`
+    * New required field: `imaging_protocol.microscopy_technique`
+    * New required field: `imaging_protocol.magnification`
+    * New required field: `imaging_protocol.numerical_aperture`
+    * New required field: `imaging_protocol.overlapping_tiles`
+    * New required field: `imaging_protocol.pixel_size`
+    * New optional field: `imaging_protocol.immersion_medium_type`
+    * New optional field: `imaging_protocol.microscope_setup_description`
+    * New optional field: `imaging_protocol.immersion_medium_refractive_index`
+    * New optional field: `imaging_protocol.number_of_tiles`
+    * New optional field: `imaging_protocol.tile_size_y`
+    * New optional field: `imaging_protocol.tile_size_x`
+    * New optional field: `imaging_protocol.z_stack_step_size`
+    * New optional field: `imaging_protocol.number_of_z_steps`
+    * New optional field: `growth_conditions.culture_environment`
+    * New optional field: `supplementary_file.provenance`
+    * Changed field name: `donor_organism.disease` to `donor_organism.diseases`
+    * Changed field name: `specimen_from_organism.disease` to `specimen_from_organism.diseases`
+    * Changed field name: `differentiation_protocol.differentiation_media` to `differentiation_protocol.media`
+    * Changed field name: `differentiation_protocol.differentiation_small_molecules` to `differentiation_protocol.small_molecules`
+    * Changed field name: `differentiation_protocol.differentiation_target_cell_yield` to `differentiation_protocol.target_cell_yield`
+    * Changed field name: `differentiation_protocol.differentiation_reagents` to `differentiation_protocol.reagents`
+    * Changed field name: `differentiation_protocol.differentiation_target_pathway` to `differentiation_protocol.target_pathway`
+    * Changed field name: `differentiation_protocol.differentiation_validation_method` to `differentiation_protocol.validation_method`
+    * Changed field name: `differentiation_protocol.differentiation_validation_results` to `differentiation_protocol.validation_result`
+    * Changed field name: `ipsc_induction_protocol.induced_pluripotent_cell_induction_method` to `ipsc_induction_protocol.ipsc_induction_method`
+    * Changed field name: `ipsc_induction_protocol.induced_pluripotent_cell_induction_kit` to `ipsc_induction_protocol.ipsc_induction_kit`
+    * Changed field name: `ipsc_induction_protocol.induced_pluripotent_cell_induction_produced_in_house` to `ipsc_induction_protocol.ipsc_induction_produced_in_house`
+* Ontology changes
+    * disease_ontology.json now accepts top-level values (MONDO:0000001, PATO:0000461) as valid
+    * organ_ontology.json now accepts top-level values (UBERON:0000062, UBERON:0000179) as valid
+    * strain_ontology.json now accepts top-level value (NCBITaxon:10090) as valid
+    * ethnicity_ontology.json now uses HANCESTRO ontology
+
+
 ## Staging 2018/09/05
 
 ### Ingest
