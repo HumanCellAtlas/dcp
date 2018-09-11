@@ -172,6 +172,7 @@ class DatasetRunner:
     def _count_primary_bundles(self):
         for bundle_uuid in self.submission_envelope.bundles():
             if bundle_uuid not in self.primary_to_results_bundles_map:
+                Progress.report(f"    found new primary bundle: {bundle_uuid}")
                 self.primary_to_results_bundles_map[bundle_uuid] = None
 
     def _primary_bundle_count(self):
@@ -194,7 +195,9 @@ class DatasetRunner:
                 results = self.data_store.search(query)
                 if len(results) > 0:
                     results_bundle_uuid = results[0]['bundle_fqid'].split('.')[0]
-                    self.primary_to_results_bundles_map[primary_bundle_uuid] = results_bundle_uuid
+                    if self.primary_to_results_bundles_map[primary_bundle_uuid] is None:
+                        Progress.report(f"    found new results bundle: {results_bundle_uuid}")
+                        self.primary_to_results_bundles_map[primary_bundle_uuid] = results_bundle_uuid
 
     @staticmethod
     def _run_command(cmd_and_args_list, expected_retcode=0):
