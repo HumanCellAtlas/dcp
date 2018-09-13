@@ -32,7 +32,12 @@ Version: v2.3.0 => v2.3.5
 * Increase in checksum lambda memory to 3008mb to avoid lambda out of memory errors
 
 ### Data Store
-No changes.
+
+Version: staging-2018-09-12-16-53-24.release
+
+* get_file performs synchronously when possible (#1347)
+* get_bundle only performs checkout when necessary (#1347)
+
 
 ### Secondary Analysis
 
