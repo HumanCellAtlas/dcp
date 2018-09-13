@@ -3,52 +3,53 @@
 ## Staging 2018/09/07
 
 ### Ingest
-Version:
-* State Tracking v0.6.1.rc
-* Core v0.7.1.rc
-* Broker v0.8.0.rc
-* Accessioner v0.5.0.rc
-* Validator v0.6.0.rc
-Unchanged:
-* Staging v0.5.1.rc
-* Exporter v0.7.0.rc
-* UI v0.5.2.rc
+Version: 
+State Tracking v0.6.1.rc -> v0.7.0.rc
+Core  v0.7.1.rc -> v0.7.2.rc
+Exporter v0.7.0.rc -> v0.7.1.rc 
 
 Changes:
 
-* Accessioner v0.5.0.rc
-    * New Accessioner using Node.js
-* Core v0.7.1.rc
-    * Endpoint in monitoring state transitions of submission envelope
-    * Added File indices in mongo for faster uploading of files metadata
-* Broker v0.8.0.rc
-    * Ability to upload supplementary files
-    * Ability to Link entity to entity with same concrete type in the spreadsheet
-    * Changes Submission report format
-    * Configurable submission report
-    * Error handling changes during spreadsheet upload
-    * Support for additional project modules in spreadsheet
-* State Tracker v0.6.1.rc
-    * Optimizations in sending state tracker messages
-    * Fix to race condition when processing state tracker messages
-* Validator v0.6.0.rc
-    * New JavaScript Validator
-    * Support for Draft-07 JSON schema
-* UI v0.5.2.rc
-    * Fix submission dashboard pagination
-
+* Core v0.7.2.rc
+    * Optimizations regarding sending of unnecessary messages to the rabbit-mq broker
+    * Integration with the state tracker’s HTTP API
+    * Indexing on Process resources’ input and output biomaterials/files enabling faster bundle generation and export
+* State Tracking v0.7.0.rc
+    * Race condition bug fix whereby state updates were processed out of order
+    * Added a HTTP API for processing state update messages
+* Exporter v0.7.1.rc
+    * Caching of previously retrieved documents for faster export time
+    * Retrying 20 times with 1 minute between for idempotent requests to the DSS
 
 ### Upload Service
 
-Version: 2.3.1
+Version: v2.3.0 => v2.3.5
 
-* Notify ingest if an identical file is re-uploaded, even if it has already been checksummed (#168)
+* Fixes to schema for get validation and checksum statuses
+* Changing max vcpus for validation batch infrastructure to 512
+* Fix for validating files with hashes
+* Increase of validation job definitions to 2048mb and 2vCPUs
+* Increase in checksum lambda memory to 3008mb to avoid lambda out of memory errors
 
 ### Data Store
-No changes.
+
+Version: staging-2018-09-12-16-53-24.release
+
+* get_file performs synchronously when possible (#1347)
+* get_bundle only performs checkout when necessary (#1347)
+
 
 ### Secondary Analysis
-No changes.
+
+* Lira v0.13.0 (was v0.12.1)
+    * Changed and improved the deployment scripts
+    * Turned on throttling (set submit_and_hold = true)
+
+* Submission v0.28.0 (was v0.25.0)
+    * Retry HTTP requests with a 409 status code
+    * Use CaaS Prod within the Cromwell-metadata docker image, which is used in Submit WDL task
+    * Adding md5 checksums to results bundle metadata is optional and turned off by default due to HumanCellAtlas/secondary-analysis#287
+
 
 ### Data Portal
 No changes.
