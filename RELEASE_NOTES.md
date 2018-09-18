@@ -2,7 +2,7 @@
 
 <!-- newest release at the top please) -->
 
-## Prod 2018/08/18
+## Prod 2018/09/18
 
 ### Ingest
 
@@ -197,28 +197,6 @@
 
 #### Falcon
 - Stand up Falcon v0.1.3 in production, No workflow will be started at this time.
-V0.1.0 (This release is the first iteration of this new service):
-	- Implement the queue-handler component of the Falcon.
-	- Implement the igniter component of the Falcon.
-	- Initialize the Falcon repository with config files, readme, and dockerfile.
-	- Add Quay.io docker image build status badge.
-	- Add kubernetes YAML file and corresponding deploy script for Falcon.
-	- Add Travis CI build status badge to the readme :)
-	- Add config file for Travis CI.
-	- Add test coverage report to the pytest outputs.
-	- Implement unit test cases for the queue_handler component.
-	- Implement unit test cases for the igniter component.
-	- Add and use mock data for testing.
-	- Implement unit test cases for the settings module.
-	- Implement the basic unit tests and a Cromwell simulator for testing purposes.
-	- Implement the settings helper function and the main function for Falcon.
-	- Implement the queue-handler component of the Falcon.
-	- Implement the igniter component of the Falcon.
-v0.1.1:
-	- Fixes an issue with the deployment YAML template file, which causes a validation error during the deployment process.
-	- Fixes an issue with the deploy script, which throws warnings if certain input parameters are missing.
-v0.1.2:
-	- Fix a bug with the settings loader which can potentially prevent falcon from accessing to Cromwell-as-a-Service
 
 #### Lira and subscriptions
 - Stand up Lira v0.13.2 in production, No subscriptions to DSS for now to avoid workflows running in production environment.
