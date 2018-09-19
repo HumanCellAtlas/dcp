@@ -1,5 +1,75 @@
 # Release Notes
 
+## Staging 2018/09/19
+
+
+### Ingest
+
+* Core v0.7.3.rc
+  - Fix bug in sending messages to state tracker when adding reference files in a secondary submission
+  - Reduce timeout when sending state tracking messages
+  - Updated secondary submission documentation
+
+* State Tracker v0.7.1.rc
+  - Reducing timeout before the actual submission state update happens
+  - Concurrent hash map for document states
+
+* Exporter v0.7.2.rc
+  - Use latest schema for links.json
+
+* Broker v0.8.1.rc
+  - Added support for multiple ontology processing
+
+
+### Upload Service
+
+- Add /validations (retrieve validation status for all files in an upload area)
+- Add /checksums endpoint (retrieve checksum status for all files in an upload area)
+- Lambda checksum memory 3008 -> 960
+- Only notify ingest if file checksummed
+- Fix race condition for file upload
+
+
+### Data Store
+
+- Fix timeout handling for API lambda (#1555)
+- Parameterize GCP checkout bucker viewers (#1553)
+- Give GCP service account read access. (#1547)
+- Remove scheduled CI build daemon (#1560)
+- Retrieving user email from custom JWT claim or email claim (#1562)
+- DSS read-only mode (#1568)
+
+
+### Secondary Analysis
+
+#### Lira and subscriptions
+- Fix the domain for the TLS cert created for Prod.
+- Add submit and hold variable for Falcon to deployment script.
+- Streamline the lira variable by combining the lira version and the lira docker image tag.
+- Fixing an issue with the service name being too long.
+- Add kubernetes admin IAM policy to the deployment service account.
+- Update version endpoint of Lira to include "cache_wdls" and "submit_and_hold" configuration values.
+- Fix a syntax issue in the Lira config ctmpl file.
+
+#### Pipeline-tools
+- Update to use hca CLI version v4.4.0, which fixes changed the mechanism to throw exceptions when an error occurs.
+- Add cromwell maxRetries runtime parameter to the submit wdl tasks "get_metadata" and "stage_files"
+
+
+### Azul
+- Hot fix: Work around CommonMark dependency issue (connected to #306)
+
+
+### Metadata Schema
+
+#### Ontology changes
+- Fixed organ validation issue by including embryo and its children as allowed values
+
+#### Miscellaneous
+- Updated release process SOP
+- Added Metadata Style Guide
+
+
 ## Staging 2018/09/07
 
 ### Ingest
