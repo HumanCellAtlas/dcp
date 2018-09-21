@@ -3,6 +3,7 @@ image: python:3.6
 stages:
   - dcp_wide_test
   - 1000_cell_test
+  - 100_cell_test
 
 before_script:
   - apt-get -y update
@@ -21,9 +22,16 @@ dcp_wide_test:
   script:
     - make test
 
+100_cell_test:
+  stage: 100_cell_test
+  only:
+    - schedules
+  script:
+    - CI_COMMIT_REF_NAME=integration python -m unittest tests.scale.test_big_bundles.TestBigBundles.test_one_submission_with_100_bundles
+
 1000_cell_test:
   stage: 1000_cell_test
   only:
-    - 1000_cell_test
+    - schedules
   script:
     - CI_COMMIT_REF_NAME=integration python -m unittest tests.scale.test_big_bundles.TestBigBundles.test_one_submission_with_1000_bundles
