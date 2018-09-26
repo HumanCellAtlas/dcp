@@ -25,17 +25,21 @@ dcp_wide_test:
 100_cell_test:
   stage: 100_cell_test
   only:
-    - master
-  only:
-    - schedules
+    refs:
+      - master
+      - schedules
+    variables:
+      - $COUNT == "100"
   script:
     - CI_COMMIT_REF_NAME=integration python -m unittest tests.scale.test_big_bundles.TestBigBundles.test_one_submission_with_100_bundles
 
 1000_cell_test:
   stage: 1000_cell_test
   only:
-    - master
-  only:
-    - schedules
+    refs:
+      - master
+      - schedules
+    variables:
+      - $COUNT == "1000"
   script:
     - CI_COMMIT_REF_NAME=integration python -m unittest tests.scale.test_big_bundles.TestBigBundles.test_one_submission_with_1000_bundles
