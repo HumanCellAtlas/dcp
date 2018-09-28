@@ -13,6 +13,8 @@ before_script:
   - mkdir -p ~/.config/hca
   - jq -n .DSSClient.swagger_url=env.SWAGGER_URL > ~/.config/hca/config.$CI_COMMIT_REF_NAME.json
   - export HCA_CONFIG_FILE=~/.config/hca/config.$CI_COMMIT_REF_NAME.json
+  - aws configure set default.s3.multipart_threshold 64MB
+  - aws configure set default.s3.multipart_chunksize 64MB
 
 dcp_wide_test:
   stage: dcp_wide_test
