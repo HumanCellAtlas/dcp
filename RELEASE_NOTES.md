@@ -2,6 +2,23 @@
 
 <!-- newest release at the top please) -->
 
+## Prod 2018/10/02
+
+### Metadata Schema
+- Less stringent term restriction for organ ontology.
+- `project_core` required in `project.json`
+- "not provided" valid value for `strand` field in `library_preparation_protocol.json`
+- `publication` field in `cell_line.json` takes only a single publication
+- Version Changes: 
+  - organ_ontology.json - v5.3.5
+  - cell_line.json - v9.0.0
+  - donor_organism.json - v10.1.2
+  - project.json - v9.0.3
+  - library_preparation_protocol.json - v4.3.3
+  - specimen_from_organism.json - v6.3.3
+  - organoid.json - v8.3.8
+
+
 ## Prod 2018/09/18
 
 ### Ingest

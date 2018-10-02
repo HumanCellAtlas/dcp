@@ -10,6 +10,7 @@ deployed_component_versions:
   # e.g.
   # ingest: v0.1.2
   upload: v2.3.5
+  metadata-schema: http://api.ingest.data.humancellatlas.org/schemas/search/latestSchemas
   azul: 0ff6c960735a0cc9772a657be1fbfcda330dc36f
   secondary-analysis:
     falcon: v0.1.3
