@@ -18,8 +18,10 @@ class DataStoreAgent:
     def search(self, query, replica='aws'):
         url = f"{self.dss_url}/search?replica={replica}"
         response = requests.post(url, json={"es_query": query})
-        logger.debug(json.dumps(response.json(), indent=4))
-        return response.json()['results']
+        if response.status_code == 200:
+            return response.json()['results']
+        else:
+            return []
 
     def download_bundle(self, bundle_uuid, target_folder):
         Progress.report(f"Downloading bundle {bundle_uuid}:\n")
