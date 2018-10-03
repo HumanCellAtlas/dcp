@@ -1,5 +1,67 @@
 # Release Notes
 
+## Staging 2018/10/03
+
+### Ingest
+* Exporter v0.7.4.rc
+  - Reverted to 20 retries spaced a minute apart for operations on the DSS API
+  - Using ingest's update timestamp for creating .json files in the DSS, averting needless duplicates
+  - Polling DSS Files to confirm their full creation prior to creating a bundle containing said Files
+* Staging Manager v0.5.2.rc
+  - Set to use HTTP HEAD when checking for existence of an upload area
+* Broker v0.8.2.rc
+  - Fix to submission error message
+
+
+### Upload Service
+Version: v2.3.11
+
+- Head request for upload area
+- Gitlab prod fixes
+- Change job definition to 4 vcpus for batch
+- Fix for csum deployment lambda bucket name
+- Fix for new version of Postgres
+
+### Data Store
+No changes
+
+### Secondary Analysis
+No changes
+
+### Azul
+Version: 67bd504c0eda2471c088fbb3fd6d89dde7b3b641
+
+- Add FIFO queue between transformers and writer (resolves #181)
+- Temporarily disable ill-configured autocomplete (connected to #362)
+- Specimen documents have singleton `specimens` lists (connected to #312)
+- File documents have singleton `files` lists (fixes #312)
+- Add test case for analysis bundles with derived files (connected to #312)
+- Fix file type summaries returning in files response (fixes #352)
+- Fixed Spacing and Formatting (fixes #265)
+- Fixed Naming and Formatting (fixes #265)
+- Added Exception when the missing/wrong index is requested (fixes #265)
+- Upgrade `hca` to 4.4.1 and `metadata-api` to 1.0b4 (resolves #309)
+- Document deployment and promotion procedure (fixes #344)
+- Increase ES bulk API threshold (fixes #343)
+- Updating Elasticsearch instance volume size. (fixes #338)
+- Add support for bundle deletions (fixes #45)
+- Change default sort criteria to specimenId (fixes #227)
+- Added summary endpoint for specimens (fixes #156)
+- Add infrastructure to share dev es index (fixes #221)
+- Add "null" counter to facets (fixes #99)
+- Switch to SQS trigger (resolves #180)
+- Casting totalSize to int (resolves #251)
+- Replace `files` with `fileTypeSummaries` in /specimens (resolves #170)
+- Removed piecharts endpoint (fixes #236)
+- Upgrade to Chalice 1.6.0 (resolves #179)
+
+### Data Portal
+No changes
+
+### Metadata Schema
+No changes
+
+
 ## Staging 2018/09/19
 
 
