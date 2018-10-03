@@ -9,16 +9,16 @@ deployed_component_versions:
   # component-identifier: component-version
   # e.g.
   # ingest: v0.1.2
-  upload: v2.3.8
+  upload: v2.3.11
   metadata-schema: http://api.ingest.staging.data.humancellatlas.org/schemas/search/latestSchemas
   ingest:
-    ingest-broker: v0.8.1.rc
-    ingest-exporter: v0.7.2.rc
+    ingest-broker: v0.8.2.rc
+    ingest-exporter: v0.7.4.rc
     ingest-validator: v0.6.0.rc
     ingest-core: v0.7.3.rc
     ingest-accesioner: v0.5.0.rc
     ingest-archiver: 0.1.1
-    ingest-staging-manager: v0.5.1.rc
+    ingest-staging-manager: v0.5.2.rc
     ingest-state-tracking: v0.7.1.rc
     ingest-ui: v0.5.2.rc
   greenbox:
@@ -29,4 +29,4 @@ deployed_component_versions:
     greenbox-skylab:
       smartseq2: smartseq2_v1.0.0
   data-store: staging-2018-09-19-15-37-11.release
-  azul: 4763d337b38f8275bb213ae8d15e0e6a40eb0902
+  azul: 67bd504c0eda2471c088fbb3fd6d89dde7b3b641
