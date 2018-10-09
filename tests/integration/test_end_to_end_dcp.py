@@ -81,6 +81,19 @@ class TestSmartSeq2Run(TestEndToEndDCP):
         re.compile('^.+\_rsem\.bam$'),  # aligned_trans_bam
         re.compile('^.+\_rsem\.genes\.results$'),  # rsem_gene_results
         re.compile('^.+\_rsem\.isoforms\.results$'),  # rsem_isoform_results
+        re.compile('^.+\zarr!\.zattrs$'),
+        re.compile('^.+\zarr!\.zgroup$'),
+        re.compile('^.+\zarr!expression_matrix!\.zgroup$'),
+        re.compile('^.+\zarr!expression_matrix!cell_id!\.zarray$'),
+        re.compile('^.+\zarr!expression_matrix!cell_id!0\.0$'),
+        re.compile('^.+\zarr!expression_matrix!expression!\.zarray$'),
+        re.compile('^.+\zarr!expression_matrix!expression!0\.0$'),
+        re.compile('^.+\zarr!expression_matrix!gene_id!\.zarray$'),
+        re.compile('^.+\zarr!expression_matrix!gene_id!0\.0$'),
+        re.compile('^.+\zarr!expression_matrix!qc_metric!\.zarray$'),
+        re.compile('^.+\zarr!expression_matrix!qc_metric!0\.0$'),
+        re.compile('^.+\zarr!expression_matrix!qc_values!\.zarray$'),
+        re.compile('^.+\zarr!expression_matrix!qc_values!0\.0$'),
     ]
 
     def test_smartseq2_run(self):
