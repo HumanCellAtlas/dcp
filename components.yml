@@ -29,5 +29,5 @@ deployed_component_versions:
     greenbox-skylab:
       smartseq2: smartseq2_v2.0.0
   data-store: 2018-10-11-15-48-22-staging.release
-  azul: 67bd504c0eda2471c088fbb3fd6d89dde7b3b641
+  azul: 1247300708cd0a95f5b28a4525dd301b3fd005d9
   data-browser: 17dcbc18b499efa7ef6a11c5403b3b8501741f4f
