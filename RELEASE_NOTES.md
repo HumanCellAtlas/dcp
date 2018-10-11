@@ -1,5 +1,91 @@
 # Release Notes
 
+## Staging 2018/10/11
+
+
+### Ingest
+Core v0.7.4.rc
+- Logging when submission envelope is created and submitted
+- Optimization in finding assay processes for export
+- Bug fixes
+
+
+### Upload Service
+Version: v2.3.12
+- aws_rds_cluster_instance engine version bumped from 9.6.3 -> 9.6.8
+
+
+### Data Store
+Version(s): 2018-10-11-15-48-22-staging.release
+- Raise sync exception when s3/gs presigned urls fail to resolve (#1637)
+- Add retry to join task in s3copyclient sfn (#1635)
+- Define GitLab prod release/deploy (#1634)
+- Define GitLab test for large blob sync (#1633)
+- Use new Terraform version in Docker GitLab image (#1626)
+- Remove unnecessary lambda Get/List permissions for s3. (#1631)
+- Fix scripts/release.sh --help (#1602)
+- Lambda env vars are read from SSM during deploy (#1612)
+- Adding environment variable documentation (#1618)
+- Making notification logs less noisy (#1619)
+- Adding info log messages to subscriptions (#1608)
+- Remove remnants of docker config (#1606)
+- Fixing the errors returned by auth failures (#1605)
+- Moved documentation badges under title (#1604)
+- Remove Travis deploy jobs (#1601)
+- Update integration checkout bucket whitelist (#1592)
+- Fix Swagger YAML Docstring formatting
+- .gitlab-ci.yml: break up long line 
+- Don't run tests when tags are pushed (#1599)
+- Organize README into sections
+- Update environment.prod (#1587)
+- Reparameterize backend bucket (#1591)
+- gitlab-cy.yml simplifications (#1590) 
+- GS event relay: Get all available GRTC env vars in one go (#1586)
+- Use dev Auth0 until prod Auth0 is available. (#1588)
+
+
+### Secondary Analysis
+Version(s):
+
+Lira v0.14.0 (was v0.13.2)
+- Update default 10x WDL config parameters in deployment script to reference CellRanger adapter WDL files
+- Update SS2 WDL parameters in deployment script to includes the zarr utils analysis wdl
+- Improve SS2 subscription query to use ontology IDs instead of the text field
+- The scripts for making subscriptions are using the new HCA DCP Auth method to communicate with Data-Storage service now
+
+Pipeline-tools v0.34.0 (was v0.28.2)
+- Fix disk space for stage_files task in submission workflow
+- Update the adapter WDL for Smart-seq2 to submit zarr files to ingest
+- Improve the analysis result file format mapping, as well as add zarr to the mapping
+- Add web_summary.html to CellRanger adapter outputs.
+- Use metadata-api v1.0b4
+- Add CellRanger adapter WDL
+- Update SS2 analysis outputs in the SS2 adapter pipeline
+- Instead of querying Cromwell during the submission, pipeline-tools is getting the versions of the pipelines directly from the WDL files.
+
+10x pipeline: (no 10x subscription active)
+
+Smart-seq2 pipeline: smartseq2_v2.0.0 (was smartseq2_v1.0.0)
+- QC metrics more rationally grouped
+- Expression data and QC metrics in Zarr format
+- Fix out of disk space problem for Hisat2 tasks
+
+
+### Azul
+Version: 1247300708cd0a95f5b28a4525dd301b3fd005d9 (deployed/staging/2018-10-11__11-47)
+* Address token deficit and surplus (fixes #390)
+* Implement service support for projects tab (resolves #57)
+
+### Data Browser
+Version: 17dcbc18b499efa7ef6a11c5403b3b8501741f4f
+- Deploy moved from Elastic Beanstalk to S3
+- Selected Facet shows in URLs
+- Facet Selector Drop Downs Scrollbars Removed
+
+### Metadata Schema
+No changes
+
+
 ## Staging 2018/10/03
 
 ### Ingest
