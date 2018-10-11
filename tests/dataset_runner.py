@@ -212,17 +212,18 @@ class DatasetRunner:
     def assert_data_browser_bundles(self, project_shortname):
         WaitFor(
             self._assert_data_browser_bundles, project_shortname
-        ).to_return_value(value=True)
+        ).to_return_value(value=(len(self.primary_bundle_uuids) + len(self.secondary_bundle_uuids)))
 
     def _assert_data_browser_bundles(self, project_shortname):
         try:
             response_json = self.azul_agent.get_specimen_by_project(project_shortname)
             orange_uuids = {bundle["bundleUuid"] for hit in response_json["hits"] for bundle in hit["bundles"]}
-            assert orange_uuids == set(self.primary_bundle_uuids).union(self.secondary_bundle_uuids)
+            assert orange_uuids == set(self.primary_bundle_uuids).union(self.secondary_bundle_uuids), \
+                                   f"found {len(orange_uuids)}/{len(self.primary_bundle_uuids) + len(self.secondary_bundle_uuids)}"
             orange_shortnames = {project["projectShortname"] for hit in response_json["hits"] for project in hit["projects"]}
-            assert orange_shortnames == {project_shortname}
+            assert orange_shortnames == {project_shortname}, "shortnames retrieved do not match given project shortname"
         except AssertionError as e:
             Progress.report(f"Exception occurred: {e}")
-            return False
+            return len(orange_uuids)
         else:
-            return True
+            return len(orange_uuids)
