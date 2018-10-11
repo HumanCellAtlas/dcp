@@ -71,7 +71,9 @@ Smart-seq2 pipeline: smartseq2_v2.0.0 (was smartseq2_v1.0.0)
 
 
 ### Azul
-No changes
+Version: 1247300708cd0a95f5b28a4525dd301b3fd005d9 (deployed/staging/2018-10-11__11-47)
+* Address token deficit and surplus (fixes #390)
+* Implement service support for projects tab (resolves #57)
 
 ### Data Browser
 Version: 17dcbc18b499efa7ef6a11c5403b3b8501741f4f
