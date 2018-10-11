@@ -16,7 +16,7 @@ Version: v2.3.12
 
 
 ### Data Store
-Version(s): 56da699cc785c7258d67754ec1987c945960f8c0
+Version(s): 2018-10-11-15-48-22-staging.release
 - Raise sync exception when s3/gs presigned urls fail to resolve (#1637)
 - Add retry to join task in s3copyclient sfn (#1635)
 - Define GitLab prod release/deploy (#1634)
@@ -52,7 +52,8 @@ Lira v0.14.0 (was v0.13.2)
 - Update SS2 WDL parameters in deployment script to includes the zarr utils analysis wdl
 - Improve SS2 subscription query to use ontology IDs instead of the text field
 - The scripts for making subscriptions are using the new HCA DCP Auth method to communicate with Data-Storage service now
-- Pipeline-tools v0.34.0 (was v0.28.2)
+
+Pipeline-tools v0.34.0 (was v0.28.2)
 - Fix disk space for stage_files task in submission workflow
 - Update the adapter WDL for Smart-seq2 to submit zarr files to ingest
 - Improve the analysis result file format mapping, as well as add zarr to the mapping
