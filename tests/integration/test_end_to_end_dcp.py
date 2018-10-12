@@ -65,36 +65,35 @@ class TestSmartSeq2Run(TestEndToEndDCP):
 
     SS2_ANALYSIS_OUTPUT_FILES_REGEXES = [
         re.compile('^.+\_qc\.bam$'),  # aligned_bam
-        re.compile('^.+\_qc\.alignment\_summary\_metrics\.txt$'),  # alignment_summary_metrics
-        re.compile('^.+\_qc\.bait\_bias\_detail\_metrics\.txt$'),  # bait_bias_detail_metrics
-        re.compile('^.+\_qc\.bait\_bias\_summary\_metrics\.txt$'),  # bait_bias_summary_metrics
-        re.compile('^.+\_qc\.base\_distribution\_by\_cycle\_metrics\.txt$'),  # base_call_dist_metrics
-        re.compile('^.+\_qc\.base\_distribution\_by\_cycle\.pdf$'),  # base_call_pdf
-        re.compile('^.+\_qc\.duplicate\_metrics\.txt$'),  # dedup_metrics
-        re.compile('^.+\_qc\.error\_summary\_metrics\.txt$'),  # error_summary_metrics
-        re.compile('^.+\_qc\.gc\_bias\.detail\_metrics\.txt$'),  # gc_bias_detail_metrics
-        re.compile('^.+\_qc\.gc\_bias\.pdf$'),  # gc_bias_dist_pdf
-        re.compile('^.+\_qc\.gc\_bias\.summary\_metrics\.txt$'),  # gc_bias_summary_metrics
-        re.compile('^.+\_qc\.insert\_size\_histogram\.pdf$'),  # insert_size_hist
+        re.compile('^.+\_qc\.bam\.bai$'),  # bam_index
         re.compile('^.+\_qc\.insert\_size\_metrics\.txt$'),  # insert_size_metrics
-        re.compile('^.+\_qc\.log$'),  # hisat2_logfile
-        re.compile('^.+\_qc\.hisat2\.met\.txt$'),  # hisat2_metfile
-        re.compile('^.+\_qc\.pre\_adapter\_detail\_metrics\.txt$'),  # pre_adapter_details_metrics
-        re.compile('^.+\_qc\.quality\_by\_cycle\_metrics\.txt$'),  # quality_by_cycle_metrics
-        re.compile('^.+\_qc\.quality\_by\_cycle\.pdf$'),  # quality_by_cycle_pdf
-        re.compile('^.+\_qc\.quality\_distribution\.pdf$'),  # quality_distribution_dist_pdf
         re.compile('^.+\_qc\.quality\_distribution\_metrics\.txt$'),  # quality_distribution_metrics
-        re.compile('^.+\_qc\.rna\.coverage\.pdf$'),  # rna_coverage
+        re.compile('^.+\_qc\.quality\_by\_cycle\_metrics\.txt$'),  # quality_by_cycle_metrics
+        re.compile('^.+\_qc\.bait\_bias\_summary\_metrics\.txt$'),  # bait_bias_summary_metrics
         re.compile('^.+\_qc\.rna\_metrics\.txt$'),  # rna_metrics
+        re.compile('^.+\_QCs\.csv$'),  # QCs
+        re.compile('^.+\_bait\_bias\_detail\_metrics\.csv$'),  # bait_bias_detail_metrics
+        re.compile('^.+\_base\_distribution\_by\_cycle\_metrics\.csv$'),  # base_distribution_by_cycle_metrics
+        re.compile('^.+\_error\_summary\_metrics\.csv$'),  # error_summary_metrics
+        re.compile('^.+\_gc\_bias\.csv$'),  # gc_bias
+        re.compile('^.+\_pre\_adapter\_detail\_metrics\.csv$'),  # pre_adapter_detail_metrics
+        re.compile('^.+\_pre\_adapter\_summary\_metrics\.csv$'),  # pre_adapter_summary_metrics
         re.compile('^.+\_rsem\.bam$'),  # aligned_trans_bam
-        re.compile('^.+\_rsem\.log$'),  # hisat2tran_logfile
-        re.compile('^.+\_rsem\.hisat2\.met\.txt$'),  # hisat2tran_metfile
-        re.compile('^.+\_rsem\.cnt$'),  # rsem_cnt_log
         re.compile('^.+\_rsem\.genes\.results$'),  # rsem_gene_results
         re.compile('^.+\_rsem\.isoforms\.results$'),  # rsem_isoform_results
-        re.compile('^.+\_rsem\.model$'),  # rsem_model_log
-        re.compile('^.+\_rsem\.theta$'),  # rsem_theta_log
-        re.compile('^.+\_rsem\.time$')  # rsem_time_log
+        re.compile('^.+zarr!\.zattrs$'),
+        re.compile('^.+zarr!\.zgroup$'),
+        re.compile('^.+zarr!expression_matrix!\.zgroup$'),
+        re.compile('^.+zarr!expression_matrix!cell_id!\.zarray$'),
+        re.compile('^.+zarr!expression_matrix!cell_id!0\.0$'),
+        re.compile('^.+zarr!expression_matrix!expression!\.zarray$'),
+        re.compile('^.+zarr!expression_matrix!expression!0\.0$'),
+        re.compile('^.+zarr!expression_matrix!gene_id!\.zarray$'),
+        re.compile('^.+zarr!expression_matrix!gene_id!0\.0$'),
+        re.compile('^.+zarr!expression_matrix!qc_metric!\.zarray$'),
+        re.compile('^.+zarr!expression_matrix!qc_metric!0\.0$'),
+        re.compile('^.+zarr!expression_matrix!qc_values!\.zarray$'),
+        re.compile('^.+zarr!expression_matrix!qc_values!0\.0$'),
     ]
 
     def test_smartseq2_run(self):
