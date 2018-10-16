@@ -27,6 +27,7 @@ dcp_wide_test_SS2:
   stage: dcp_wide_test
   only:
     - integration
+    - se-add-10x-run
   script:
     - CI_COMMIT_REF_NAME=integration python -m unittest tests.integration.test_end_to_end_dcp.TestSmartSeq2Run.test_smartseq2_run
 
@@ -34,6 +35,7 @@ dcp_wide_test_10x:
   stage: dcp_wide_test
   only:
     - integration
+    - se-add-10x-run
   script:
     - CI_COMMIT_REF_NAME=integration python -m unittest tests.integration.test_end_to_end_dcp.Test10xRun.test_10x_run
 
