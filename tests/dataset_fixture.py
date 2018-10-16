@@ -39,7 +39,7 @@ class DatasetFixture:
 
     def update_spreadsheet_project_shortname(self, new_shortname):
         project_tab = self.spreadsheet['Project']
-        if project_tab['A2'].value != "Project shortname":
+        if project_tab['A4'].value != "project.project_core.project_short_name":
             raise RuntimeError("Project shortname is no longer in cell project!A2")
         project_tab['A6'] = new_shortname
         self.spreadsheet.save(filename=self.metadata_spreadsheet_path)
