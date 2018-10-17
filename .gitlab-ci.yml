@@ -21,13 +21,11 @@ dcp_wide_test_SS2:
   only:
     - integration
     - staging
-  script:
 
 dcp_wide_test_10x:
   stage: dcp_wide_test
   only:
     - integration
-  script:
 
 100_cell_test:
   stage: 100_cell_test
