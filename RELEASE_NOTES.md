@@ -1,5 +1,68 @@
 # Release Notes
 
+## Staging 2018/10/17
+
+
+### Ingest
+Core v0.7.6.rc
+
+- Optimizing retrieval of biomaterials from mongo
+- Fix to slowdown caused by synchronous UUID generation
+- Logging when submission envelope is created and submitted
+- Optimization in finding assay processes for export
+- Misc. bug fixes
+- Logging when submission envelope is created and submitted
+- Optimization in finding assay processes for export
+- Bug fixes
+
+State-tracking v0.7.2.rc
+
+- Fix to state tracking persistence
+
+Broker v0.8.3.rc
+
+- Fixed bug whereby file metadata updates fail if a file is uploaded prior spreadsheet upload
+
+### Upload Service
+Version: v2.4.0
+
+- Faster checksumming for larger files: files up to 10GB (was 4GB) in size are now checksummed "in-line" (in Lambda instead of Batch)
+- Daily health check for upload service
+- Merge Lambda deployment buckets into a single bucket per environment
+- Big Red Button: uploadctl up|down|status commands.
+
+### Data Store
+No changes
+
+### Secondary Analysis
+Version(s):
+
+Pipeline-tools v0.36.0 (was v0.34.0)
+- Have cellranger adapter WDL pass in max_cromwell_retries parameter to submit WDL
+
+10x pipeline: (no 10x subscription active)
+
+Smart-seq2 pipeline: smartseq2_v2.1.0 (was smartseq2_v2.0.0)
+- Update zarr creation task
+
+
+### Azul
+No changes
+
+### Data Browser
+No changes
+
+### Metadata Schema
+Version(s):
+
+imaging_protocol: 8.0.3
+sequencing_protocol: 9.0.3
+
+- Added dcp_scale_test_pancreas6decades.xlsx spreadsheet
+- Bug fix in imaging_protocol.json schema.
+- Patch in sequencing_protocol.json schema (update to field description).
+
+
 ## Staging 2018/10/11
 
 
