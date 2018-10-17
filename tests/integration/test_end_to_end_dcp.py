@@ -110,5 +110,34 @@ class TestSmartSeq2Run(TestEndToEndDCP):
         self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
 
 
+class Test10xRun(TestEndToEndDCP):
+
+    CELLRANGER_10X_ANALYSIS_OUTPUT_FILES_REGEXES = [
+        re.compile('metrics\_summary\.csv$'),
+        re.compile('possorted\_genome\_bam\.bam$'),
+        re.compile('possorted\_genome\_bam\.bam\.bai$'),
+        re.compile('barcodes\.tsv$'),
+        re.compile('genes\.tsv$'),
+        re.compile('matrix\.mtx$'),
+        re.compile('filtered\_gene\_bc\_matrices\_h5.h5$'),
+        re.compile('raw\_gene\_bc\_matrices\_h5.h5$'),
+        re.compile('raw\_barcodes\.tsv$'),
+        re.compile('raw\_genes\.tsv$'),
+        re.compile('raw\_matrix\.mtx$'),
+        re.compile('molecule\_info\.h5$'),
+        re.compile('web\_summary\.html$')
+    ]
+
+    def test_10x_run(self):
+        runner = self.ingest_store_and_analyze_dataset(dataset_fixture='10x')
+        self.assertEqual(1, len(runner.primary_bundle_uuids))
+        self.assertEqual(1, len(runner.secondary_bundle_uuids))
+        expected_files = self.expected_results_bundle_files(runner.primary_bundle_uuids[0],
+                                                            self.CELLRANGER_10X_ANALYSIS_OUTPUT_FILES_REGEXES)
+        results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuids[0])
+
+        self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
+
+
 if __name__ == '__main__':
     unittest.main()
