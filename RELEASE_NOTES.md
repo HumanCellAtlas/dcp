@@ -36,15 +36,13 @@ No changes
 
 ### Secondary Analysis
 Version(s):
-
+Lira v0.14.0
 Pipeline-tools v0.36.0 (was v0.34.0)
 - Have cellranger adapter WDL pass in max_cromwell_retries parameter to submit WDL
-
-10x pipeline: (no 10x subscription active)
-
+10x pipeline: cellranger_v1.0.0 (no 10x subscription active)
 Smart-seq2 pipeline: smartseq2_v2.1.0 (was smartseq2_v2.0.0)
 - Update zarr creation task
-
+- Add wdl to build gencode and ensemble references for cellranger
 
 ### Azul
 No changes
