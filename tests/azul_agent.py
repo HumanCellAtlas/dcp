@@ -16,7 +16,7 @@ class AzulAgent:
 
     def get_specimen_by_project(self, project_shortname):
         filters = {"file": {"project": {"is": [project_shortname]}}}
-        path = '/repository/specimens?filters=' + urllib.parse.quote(json.dumps(filters))
+        path = '/repository/projects?filters=' + urllib.parse.quote(json.dumps(filters))
         response = self.https_session.request("GET", self.azul_url + path)
         response.raise_for_status()
         return response.json()
