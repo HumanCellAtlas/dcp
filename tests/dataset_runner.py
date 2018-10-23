@@ -217,17 +217,15 @@ class DatasetRunner:
 
     def _assert_data_browser_bundles(self, project_shortname):
         try:
+            expected_uuids = set(self.primary_bundle_uuids).union(self.secondary_bundle_uuids)
             response_json = self.azul_agent.get_specimen_by_project(project_shortname)
             orange_uuids = {bundle["bundleUuid"] for hit in response_json["hits"] for bundle in hit["bundles"]}
-            assert orange_uuids == set(self.primary_bundle_uuids).union(self.secondary_bundle_uuids)
-            orange_shortnames = {self._validate_shortname(project["projectShortname"]) for hit in response_json["hits"] for project in hit["projects"]}
+            assert orange_uuids == expected_uuids
+            orange_shortnames = {project["projectShortname"] for hit in response_json["hits"] for project in hit["projects"]}
             assert orange_shortnames == {project_shortname}
         except AssertionError as e:
             Progress.report(f"Exception occurred: {e}")
             return False
         else:
+            Progress.report(f"{len(orange_uuids)}/{len(expected_uuids)}")
             return True
-
-    def _validate_shortname(self, project_shortnames):
-        assert len(project_shortnames) == 1, "projectshortnames returned non-singleton value"
-        return project_shortnames[0]
