@@ -41,8 +41,12 @@ class TestEndToEndDCP(unittest.TestCase):
         # Metadata schema requires a new analysis_process between runs
         analysis_process_regex = re.compile(f"^analysis_process_0\.json$")
 
+        # Metadata schema requires a new analysis_protocol which is static between runs unless the pipeline is changed
+        analysis_protocol_regex = re.compile(f"^analysis_protocol_0\.json$")
+
         expected_files_regexes += result_file_schemas_regexes
         expected_files_regexes.append(analysis_process_regex)
+        expected_files_regexes.append(analysis_protocol_regex)
 
         return expected_files_regexes
 
