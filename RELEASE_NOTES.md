@@ -93,9 +93,9 @@ Pipeline-tools
 
 (Pipelines)
 - (no 10x subscription active)10x pipeline: N/A -> cellranger_v1.0.0
-- Add wdl to build gencode and ensemble references for cellranger.
+    - Add wdl to build gencode and ensemble references for cellranger.
 - (no ss2 subscription active) Smart-seq2 pipeline: smartseq2_v2.0.0 -> smartseq2_v2.1.0
-- Update zarr creation task
+    - Update zarr creation task
 
 ### Data Portal
 No changes.
