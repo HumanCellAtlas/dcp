@@ -7,29 +7,29 @@
 ### Ingest
 
 #### State Tracker v0.7.3
-Fixed bug determining the URI for persisted state machines
-Fixed state tracking persistence
-Ensuring envelopes go to the Cleanup state when more than the number of expected bundles are generated
+- Fixed bug determining the URI for persisted state machines
+- Fixed state tracking persistence
+- Ensuring envelopes go to the Cleanup state when more than the number of expected bundles are generated
 
 #### Exporter v0.7.5
-Fixed bug in analysis export, analysis bundles should reference same metadata file version from input bundle
-Reverted to 20 retries spaced a minute apart for operations on the DSS API
-Using ingest's update timestamp for creating .json files in the DSS, averting needless duplicates
-Polling DSS Files to confirm their full creation prior to creating a bundle containing said Files
+- Fixed bug in analysis export, analysis bundles should reference same metadata file version from input bundle
+- Reverted to 20 retries spaced a minute apart for operations on the DSS API
+- Using ingest's update timestamp for creating .json files in the DSS, averting needless duplicates
+- Polling DSS Files to confirm their full creation prior to creating a bundle containing said Files
 
 #### Broker v0.8.3
-Fixed bug whereby file metadata updates fail if a file is uploaded prior spreadsheet upload
-Fix to submission error message
+- Fixed bug whereby file metadata updates fail if a file is uploaded prior spreadsheet upload
+- Fix to submission error message
 
 #### Core v0.7.6
-Lazy load biomaterial dbrefs
-Logging when submission envelope is created and submitted
-Optimization in finding assay processes for export
-Fix to slow-down caused by synchronous UUID generation
-Bug fixes
+- Lazy load biomaterial dbrefs
+- Logging when submission envelope is created and submitted
+- Optimization in finding assay processes for export
+- Fix to slow-down caused by synchronous UUID generation
+- Bug fixes
 
 #### Staging Manager v0.5.2
-Using HTTP HEAD when asserting existence of upload area resources in the upload service
+- Using HTTP HEAD when asserting existence of upload area resources in the upload service
 
 ### Upload Service
 Version: v2.4.1
