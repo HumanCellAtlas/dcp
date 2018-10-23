@@ -2,6 +2,113 @@
 
 <!-- newest release at the top please) -->
 
+## Prod 2018/10/23
+
+### Ingest
+
+#### State Tracker v0.7.3
+Fixed bug determining the URI for persisted state machines
+Fixed state tracking persistence
+Ensuring envelopes go to the Cleanup state when more than the number of expected bundles are generated
+
+#### Exporter v0.7.5
+Fixed bug in analysis export, analysis bundles should reference same metadata file version from input bundle
+Reverted to 20 retries spaced a minute apart for operations on the DSS API
+Using ingest's update timestamp for creating .json files in the DSS, averting needless duplicates
+Polling DSS Files to confirm their full creation prior to creating a bundle containing said Files
+
+#### Broker v0.8.3
+Fixed bug whereby file metadata updates fail if a file is uploaded prior spreadsheet upload
+Fix to submission error message
+
+#### Core v0.7.6
+Lazy load biomaterial dbrefs
+Logging when submission envelope is created and submitted
+Optimization in finding assay processes for export
+Fix to slow-down caused by synchronous UUID generation
+Bug fixes
+
+#### Staging Manager v0.5.2
+Using HTTP HEAD when asserting existence of upload area resources in the upload service
+
+### Upload Service
+Version: v2.4.1
+
+- Add head method to v1/area/upload_area_id endpoint
+- Daily health check lambda
+- Move lambda deployments to shared s3 bucket
+- Batch vcpus 2 -> 4
+- increase lambda timeout (5 min -> 15 min)  and file size (4gb -> 10 gb) for inline checksumming
+- recheck file content type after checksumming
+- Add ability to disable/enable Lambdas and batch deployments (uploadctl runlevel start|stop|status)
+- Remove uploadctl setup|teardown functionality
+
+### Data Store
+Version: prod-2018-09-18-15-58-07.release
+
+- Remove unnecessary lambda Get/List permissions for s3.
+- Lambda env vars are read from SSM during deploy
+- Making notification logs less noisy
+- Adding info log messages to subscriptions
+- Update integration checkout bucket whitelist
+- reparameterize backend bucket
+- GS event relay: Get all available GRTC env vars in one go
+- refactor and optimize get bundle to serve existing checkout bundles when possible
+- adding google project to whitelist
+- adding 422 when metadata checksums are missing for put_file
+- optimize get file to always return immediately if checkout is available
+- Multiplex GS events between indexer and sync daemons using SNS-SQS
+- SFN Sync daemon: Loosen SQS name constraint in IAM policy
+- Describing auth env var in readme
+- Give GCP service account read access.
+- Parameterize GCP checkout bucker viewers
+- Fix timeout handling for API lambda
+
+
+### Secondary Analysis
+Version(s):
+- Lira: v0.13.2 -> v0.14.0
+- Pipeline-tools v0.28.2 -> v0.36.0
+
+Changes:
+
+Lira and subscriptions
+- The scripts for making subscriptions are using the new HCA DCP Auth method to communicate with Data-Storage service now.
+- Update default 10x WDL config parameters in deployment script to reference CellRanger adapter WDL files
+- Update SS2 WDL parameters in deployment script to includes the zarr utils analysis wdl
+- Improve SS2 subscription query to use ontology IDs instead of the text field
+
+Pipeline-tools
+- Removed a lot of unused files in the repo.
+- Instead of querying Cromwell during the submission, pipeline-tools is getting the versions of the pipelines directly from the WDL files.
+- Update SS2 analysis outputs in the SS2 adapter pipeline
+- Uses metadata-api v1.0b4.
+- Add Adapter WDL for the CellRanger count pipeline for 10x data
+- Update the Adapter WDL for SmartSeq2 so it accepts Zarr files from the analysis pipeline and submits back to Ingest.
+- Improve the analysis result file format mapping, as well as add zarr to the mapping.
+- Add web_summary.html to CellRanger adapter outputs.
+- Fix disk space for stage_files task in submit WDL.
+- Rename cellranger outputs so that they are unique.
+- Have cellranger adapter WDL pass in max_cromwell_retries parameter to submit WDL.
+
+(Pipelines)
+- (no 10x subscription active)10x pipeline: N/A -> cellranger_v1.0.0
+- Add wdl to build gencode and ensemble references for cellranger.
+- (no ss2 subscription active) Smart-seq2 pipeline: smartseq2_v2.0.0 -> smartseq2_v2.1.0
+- Update zarr creation task
+
+### Data Portal
+No changes.
+
+### Metadata Schema
+Version(s):
+- imaging_protocol: 8.0.3
+- sequencing_protocol: 9.0.3
+
+- Changed description for paired_end in sequencing_protocol.json
+- Removed required field `protocol_type` from imaging_protocol (not actually in the schema).
+- Added dcp_scale_test_pancreas6decades.xlsx spreadsheet
+
 ## Prod 2018/10/02
 
 ### Metadata Schema
@@ -9,7 +116,7 @@
 - `project_core` required in `project.json`
 - "not provided" valid value for `strand` field in `library_preparation_protocol.json`
 - `publication` field in `cell_line.json` takes only a single publication
-- Version Changes: 
+- Version Changes:
   - organ_ontology.json - v5.3.5
   - cell_line.json - v9.0.0
   - donor_organism.json - v10.1.2
@@ -35,7 +142,7 @@
   - Core messaging optimizations
   - Added DRAFT transition controller methods for each metadata resource
   - Fixed schemas endpoint to correctly fetch latest schema
-  - Addressed concurrency issues when sending messages in the core 
+  - Addressed concurrency issues when sending messages in the core
   - Modified schema parser to use URI directly.
   - Set script to assemble package when running locally
   - Added SCHEMA_BASE_URI in docker compose script
@@ -96,7 +203,7 @@
 - Fix to upload area sync and create scripts to account for new credentials format
 - Fix for ChecksummingSink() method call with upgrade of dcplib package
 - Fix: allow filenames to have a hash in them
-- Fix: Notify ingest if an identical file is re-uploaded, even if it has already been checksummed 
+- Fix: Notify ingest if an identical file is re-uploaded, even if it has already been checksummed
 
 - Update to Upload Api's token logic triggered by hca client file upload
 - Api endpoint to check validation statuses
