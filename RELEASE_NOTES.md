@@ -46,6 +46,7 @@ Version: v2.4.1
 ### Data Store
 Version: prod-2018-09-18-15-58-07.release
 
+- Raise sync exception when s3/gs presigned urls fail to resolve
 - Remove unnecessary lambda Get/List permissions for s3.
 - Lambda env vars are read from SSM during deploy
 - Making notification logs less noisy
@@ -53,12 +54,15 @@ Version: prod-2018-09-18-15-58-07.release
 - Update integration checkout bucket whitelist
 - reparameterize backend bucket
 - GS event relay: Get all available GRTC env vars in one go
+- Replace all storage buckets
 - refactor and optimize get bundle to serve existing checkout bundles when possible
 - adding google project to whitelist
 - adding 422 when metadata checksums are missing for put_file
 - optimize get file to always return immediately if checkout is available
 - Multiplex GS events between indexer and sync daemons using SNS-SQS
 - SFN Sync daemon: Loosen SQS name constraint in IAM policy
+- Sync daemon: use SQS and state functions, ensure referential consistency
+- DSS read-only mode
 - Describing auth env var in readme
 - Give GCP service account read access.
 - Parameterize GCP checkout bucker viewers
