@@ -2,6 +2,24 @@
 
 <!-- newest release at the top please) -->
 
+## Prod 2018/10/25
+
+This is an ad-hoc promotion for only Secondary-Analysis
+
+### Secondary Analysis
+
+Version(s):
+Pipeline-tools v0.28.2 -> v0.38.0
+
+Changes:
+
+#### Lira and subscriptions
+- Subscriptions are still turned off in production at this time point. 
+
+#### Pipeline-tools
+- Fix an [issue](https://github.com/HumanCellAtlas/secondary-analysis/issues/393) so now the analysis_protocol is linked to analysis_process properly.
+- Fix an [issue](https://github.com/HumanCellAtlas/secondary-analysis/issues/392), where the GetInputs task of the CellRanger Adapter WDL output Array[File] i1_fastq = [""] for bundles with no I1 files.
+
 ## Prod 2018/10/23
 
 ### Ingest
