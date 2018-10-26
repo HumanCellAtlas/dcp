@@ -14,8 +14,8 @@ deployed_component_versions:
   azul: 0ff6c960735a0cc9772a657be1fbfcda330dc36f
   secondary-analysis:
     falcon: v0.1.3
-    lira: v0.13.2
-    pipeline-tools: v0.28.2
+    lira: v0.14.0
+    pipeline-tools: v0.38.0
   ingest:
     ingest-accessioner: v0.5.0
     ingest-broker: v0.8.0
