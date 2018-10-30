@@ -22,12 +22,12 @@ deployed_component_versions:
     ingest-state-tracking: v0.7.2.rc
     ingest-ui: v0.5.2.rc
   greenbox:
-    greenbox-cromwell: 35-0a01d91-SNAP
-    greenbox-falcon: v0.1.3
-    greenbox-lira: v0.14.0
-    greenbox-pipeline-tools: v0.40.0
+    greenbox-falcon: v0.1.4
+    greenbox-lira: v0.14.1
+    greenbox-pipeline-tools: v0.42.0
     greenbox-skylab:
       smartseq2: smartseq2_v2.1.0
+      tenx: cellranger_v1.0.2
   data-store: 2018-10-11-15-48-22-staging.release
   azul: 1247300708cd0a95f5b28a4525dd301b3fd005d9
   data-browser: 17dcbc18b499efa7ef6a11c5403b3b8501741f4f
