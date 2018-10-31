@@ -1,6 +1,32 @@
 # Release Notes
 
 <!-- newest release at the top please) -->
+## Prod 2018/10/30
+
+This is an ad-hoc promotion for only Secondary-Analysis
+
+### Secondary Analysis
+
+Version(s):
+- Lira v0.14.0 -> v0.14.1
+- Pipeline-tools v0.38.0 -> v0.42.0
+- Falcon v0.1.3 -> v0.1.4
+
+Changes:
+
+#### Lira and subscriptions
+- Subscriptions for SmartSeq2 pipeline is on.
+- Subscriptions for 10x pipeline is on.
+- Update requests library in requirements.txt to fix security [issue](https://nvd.nist.gov/vuln/detail/CVE-2018-18074)
+
+#### Pipeline-tools
+- Pass `max_retries` parameter to CellRanger workflow.
+- Fix a bug that prevents production workflows from submitting results back to Ingest.
+- Upgrade the requests library to fix the [security vulnerability](https://nvd.nist.gov/vuln/detail/CVE-2018-18074)
+
+#### Falcon
+- Add namespace parameter to deploy.sh.
+- Update version of requests library.
 
 ## Prod 2018/10/25
 
