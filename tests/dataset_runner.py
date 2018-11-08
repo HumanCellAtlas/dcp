@@ -217,15 +217,16 @@ class DatasetRunner:
 
     def _assert_data_browser_bundles(self, project_shortname):
         try:
-            expected_uuids = set(self.primary_bundle_uuids).union(self.secondary_bundle_uuids)
-            response_json = self.azul_agent.get_specimen_by_project(project_shortname)
-            orange_uuids = {bundle["bundleUuid"] for hit in response_json["hits"] for bundle in hit["bundles"]}
-            assert orange_uuids == expected_uuids
-            orange_shortnames = {project["projectShortname"] for hit in response_json["hits"] for project in hit["projects"]}
-            assert orange_shortnames == {project_shortname}
+            expected_bundle_uuids = set(self.primary_bundle_uuids).union(self.secondary_bundle_uuids)
+            files = self.azul_agent.get_files_py_project(project_shortname)
+            bundle_uuids = {bundle['bundleUuid'] for file in files for bundle in file['bundles']}
+            assert bundle_uuids == expected_bundle_uuids
+            project_shortnames = {project_short_name for file in files for project in file['projects']
+                                  for project_short_name in project['projectShortname']}
+            assert project_shortnames == {project_shortname}
         except AssertionError as e:
             Progress.report(f"Exception occurred: {e}")
             return False
         else:
-            Progress.report(f"{len(orange_uuids)}/{len(expected_uuids)}")
+            Progress.report(f"{len(bundle_uuids)}/{len(expected_bundle_uuids)}")
             return True
