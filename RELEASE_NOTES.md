@@ -2,6 +2,13 @@
 
 <!-- newest release at the top please) -->
 
+## Prod 2018/11/13
+
+### Azul
+Version: 2fb1b25c1bd8b3e6eda27d15e716fa849f80d4a5 (tagged deployed/prod/2018-11-13__14-41)
+
+* Initial production release
+
 ## Prod 2018/10/25
 
 This is an ad-hoc promotion for only Secondary-Analysis
