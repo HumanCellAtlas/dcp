@@ -23,7 +23,7 @@ class TestEndToEndDCP(unittest.TestCase):
     def ingest_store_and_analyze_dataset(self, dataset_fixture):
         dataset = DatasetFixture(dataset_fixture, deployment=self.deployment)
         runner = DatasetRunner(deployment=self.deployment)
-        runner.run(dataset, run_name_prefix="integration")
+        runner.run(dataset, run_name_prefix=self.deployment)
         return runner
 
     def expected_results_bundle_files(self, primary_bundle_uuid, analysis_results_files_regexes):

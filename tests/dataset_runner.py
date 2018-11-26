@@ -27,6 +27,7 @@ class DatasetRunner:
         self.data_store = DataStoreAgent(deployment=deployment)
         self.azul_agent = AzulAgent(deployment=deployment)
         self.dataset = None
+        self.project_shortname = None
         self.submission_id = None
         self.submission_envelope = None
         self.upload_credentials = None
@@ -45,8 +46,7 @@ class DatasetRunner:
 
     def run(self, dataset_fixture, run_name_prefix="test"):
         self.dataset = dataset_fixture
-        run_name = f"{run_name_prefix}/{self.dataset.name}/{datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')}"
-        self.dataset.update_spreadsheet_project_shortname(run_name)
+        self.set_project_shortname(run_name_prefix)
         self.upload_spreadsheet_and_create_submission()
         self.wait_for_ingest_to_process_spreadsheet_files_tab()
         self.get_upload_area_credentials()
@@ -55,9 +55,17 @@ class DatasetRunner:
         if self.export_bundles:
             self.complete_submission()
             self.wait_for_primary_and_results_bundles()
-            self.assert_data_browser_bundles(run_name)
+            self.assert_data_browser_bundles()
         if self.failure_reason:
             raise RuntimeError(self.failure_reason)
+
+    def set_project_shortname(self, run_name_prefix):
+        self.project_shortname = "{prefix}/{dataset}/{when}".format(
+            prefix=run_name_prefix,
+            dataset=self.dataset.name,
+            when=datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ'))
+        Progress.report(f"UPDATING SPREADSHEET PROJECT SHORTNAME TO {self.project_shortname}")
+        self.dataset.update_spreadsheet_project_shortname(self.project_shortname)
 
     def upload_spreadsheet_and_create_submission(self):
         spreadsheet_filename = os.path.basename(self.dataset.metadata_spreadsheet_path)
@@ -209,10 +217,10 @@ class DatasetRunner:
                 )
             )
 
-    def assert_data_browser_bundles(self, project_shortname):
-        Progress.report(f"Project shortname: {project_shortname}")
+    def assert_data_browser_bundles(self):
+        Progress.report(f"Project shortname: {self.project_shortname}")
         WaitFor(
-            self._assert_data_browser_bundles, project_shortname
+            self._assert_data_browser_bundles, self.project_shortname
         ).to_return_value(value=True)
 
     def _assert_data_browser_bundles(self, project_shortname):
