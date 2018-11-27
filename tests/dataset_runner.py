@@ -9,6 +9,7 @@ from datetime import datetime
 from .azul_agent import AzulAgent
 from .data_store_agent import DataStoreAgent
 from .ingest_agents import IngestUIAgent, IngestApiAgent
+from .matrix_agent import MatrixAgent
 from .utils import Progress
 from .wait_for import WaitFor
 
@@ -26,22 +27,27 @@ class DatasetRunner:
         self.ingest_api = IngestApiAgent(deployment=deployment)
         self.data_store = DataStoreAgent(deployment=deployment)
         self.azul_agent = AzulAgent(deployment=deployment)
+        self.matrix_agent = MatrixAgent(deployment=deployment)
         self.dataset = None
         self.submission_id = None
         self.submission_envelope = None
         self.upload_credentials = None
         self.upload_area_uuid = None
         self.expected_bundle_count = None
-        self.primary_to_results_bundles_map = {}
+        self.primary_uuid_to_secondary_bundle_fqid_map = {}
         self.failure_reason = None
 
     @property
     def primary_bundle_uuids(self):
-        return list(self.primary_to_results_bundles_map.keys())
+        return list(self.primary_uuid_to_secondary_bundle_fqid_map.keys())
 
     @property
     def secondary_bundle_uuids(self):
-        return list(self.primary_to_results_bundles_map.values())
+        return [fqid.split('.')[0] for fqid in self.primary_uuid_to_secondary_bundle_fqid_map.values()]
+
+    @property
+    def secondary_bundle_fqids(self):
+        return list(self.primary_uuid_to_secondary_bundle_fqid_map.values())
 
     def run(self, dataset_fixture, run_name_prefix="test"):
         self.dataset = dataset_fixture
@@ -55,6 +61,8 @@ class DatasetRunner:
         if self.export_bundles:
             self.complete_submission()
             self.wait_for_primary_and_results_bundles()
+            self.retrieve_zarr_output_from_matrix_service()
+            self.retrieve_loom_output_from_matrix_service()
             self.assert_data_browser_bundles(run_name)
         if self.failure_reason:
             raise RuntimeError(self.failure_reason)
@@ -171,20 +179,20 @@ class DatasetRunner:
 
     def _count_primary_bundles(self):
         for bundle_uuid in self.submission_envelope.bundles():
-            if bundle_uuid not in self.primary_to_results_bundles_map:
+            if bundle_uuid not in self.primary_uuid_to_secondary_bundle_fqid_map:
                 Progress.report(f"    found new primary bundle: {bundle_uuid}")
-                self.primary_to_results_bundles_map[bundle_uuid] = None
+                self.primary_uuid_to_secondary_bundle_fqid_map[bundle_uuid] = None
 
     def _primary_bundle_count(self):
         self._count_primary_bundles()
-        return len(self.primary_to_results_bundles_map)
+        return len(self.primary_uuid_to_secondary_bundle_fqid_map)
 
     def _results_bundles_count(self):
-        return len(list(v for v in self.primary_to_results_bundles_map.values() if v))
+        return len(list(v for v in self.primary_uuid_to_secondary_bundle_fqid_map.values() if v))
 
     def _count_results_bundles(self):
-        for primary_bundle_uuid, secondary_bundle_uuid in self.primary_to_results_bundles_map.items():
-            if secondary_bundle_uuid is None:
+        for primary_bundle_uuid, secondary_bundle_fqid in self.primary_uuid_to_secondary_bundle_fqid_map.items():
+            if secondary_bundle_fqid is None:
                 query = {
                     "query": {
                         "match": {
@@ -194,10 +202,10 @@ class DatasetRunner:
                     }
                 results = self.data_store.search(query)
                 if len(results) > 0:
-                    results_bundle_uuid = results[0]['bundle_fqid'].split('.')[0]
-                    if self.primary_to_results_bundles_map[primary_bundle_uuid] is None:
-                        Progress.report(f"    found new results bundle: {results_bundle_uuid}")
-                        self.primary_to_results_bundles_map[primary_bundle_uuid] = results_bundle_uuid
+                    results_bundle_fqid = results[0]['bundle_fqid']
+                    if self.primary_uuid_to_secondary_bundle_fqid_map[primary_bundle_uuid] is None:
+                        Progress.report(f"    found new results bundle: {results_bundle_fqid}")
+                        self.primary_uuid_to_secondary_bundle_fqid_map[primary_bundle_uuid] = results_bundle_fqid
 
     @staticmethod
     def _run_command(cmd_and_args_list, expected_retcode=0):
@@ -230,3 +238,15 @@ class DatasetRunner:
         else:
             Progress.report(f"{len(bundle_uuids)}/{len(expected_bundle_uuids)}")
             return True
+
+    def retrieve_zarr_output_from_matrix_service(self):
+        request_id = self.matrix_agent.post_matrix_request(self.secondary_bundle_fqids)
+        WaitFor(
+            self.matrix_agent.get_matrix_request, request_id
+        ).to_return_value(value="Complete")
+
+    def retrieve_loom_output_from_matrix_service(self):
+        request_id = self.matrix_agent.post_matrix_request(self.secondary_bundle_fqids, "loom")
+        WaitFor(
+            self.matrix_agent.get_matrix_request, request_id
+        ).to_return_value(value="Complete")
