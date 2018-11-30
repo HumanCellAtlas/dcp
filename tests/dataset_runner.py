@@ -61,8 +61,9 @@ class DatasetRunner:
         if self.export_bundles:
             self.complete_submission()
             self.wait_for_primary_and_results_bundles()
-            self.retrieve_zarr_output_from_matrix_service()
-            self.retrieve_loom_output_from_matrix_service()
+            if self.dataset.name == "Smart-seq2":
+                self.retrieve_zarr_output_from_matrix_service()
+                self.retrieve_loom_output_from_matrix_service()
             self.assert_data_browser_bundles()
         if self.failure_reason:
             raise RuntimeError(self.failure_reason)
