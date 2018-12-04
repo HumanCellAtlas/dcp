@@ -5,6 +5,7 @@ import subprocess
 from typing import Set
 from urllib.parse import urlparse
 from datetime import datetime
+import boto3
 
 from .azul_agent import AzulAgent
 from .data_store_agent import DataStoreAgent
@@ -21,6 +22,7 @@ class DatasetRunner:
     FASTQ_CONTENT_TYPE = 'application/gzip; dcp-type=data'
 
     def __init__(self, deployment, export_bundles=True):
+        self.s3_client = boto3.client('s3')
         self.deployment = deployment
         self.export_bundles = export_bundles
         self.ingest_broker = IngestUIAgent(deployment=deployment)
@@ -127,16 +129,31 @@ class DatasetRunner:
         re-copy them over themselves with the correct content-type.
         """
         Progress.report("FIXING UPLOADED FILE CONTENT-TYPEs...")
-        import boto3
         s3r = boto3.resource('s3')
-        bucket = s3r.Bucket(f"org-humancellatlas-upload-{self.deployment}")
+        bucket_name = f"org-humancellatlas-upload-{self.deployment}"
+        bucket = s3r.Bucket(bucket_name)
         for object_summary in bucket.objects.filter(Prefix=self.upload_area_uuid):
-            obj = bucket.Object(object_summary.key)
+            obj_key = object_summary.key
+            obj = bucket.Object(obj_key)
             if obj.content_type != self.FASTQ_CONTENT_TYPE:
+                response = self.s3_client.get_object_tagging(
+                    Bucket=bucket_name,
+                    Key=obj_key
+                )
+                old_obj_tags = response.get('TagSet')
                 Progress.report(f"  fixing {obj.key}")
                 obj.copy_from(CopySource={'Bucket': bucket.name, 'Key': obj.key},
                               MetadataDirective="REPLACE",
                               ContentType=self.FASTQ_CONTENT_TYPE)
+                if old_obj_tags:
+                    self.s3_client.put_object_tagging(
+                        Bucket=bucket_name,
+                        Key=obj_key,
+                        Tagging={
+                            'TagSet': old_obj_tags
+                        }
+                    )
+
 
     def forget_about_upload_area(self):
         self._run_command(['hca', 'upload', 'forget', self.upload_area_uuid])
