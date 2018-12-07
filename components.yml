@@ -24,7 +24,7 @@ deployed_component_versions:
   greenbox:
     greenbox-falcon: v0.1.4
     greenbox-lira: v0.14.1
-    greenbox-pipeline-tools: v0.42.0
+    greenbox-pipeline-tools: 4k-scaling-test-2018-11-06-with-papiv2
     greenbox-skylab:
       smartseq2: smartseq2_v2.1.0
       tenx: cellranger_v1.0.2
