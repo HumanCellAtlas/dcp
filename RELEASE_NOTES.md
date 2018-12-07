@@ -1,5 +1,24 @@
 # Release Notes
 
+
+## Staging 2018/12/06
+
+
+### Secondary Analysis
+
+Pipeline-tools: v0.42.1
+
+- Update version of HCA CLI to use at least version 4.4.9 as a security precaution
+
+### Metadata Schema
+
+imaging_target.json: 1.1.0
+imaging_protocol.json: 8.1.0
+
+- Changed channel field to optional in imaging_target.json.
+- Changed channel field to optional in imaging_protocolol.json
+
+
 ## Staging 2018/10/17
 
 
