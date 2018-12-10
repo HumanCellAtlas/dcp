@@ -1,5 +1,12 @@
 # Release Notes
 
+## Staging 2018/12/10
+
+### Secondary Analysis
+
+Pipeline-tools: v0.43.0
+
+- Get expected cell count from 10x bundles instead of using a static value in the cellranger adapter WDL
 
 ## Staging 2018/12/06
 
