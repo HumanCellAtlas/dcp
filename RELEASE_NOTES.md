@@ -2,6 +2,17 @@
 
 <!-- newest release at the top please) -->
 
+## Prod 2018/12/11
+
+### Metadata Schema
+
+Version(s): 
+imaging_target.json: 1.1.0
+imaging_protocol.json: 8.1.0
+
+* Changed channel field to optional in imaging_target.json.
+* Changed channel field to optional in imaging_protocolol.json
+
 ## Prod 2018/12/10
 
 This is an hot fix promotion for only Secondary-Analysis to address a issue with the 10x analysis pipeline: 
@@ -11,7 +22,6 @@ Get expected cell count from 10x bundles instead of using a static value in the 
 
 Version(s):
 Pipeline-tools v0.42.0 -> v0.43.0
-
 
 ## Prod 2018/11/13
 
