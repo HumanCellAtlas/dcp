@@ -2,6 +2,17 @@
 
 <!-- newest release at the top please) -->
 
+## Prod 2018/12/10
+
+This is an hot fix promotion for only Secondary-Analysis to address a issue with the 10x analysis pipeline: 
+Get expected cell count from 10x bundles instead of using a static value in the cellranger adapter WDL
+
+### Secondary Analysis
+
+Version(s):
+Pipeline-tools v0.42.0 -> v0.43.0
+
+
 ## Prod 2018/11/13
 
 ### Azul
