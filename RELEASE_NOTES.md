@@ -99,6 +99,43 @@ Add tenacity to checksummer reqs
 - Add original_validation_id field to validation_event
 - Mark all historical "SCHEDULED" and "VALIDATING"/"CHECKSUMMING" events as "FAILED".
 
+### Data Store
+
+Version(s): 2018-12-12-17-56-10-staging.release
+
+Changes:
+- Grab collections owner from gcp credentials (#1769)
+- returning manifest data on put /Bundle , working tests, changed dss-api.yml to reflect changes.
+- Update staging environment (#1757)
+- Staging uses its own ES cluster (previously sharing dev)
+- Make ES index logging optional
+- Validating version format is DSS_VERSION (#1698)
+- Note requirement of privileged access in README.md (#1748)
+- Updating Auth in readme (#1741)
+- Use async state to catch/expose copy sfn errors (#1706)
+- updating patch collection to deduplicate contents (#1725)
+- Store and recover chunks of state in dynamodb (#1705)
+- Update DSS_VERSION after deploy succeeds (#1724)
+- Provide fine grained management of Lambda environment variables (#1723)
+- replacing scan with search after for notifications. (#1676)
+- Added Architectural diagram to readme (#1692)
+- Reorganize deployment and auth section of readme (#1695)
+- Drive dss-index with SQS instead of SNS (#1691)
+- restrict access to put bundle and files (#1609)
+- Retry join state in s3 copy sfn (#1687)
+- Send GS copy client exceptions to fail state (#1674)
+- Update docs for some env vars (#1678)
+- updating authorized domains in prod (#1681)
+- Send S3 copy client exceptions to fail state (#1643)
+- Raw Search Page Limit  to 10 (#1652)
+- Accommodate TF changes plus minor infra updates (#1673)
+- Check GitLab status, instead of GitHub, in release.sh (#1641)
+- DSS_AUTHORIZED_DOMAINS should be quoted (#1642)
+- Increase the number of ES nodes (#1660)
+- remove unsupported azure from swagger (#1649)
+- Adding documentation for subscription PUT to handle duplicate notifications. (#1622)
+
+Are there changes that require the DCP to in read-only mode, or maintenance mode during deploy? No
 
 ## Staging 2018/12/10
 
