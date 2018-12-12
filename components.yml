@@ -9,25 +9,40 @@ deployed_component_versions:
   # component-identifier: component-version
   # e.g.
   # ingest: v0.1.2
-  upload: v2.4.1
+  upload: v3.1.0
   metadata-schema: http://api.ingest.staging.data.humancellatlas.org/schemas/search/latestSchemas
+    cell_line.json: 9.0.1
+    cell_suspension.json: 8.6.2
+    channel.json: 2.0.0
+    contact.json: 6.1.4
+    donor_organism.json: 10.2.1
+    imaged_specimen.json: 2.0.2
+    imaging_protocol.json: 11.0.1
+    imaging_target.json: 3.0.0
+    library_preparation_protocol.json: 4.4.0
+    links.json: 1.1.4
+    organoid.json: 8.3.9
+    project.json: 9.0.4
+    sequence_file.json: 7.0.0
+    specimen_from_organism.json: 6.3.4
+    target.json: 1.0.1
   ingest:
-    ingest-broker: v0.8.3.rc
-    ingest-exporter: v0.7.4.rc
+    ingest-broker: v0.8.4.rc
+    ingest-exporter: v0.7.6.rc
     ingest-validator: v0.6.0.rc
     ingest-core: v0.7.6.rc
     ingest-accesioner: v0.5.0.rc
     ingest-archiver: 0.1.1
-    ingest-staging-manager: v0.5.2.rc
+    ingest-staging-manager: v0.5.3.rc
     ingest-state-tracking: v0.7.2.rc
     ingest-ui: v0.5.2.rc
   greenbox:
     greenbox-falcon: v0.1.4
-    greenbox-lira: v0.14.1
+    greenbox-lira: v0.14.3
     greenbox-pipeline-tools: v0.43.0
     greenbox-skylab:
       smartseq2: smartseq2_v2.1.0
       tenx: cellranger_v1.0.2
-  data-store: 2018-10-11-15-48-22-staging.release
+  data-store: 2018-12-12-17-56-10-staging.release
   azul: 1247300708cd0a95f5b28a4525dd301b3fd005d9
   data-browser: 17dcbc18b499efa7ef6a11c5403b3b8501741f4f

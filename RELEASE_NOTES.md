@@ -1,5 +1,142 @@
 # Release Notes
 
+## Staging 2018/12/12
+
+### Ingest
+
+Version(s): 
+* Broker v0.8.4.rc
+  - Fix to connection reset error during spreadsheet import
+  - Fix schema parsing, defaults to string if there is no items obj inside array field in schema
+  - Added fix to ensure that import doesn't fail due to erroneous max_row count
+  - Fixes to raising and logging error details
+
+* Exporter v0.7.6.rc
+  - Fix to DSS datetime version format
+  - DSS API Authentication
+  - More info on logs
+  - Deploy new exporter secrets
+
+* Validator v0.6.0.rc (same version)
+  - Deployment config change to make validator point to the latest fastq validator image (fastq_utils:v0.1.0.rc)
+
+* Staging Manager v0.5.3.rc
+  - Remove 10s wait when creating upload area
+  - Fix setting for retry policy, retrying for ~20min
+
+* Ontology
+  - Redeploying to pick up new ontology values
+
+### Metadata Schema
+
+Version(s):
+cell_line.json: 9.0.1
+cell_suspension.json: 8.6.2
+channel.json: 2.0.0
+contact.json: 6.1.4
+donor_organism.json: 10.2.1
+imaged_specimen.json: 2.0.2
+imaging_protocol.json: 11.0.1
+imaging_target.json: 3.0.0
+library_preparation_protocol.json: 4.4.0
+links.json: 1.1.4
+organoid.json: 8.3.9
+project.json: 9.0.4
+sequence_file.json: 7.0.0
+specimen_from_organism.json: 6.3.4
+target.json: 1.0.1
+
+- Changed molecule_ID to lower case in target.json Fixes #666
+- Added new schema target.json to replace deprecated imaging_target.json. Fixes #641
+- Changed technical_replicate_group_id to library_preparation_id. Fixes #262.
+- Changed channel_id from string to array
+- Changed name of the required field channel_name to channel_id
+- Added optional field timecourse.
+- Changed channel field type to array
+- Fixed a bug in the links schema still referencing core instead of system
+- Changed channel field type to array
+- Added new optional fields nominal_length and nominal_sdev. Fixes #594.
+
+### Upload Service
+
+Versions v2.4.3->v3.1.0
+
+Changes
+upgrades: 
+terraform to 0.11.10
+Moto to 1.3.7
+Boto to  1.9.44
+Botocore to 1.12.44
+Validation image to 11
+Requests to 2.20.0 (safe version)
+Checksummer image to 5
+Add tenacity to checksummer reqs
+
+- Create validation harness
+- ValidatorHarness: make staged_file_path a pathlib.Path
+- publish humancellatlas/upload-validator-base-alpine:17 as latest
+- Create new env local, allow tests to run offline in local env
+- Add errors and retry on tags to s3 object 
+- Add endpoint /area/file endpoint that adds file to pre checksum sqs which triggers checksum daemon lambda
+- Add Batch watcher daemon 
+- runs on hourly schedule and checks for failed jobs, killing any relevant instances in that env and rescheduling the validation/csum job
+- retry on boto3 batch describe_job 
+- policy on batch watcher to invoke checksum daemon
+- refetch jobs after killing instances
+- Update to daily health check to output number of failed validation and checksum events in report.
+- Update chalice policy for batch jobs 
+- Update validation scheduler to return validation_id
+- Refactor tests to make more dry
+- Refactor: wrap database_orm db initialization code in a class
+- Refactor: wrap common/database code in a class: UploadDB
+- fix from queue.url to queue.id in retrieving csum sqs url
+- remove correlation ID from log entries
+- remove obsolete "make secrets"
+- remove unused imports
+- DB migration
+- Add "FAILED" status to checksum_event and validation_event statuses
+- Add docker_image field to validation_event
+- Add original_validation_id field to validation_event
+- Mark all historical "SCHEDULED" and "VALIDATING"/"CHECKSUMMING" events as "FAILED".
+
+### Data Store
+
+Version(s): 2018-12-12-17-56-10-staging.release
+
+Changes:
+- Grab collections owner from gcp credentials (#1769)
+- returning manifest data on put /Bundle , working tests, changed dss-api.yml to reflect changes.
+- Update staging environment (#1757)
+- Staging uses its own ES cluster (previously sharing dev)
+- Make ES index logging optional
+- Validating version format is DSS_VERSION (#1698)
+- Note requirement of privileged access in README.md (#1748)
+- Updating Auth in readme (#1741)
+- Use async state to catch/expose copy sfn errors (#1706)
+- updating patch collection to deduplicate contents (#1725)
+- Store and recover chunks of state in dynamodb (#1705)
+- Update DSS_VERSION after deploy succeeds (#1724)
+- Provide fine grained management of Lambda environment variables (#1723)
+- replacing scan with search after for notifications. (#1676)
+- Added Architectural diagram to readme (#1692)
+- Reorganize deployment and auth section of readme (#1695)
+- Drive dss-index with SQS instead of SNS (#1691)
+- restrict access to put bundle and files (#1609)
+- Retry join state in s3 copy sfn (#1687)
+- Send GS copy client exceptions to fail state (#1674)
+- Update docs for some env vars (#1678)
+- updating authorized domains in prod (#1681)
+- Send S3 copy client exceptions to fail state (#1643)
+- Raw Search Page Limit  to 10 (#1652)
+- Accommodate TF changes plus minor infra updates (#1673)
+- Check GitLab status, instead of GitHub, in release.sh (#1641)
+- DSS_AUTHORIZED_DOMAINS should be quoted (#1642)
+- Increase the number of ES nodes (#1660)
+- remove unsupported azure from swagger (#1649)
+- Adding documentation for subscription PUT to handle duplicate notifications. (#1622)
+
+Are there changes that require the DCP to in read-only mode, or maintenance mode during deploy? No
+
 ## Staging 2018/12/10
 
 ### Secondary Analysis
