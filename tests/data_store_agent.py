@@ -1,7 +1,8 @@
 import json
 import os
 
-import requests
+from hca.dss import DSSClient
+from hca.util.exceptions import SwaggerAPIException
 
 from . import logger
 from .utils import Progress
@@ -9,18 +10,18 @@ from .utils import Progress
 
 class DataStoreAgent:
 
-    DSS_API_URL_TEMPLATE = "https://dss.{deployment}.data.humancellatlas.org/v1"
+    DSS_SWAGGER_URL_TEMPLATE = "https://dss.{deployment}.data.humancellatlas.org/v1/swagger.json"
 
     def __init__(self, deployment):
         self.deployment = deployment
-        self.dss_url = self.DSS_API_URL_TEMPLATE.format(deployment=deployment)
+        swagger_url = self.DSS_SWAGGER_URL_TEMPLATE.format(deployment=deployment)
+        self.client = DSSClient(swagger_url=swagger_url)
 
     def search(self, query, replica='aws'):
-        url = f"{self.dss_url}/search?replica={replica}"
-        response = requests.post(url, json={"es_query": query})
-        if response.status_code == 200:
-            return response.json()['results']
-        else:
+        try:
+            response = self.client.post_search(replica=replica, es_query=query)
+            return response['results']
+        except SwaggerAPIException:
             return []
 
     def download_bundle(self, bundle_uuid, target_folder):
@@ -37,18 +38,15 @@ class DataStoreAgent:
         return bundle_folder
 
     def bundle_manifest(self, bundle_uuid, replica='aws'):
-        url = f"{self.dss_url}/bundles/{bundle_uuid}?replica={replica}"
-        response = requests.get(url)
-        assert response.ok
-        assert response.headers['Content-type'] == 'application/json'
-        return json.loads(response.content)
+        return self.client.get_bundle(replica=replica, uuid=bundle_uuid)
 
     def download_file(self, file_uuid, save_as, replica='aws'):
-        url = f"{self.dss_url}/files/{file_uuid}?replica={replica}"
         Progress.report(f"Downloading file {file_uuid} to {save_as}\n")
-        response = requests.get(url, stream=True)
-        assert response.ok
-        with open(save_as, 'wb') as f:
-            for chunk in response.iter_content(chunk_size=1024):
-                if chunk:  # filter out keep-alive new chunks
-                    f.write(chunk)
+        with self.client.get_file.stream(replica=replica, uuid=file_uuid) as fh:
+            with open(save_as, "wb") as f:
+                while True:
+                    chunk = fh.raw.read(1024)
+                    if chunk:
+                        f.write(chunk)
+                    else:
+                        break
