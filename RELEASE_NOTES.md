@@ -1,5 +1,19 @@
 # Release Notes
 
+
+## Staging 2018/12/19
+
+### Upload Service
+
+#### Version(s)
+
+v3.3.0
+
+#### Changes
+
+* Post file endpoint to trigger checksumming
+* S3etag column for file record in db
+
 ## Staging 2018/12/12
 
 ### Ingest
