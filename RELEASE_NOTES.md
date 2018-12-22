@@ -2,6 +2,127 @@
 
 <!-- newest release at the top please) -->
 
+## Prod 2018/12/18
+
+### Ingest
+
+#### Version(s): 
+
+* Broker v0.8.4
+* Fix to connection reset error during spreadsheet import
+* Fix schema parsing, defaults to string if there is no items obj inside array field in schema
+* Added fix to ensure that import doesn't fail due to erroneous max_row count
+* Fixes to raising and logging error details
+
+#### Validator v0.6.0 (same version)
+
+* Config change: Point to the latest fastq validator image (fastq_utils:v0.1.0.rc) when requesting fastq validation jobs from the upload validation service
+
+#### Staging Manager v0.5.3
+
+* Remove 10s wait when creating upload area
+* Fix setting for retry policy, retrying for ~20min
+
+#### State-tracking v0.7.4
+
+* Addressed bug where a deleted state machine would be stored as null in the Redis database
+
+#### Ontology
+
+* Redeploying to pick up new ontology values
+
+### Upload Service
+
+#### Version(s)
+
+v2.4.3->v3.1.0
+
+#### Changes
+
+* upgrade 
+	* terraform to 0.11.10
+	* Moto to 1.3.7
+	* Boto to  1.9.44
+	* Botocore to 1.12.44
+	* Validation image to 11
+	* Requests to 2.20.0 (safe version)
+	* Checksummer image to 5
+* Add tenacity to checksummer reqs
+* Create validation harness
+	* ValidatorHarness: make staged_file_path a pathlib.Path
+	* publish humancellatlas/upload-validator-base-alpine:17 as latest
+* Create new env local, allow tests to run offline in local env
+* Add errors and retry on tags to s3 object 
+* Add endpoint /area/file endpoint that adds file to pre checksum sqs which triggers checksum daemon lambda
+* Add Batch watcher daemon 
+	* runs on hourly schedule and checks for failed jobs, killing any relevant instances in that env and rescheduling the validation/csum job
+	* retry on boto3 batch describe_job 
+	* policy on batch watcher to invoke checksum daemon
+	* refetch jobs after killing instances
+* Update to daily health check to output number of failed validation and checksum events in report.
+* Update chalice policy for batch jobs 
+* Update validation scheduler to return validation_id
+* Refactor tests to make more dry
+* Refactor: wrap database_orm db initialization code in a class
+* Refactor: wrap common/database code in a class: UploadDB
+* fix from queue.url to queue.id in retrieving csum sqs url
+* remove correlation ID from log entries
+* remove obsolete "make secrets"
+* remove unused imports
+* DB migration
+	* Add "FAILED" status to checksum_event and validation_event statuses
+	* Add docker_image field to validation_event
+	* Add original_validation_id field to validation_event
+	* Mark all historical "SCHEDULED" and "VALIDATING"/"CHECKSUMMING" events as "FAILED".
+
+### Data Store
+
+No changes to promote.
+
+### Secondary Analysis
+
+No changes to promote.
+
+### Data Portal
+
+No changes to promote.
+
+### Metadata Schema
+
+#### Version(s)
+
+* contact: 6.1.4
+* channel: 2.0.0
+* target: 1.0.1
+* links: 1.1.4
+* cell_line: 9.0.1
+* cell_suspension: 8.6.2
+* donor_organism: 10.2.1
+* imaged_specimen: 2.0.2
+* organoid: 8.3.9
+* specimen_from_organism: 6.3.4
+* sequence_file: 7.0.0
+* project: 9.0.4
+* imaging_protocol: 11.0.1
+* library_preparation_protocol: 4.4.0
+
+#### Changes
+
+* Changed channel field to optional in imaging_target.json.
+* Changed channel field to optional in imaging_protocolol.json
+* Merges in the new validator (JS instead of python)
+* Changed molecule_ID to lower case in target.json Fixes #666
+* Added new schema target.json to replace deprecated imaging_target.json. Fixes #641
+* Changed technical_replicate_group_id to library_preparation_id. Fixes #262.
+* Changed channel_id from string to array
+* Changed name of the required field channel_name to channel_id
+* Added optional field timecourse.
+* Changed channel field type to array
+* Fixed a bug in the links schema still referencing core instead of system
+* Changed channel field type to array
+* Added new optional fields nominal_length and nominal_sdev. Fixes #594
+
+
 ## Prod 2018/12/10
 
 This is an hot fix promotion for only Secondary-Analysis to address a issue with the 10x analysis pipeline: 
