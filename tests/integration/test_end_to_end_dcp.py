@@ -113,6 +113,9 @@ class TestSmartSeq2Run(TestEndToEndDCP):
 
         self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
 
+        self.data_store.tombstone_bundle(runner.primary_bundle_uuids[0])
+        self.data_store.tombstone_bundle(runner.secondary_bundle_uuids[0])
+
 
 class Test10xRun(TestEndToEndDCP):
 
@@ -141,6 +144,9 @@ class Test10xRun(TestEndToEndDCP):
         results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuids[0])
 
         self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
+
+        self.data_store.tombstone_bundle(runner.primary_bundle_uuids[0])
+        self.data_store.tombstone_bundle(runner.secondary_bundle_uuids[0])
 
 
 if __name__ == '__main__':
