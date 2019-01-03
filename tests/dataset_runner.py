@@ -67,12 +67,7 @@ class DatasetRunner:
                 self.retrieve_zarr_output_from_matrix_service()
                 self.retrieve_loom_output_from_matrix_service()
             self.assert_data_browser_bundles()
-
-        for primary_bundle_uuid, secondary_bundle_fqid in self.primary_uuid_to_secondary_bundle_fqid_map.items():
-            self.data_store.tombstone_bundle(primary_bundle_uuid)
-            if secondary_bundle_fqid is not None:
-                secondary_bundle_uuid = secondary_bundle_fqid.split('.')[0]
-                self.data_store.tombstone_bundle(secondary_bundle_uuid)
+        self.cleanup_primary_and_result_bundles()
 
         if self.failure_reason:
             raise RuntimeError(self.failure_reason)
@@ -271,6 +266,13 @@ class DatasetRunner:
         else:
             Progress.report(f"{len(bundle_uuids)}/{len(expected_bundle_uuids)}")
             return True
+
+    def cleanup_primary_and_result_bundles(self):
+        for primary_bundle_uuid, secondary_bundle_fqid in self.primary_uuid_to_secondary_bundle_fqid_map.items():
+            self.data_store.tombstone_bundle(primary_bundle_uuid)
+            if secondary_bundle_fqid is not None:
+                secondary_bundle_uuid = secondary_bundle_fqid.split('.')[0]
+                self.data_store.tombstone_bundle(secondary_bundle_uuid)
 
     def retrieve_zarr_output_from_matrix_service(self):
         request_id = self.matrix_agent.post_matrix_request(self.secondary_bundle_fqids)
