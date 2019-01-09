@@ -115,47 +115,17 @@ class DatasetRunner:
         self._stage_data_files_using_s3_sync()
 
     def _stage_data_files_using_s3_sync(self):
-        Progress.report("STAGING FILES using aws s3 sync...")
-        upload_area_s3_location = f"s3://org-humancellatlas-upload-{self.deployment}/{self.upload_area_uuid}"
-        command = ['aws', 's3', 'sync', '--content-type', self.FASTQ_CONTENT_TYPE,
-                   self.dataset.config['data_files_location'],
-                   upload_area_s3_location]
-        self._run_command(command)
-        self._band_aid_to_fix_wrong_content_types()
+        Progress.report("STAGING FILES using hca cli...")
+        self.select_upload_area()
+        self.upload_files()
+        self.forget_about_upload_area()
 
-    def _band_aid_to_fix_wrong_content_types(self):
-        """
-        BAND AID:
-        AWS S3 sync fails to set content-type sometimes.
-        Examine all the files in the upload area, and for the ones with an incorrect content type,
-        re-copy them over themselves with the correct content-type.
-        """
-        Progress.report("FIXING UPLOADED FILE CONTENT-TYPEs...")
-        s3r = boto3.resource('s3')
-        bucket_name = f"org-humancellatlas-upload-{self.deployment}"
-        bucket = s3r.Bucket(bucket_name)
-        for object_summary in bucket.objects.filter(Prefix=self.upload_area_uuid):
-            obj_key = object_summary.key
-            obj = bucket.Object(obj_key)
-            if obj.content_type != self.FASTQ_CONTENT_TYPE:
-                response = self.s3_client.get_object_tagging(
-                    Bucket=bucket_name,
-                    Key=obj_key
-                )
-                old_obj_tags = response.get('TagSet')
-                Progress.report(f"  fixing {obj.key}")
-                obj.copy_from(CopySource={'Bucket': bucket.name, 'Key': obj.key},
-                              MetadataDirective="REPLACE",
-                              ContentType=self.FASTQ_CONTENT_TYPE)
-                if old_obj_tags:
-                    self.s3_client.put_object_tagging(
-                        Bucket=bucket_name,
-                        Key=obj_key,
-                        Tagging={
-                            'TagSet': old_obj_tags
-                        }
-                    )
+    def select_upload_area(self):
+        upload_area_s3_location = f"s3://org-humancellatlas-upload-{self.deployment}/{self.upload_area_uuid}/"
+        self._run_command(['hca', 'upload', 'select', upload_area_s3_location])
 
+    def upload_files(self):
+        self._run_command(['hca', 'upload', 'files', self.dataset.config['data_files_location']])
 
     def forget_about_upload_area(self):
         self._run_command(['hca', 'upload', 'forget', self.upload_area_uuid])
