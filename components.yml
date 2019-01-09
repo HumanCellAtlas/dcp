@@ -20,9 +20,9 @@ deployed_component_versions:
     ingest-accessioner: v0.5.0
     ingest-broker: v0.8.0
     ingest-core: v0.7.2
-    ingest-exporter: v0.7.1
+    ingest-exporter: v0.7.6
     ingest-staging-manager: v0.5.1
     ingest-state-tracking: v0.7.0
     ingest-validator: v0.6.0
     ingest-ui: v0.5.2
-  data-store: production-2018-09-18-15-53-48.release bb86b74
+  data-store: 2019-01-08-17-14-33-prod.release 413c2e0

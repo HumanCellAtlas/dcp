@@ -2,6 +2,60 @@
 
 <!-- newest release at the top please) -->
 
+## Prod 2019/01/08
+
+### Ingest
+
+#### Version(s): 
+
+* Exporter v0.7.6
+* Fix to DSS datetime version format
+* DSS API Authentication
+* More info on logs
+* Deploy new exporter secrets
+
+### Data Store
+Version: 2019-01-08-17-14-33-prod.release
+
+* Grab collections owner from gcp credentials
+* Update staging checkout bucket viewers
+* working test modules for PUT/bundle response, changes to dss_api.yml for updates to swagger, changes to dss_api.py for responding within bundle manifest.
+* Validating version format is DSS_VERSION
+* Some improvements to README.md
+* Note requirement of privileged access in README.md
+* Update tf version in build Dockerfile
+* Convenience function for temporary local storage of gcp credentials
+* Updating Auth in readme
+* Use async state to catch/expose copy sfn errors
+* Prevent elasticsearch-dsl versioning above 5.x.
+* updating patch collection to deduplicate contents
+* Store and recover chunks of state in dynamodb
+* Update DSS_VERSION after deploy succeeds
+* Provide fine grained management of Lambda environment variables
+* Test head File returns file metadata.
+* DEFINE, not CREATE the bucket
+* State that terraform is needed
+* replacing scan with search after for notifications.
+* Sort exported variables
+* Adding Indexer idempotent test
+* Refreshing Requirements
+* Added Architectural diagram to readme
+* Reorganize deployment and auth section of readme
+* Drive dss-index with SQS instead of SNS
+* restrict access to put bundle and files
+* Retry join state in s3 copy sfn
+* Send GS copy client exceptions to fail state
+* Update docs for some env vars
+* Send S3 copy client exceptions to fail state
+* Raw Search Page Limit
+* Accommodate TF changes plus minor infra updates
+* Check GitLab status, instead of GitHub, in release.sh
+* DSS_AUTHORIZED_DOMAINS should be quoted
+* Increase the number of ES nodes
+* remove unsupported azure from swagger
+* Adding documentation for subscription PUT to handle duplicate notifications.
+
+
 ## Prod 2018/12/18
 
 ### Ingest
