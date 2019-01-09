@@ -113,7 +113,7 @@ class DatasetRunner:
         self._stage_data_files_using_s3_sync()
 
     def _stage_data_files_using_s3_sync(self):
-        Progress.report("STAGING FILES using aws s3 sync...")
+        Progress.report("STAGING FILES using hca cli...")
         self.select_upload_area()
         self.upload_files()
         self.forget_about_upload_area()
