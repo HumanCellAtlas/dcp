@@ -105,14 +105,16 @@ class TestSmartSeq2Run(TestEndToEndDCP):
 
     def test_smartseq2_run(self):
         runner = self.ingest_store_and_analyze_dataset(dataset_fixture='Smart-seq2')
-        self.assertEqual(1, len(runner.primary_bundle_uuids))
-        self.assertEqual(1, len(runner.secondary_bundle_uuids))
-        expected_files = self.expected_results_bundle_files(runner.primary_bundle_uuids[0],
-                                                            self.SS2_ANALYSIS_OUTPUT_FILES_REGEXES)
-        results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuids[0])
+        try:
+            self.assertEqual(1, len(runner.primary_bundle_uuids))
+            self.assertEqual(1, len(runner.secondary_bundle_uuids))
+            expected_files = self.expected_results_bundle_files(runner.primary_bundle_uuids[0],
+                                                                self.SS2_ANALYSIS_OUTPUT_FILES_REGEXES)
+            results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuids[0])
 
-        self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
-        runner.cleanup_primary_and_result_bundles()
+            self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
+        finally:
+            runner.cleanup_primary_and_result_bundles()
 
 
 class Test10xRun(TestEndToEndDCP):
@@ -135,14 +137,16 @@ class Test10xRun(TestEndToEndDCP):
 
     def test_10x_run(self):
         runner = self.ingest_store_and_analyze_dataset(dataset_fixture='10x')
-        self.assertEqual(1, len(runner.primary_bundle_uuids))
-        self.assertEqual(1, len(runner.secondary_bundle_uuids))
-        expected_files = self.expected_results_bundle_files(runner.primary_bundle_uuids[0],
-                                                            self.CELLRANGER_10X_ANALYSIS_OUTPUT_FILES_REGEXES)
-        results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuids[0])
-
-        self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
-        runner.cleanup_primary_and_result_bundles()
+        try:
+            self.assertEqual(1, len(runner.primary_bundle_uuids))
+            self.assertEqual(1, len(runner.secondary_bundle_uuids))
+            expected_files = self.expected_results_bundle_files(runner.primary_bundle_uuids[0],
+                                                                self.CELLRANGER_10X_ANALYSIS_OUTPUT_FILES_REGEXES)
+            results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuids[0])
+    
+            self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
+        finally:
+            runner.cleanup_primary_and_result_bundles()
 
 
 if __name__ == '__main__':
