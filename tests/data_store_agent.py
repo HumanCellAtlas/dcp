@@ -50,3 +50,6 @@ class DataStoreAgent:
                         f.write(chunk)
                     else:
                         break
+
+    def tombstone_bundle(self, bundle_uuid, replica='aws'):
+        self.client.delete_bundle(replica=replica, uuid=bundle_uuid, reason="DCP-wide integration test")

@@ -15,6 +15,8 @@ before_script:
   - export HCA_CONFIG_FILE=~/.config/hca/config.$CI_COMMIT_REF_NAME.json
   - aws configure set default.s3.multipart_threshold 64MB
   - aws configure set default.s3.multipart_chunksize 64MB
+  - aws secretsmanager get-secret-value --secret-id dcp/dss/${CI_COMMIT_REF_NAME}/gcp-credentials.json | jq -r .SecretString > gcp-credentials.json
+  - export GOOGLE_APPLICATION_CREDENTIALS=$(pwd -P)/gcp-credentials.json
 
 dcp_wide_test_SS2:
   stage: dcp_wide_test
