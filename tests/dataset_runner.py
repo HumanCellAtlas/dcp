@@ -67,7 +67,6 @@ class DatasetRunner:
                 self.retrieve_zarr_output_from_matrix_service()
                 self.retrieve_loom_output_from_matrix_service()
             self.assert_data_browser_bundles()
-        self.cleanup_primary_and_result_bundles()
 
         if self.failure_reason:
             raise RuntimeError(self.failure_reason)
