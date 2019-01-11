@@ -112,6 +112,7 @@ class TestSmartSeq2Run(TestEndToEndDCP):
         results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuids[0])
 
         self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
+        runner.cleanup_primary_and_result_bundles()
 
 
 class Test10xRun(TestEndToEndDCP):
@@ -141,6 +142,7 @@ class Test10xRun(TestEndToEndDCP):
         results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuids[0])
 
         self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
+        runner.cleanup_primary_and_result_bundles()
 
 
 if __name__ == '__main__':
