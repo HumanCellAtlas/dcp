@@ -25,12 +25,6 @@ v3.4.0
 - Policies for upload from cloud url
 - Upgrade hca cli to v4.6.0, move away from aws cp, and remove bucket to sqs notification post file upload
 
-### Data Store
-
-#### Version(s)
-
-#### Changes
-
 ### Secondary Analysis
 
 #### Version(s)
@@ -47,12 +41,6 @@ v3.4.0
 - Pipeline-tools
     - Update hca-cli version
     - By default use Google PAPIv2 API for all of the adapter workflows.
-
-### Data Portal
-
-#### Version(s)
-
-#### Changes
 
 ### Metadata Schema
 
