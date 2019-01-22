@@ -5,10 +5,14 @@ import requests
 class IngestUIAgent:
 
     INGEST_UI_URL_TEMPLATE = "http://ingest.{}.data.humancellatlas.org"
+    INGEST_UI_PROD_URL = "http://ingest.data.humancellatlas.org"
 
     def __init__(self, deployment):
         self.deployment = deployment
-        self.ingest_broker_url = self.INGEST_UI_URL_TEMPLATE.format(self.deployment)
+        if self.deployment == "prod":
+            self.ingest_broker_url = self.INGEST_UI_PROD_URL
+        else:
+            self.ingest_broker_url = self.INGEST_UI_URL_TEMPLATE.format(self.deployment)
         self.ingest_auth_agent = IngestAuthAgent()
         self.auth_headers = self.ingest_auth_agent.make_auth_header()
 
