@@ -2,6 +2,124 @@
 
 <!-- newest release at the top please) -->
 
+## Prod 2019/01/22
+
+### Upload Service
+
+Version: v3.4.0
+
+* setup of asynchronous upload area deletion via sqs
+* increase csum lambda memory to 1500 due to bumping into 960 mb limit
+* reduce unnecessary information posted by health check bot
+* Make UploadArea database id an integer sequence
+* Fix functional test to work with new upload_area db schema
+* fix a broken call to UploadException
+* db: make file.s3_etag NOT NULL
+* In create_db_record, use the same time for created_at/updated_at
+* UploadDB: switch from SQLAlchemy MetaData(reflect=True) to .reflect()
+* UploadArea: move DB methods together and prefix all with _db_
+* Rename mock_upload_file to mock_upload_file_to_s3
+* Fix order of assertEqual params in TestUploadApiClient
+* policies for upload from cloud url
+* upgrade hca cli to v4.6.0, move away from aws cp, and remove bucket to sqs notification post file upload
+* Hotfix - allow for cross account copy from dcp-test-data s3 bucket
+
+### Secondary Analysis
+
+Versions
+* Lira: v0.15.0
+* Pipeline-tools: v0.43.2
+
+Lira and subscriptions
+* Update the pull-request-template.
+* Add project_uuid to the metadata attachment in subscriptions. (Require re-subscribe to Data-Store service to take effect: We are skipping this change in this release and will deploy this change in the next release)
+* Add Gitlab deployment support as an alternative deployment choice to Jenkins for Lira.
+
+Pipeline-tools
+* Update hca-cli version
+* By default use Google PAPIv2 API for all of the adapter workflows.
+
+### Metadata Schema
+
+Versions
+* biomaterial_core v7.0.4
+* file_core v5.2.5
+* process_core v9.0.3
+* project_core v7.0.5
+* protocol_core v5.2.5
+* cell_morphology v6.1.5
+* death v5.4.1
+* familial_relationship v6.0.3
+* growth_conditions v6.4.2
+* human_specific v1.0.7
+* medical_history v5.2.5
+* mouse_specific v1.0.6
+* preservation_storage v5.3.5
+* state_of_specimen v5.2.7
+* timecourse v1.1.5
+* biological_macromolecule_ontology v5.3.3
+* cell_cycle_ontology v5.3.3
+* cell_type_ontology v5.3.3
+* cellular_component_ontology v1.0.3
+* development_stage_ontology v5.3.3
+* disease_ontology v5.3.4
+* enrichment_ontology v1.2.4
+* ethnicity_ontology v5.3.5
+* instrument_ontology v5.3.3
+* length_unit_ontology v5.3.3
+* library_amplification_ontology v1.2.3
+* library_construction_ontology v1.2.3
+* mass_unit_ontology v5.3.3
+* microscopy_ontology v1.0.2
+* organ_ontology v5.3.6
+* organ_part_ontology v5.3.3
+* process_type_ontology v5.3.3
+* protocol_type_ontology v5.3.3
+* sequencing_ontology v1.1.3
+* species_ontology v5.3.3
+* strain_ontology v5.3.4
+* time_unit_ontology v5.3.3
+* purchased_reagents v6.0.4
+* 10x v1.0.5
+* barcode v5.2.5
+* insdc_experiment v1.1.5
+* plate_based_sequencing v1.0.4
+* funder v1.0.4
+* publication v5.2.5
+* target v1.0.3
+* license v1.0.0
+* cell_line v9.0.5
+* cell_suspension v8.6.6
+* donor_organism v12.0.5
+* imaged_specimen v2.0.4
+* organoid v8.3.12
+* specimen_from_organism v6.3.8
+* analysis_file v5.3.5
+* image_file v1.0.2
+* reference_file v2.2.8
+* sequence_file v7.0.2
+* supplementary_file v1.1.7
+* analysis_process v8.0.6
+* process v6.0.6
+* project v9.0.8
+* analysis_protocol v8.0.6
+* aggregate_generation_protocol v1.1.7
+* collection_protocol v8.2.10
+* differentiation_protocol v1.3.3
+* dissociation_protocol v5.0.7
+* enrichment_protocol v2.2.8
+* ipsc_induction_protocol v2.0.4
+* imaging_preparation_protocol v1.0.4
+* imaging_protocol v11.0.5
+* protocol v6.3.7
+* library_preparation_protocol v4.4.4
+* sequencing_protocol v9.0.8
+
+Functionality
+* Removed normothermic_regional_perfusion from donor_organism.json
+* Added normothermic_regional_perfusion to death.json
+* Changed development_stage to required field in donor_organism.json
+
 ## Prod 2019/01/08
 
 ### Ingest
