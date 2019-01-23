@@ -1,5 +1,85 @@
 # Release Notes
 
+## Staging 2019/01/23
+
+### Ingest
+
+Versions:
+* Core v0.8.0.rc
+* Exporter v0.7.7.rc
+* UI v0.5.3.rc
+
+Core
+* Expose API endpoints for rabbitmq communication
+* Accept and verify JWT tokens from DCP Auth and GCP Service accounts
+* Point to schema https urls
+
+Exporter
+* Reporting export errors in submission envelope
+* Remove unused schema env var in the exporter
+
+UI
+* Use DCP Auth (Fusillade) for Authentication
+* Display submission errors
+* Display commit hash build
+
+### Secondary Analysis
+
+Versions:
+* Lira v0.16.0
+* Pipeline-tools v0.44.0
+* Skylab:
+    * smartseq2_v2.2.0
+
+Lira and subscriptions
+* Use HTTPS for all of the Ingest API endpoints.
+* Re-subscribe to Data-Store service to let the project_uuid show as a workflow label
+
+Pipeline-tools
+* Use HTTPS for all of the Ingest API endpoints.
+* Let the Adapter SmartSeq2 WDL accept optional output, e.g. the Zarr output.
+
+Scientific Pipelines
+* The Zarr format conversion task is now optional in SmartSeq2, but it will still always be called in HCA DCP by default.
+
+### Azul
+
+Version: deployed/staging/2019-01-23__09-05, (b80a05db398e2e144006042523becca2dc653e90)
+
+* Return content disposition header from manifest endpoints (#655)
+* Improve health check endpoints (#624, #615, #548)
+* Return content disposition header from /fetch/dss/files (#660)
+* Replaced unsafe call to yaml.load() with yaml.safe_load()
+* Limit impact reindexing on DSS in personal deployments (#646)
+* Fix missing Slack notification on CloudWatch alarms (#621)
+* Make web service tests use actual indexer input (#428)
+* Terraform a Gitlab instance and run our tests on it (#632)
+* Prototype carts API (fixes #480)
+* Add endpoint for shortening URLs (fixes #66)
+* Bump ES instance count to four in `dev`
+* Upload manifests to S3 in multiple parts (#525)
+* Delete indices when reindexing by default (connected to #610)
+* Work around truncated results from DSS POST /search
+* Amortized aggregation (fixes #86, …)
+* Emulate HTTP redirects and retry-after in DSS file proxy (fixes #551)
+* Make the manifest endpoint dual mode (fixes #567)
+* Convert whitelist for DSS prod to blacklist (fixes #578)
+* Replace `process` inner entity with `protocol` (fixes #540)
+* Generate manifest using step functions (fixes #546)
+
+
+### Metadata Schema
+
+Versions:
+* biomaterial/timecourse.json - v2.0.0
+* biomaterial/donor_organism.json - v13.0.0
+* biomaterial/organoid.json - v9.0.0
+
+Functionality:
+* Changed fields to remove timecourse_. Fixes #745.
+* Updated field names to remove organoid_ prefix. Fixes #480.
+
+
 ## Staging 2019/01/16
 
 ### Upload Service
