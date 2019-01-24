@@ -9,7 +9,7 @@ deployed_component_versions:
   # component-identifier: component-version
   # e.g.
   # ingest: v0.1.2
-  upload: v4.0.0
+  upload: v4.0.1
   metadata-schema: http://api.ingest.integration.data.humancellatlas.org/schemas/search/latestSchemas
   ingest:
     ingest-broker: v0.7.2.rc
