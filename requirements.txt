@@ -4,4 +4,4 @@ urllib3
 hca>=4.6.0
 openpyxl
 awscli
-
+hca-ingest
