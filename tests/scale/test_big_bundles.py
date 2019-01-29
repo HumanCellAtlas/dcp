@@ -8,19 +8,16 @@ from ..dataset_runner import DatasetRunner
 class TestBigBundles(unittest.TestCase):
 
     def test_one_submission_with_100_bundles(self):
-        self._run(fixture_name='gliob_100')
-
-    def test_one_submission_with_200_bundles(self):
-        self._run(fixture_name='gliob_200')
-
-    def test_one_submission_with_400_bundles(self):
-        self._run(fixture_name='gliob_400')
+        self._run(fixture_name='ss2_100')
 
     def test_one_submission_with_1000_bundles(self):
-        self._run(fixture_name='gliob_1000')
+        self._run(fixture_name='ss2_1000')
+
+    def test_one_submission_with_4000_bundles(self):
+        self._run(fixture_name='ss2_4000')
 
     def test_ingest_and_upload_only_1000_bundle_submissions(self):
-        self._run(fixture_name='gliob_1000', export_bundles=False)
+        self._run(fixture_name='ss2_1000', export_bundles=False)
 
     def _run(self, fixture_name, export_bundles=True):
         print("")
