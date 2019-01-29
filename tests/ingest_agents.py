@@ -1,5 +1,6 @@
 import json
 import requests
+import os
 
 from ingest.utils.s2s_token_client import S2STokenClient
 from ingest.utils.token_manager import TokenManager
@@ -180,7 +181,8 @@ class IngestAuthAgent:
             store the token and make authenticated headers. Note:
         """
         self.s2s_token_client = S2STokenClient()
-        self.s2s_token_client.setup_from_env_var('GOOGLE_APPLICATION_CREDENTIALS')
+        gcp_credentials_file = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
+        self.s2s_token_client.setup_from_file(gcp_credentials_file)
         self.token_manager = TokenManager(token_client=self.s2s_token_client)
 
     def _get_auth_token(self):
