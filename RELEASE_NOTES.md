@@ -24,7 +24,7 @@
 Version(s):
 * Lira: v0.15.0 -> v0.16.0
 * Pipeline-tools: v0.43.2 -> v0.44.0
-* Skylab:
+* Skylab: smartseq2_v2.1.0 -> smartseq2_v2.2.0
 * smartseq2_v2.1.0 -> smartseq2_v2.2.0
 
 #### Lira and subscriptions
