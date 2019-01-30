@@ -9,7 +9,7 @@ deployed_component_versions:
   # component-identifier: component-version
   # e.g.
   # ingest: v0.1.2
-  upload: v3.4.0
+  upload: v4.1.0
   metadata-schema: http://api.ingest.staging.data.humancellatlas.org/schemas/search/latestSchemas
     biomaterial_core: 7.0.4
     file_core: 5.2.5
@@ -23,7 +23,7 @@ deployed_component_versions:
     human_specific: 1.0.7
     medical_history: 5.2.5
     mouse_specific: 1.0.6
-    preservation_storage: 5.3.5
+    preservation_storage: 6.0.0
     state_of_specimen: 5.2.7
     timecourse: 2.0.0
     biological_macromolecule_ontology: 5.3.3
@@ -54,7 +54,7 @@ deployed_component_versions:
     barcode: 5.2.5
     insdc_experiment: 1.1.5
     plate_based_sequencing: 1.0.4
-    funder: 1.0.4
+    funder: 2.0.0
     publication: 5.2.5
     target: 1.0.3
     license: 1.0.0
@@ -66,7 +66,7 @@ deployed_component_versions:
     imaged_specimen: 2.0.4
     imaging_target: 3.0.0
     organoid: 9.0.0
-    specimen_from_organism: 6.3.8
+    specimen_from_organism: 7.0.0
     analysis_file: 5.3.5
     image_file: 1.0.2
     reference_file: 2.2.8
@@ -74,7 +74,7 @@ deployed_component_versions:
     supplementary_file: 1.1.7
     analysis_process: 8.0.6
     process: 6.0.6
-    project: 9.0.8
+    project: 10.0.0
     analysis_protocol: 8.0.6
     aggregate_generation_protocol: 1.1.7
     collection_protocol: 8.2.10
@@ -82,16 +82,16 @@ deployed_component_versions:
     dissociation_protocol: 5.0.7
     enrichment_protocol: 2.2.8
     ipsc_induction_protocol: 2.0.4
-    imaging_preparation_protocol: 1.0.4
+    imaging_preparation_protocol: 2.0.0
     imaging_protocol: 11.0.5
     protocol: 6.3.7
     library_preparation_protocol: 4.4.4
     sequencing_protocol - v9.0.8
   ingest:
-    ingest-broker: v0.8.4.rc
+    ingest-broker: v0.8.5.rc
     ingest-exporter: v0.7.7.rc
     ingest-validator: v0.6.0.rc
-    ingest-core: v0.8.0.rc
+    ingest-core: v0.8.1.rc
     ingest-accesioner: v0.5.0.rc
     ingest-archiver: 0.1.1
     ingest-staging-manager: v0.5.3.rc
