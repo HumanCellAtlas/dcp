@@ -11,7 +11,7 @@
 * Bug fixes in JSON parsing upload-service messages
 * Logging auth failures
 
-### Upload Service
+### Upload Service (v4.1.0)
 * Send notifications to new Ingest REST endpoints instead of AMQP
 * Checksumming has been restructured to be more resilient to multiple-simultaneous-uploads-of-the-same-file attacks.
 
