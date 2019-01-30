@@ -9,12 +9,15 @@ from .utils import Progress
 
 
 class DataStoreAgent:
-
     DSS_SWAGGER_URL_TEMPLATE = "https://dss.{deployment}.data.humancellatlas.org/v1/swagger.json"
+    DSS_PROD_SWAGGER_URL = "https://dss.data.humancellatlas.org/v1/swagger.json"
 
     def __init__(self, deployment):
         self.deployment = deployment
-        swagger_url = self.DSS_SWAGGER_URL_TEMPLATE.format(deployment=deployment)
+        if self.deployment == "prod":
+            swagger_url = self.DSS_PROD_SWAGGER_URL
+        else:
+            swagger_url = self.DSS_SWAGGER_URL_TEMPLATE.format(deployment=deployment)
         self.client = DSSClient(swagger_url=swagger_url)
 
     def search(self, query, replica='aws'):

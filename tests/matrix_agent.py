@@ -7,10 +7,14 @@ from .utils import Progress
 
 class MatrixAgent:
     MATRIX_URL_TEMPLATE = 'https://matrix.{deployment}.data.humancellatlas.org/v0'
+    MATRIX_PROD_URL = 'https://matrix.data.humancellatlas.org/v0'
 
     def __init__(self, deployment):
         self.deployment = deployment
-        self.service_url = self.MATRIX_URL_TEMPLATE.format(deployment=deployment)
+        if self.deployment == "prod":
+            self.service_url = self.MATRIX_PROD_URL
+        else:
+            self.service_url = self.MATRIX_URL_TEMPLATE.format(deployment=deployment)
         self.headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
 
     def post_matrix_request(self, bundle_fqids, format="zarr"):

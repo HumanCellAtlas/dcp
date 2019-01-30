@@ -5,10 +5,14 @@ import urllib.parse
 
 class AzulAgent:
     AZUL_URL_TEMPLATE = 'https://service.{deployment}.explore.data.humancellatlas.org'
+    AZUL_PROD_URL = 'https://service.explore.data.humancellatlas.org'
 
     def __init__(self, deployment):
         from urllib3 import Retry
-        self.azul_url = self.AZUL_URL_TEMPLATE.format(deployment=deployment)
+        if deployment == "prod":
+            self.azul_url = self.AZUL_PROD_URL
+        else:
+            self.azul_url = self.AZUL_URL_TEMPLATE.format(deployment=deployment)
         self.https_session = requests.Session()
         azul_retries = Retry(status_forcelist=(500, 502, 503, 504))
         azul_adapter = requests.adapters.HTTPAdapter(max_retries=azul_retries)
