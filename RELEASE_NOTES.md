@@ -1,6 +1,94 @@
 # Release Notes
 
 <!-- newest release at the top please) -->
+## Prod 2019/01/29
+
+### Ingest
+
+#### Core v0.8.0
+* Expose API endpoints for rabbitmq communication
+* Accept and verify JWT tokens from DCP Auth and GCP Service accounts
+* Point to schema https urls
+
+#### Exporter v0.7.7
+* Reporting export errors in submission envelope
+* Remove unused schema env var in the exporter
+
+#### UI v0.5.3
+* Use DCP Auth (Fusillade) for Authentication
+* Display submission errors
+* Display commit hash build
+
+### Secondary Analysis
+
+Version(s):
+* Lira: v0.15.0 -> v0.16.0
+* Pipeline-tools: v0.43.2 -> v0.44.0
+* Skylab: smartseq2_v2.1.0 -> smartseq2_v2.2.0
+
+#### Lira and subscriptions
+* Use HTTPS for all of the Ingest API endpoints.
+* Re-subscribe to Data-Store service to let the project_uuid show as a workflow label
+
+#### Pipeline-tools
+* Use HTTPS for all of the Ingest API endpoints.
+* Let the Adapter SmartSeq2 WDL accept optional output, e.g. the Zarr output.
+
+#### Scientific Pipelines
+* The Zarr format conversion task is now optional in SmartSeq2, but it will still always be called in HCA DCP by default.
+
+### Data Browser
+
+Version(s): commit 11333a07dd4bf44eb9b06b6889d5a60bcd635a79
+
+* `23d7a339` - Updated manifest download API call.
+* `bc40bd8d` - Updated file download to use native browser download.
+* `87b1056f` - Fixed file download  where initial response is 302.
+* `be576746` - Update spa/src/app/files/hca-download-file/hca-download-file.component.html
+* `55db1710` - Removed download attribute.
+* `101a7776` - Added manifest download params.
+* `0bca8a70` - Added file name to file download GET.
+* `af4ee977` - Augment pagination control for usability
+* `ca2b9b96` - Improve specimen and files data on files tab
+* `0ab6e2a2` - Pagination component
+* `b26d107c` - Show data column at all times
+* `45dd37f1` - Pagination css
+* `24957af3` - Responsive adjustments to the filters
+* `11333a07` - Fix for filters when height is limited
+
+
+### Azul
+
+Version(s): deployed/prod/2019-01-29__08-26, 8266ac30b897d1514af77883b4a189d61234a191
+
+* Move to Azul-specific bucket for Terraform state (#645)
+* Return content disposition header from manifest endpoints (#655)
+* Improve health check endpoints (#624, #615, #548)
+* Return content disposition header from /fetch/dss/files (#660)
+* Replaced unsafe call to yaml.load() with yaml.safe_load()
+* Limit impact reindexing on DSS in personal deployments (#646)
+* Fix missing Slack notification on CloudWatch alarms (#621)
+* Make web service tests use actual indexer input (#428)
+* Terraform a Gitlab instance and run our tests on it (#632)
+* Prototype carts API (fixes #480)
+* Add endpoint for shortening URLs (fixes #66)
+* Bump ES instance count to four in `dev`
+* Upload manifests to S3 in multiple parts (#525)
+* Delete indices when reindexing by default (connected to #610)
+* Work around truncated results from DSS POST /search
+* Amortized aggregation (fixes #86, …)
+* Emulate HTTP redirects and retry-after in DSS file proxy (fixes #551)
+* Make the manifest endpoint dual mode (fixes #567)
+* Convert whitelist for DSS prod to blacklist (fixes #578)
+* Replace `process` inner entity with `protocol` (fixes #540)
+* Generate manifest using step functions (fixes #546)
+
+### Metadata Schema
+
+Versions:
+* biomaterial/timecourse.json - v2.0.0
+* biomaterial/donor_organism.json - v13.0.0
+* biomaterial/organoid.json - v9.0.0
 
 ## Prod 2019/01/22
 
