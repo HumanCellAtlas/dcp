@@ -22,7 +22,11 @@ class DatasetFixture:
 
     def __init__(self, dataset_name, deployment):
         self.name = dataset_name
-        self.deployment = deployment
+        if deployment == "prod":
+            # Metadata uses master branch for prod schemas
+            self.deployment = "master"
+        else:
+            self.deployment = deployment
         self.config = {}
         self.dataset_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'fixtures/datasets', self.name))
         self._spreadsheet = None
