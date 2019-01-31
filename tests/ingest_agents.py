@@ -18,12 +18,12 @@ class IngestUIAgent:
         else:
             self.ingest_broker_url = self.INGEST_UI_URL_TEMPLATE.format(self.deployment)
         self.ingest_auth_agent = IngestAuthAgent()
-        self.auth_headers = self.ingest_auth_agent.make_auth_header()
 
     def upload(self, metadata_spreadsheet_path):
         url = self.ingest_broker_url + '/api_upload'
         files = {'file': open(metadata_spreadsheet_path, 'rb')}
-        response = requests.post(url, files=files, allow_redirects=False, headers=self.auth_headers)
+        headers = self.ingest_auth_agent.make_auth_header()
+        response = requests.post(url, files=files, allow_redirects=False, headers=headers)
         if response.status_code != requests.codes.found and response.status_code != requests.codes.created:
             raise RuntimeError(f"POST {url} response was {response.status_code}: {response.content}")
         return json.loads(response.content)['details']['submission_id']
@@ -34,7 +34,7 @@ class IngestApiAgent:
     def __init__(self, deployment):
         self.deployment = deployment
         self.ingest_api_url = self._ingest_api_url()
-        self.auth_headers = IngestAuthAgent().make_auth_header()
+        self.ingest_auth_agent = IngestAuthAgent()
 
     def project(self, project_id):
         return IngestApiAgent.Project(project_id=project_id, ingest_api_agent=self)
@@ -84,7 +84,7 @@ class IngestApiAgent:
         else:
             url = f"{self.ingest_api_url}{path_or_url}"
 
-        response = requests.get(url, headers=self.auth_headers)
+        response = requests.get(url, headers=self.ingest_auth_agent.make_auth_header())
 
         if response.ok:
             return response.json()
