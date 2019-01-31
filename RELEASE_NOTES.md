@@ -1,5 +1,35 @@
 # Release Notes
 
+## Staging 2019/01/30
+
+### Ingest
+
+#### Broker(v0.8.5.rc)
+* Reporting all import errors to the submission envelope
+
+#### Core(v0.8.1.rc)
+* Bug fixes in JSON parsing upload-service messages
+* Logging auth failures
+
+### Upload Service (v4.1.0)
+* Send notifications to new Ingest REST endpoints instead of AMQP
+* Checksumming has been restructured to be more resilient to multiple-simultaneous-uploads-of-the-same-file attacks.
+
+### Metadata Schema
+
+#### Versions
+* preservation_storage.json - v6.0.0
+* specimen_from_organism.json - v7.0.0
+* imaging_preparation_protocol.json - v2.0.0
+* funder.json - v2.0.0
+* project.json - v10.0.0
+
+#### Changes
+* change storage_method enum list to remove commas from values
+* change funder_name to organization
+* change grant_id and organization to be required
+* change funders to be required
+
 ## Staging 2019/01/23
 
 ### Ingest
