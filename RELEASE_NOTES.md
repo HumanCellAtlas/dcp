@@ -1,6 +1,60 @@
 # Release Notes
 
 <!-- newest release at the top please) -->
+
+
+## Prod 2019/02/12
+
+### Ingest
+
+#### Broker v0.8.5.rc
+
+* Reporting all import errors to the submission envelope
+
+#### Core v0.8.1.rc
+
+* Bug fixes in JSON parsing upload-service messages
+* Logging auth failures
+
+### Data Browser
+
+### Azul
+
+These changes were actually deployed on 02/05/2019 but release notes weren't published then.
+
+Version(s): deployed/prod/2019-02-05__16-31, 959e886d2b1c3aa79123769413e60159fe373379
+
+* 959e886 - (HEAD -> prod, tag: deployed/prod/2019-02-05__16-31, origin/prod) Blacklist test projects in prod
+* 4376e31 - Upgrade to metadata-api 1.0b9
+* 1ee8a82 - Implement integration test (#262)
+* 9c32e93 - Make default sort specific to each entity type (#683)
+* 5275671 - Temporarily disable gitlab in prod
+* 38f0858 - Blacklist test projects in prod from 1/22/2019
+* 78e9511 - Fix misc typos and formatting in README
+* 193ffcc - Add Locust script for scale testing (#542)
+* a8fd104 - Add GA4GH Data Repository Service (DRS) GET for files (#638)
+* a2313a4 - Fix: Health check tests only pass with `dev` selected (#670)
+* 5289bfd - Move to Azul-specific bucket for Terraform state (#645)
+* 5b14c64 - Blacklist test projects in prod from 1/22/2019
+* 56abed4 - Move to Azul-specific bucket for Terraform state (#645)
+
+### Metadata Schema
+
+Version(s): 
+
+* imaging_preparation_protocol.json - v2.0.0
+* project.json - v10.0.0
+* specimen_from_organism.json - v7.0.0
+* funder.json - v2.0.0
+* preservation_storage.json - v6.0.0
+
+Functionality changes:
+
+* change enum list for storage_method to remove commas from values
+* changed grant_id and funder_name to be required
+* changed funders to be required
+
+
 ## Prod 2019/01/29
 
 ### Ingest
