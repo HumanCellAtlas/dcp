@@ -144,7 +144,8 @@ class DatasetRunner:
     def complete_submission(self):
         Progress.report("COMPLETING SUBMISSION...")
         submit_url = self.submission_envelope.data['_links']['submit']['href']
-        response = requests.put(submit_url, headers=self.ingest_api.auth_headers)
+        headers = self.ingest_api.ingest_auth_agent.make_auth_header()
+        response = requests.put(submit_url, headers=headers)
         if response.status_code != requests.codes.accepted:
             raise RuntimeError(f"PUT {submit_url} returned {response.status_code}: {response.content}")
         Progress.report("  done.\n")
