@@ -2,6 +2,135 @@
 
 <!-- newest release at the top please) -->
 
+## Prod 2019/02/20
+
+### Ingest
+
+#### Broker v0.8.6
+* Utilizing submission envelope's link/edge counter
+
+#### Core v0.8.3
+* Added submission envelope field to track number of expected links/edges in the metadata graph
+* Hotfix to use different environment variables for user and service JWTs
+
+### Upload Service
+* Added support for paired file validation
+* Add retry around loading files from upload area (fixes scale test issue)
+* Put sqs between upload api and adding to validation batch queue
+* Fix checksumming to allow for simultaneous file upload and reliability of checksum tags on s3 objects.
+* Communicating with Ingest via HTTPS API endpoint instead of RabbitMQ
+
+### Data Store 2019-02-20-16-05-58-prod.release
+* adding current stage to audience (#1865)
+* Fix daemons/dss-sync-sfn/Readme.md typo (#1882)
+* Use jq -r instead of shelling out to Python (#1873)
+* Notification sent out for all versions of a deleted bundle (#1872)
+* Fix typo in Swagger doc (#1867)
+* [Easy] Sync logs INFO instead of ERROR for existing keys (#1870)
+* Allow custom handlers in local test server. (#1863)
+* Add s3:GetObjectTagging permissions to the visitation lambda explicitly. (#1869)
+* moved ADMIN_USER_EMAILS to be stored within AWS SecretManager (#1829)
+* Search when Version is None (#1862)
+* Ignore cache objects when syncing (#1861)
+* Added X-AWS-REQUEST-ID to chalice API (#1845)
+* Fixed paging with bundle tombstones (#1846)
+* adding delete and tombstone notifications to smoke test (#1856)
+* [Easy] Use correct document when notifying on delete (#1851)
+* Update domovoi and change naming to reflect changes in domovoi. (#1847)
+* adjust infra make clean (#1830)
+* Adding Source IP and Decoded JWT to logs (#1839)
+* Change staging bucket names to encrypted buckets. (#1840)
+* Update the build image to Terraform v0.11.11 (#1841)
+* Script for ad-hoc tombstoning (#1831)
+* Reducing the DSS permission to deny deletion privilages (#1826)
+* Increase checkout TTL to 90 days (#1836)
+* Use AWS ACM identifier to id domain cert (#1835)
+* Use terraform to deploy custom domain natively (#1834)
+* added --dry-run functionality to set_secrets (#1833)
+* Put admin user emails in SSM store (#1828)
+* Switch to on-demand capacity for async state db (#1827)
+* Update infra defs for prod (#1824)
+* Populating lambda SSM warns on undefined vars (#1817)
+* Parameterize SSM store name in environment (#1814)
+* Change buckets names over to new encrypted buckets. (#1815)
+
+### Secondary Analysis
+
+#### Lira v0.17.0
+* Authenticate Cromwell VMs with the Cromwell-as-a-Service (CaaS) service account by using the “google_compute_service_account” workflow options parameter
+
+#### Pipeline-tools v0.46.1
+* Standardize Cromwell timestamps to follow the date-time format required by the analysis process JSON schema
+* Use the default application credentials of the VM when requesting metadata from Cromwell instead of storing the JSON key in a private docker image
+* Use JWT created from CaaS service account for authentication to Ingest API
+
+
+### Metadata Schema
+biomaterial_core - v7.0.5
+cell_morphology - v6.1.6
+human_specific - v1.0.9
+mouse_specific - v1.0.7
+preservation_storage - v6.0.1
+timecourse - v2.0.1
+barcode - v5.2.6
+plate_based_sequencing - v1.0.6
+channel - v2.0.1
+target - v1.0.6
+links - v1.1.5
+cell_line - v10.0.4
+cell_suspension - v9.0.0
+donor_organism - v14.0.3
+maged_specimen - v2.0.7
+organoid - v10.0.2
+specimen_from_organism - v7.0.3
+analysis_file - v5.3.6
+image_file - v1.0.3
+reference_file - v2.2.10
+supplementary_file - v1.1.8
+analysis_process - v8.0.8
+process - v6.0.7
+project - v11.0.0
+analysis_protocol - v8.0.7
+aggregate_generation_protocol - v2.0.0
+collection_protocol - v8.2.11
+dissociation_protocol - v5.0.8
+enrichment_protocol - v2.2.9
+imaging_preparation_protocol - v2.0.1
+imaging_protocol - v11.0.9
+protocol - v6.3.9
+library_preparation_protocol - v4.4.6
+sequencing_protocol - v9.0.11
+biological_macromolecule_ontology - v5.3.4
+cell_cycle_ontology - v5.3.5
+cell_type_ontology - v5.3.5
+cellular_component_ontology - v1.0.4
+development_stage_ontology - v5.3.5
+disease_ontology - v5.3.7
+enrichment_ontology - v1.2.5
+ethnicity_ontology - v5.3.7
+instrument_ontology - v5.3.5
+length_unit_ontology - v5.3.4
+library_amplification_ontology - v1.2.4
+library_construction_ontology - v1.2.4
+mass_unit_ontology - v5.3.4
+microscopy_ontology - v1.0.4
+organ_ontology - v5.3.7
+organ_part_ontology - v5.3.4
+process_type_ontology - v5.3.4
+protocol_type_ontology - v5.3.4
+sequencing_ontology - v1.1.4
+species_ontology - v5.3.4
+strain_ontology - v5.3.5
+time_unit_ontology - v5.3.4
+
+* Changed total_estimated_cells to estimated_cell_count.
+* Added timecourse field to cell_suspension schema.
+* Changed familial_relationship field to be plural.
+* Changed accession fields to arrays and changed corresponding field names in project schema.
+* Added required model_organ field to cell line schema.
+* Removed organoid_type field from organoid schema.
+* Changed field names in aggregate_generation_protocol.
+
 
 ## Prod 2019/02/12
 
