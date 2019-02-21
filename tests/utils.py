@@ -36,6 +36,7 @@ class Timeout(AbstractContextManager):
 
     def __enter__(self):
         def _timeout_handler(signum, frame):
+            self.did_timeout = True
             raise TimeoutError("time's up!")
 
         signal.signal(signal.SIGALRM, _timeout_handler)
@@ -47,8 +48,4 @@ class Timeout(AbstractContextManager):
         signal.signal(signal.SIGALRM, signal.SIG_DFL)
         signal.alarm(0)
 
-        if exc_type == TimeoutError:
-            self.did_timeout = True
-            return True
-
-        return None is exc_type
+        return (None is exc_type) or (TimeoutError is exc_type)
