@@ -8,8 +8,8 @@ from ingest.utils.token_manager import TokenManager
 
 class IngestUIAgent:
 
-    INGEST_UI_URL_TEMPLATE = "http://ingest.{}.data.humancellatlas.org"
-    INGEST_UI_PROD_URL = "http://ingest.data.humancellatlas.org"
+    INGEST_UI_URL_TEMPLATE = "https://ingest.{}.data.humancellatlas.org"
+    INGEST_UI_PROD_URL = "https://ingest.data.humancellatlas.org"
 
     def __init__(self, deployment):
         self.deployment = deployment
@@ -93,9 +93,9 @@ class IngestApiAgent:
 
     def _ingest_api_url(self):
         if self.deployment == 'prod':
-            return "http://api.ingest.data.humancellatlas.org"
+            return "https://api.ingest.data.humancellatlas.org"
         else:
-            return f"http://api.ingest.{self.deployment}.data.humancellatlas.org"
+            return f"https://api.ingest.{self.deployment}.data.humancellatlas.org"
 
     class Project:
 
