@@ -104,7 +104,7 @@ class TestSmartSeq2Run(TestEndToEndDCP):
     ]
 
     def test_smartseq2_run(self):
-        with Timeout(6) as to:  # timeout after 1 hour and 50 minutes
+        with Timeout(110 * 60) as to:  # timeout after 1 hour and 50 minutes
             runner = self.ingest_store_and_analyze_dataset(dataset_fixture='Smart-seq2')
             try:
                 self.assertEqual(1, len(runner.primary_bundle_uuids))
@@ -142,7 +142,7 @@ class Test10xRun(TestEndToEndDCP):
     ]
 
     def test_10x_run(self):
-        with Timeout(6) as to:  # timeout after 1 hour and 50 minutes
+        with Timeout(110 * 60) as to:  # timeout after 1 hour and 50 minutes
             runner = self.ingest_store_and_analyze_dataset(dataset_fixture='10x')
             try:
                 self.assertEqual(1, len(runner.primary_bundle_uuids))
