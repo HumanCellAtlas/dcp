@@ -9,7 +9,7 @@ deployed_component_versions:
   # component-identifier: component-version
   # e.g.
   # ingest: v0.1.2
-  azul: 25f1a4413b302c655ce6134ad138b7a67cf12156 deployed/staging/2019-02-05__16-16
+  azul: 321320c3b4e459ec932c57db57b196bf8c3be78b deployed/staging/2019-02-21__08-38
   data-store: 2019-02-13-17-06-40-staging.release
   data-browser: 17dcbc18b499efa7ef6a11c5403b3b8501741f4f  
   greenbox:

@@ -1,5 +1,29 @@
 # Release Notes
 
+
+## Staging 2019/02/21
+
+#### Azul
+
+Version: 321320c3b4e459ec932c57db57b196bf8c3be78b (deployed/staging/2019-02-21__08-38)
+
+* 2d8a701f Delete empty aggregates (#709)
+* c88434b2 Prioritize organoid organ fields (#695)
+* c815bc8b Deploy Grafana dashboard during `make terraform`
+* 7817477a Migrate monitoring resources from dcp-monitoring (#622)
+* c81bde06 Rename `AZUL_ENABLE_CLOUDWATCH_ALARMS` to `AZUL_ENABLE_MONITORING`
+* 94ca44e1 Refactor app.py with individual services (#678)
+* 3885e511 Implement the integration with Fusillade (#58)
+* d5a19a01 Ignored everything in lambdas/*/vendor except 'azul'
+* 354a129f Fix cheat sheet in README to reflect 904883e
+* 904883e5 Fix deployment issues with `python -m venv` and make it the default (#340)
+* b5edf68c Implemented the default cart logic (#629)
+* 12da6c1c Blacklist test projects in prod
+* 494c49ec Sync threads more reliably in concurrent indexer test (#696)
+* 97214c9c Blacklist test projects in prod
+* aae9244c Add rudimentary script for counting bundles
+
+
 ## Staging 2019/02/13
 
 ### Ingest
