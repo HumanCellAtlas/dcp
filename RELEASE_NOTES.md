@@ -3,7 +3,18 @@
 
 ## Staging 2019/02/21
 
-#### Azul
+### Ingest
+
+#### Broker v0.8.7.rc
+
+* Bug fixes in the importer: trailing space and number field conversion
+
+####  UI v0.5.4.rc
+
+* Show linking progress in the UI
+* Upgrade to component versions
+
+### Azul
 
 Version: 321320c3b4e459ec932c57db57b196bf8c3be78b (deployed/staging/2019-02-21__08-38)
 
