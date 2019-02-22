@@ -9,101 +9,81 @@ deployed_component_versions:
   # component-identifier: component-version
   # e.g.
   # ingest: v0.1.2
-  azul: deployed/staging/2019-01-23__09-05
-  data-store: 2018-12-12-17-56-10-staging.release
+  azul: 25f1a4413b302c655ce6134ad138b7a67cf12156 deployed/staging/2019-02-05__16-16
+  data-store: 2019-02-13-17-06-40-staging.release
   data-browser: 17dcbc18b499efa7ef6a11c5403b3b8501741f4f  
   greenbox:
     greenbox-falcon: v0.1.4
-    greenbox-lira: v0.16.0
-    greenbox-pipeline-tools: v0.44.0
+    greenbox-lira: v0.17.0
+    greenbox-pipeline-tools: v0.46.1
     greenbox-skylab:
       smartseq2: smartseq2_v2.2.0
       tenx: cellranger_v1.0.2
   ingest:
     ingest-accesioner: v0.5.0.rc
     ingest-archiver: 0.1.1
-    ingest-broker: v0.8.5.rc
-    ingest-core: v0.8.1.rc
+    ingest-broker: v0.8.6.rc
+    ingest-core: v0.8.2.rc
     ingest-exporter: v0.7.7.rc
     ingest-staging-manager: v0.5.3.rc
     ingest-state-tracking: v0.7.2.rc
     ingest-ui: v0.5.3.rc
     ingest-validator: v0.6.0.rc
   metadata-schema: http://api.ingest.staging.data.humancellatlas.org/schemas/search/latestSchemas
-    10x: 1.0.5
-    aggregate_generation_protocol: 1.1.7
-    analysis_file: 5.3.5
-    analysis_process: 8.0.6
-    analysis_protocol: 8.0.6
-    barcode: 5.2.5
-    biological_macromolecule_ontology: 5.3.3
-    biomaterial_core: 7.0.4
-    cell_cycle_ontology: 5.3.3
-    cell_line: 9.0.5
-    cell_morphology: 6.1.5
-    cell_suspension: 8.6.6
-    cell_type_ontology: 5.3.3
-    cellular_component_ontology: 1.0.3
-    channel: 2.0.0
-    collection_protocol: 8.2.10
-    contact: 6.1.4
-    death: 5.4.1
-    development_stage_ontology: 5.3.3
-    differentiation_protocol: 1.3.3
-    disease_ontology: 5.3.4
-    dissociation_protocol: 5.0.7
-    donor_organism: 13.0.0
-    enrichment_ontology: 1.2.4
-    enrichment_protocol: 2.2.8
-    ethnicity_ontology: 5.3.5
-    familial_relationship: 6.0.3
-    file_core: 5.2.5
-    funder: 2.0.0
-    growth_conditions: 6.4.2
-    human_specific: 1.0.7
-    image_file: 1.0.2
-    imaged_specimen: 2.0.4
-    imaging_preparation_protocol: 2.0.0
-    imaging_protocol: 11.0.5
-    imaging_target: 3.0.0
-    insdc_experiment: 1.1.5
-    instrument_ontology: 5.3.3
-    ipsc_induction_protocol: 2.0.4
-    length_unit_ontology: 5.3.3
-    library_amplification_ontology: 1.2.3
-    library_construction_ontology: 1.2.3
-    library_preparation_protocol: 4.4.4
-    license: 1.0.0
-    links: 1.1.4
-    mass_unit_ontology: 5.3.3
-    medical_history: 5.2.5
-    microscopy_ontology: 1.0.2
-    mouse_specific: 1.0.6
-    organ_ontology: 5.3.6
-    organ_part_ontology: 5.3.3
-    organoid: 9.0.0
-    plate_based_sequencing: 1.0.4
-    preservation_storage: 6.0.0
-    process: 6.0.6
-    process_core: 9.0.3
-    process_type_ontology: 5.3.3
-    project: 10.0.0
-    project_core: 7.0.5
-    protocol: 6.3.7
-    protocol_core: 5.2.5
-    protocol_type_ontology: 5.3.3
-    publication: 5.2.5
-    purchased_reagents: 6.0.4
-    reference_file: 2.2.8
-    sequence_file: 7.0.2
-    sequencing_ontology: 1.1.3
-    sequencing_protocol - v9.0.8
-    species_ontology: 5.3.3
-    specimen_from_organism: 7.0.0
-    state_of_specimen: 5.2.7
-    strain_ontology: 5.3.4
-    supplementary_file: 1.1.7
-    target: 1.0.3
-    time_unit_ontology: 5.3.3
-    timecourse: 2.0.0
-  upload: v4.1.0
+    aggregate_generation_protocol: 2.0.0
+    analysis_file: 5.3.6
+    analysis_process: 8.0.8
+    analysis_protocol: 8.0.7
+    barcode: 5.2.6
+    biological_macromolecule_ontology: 5.3.4
+    biomaterial_core: 7.0.5
+    cellular_component_ontology: 1.0.4
+    cell_cycle_ontology: 5.3.5
+    cell_line: 10.0.4
+    cell_morphology: 6.1.6
+    cell_suspension: 9.0.0
+    cell_type_ontology: 5.3.5
+    channel: 2.0.1
+    collection_protocol: 8.2.11
+    development_stage_ontology: 5.3.5
+    disease_ontology: 5.3.7
+    dissociation_protocol: 5.0.8
+    donor_organism: 14.0.3
+    enrichment_ontology: 1.2.5
+    enrichment_protocol: 2.2.9
+    ethnicity_ontology: 5.3.7
+    human_specific: 1.0.9
+    image_file: 1.0.3
+    imaging_preparation_protocol: 2.0.1
+    imaging_protocol: 11.0.9
+    instrument_ontology: 5.3.5
+    length_unit_ontology: 5.3.4
+    library_amplification_ontology: 1.2.4
+    library_construction_ontology: 1.2.4
+    library_preparation_protocol: 4.4.6
+    links: 1.1.5
+    maged_specimen: 2.0.7
+    mass_unit_ontology: 5.3.4
+    microscopy_ontology: 1.0.4
+    mouse_specific: 1.0.7
+    organoid: 10.0.2
+    organ_ontology: 5.3.7
+    organ_part_ontology: 5.3.4
+    plate_based_sequencing: 1.0.6
+    preservation_storage: 6.0.1
+    process: 6.0.7
+    process_type_ontology: 5.3.4
+    project: 11.0.0
+    protocol: 6.3.9
+    protocol_type_ontology: 5.3.4
+    reference_file: 2.2.10
+    sequencing_ontology: 1.1.4
+    sequencing_protocol: 9.0.11
+    species_ontology: 5.3.4
+    specimen_from_organism: 7.0.3
+    strain_ontology: 5.3.5
+    supplementary_file: 1.1.8
+    target: 1.0.6
+    timecourse: 2.0.1
+    time_unit_ontology: 5.3.4
+  upload: v4.2.0
