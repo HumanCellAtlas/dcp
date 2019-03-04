@@ -2,7 +2,6 @@ import os
 import requests
 import subprocess
 
-from typing import Set
 from urllib.parse import urlparse
 from datetime import datetime
 import boto3
@@ -224,7 +223,7 @@ class DatasetRunner:
     def _assert_data_browser_bundles(self, project_shortname):
         try:
             expected_bundle_uuids = set(self.primary_bundle_uuids).union(self.secondary_bundle_uuids)
-            files = self.azul_agent.get_files_py_project(project_shortname)
+            files = self.azul_agent.get_entities_by_project('files', project_shortname)
             bundle_uuids = {bundle['bundleUuid'] for file in files for bundle in file['bundles']}
             assert bundle_uuids == expected_bundle_uuids
             project_shortnames = {project_short_name for file in files for project in file['projects']
@@ -237,12 +236,22 @@ class DatasetRunner:
             Progress.report(f"{len(bundle_uuids)}/{len(expected_bundle_uuids)}")
             return True
 
+    def _assert_project_removed_from_azul(self):
+        results_empty = [len(self.azul_agent.get_entities_by_project(entity, self.project_shortname)) == 0
+                         for entity in ['files', 'projects', 'specimens']]
+        Progress.report("Project removed from index files: {}, projects: {}, specimens: {}".format(*results_empty))
+        return all(results_empty)
+
     def cleanup_primary_and_result_bundles(self):
         for primary_bundle_uuid, secondary_bundle_fqid in self.primary_uuid_to_secondary_bundle_fqid_map.items():
             self.data_store.tombstone_bundle(primary_bundle_uuid)
             if secondary_bundle_fqid is not None:
                 secondary_bundle_uuid = secondary_bundle_fqid.split('.')[0]
                 self.data_store.tombstone_bundle(secondary_bundle_uuid)
+        Progress.report("WAITING FOR BUNDLES TO BE REMOVED FROM AZUL ")
+        WaitFor(
+            self._assert_project_removed_from_azul
+        ).to_return_value(True)
 
     def retrieve_zarr_output_from_matrix_service(self):
         request_id = self.matrix_agent.post_matrix_request(self.secondary_bundle_fqids)
