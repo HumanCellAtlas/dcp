@@ -1,4 +1,3 @@
-import json
 import requests
 import urllib.parse
 
@@ -18,13 +17,13 @@ class AzulAgent:
         azul_adapter = requests.adapters.HTTPAdapter(max_retries=azul_retries)
         self.https_session.mount('https://', azul_adapter)
 
-    def get_files_py_project(self, project_shortname):
+    def get_entities_by_project(self, entity_type, project_shortname):
         """
         Returns all files in a given project.
 
-        >>> agent = AzulAgent(deployment='staging')
-        >>> files = agent.get_files_py_project('integration/10x/2018-11-07T16:01:15Z')
-        >>> len(files) > 0
+        >>> agent = AzulAgent(deployment='prod')
+        >>> files = agent.get_entities_by_project('files', '')
+        >>> len(files) == 0
         True
         """
         filters = {'file': {'project': {'is': [project_shortname]}}}
@@ -34,7 +33,7 @@ class AzulAgent:
         # https://github.com/DataBiosphere/azul/issues/537
         params = dict(filters=str(filters), size=str(size))
         while True:
-            url = self.azul_url + '/repository/files?' + urllib.parse.urlencode(params, safe="{}/'")
+            url = self.azul_url + f'/repository/{entity_type}?' + urllib.parse.urlencode(params, safe="{}/'")
             response = self.https_session.request('GET', url)
             response.raise_for_status()
             body = response.json()
