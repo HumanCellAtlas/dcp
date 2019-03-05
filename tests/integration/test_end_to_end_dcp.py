@@ -20,11 +20,9 @@ class TestEndToEndDCP(unittest.TestCase):
             raise RuntimeError(f"CI_COMMIT_REF_NAME environment variable must be one of {DEPLOYMENTS}")
         self.data_store = DataStoreAgent(deployment=self.deployment)
 
-    def ingest_store_and_analyze_dataset(self, dataset_fixture):
+    def ingest_store_and_analyze_dataset(self, runner, dataset_fixture):
         dataset = DatasetFixture(dataset_fixture, deployment=self.deployment)
-        runner = DatasetRunner(deployment=self.deployment)
         runner.run(dataset, run_name_prefix=self.deployment)
-        return runner
 
     def expected_results_bundle_files(self, primary_bundle_uuid, analysis_results_files_regexes):
         primary_bundle_manifest = self.data_store.bundle_manifest(primary_bundle_uuid)
@@ -104,8 +102,10 @@ class TestSmartSeq2Run(TestEndToEndDCP):
     ]
 
     def test_smartseq2_run(self):
+        runner = DatasetRunner(deployment=self.deployment)
+
         with Timeout(110 * 60) as to:  # timeout after 1 hour and 50 minutes
-            runner = self.ingest_store_and_analyze_dataset(dataset_fixture='Smart-seq2')
+            self.ingest_store_and_analyze_dataset(runner, dataset_fixture='Smart-seq2')
             try:
                 self.assertEqual(1, len(runner.primary_bundle_uuids))
                 self.assertEqual(1, len(runner.secondary_bundle_uuids))
@@ -117,10 +117,10 @@ class TestSmartSeq2Run(TestEndToEndDCP):
             except:
                 pass
 
-        print()
-        print("test timed out:", to.did_timeout)
-
         runner.cleanup_primary_and_result_bundles()
+
+        if to.did_timeout:
+            raise TimeoutError("test timed out")
 
 
 class Test10xRun(TestEndToEndDCP):
@@ -142,8 +142,10 @@ class Test10xRun(TestEndToEndDCP):
     ]
 
     def test_10x_run(self):
+        runner = DatasetRunner(deployment=self.deployment)
+
         with Timeout(110 * 60) as to:  # timeout after 1 hour and 50 minutes
-            runner = self.ingest_store_and_analyze_dataset(dataset_fixture='10x')
+            self.ingest_store_and_analyze_dataset(runner, dataset_fixture='10x')
             try:
                 self.assertEqual(1, len(runner.primary_bundle_uuids))
                 self.assertEqual(1, len(runner.secondary_bundle_uuids))
@@ -155,10 +157,10 @@ class Test10xRun(TestEndToEndDCP):
             except:
                 pass
 
-        print()
-        print("test timed out:", to.did_timeout)
-
         runner.cleanup_primary_and_result_bundles()
+
+        if to.did_timeout:
+            raise TimeoutError("test timed out")
 
 
 if __name__ == '__main__':
