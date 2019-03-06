@@ -14,6 +14,9 @@
 * Upgrade to component versions
 
 ### Azul
+
+Version: deployed/prod/2019-03-05__08-31 (c56f00698ef8bff00efc3d1c72300f6f46fd5203)
+
 * 2d8a701f Delete empty aggregates (#709)
 * c88434b2 Prioritize organoid organ fields (#695)
 * c815bc8b Deploy Grafana dashboard during `make terraform`
