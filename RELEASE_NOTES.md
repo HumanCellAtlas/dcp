@@ -21,7 +21,7 @@
 * c81bde06 Rename `AZUL_ENABLE_CLOUDWATCH_ALARMS` to `AZUL_ENABLE_MONITORING`
 * 94ca44e1 Refactor app.py with individual services (#678)
 * 3885e511 Implement the integration with Fusillade (#58)
-* d5a19a01 Ignored everything in lambdas/*/vendor except 'azul'
+* d5a19a01 Ignored everything in lambdas/\*/vendor except 'azul'
 * 354a129f Fix cheat sheet in README to reflect 904883e
 * 904883e5 Fix deployment issues with `python -m venv` and make it the default (#340)
 * b5edf68c Implemented the default cart logic (#629)
