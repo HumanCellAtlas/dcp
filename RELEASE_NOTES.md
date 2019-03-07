@@ -22,7 +22,6 @@ Version: v4.2.3
 
 * Reraise original errors where tenacity retries are used instead of throwing a tenacity retry error
 * Bug fix for large file checksum notification flow
-* Reraise original errors where tenacity retries are used instead of throwing a tenacity retry error
 * Disable batch watcher in terraform
 * use latest version of hca against upload service
 * Updates to README: link to release instructions. Add new system architecture diagram
