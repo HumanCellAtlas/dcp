@@ -33,7 +33,7 @@ Version: v4.2.3
 
 ### Data Store
 
-Version: < to do >
+Version: 2019-03-06-16-15-17-staging.release
 
 * Change regex for PUT file/{uuid}. (#1926)
 * Fix scripts/populate_lambda_ssm_parameters.py (#1919)
