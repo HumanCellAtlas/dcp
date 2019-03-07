@@ -9,12 +9,12 @@ deployed_component_versions:
   # component-identifier: component-version
   # e.g.
   # ingest: v0.1.2
-  azul: 321320c3b4e459ec932c57db57b196bf8c3be78b deployed/staging/2019-02-21__08-38
+  azul: ef051ba5bd0f4dd992fbababce96bededada601f deployed/staging/2019-03-05__22-14
   data-store: 2019-02-13-17-06-40-staging.release
   data-browser: 17dcbc18b499efa7ef6a11c5403b3b8501741f4f  
   greenbox:
     greenbox-falcon: v0.1.4
-    greenbox-lira: v0.17.0
+    greenbox-lira: v0.18.1
     greenbox-pipeline-tools: v0.46.1
     greenbox-skylab:
       smartseq2: smartseq2_v2.2.0
@@ -22,8 +22,8 @@ deployed_component_versions:
   ingest:
     ingest-accesioner: v0.5.0.rc
     ingest-archiver: 0.1.1
-    ingest-broker: v0.8.7.rc
-    ingest-core: v0.8.2.rc
+    ingest-broker: v0.8.8.rc
+    ingest-core: v0.8.4.rc
     ingest-exporter: v0.7.7.rc
     ingest-staging-manager: v0.5.3.rc
     ingest-state-tracking: v0.7.2.rc
@@ -86,4 +86,4 @@ deployed_component_versions:
     target: 1.0.6
     timecourse: 2.0.1
     time_unit_ontology: 5.3.4
-  upload: v4.2.0
+  upload: v4.2.3

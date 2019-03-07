@@ -1,5 +1,104 @@
 # Release Notes
 
+## Staging 2019/03/06
+
+### Ingest
+
+#### Broker
+
+Version: v0.8.8.rc
+
+* minor fix to code
+
+#### Core
+
+Version: v0.8.4.rc
+
+* authentication related security related patches
+
+### Upload Service
+
+Version: v4.2.3
+
+* Reraise original errors where tenacity retries are used instead of throwing a tenacity retry error
+* Bug fix for large file checksum notification flow
+* Reraise original errors where tenacity retries are used instead of throwing a tenacity retry error
+* Disable batch watcher in terraform
+* use latest version of hca against upload service
+* Updates to README: link to release instructions. Add new system architecture diagram
+* Add function to delete all job definitions after each deployment
+* Updates to retry for s3 eventual consistency
+* Update terraform version to 0.11.11
+* fix up pgbouncer and use image version rather than latest in ecs task definition
+
+### Data Store
+
+Version: < to do >
+
+* Change regex for PUT file/{uuid}. (#1926)
+* Fix scripts/populate_lambda_ssm_parameters.py (#1919)
+* Changed PUT files/{uuid} regex pattern to support slashes with caveats.  Added testing for good and bad paths.
+* Default subscription is JMESPath (#1915)
+* L2 Health Checks (#1868)
+* Log API exceptions (#1912)
+* Reduce checkout ttl since caching is functional (#1903)
+* removed TEST_USER buckets, added mocking to tests (#1908)
+* added CHECKOUT_CACHE_CRITERIA to lambda env (#1907)
+* added TEST_USER to envsubst (#1906)
+* Metadata caching build deploy var (#1905)
+* Fixes to add new infra to terraform. (#1904)
+* Metadata Caching. (#1887)
+* changed ci-cd.json for ddb query (#1898)
+* Scale up the prod ES domain (#1883)
+* Revert "Add HTTP request handler preconfigured with timeout and retry policies"
+* Basic notifications with JMESPath filters and redrive queue (#1822)
+* Fix import typo in scripts/tombstone_bundles.py (#1888)
+* Add HTTP request handler preconfigured with timeout and retry policies
+
+
+### Secondary Analysis
+
+Version: Lira: v0.18.1
+
+* Make the subscription query for 10x v2 data more specific.
+* Update the version of Connexion App and standardize the Lira API.
+* Update the Swagger UI of Lira, which is the /ui endpoint of Lira.
+* Update the controllers of Lira to adapt to the new API definitions.
+* Update the Lira readme and add new badges.
+
+### Azul
+
+Version: deployed/staging/2019-03-05__22-14 (ef051ba5bd0f4dd992fbababce96bededada601f)
+
+* bf9d799 Mark canned bundles as generated
+* ae48aaa Change organ_part to an array (#699)
+* c0937a7 Fix deletion of bundles with > 10 entities (#734)
+* 2c2522d Test deletion of bundles with > 10 entities (#734)
+* fc53e91 Fix bdbag manifest test to be order independent
+* 5bc566b Use fewer shards for aggregate index (#680)
+* d195fe9 Copy `manifest` as `bdbag` in request_config.json (#740)
+* 3e5c8ae Add health check for data portal (#731)
+* 8e67a37 Script to simulate a deletion notification (#723)
+* 6d7f807 Added `reindex` to changelog entry for #604
+* 6151860 Export manifest in BDBag to Terra (#604)
+* 4c0a6a8 Document how to reset an ongoing indexing operation (#715)
+* ad1c60a Fix: SQS trigger initially disabled (#335)
+* 51c0667 Mention `make clean` in deployment cheat sheet
+* 916b61d Fix pastie error from 576f8546f89fc39148a455ee1b0eb5a4baa360fd
+* 576f854 Configure API Gateway logging with Terraform (#653)
+* 2584cad Rename API Gateway Terraform file
+* 1d83ace Improve deployment and promotion cheat sheet
+* e2ed1be Rename integration test target
+* 21ee567 Enforce that main deployment matches protected branch
+* a7dbce6 Various Makefile fixes
+* b0c17b8 Prototype exporting carts to DSS collections (#627)
+
+### Metadata Schema
+No metadata schema updates
+* Updates to 2 infrastructure testing spreadsheets:
+infrastructure_testing_files/current/dcp_integration_test_metadata_1_10X_bundle.xlsx
+infrastructure_testing_files/current/dcp_integration_test_metadata_1_SS2_bundle.xlsx
+
 
 ## Staging 2019/02/21
 
