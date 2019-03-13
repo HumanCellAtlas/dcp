@@ -9,9 +9,9 @@ deployed_component_versions:
   # component-identifier: component-version
   # e.g.
   # ingest: v0.1.2
-  azul: ef051ba5bd0f4dd992fbababce96bededada601f deployed/staging/2019-03-05__22-14
+  azul: deployed/staging/2019-03-13__10-49
   data-store: 2019-02-13-17-06-40-staging.release
-  data-browser: 17dcbc18b499efa7ef6a11c5403b3b8501741f4f  
+  data-browser: 17dcbc18b499efa7ef6a11c5403b3b8501741f4f
   greenbox:
     greenbox-falcon: v0.1.4
     greenbox-lira: v0.18.1
@@ -23,12 +23,12 @@ deployed_component_versions:
     ingest-accesioner: v0.5.0.rc
     ingest-archiver: 0.1.1
     ingest-broker: v0.8.8.rc
-    ingest-core: v0.8.4.rc
+    ingest-core: v0.8.5.rc
     ingest-exporter: v0.7.7.rc
     ingest-staging-manager: v0.5.3.rc
     ingest-state-tracking: v0.7.2.rc
     ingest-ui: v0.5.4.rc
-    ingest-validator: v0.6.0.rc
+    ingest-validator: v0.6.1.rc
   metadata-schema: http://api.ingest.staging.data.humancellatlas.org/schemas/search/latestSchemas
     aggregate_generation_protocol: 2.0.0
     analysis_file: 5.3.6
@@ -86,4 +86,4 @@ deployed_component_versions:
     target: 1.0.6
     timecourse: 2.0.1
     time_unit_ontology: 5.3.4
-  upload: v4.2.3
+  upload: v4.2.4
