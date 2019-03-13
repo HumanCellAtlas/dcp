@@ -1,5 +1,62 @@
 # Release Notes
 
+## Staging 2019/03/13
+
+### Ingest
+#### Core v0.8.5.rc
+* Exclude property_migrations file when retrieving latest schemas from s3 bucket listing
+* Log INFO messages
+* Fix intermittent issue where file validation fails due to many validation events
+* Find by validation ID using the ID of the validation job
+* Always setting to DRAFT when updating a file's cloudUrl/checksums
+
+#### Validator v0.6.1.rc
+* Bug fix validating files which do not trigger job
+* Handling errors
+* Added checking of checksum when triggering validation job
+* Added methods in ingest-client for fetching file checksum info
+* Bug fix when refusing to validate File resources with no content/metadata
+* Security patches
+* Targetting a newer version of the fastq validation image
+
+### Upload Service v4.2.4
+* Use write/read for s3 consistency on s3 put
+
+### Azul deployed/staging/2019-03-13__10-49
+
+* 96dfd2f9 Fix: DSS proxy test fails on integration deployment
+* c0b82d25 Prevent echoing environment variables containing secrets
+* 53e40c09 Gitlab posts status check on Github
+* 104ec775 Add missing Gitlab permissions for deploying a main branch
+* e8e044a6 Improve integration testing of subscriptions
+* 3de56679 Add sandbox deployment for validating PRs and CI/CD experiments
+* c8dd5483 Document CI/CD on Gitlab
+* 1202d507 Improve `make clean` and clean cached HCA swagger spec
+* a26d4619 Force destruction of non-empty buckets if applicable
+* ff217aaa Minor cosmetic fixes
+* e28d3599 Continuous deployment for lesser environments (#239)
+* 1f795b42 Add `auto_apply` and `auto_deploy` targets to terraform/Makefile
+* 3400fd38 Add AWS service model and script that produces it
+* a30cb73e Gitlab builds custom Docker image to run actual build on
+* 8bed2fe9 Ensure that tests don't use instance profile credentials
+* 280a3a1b Fix: Manifest requests use wrong type for Retry-After
+* 1772f7da Integration test honors Retry-After header (#752)
+* caf7fb0f Cosmetic fixes to integration test
+* 9ff12972 Validate syntax for incoming notifications (#736)
+* 973b28e7 Changed notification endpoint response status code from 200 to 202
+* eb744299 Include DOS file URL in BDBag (#749)
+* 4adccda1 Removed duplicate `indexer_endpoint` property in Config (#728)
+* a485f3a2 Fix sorting by `fileSize` in service (#713)
+* b66023d1 Pass `subscription_type` when subscribing to DSS (#771)
+* 921c6f7a Fix `sample_id` to be specimen's `document_id` (#744)
+* 2bbd08df Fix bdbag upload to S3 (#743)
+* 06ca56c7 Test deletion of updated bundle
+* 54eb3cde Test deletion of bundle sharing entities with non-deleted bundles (#424)
+* f82cc6f7 Refactor azul.config so that `azul` doesn't import `azul.deployment`
+* d1158705 Convert static config properties to attributes
+* 4876f101 Separate out Terraform state related to Gitlab resources (#239)
+* 971e8d1e Remove duplicated config properties
+
 ## Staging 2019/03/06
 
 ### Ingest
@@ -223,7 +280,7 @@ Version(s): 25f1a4413b302c655ce6134ad138b7a67cf12156 deployed/staging/2019-02-05
 
 ### Metadata Schema
 
-Version(s): 
+Version(s):
 
 * biomaterial_core - v7.0.5
 * cell_morphology - v6.1.6
@@ -545,7 +602,7 @@ v3.3.0
 
 ### Ingest
 
-Version(s): 
+Version(s):
 * Broker v0.8.4.rc
   - Fix to connection reset error during spreadsheet import
   - Fix schema parsing, defaults to string if there is no items obj inside array field in schema
@@ -603,7 +660,7 @@ target.json: 1.0.1
 Versions v2.4.3->v3.1.0
 
 Changes
-upgrades: 
+upgrades:
 terraform to 0.11.10
 Moto to 1.3.7
 Boto to  1.9.44
@@ -617,15 +674,15 @@ Add tenacity to checksummer reqs
 - ValidatorHarness: make staged_file_path a pathlib.Path
 - publish humancellatlas/upload-validator-base-alpine:17 as latest
 - Create new env local, allow tests to run offline in local env
-- Add errors and retry on tags to s3 object 
+- Add errors and retry on tags to s3 object
 - Add endpoint /area/file endpoint that adds file to pre checksum sqs which triggers checksum daemon lambda
-- Add Batch watcher daemon 
+- Add Batch watcher daemon
 - runs on hourly schedule and checks for failed jobs, killing any relevant instances in that env and rescheduling the validation/csum job
-- retry on boto3 batch describe_job 
+- retry on boto3 batch describe_job
 - policy on batch watcher to invoke checksum daemon
 - refetch jobs after killing instances
 - Update to daily health check to output number of failed validation and checksum events in report.
-- Update chalice policy for batch jobs 
+- Update chalice policy for batch jobs
 - Update validation scheduler to return validation_id
 - Refactor tests to make more dry
 - Refactor: wrap database_orm db initialization code in a class
@@ -799,12 +856,12 @@ Version(s): 2018-10-11-15-48-22-staging.release
 - Remove Travis deploy jobs (#1601)
 - Update integration checkout bucket whitelist (#1592)
 - Fix Swagger YAML Docstring formatting
-- .gitlab-ci.yml: break up long line 
+- .gitlab-ci.yml: break up long line
 - Don't run tests when tags are pushed (#1599)
 - Organize README into sections
 - Update environment.prod (#1587)
 - Reparameterize backend bucket (#1591)
-- gitlab-cy.yml simplifications (#1590) 
+- gitlab-cy.yml simplifications (#1590)
 - GS event relay: Get all available GRTC env vars in one go (#1586)
 - Use dev Auth0 until prod Auth0 is available. (#1588)
 
@@ -986,10 +1043,10 @@ No changes
 ## Staging 2018/09/07
 
 ### Ingest
-Version: 
+Version:
 State Tracking v0.6.1.rc -> v0.7.0.rc
 Core  v0.7.1.rc -> v0.7.2.rc
-Exporter v0.7.0.rc -> v0.7.1.rc 
+Exporter v0.7.0.rc -> v0.7.1.rc
 
 Changes:
 
