@@ -2,6 +2,80 @@
 
 <!-- newest release at the top please) -->
 
+## Prod 2019/03/12
+
+### Ingest
+
+#### Broker v0.8.8
+* Fix handling of file metadata when data file is uploaded first
+
+#### Core v0.8.4
+* authentication related security related patches
+
+### Upload Service v4.2.3
+* Cleanup job definitions after each deployment
+* Disable batch watch in terraform
+* Update terraform version to 0.11.11.
+
+### Data Store 2019-03-12-15-15-14-prod.release
+* Change regex for PUT file/{uuid}. (#1926)
+* Fix scripts/populate_lambda_ssm_parameters.py (#1919)
+* Changed PUT files/{uuid} regex pattern to support slashes with caveats.  Added testing for good and bad paths.
+* Default subscription is JMESPath (#1915)
+* L2 Health Checks (#1868)
+* Log API exceptions (#1912)
+* Reduce checkout ttl since caching is functional (#1903)
+* removed TEST_USER buckets, added mocking to tests (#1908)
+* added CHECKOUT_CACHE_CRITERIA to lambda env (#1907)
+* added TEST_USER to envsubst (#1906)
+* Metadata caching build deploy var (#1905)
+* Fixes to add new infra to terraform. (#1904)
+* Metadata Caching. (#1887)
+* changed ci-cd.json for ddb query (#1898)
+* Scale up the prod ES domain (#1883)
+* Revert "Add HTTP request handler preconfigured with timeout and retry policies"
+* Basic notifications with JMESPath filters and redrive queue (#1822)
+* Fix import typo in scripts/tombstone_bundles.py (#1888)
+* Add HTTP request handler preconfigured with timeout and retry policies
+
+### Secondary Analysis, Lira: v0.18.1
+* Make the subscription query for 10x v2 data more specific.
+* Update the version of Connexion App and standardize the Lira API.
+* Update the Swagger UI of Lira, which is the /ui endpoint of Lira.
+* Update the controllers of Lira to adapt to the new API definitions.
+* Update the Lira readme and add new badges.
+
+### Azul f54b6927 (deployed/prod/2019-03-12__08-17)
+* 971b4452 Pass `subscription_type` when subscribing to DSS (#771)
+* bf9d799e Mark canned bundles as generated
+* ae48aaa4 Change organ_part to an array (#699)
+* c0937a7d Fix deletion of bundles with > 10 entities (#734)
+* 2c2522d4 Test deletion of bundles with > 10 entities (#734)
+* fc53e914 Fix bdbag manifest test to be order independent
+* 5bc566bb Use fewer shards for aggregate index (#680)
+* d195fe91 Copy `manifest` as `bdbag` in request_config.json (#740)
+* 3e5c8aec Add health check for data portal (#731)
+* 8e67a377 Script to simulate a deletion notification (#723)
+* 6d7f807b Added `reindex` to changelog entry for #604
+* 61518602 Export manifest in BDBag to Terra (#604)
+* 4c0a6a8c Document how to reset an ongoing indexing operation (#715)
+* ad1c60a6 Fix: SQS trigger initially disabled (#335)
+* 51c06674 Mention `make clean` in deployment cheat sheet
+* 916b61d0 Fix pastie error from 576f8546f89fc39148a455ee1b0eb5a4baa360fd
+* 576f8546 Configure API Gateway logging with Terraform (#653)
+* 2584cad8 Rename API Gateway Terraform file
+* 1d83aceb Improve deployment and promotion cheat sheet
+* e2ed1be5 Rename integration test target
+* 21ee5672 Enforce that main deployment matches protected branch
+* a7dbce6c Various Makefile fixes
+* b0c17b83 Prototype exporting carts to DSS collections (#627)
+
+### Metadata Schema
+* No metadata schema updates.
+* Updates to 2 infrastructure testing spreadsheets:
+  * infrastructure_testing_files/current/dcp_integration_test_metadata_1_10X_bundle.xlsx
+  * infrastructure_testing_files/current/dcp_integration_test_metadata_1_SS2_bundle.xlsx
+
 ## Prod 2019/03/05
 
 ### Ingest
@@ -201,7 +275,7 @@ Version(s): deployed/prod/2019-02-05__16-31, 959e886d2b1c3aa79123769413e60159fe3
 
 ### Metadata Schema
 
-Version(s): 
+Version(s):
 
 * imaging_preparation_protocol.json - v2.0.0
 * project.json - v10.0.0
@@ -427,7 +501,7 @@ Functionality
 
 ### Ingest
 
-#### Version(s): 
+#### Version(s):
 
 * Exporter v0.7.6
 * Fix to DSS datetime version format
@@ -481,7 +555,7 @@ Version: 2019-01-08-17-14-33-prod.release
 
 ### Ingest
 
-#### Version(s): 
+#### Version(s):
 
 * Broker v0.8.4
 * Fix to connection reset error during spreadsheet import
@@ -514,7 +588,7 @@ v2.4.3->v3.1.0
 
 #### Changes
 
-* upgrade 
+* upgrade
 	* terraform to 0.11.10
 	* Moto to 1.3.7
 	* Boto to  1.9.44
@@ -527,15 +601,15 @@ v2.4.3->v3.1.0
 	* ValidatorHarness: make staged_file_path a pathlib.Path
 	* publish humancellatlas/upload-validator-base-alpine:17 as latest
 * Create new env local, allow tests to run offline in local env
-* Add errors and retry on tags to s3 object 
+* Add errors and retry on tags to s3 object
 * Add endpoint /area/file endpoint that adds file to pre checksum sqs which triggers checksum daemon lambda
-* Add Batch watcher daemon 
+* Add Batch watcher daemon
 	* runs on hourly schedule and checks for failed jobs, killing any relevant instances in that env and rescheduling the validation/csum job
-	* retry on boto3 batch describe_job 
+	* retry on boto3 batch describe_job
 	* policy on batch watcher to invoke checksum daemon
 	* refetch jobs after killing instances
 * Update to daily health check to output number of failed validation and checksum events in report.
-* Update chalice policy for batch jobs 
+* Update chalice policy for batch jobs
 * Update validation scheduler to return validation_id
 * Refactor tests to make more dry
 * Refactor: wrap database_orm db initialization code in a class
@@ -600,7 +674,7 @@ No changes to promote.
 
 ## Prod 2018/12/10
 
-This is an hot fix promotion for only Secondary-Analysis to address a issue with the 10x analysis pipeline: 
+This is an hot fix promotion for only Secondary-Analysis to address a issue with the 10x analysis pipeline:
 Get expected cell count from 10x bundles instead of using a static value in the cellranger adapter WDL
 
 ### Secondary Analysis
@@ -628,7 +702,7 @@ Pipeline-tools v0.28.2 -> v0.38.0
 Changes:
 
 #### Lira and subscriptions
-- Subscriptions are still turned off in production at this time point. 
+- Subscriptions are still turned off in production at this time point.
 
 #### Pipeline-tools
 - Fix an [issue](https://github.com/HumanCellAtlas/secondary-analysis/issues/393) so now the analysis_protocol is linked to analysis_process properly.
