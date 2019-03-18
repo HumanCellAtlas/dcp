@@ -8,8 +8,8 @@ that the Human Cell Atlas project manages and how to report them.
 Many of the Human Cell Atlas repos are a part of a large and complex system
 built on cloud architecture in AWS and GCP, whose vulnerabilities these projects
 are also subject to.  They also depend on a large set of third party libraries
-(e.g., `google-auth`, `Jinja2`, and others such as
-[this](https://github.com/HumanCellAtlas/data-store/blob/master/requirements.txt) ),
+(e.g., `google-auth`, `Jinja2`, and others listed 
+[here](https://github.com/HumanCellAtlas/data-store/blob/master/requirements.txt) ),
 though we attempt to mitigate this with Snyk in projects such as the `data-store`.
 
 It is possible that a project or its dependent libraries contain
@@ -27,7 +27,7 @@ the [data-browser](https://github.com/HumanCellAtlas/data-browser),
 the [data-portal](https://github.com/HumanCellAtlas/data-portal).
 or the [dcp-cli](https://github.com/humancellatlas/dcp-cli).
 
-Public read access to files in, for example, data-store is intended and does
+By default, public read access to files in, for example, data-store is intended and does
 not require authentication, however, any method that circumvents the normal 
 auth process for other endpoints **is** a vulnerability (check the swagger 
 for endpoints that do or do not require auth: https://dss.data.humancellatlas.org/ )
