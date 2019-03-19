@@ -2,6 +2,60 @@
 
 <!-- newest release at the top please) -->
 
+# Prod 2019/03/19
+
+### Ingest
+
+#### Validator v0.6.1
+* Typescript
+* Fixed bug where Files would be stuck in validating if metadata was missing(i.e files uploaded before complete spreadsheet import)
+* Asserting that Files aren’t already validating before requesting file-validation
+* No longer triggering file-validation if a validation job has already been completed for the same checksums
+
+#### Core v0.8.5
+* Added ValidationJobs to track running/completed file-validation jobs
+* Bug fix attempting to parse property migration files from the Schemas bucket
+
+#### Ingress
+* Using HTTP->HTTPS redirection
+
+### Azul deployed/prod/2019-03-19__08-29, e3e6baa0
+* 96dfd2f9 Fix: DSS proxy test fails on integration deployment
+* c0b82d25 Prevent echoing environment variables containing secrets
+* 53e40c09 Gitlab posts status check on Github
+* 104ec775 Add missing Gitlab permissions for deploying a main branch
+* e8e044a6 Improve integration testing of subscriptions
+* 3de56679 Add sandbox deployment for validating PRs and CI/CD experiments
+* c8dd5483 Document CI/CD on Gitlab
+* 1202d507 Improve `make clean` and clean cached HCA swagger spec
+* a26d4619 Force destruction of non-empty buckets if applicable
+* ff217aaa Minor cosmetic fixes
+* e28d3599 Continuous deployment for lesser environments (#239)
+* 1f795b42 Add `auto_apply` and `auto_deploy` targets to terraform/Makefile
+* 3400fd38 Add AWS service model and script that produces it
+* a30cb73e Gitlab builds custom Docker image to run actual build on
+* 8bed2fe9 Ensure that tests don't use instance profile credentials
+* 280a3a1b Fix: Manifest requests use wrong type for Retry-After
+* 1772f7da Integration test honors Retry-After header (#752)
+* caf7fb0f Cosmetic fixes to integration test
+* 9ff12972 Validate syntax for incoming notifications (#736)
+* 973b28e7 Changed notification endpoint response status code from 200 to 202
+* eb744299 Include DOS file URL in BDBag (#749)
+* 4adccda1 Removed duplicate `indexer_endpoint` property in Config (#728)
+* a485f3a2 Fix sorting by `fileSize` in service (#713)
+* b66023d1 Pass `subscription_type` when subscribing to DSS (#771)
+* 921c6f7a Fix `sample_id` to be specimen's `document_id` (#744)
+* 2bbd08df Fix bdbag upload to S3 (#743)
+* 06ca56c7 Test deletion of updated bundle
+* 54eb3cde Test deletion of bundle sharing entities with non-deleted bundles (#424)
+* f82cc6f7 Refactor azul.config so that `azul` doesn't import `azul.deployment`
+* d1158705 Convert static config properties to attributes
+* 4876f101 Separate out Terraform state related to Gitlab resources (#239)
+* 971e8d1e Remove duplicated config properties
+* 4ff01390 Pass `subscription_type` when subscribing to DSS (#771)
+* c6413e43 Blacklist Meyer dataset in `prod` (HumanCellAtlas/data-store#1976)
+
+
 ## Prod 2019/03/12
 
 ### Ingest
