@@ -13,3 +13,6 @@ To run the tests locally, use Python 3.6:
 
 Be aware that you will be uploading bundles to the staging deployment of the DCP and running secondary analysis.
 The test currently takes about 18 minutes to run.
+
+## Security Policy
+See our [Security Policy](SECURITY.md).
