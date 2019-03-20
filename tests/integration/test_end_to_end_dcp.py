@@ -117,7 +117,7 @@ class TestSmartSeq2Run(TestEndToEndDCP):
             except:
                 pass
 
-        # runner.cleanup_primary_and_result_bundles()
+        runner.cleanup_primary_and_result_bundles()
 
         if to.did_timeout:
             raise TimeoutError("test timed out")
@@ -157,7 +157,7 @@ class Test10xRun(TestEndToEndDCP):
             except:
                 pass
 
-        # runner.cleanup_primary_and_result_bundles()
+        runner.cleanup_primary_and_result_bundles()
 
         if to.did_timeout:
             raise TimeoutError("test timed out")
