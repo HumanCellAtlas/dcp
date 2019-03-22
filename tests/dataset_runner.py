@@ -42,7 +42,7 @@ class DatasetRunner:
         self.failure_reason = None
         self.analysis_workflow_set = set([])
 
-        gcp_credentials_file_for_analysis = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
+        gcp_credentials_file_for_analysis = os.environ.get('GCP_ACCOUNT_ANALYSIS_INFO')
         if gcp_credentials_file_for_analysis:
             self.analysis_agent = AnalysisAgent(deployment=deployment, 
                                                 service_account_key=gcp_credentials_file_for_analysis)

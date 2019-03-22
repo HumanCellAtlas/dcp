@@ -5,5 +5,5 @@ hca>=4.6.0
 openpyxl
 awscli
 hca-ingest
-cromwell-tools==1.1.1
+cromwell-tools>=1.1.2
 termcolor
