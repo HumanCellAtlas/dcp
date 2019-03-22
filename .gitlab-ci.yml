@@ -6,6 +6,7 @@ stages:
   - 100_cell_test
 
 before_script:
+  - export CI_COMMIT_REF_NAME=integration
   - apt-get -y update
   - apt-get -y install jq
   - pip install -r requirements.txt
