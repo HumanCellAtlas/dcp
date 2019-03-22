@@ -9,6 +9,7 @@ import boto3
 from .azul_agent import AzulAgent
 from .data_store_agent import DataStoreAgent
 from .ingest_agents import IngestUIAgent, IngestApiAgent
+from .analysis_agent import AnalysisAgent
 from .matrix_agent import MatrixAgent
 from .utils import Progress
 from .wait_for import WaitFor
@@ -27,6 +28,7 @@ class DatasetRunner:
         self.ingest_broker = IngestUIAgent(deployment=deployment)
         self.ingest_api = IngestApiAgent(deployment=deployment)
         self.data_store = DataStoreAgent(deployment=deployment)
+        self.analysis_agent = None
         self.azul_agent = AzulAgent(deployment=deployment)
         self.matrix_agent = MatrixAgent(deployment=deployment)
         self.dataset = None
@@ -38,6 +40,12 @@ class DatasetRunner:
         self.expected_bundle_count = None
         self.primary_uuid_to_secondary_bundle_fqid_map = {}
         self.failure_reason = None
+        self.analysis_workflow_set = set([])
+
+        gcp_credentials_file_for_analysis = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
+        if gcp_credentials_file_for_analysis:
+            self.analysis_agent = AnalysisAgent(deployment=deployment, 
+                                                service_account_key=gcp_credentials_file_for_analysis)
 
     @property
     def primary_bundle_uuids(self):
@@ -52,6 +60,12 @@ class DatasetRunner:
         return list(self.primary_uuid_to_secondary_bundle_fqid_map.values())
 
     def run(self, dataset_fixture, run_name_prefix="test"):
+        # TODO: remove this block once it's faster to query workflows
+        # at this moment, querying more than 200 workflows every X 
+        # mins is pretty expensive and slow
+        if run_name_prefix == "scale":
+            self.analysis_agent = None
+
         self.dataset = dataset_fixture
         self.set_project_shortname(run_name_prefix)
         self.upload_spreadsheet_and_create_submission()
@@ -61,7 +75,9 @@ class DatasetRunner:
         self.wait_for_envelope_to_be_validated()
         if self.export_bundles:
             self.complete_submission()
-            self.wait_for_primary_and_results_bundles()
+            self.wait_for_primary_bundles()
+            self.wait_for_analysis_workflows()
+            self.wait_for_secondary_bundles()
             if self.dataset.name == "Smart-seq2":
                 self.retrieve_zarr_output_from_matrix_service()
                 self.retrieve_loom_output_from_matrix_service()
@@ -149,28 +165,82 @@ class DatasetRunner:
             raise RuntimeError(f"PUT {submit_url} returned {response.status_code}: {response.content}")
         Progress.report("  done.\n")
 
-    def wait_for_primary_and_results_bundles(self):
+    def wait_for_primary_bundles(self):
         """
         We used to wait for all primary bundles to be created before starting to look for results.
         It appears that with large submissions, results can start to appear before bundle export is finished,
         so we now monitor both kinds of bundles simultaneously.
         """
-        Progress.report("WAITING FOR PRIMARY AND RESULTS BUNDLE(s) TO BE CREATED...")
+        Progress.report("WAITING FOR PRIMARY BUNDLE(s) TO BE CREATED...")
         self.expected_bundle_count = self.dataset.config["expected_bundle_count"]
         WaitFor(
-            self._count_primary_and_secondary_bundles
+            self._count_primary_bundles_and_report
         ).to_return_value(value=self.expected_bundle_count)
 
-    def _count_primary_and_secondary_bundles(self):
+    def wait_for_analysis_workflows(self):
+        if not self.analysis_agent:
+            Progress.report("NO CREDENTIALS PROVIDED FOR ANALYSIS AGENT, SKIPPING WORKFLOW(s) CHECK...")
+        else:
+            Progress.report("WAITING FOR ANALYSIS WORKFLOW(s) TO FINISH...")
+            WaitFor(
+                self._count_analysis_workflows_and_report
+            )
+            
+    def _count_analysis_workflows_and_report(self):
+        if self._analysis_workflows_count() < self.expected_bundle_count:
+            self._count_analysis_workflows()
+        Progress.report("  analysis workflows: {}/{}".format(
+            self._analysis_workflows_count(),
+            self.expected_bundle_count
+        ))
+        return self._analysis_workflows_count()
+
+    def _count_analysis_workflows(self):
+        for bundle_uuid in self.submission_envelope.bundles():
+            # TODO: remove the following line once there are no more scalability concerns of the analysis agent
+            with self.analysis_agent.ignore_logging_msg():
+                try:
+                    workflows = self.analysis_agent.query_by_bundle(bundle_uuid=bundle_uuid)
+
+                    # NOTE: this one-bundle-one-workflow mechanism might change in the future
+                    if len(workflows) > 1:
+                        raise Exception(f"Bundle {bundle_uuid} triggered more than one workflow: {workflows}")
+                    elif len(workflows) == 1:
+                        workflow = workflows[0]
+                        if workflow.status in ('Failed', 'Aborted'):
+                            raise Exception(f"The status of workflow {workflow.uuid} is: {workflow.status}")
+                        if workflow.status == 'Succeeded':
+                            if workflow.uuid not in self.analysis_workflow_set:
+                                Progress.report(f"    workflow succeeded for bundle {bundle_uuid}: \n {workflow}")
+                                self.analysis_workflow_set.add(workflow.uuid)
+                        else:
+                                Progress.report(f"    Found workflow for bundle {bundle_uuid}: \n {workflow}")
+                except requests.exceptions.HTTPError:
+                    # Progress.report("ENCOUNTERED AN ERROR FETCHING WORKFLOW INFO, RETRY NEXT TIME...")
+                    continue
+
+    def wait_for_secondary_bundles(self):
+        Progress.report("WAITING FOR RESULTS BUNDLE(s) TO BE CREATED...")
+        self.expected_bundle_count = self.dataset.config["expected_bundle_count"]
+        WaitFor(
+            self._count_secondary_bundles_and_report
+        ).to_return_value(value=self.expected_bundle_count)
+    
+    def _count_primary_bundles_and_report(self):
         if self._primary_bundle_count() < self.expected_bundle_count:
             self._count_primary_bundles()
+        Progress.report("  bundles: primary: {}/{}".format(
+            self._primary_bundle_count(),
+            self.expected_bundle_count
+        ))
+        return self._primary_bundles_count()
+
+    def _count_secondary_bundles_and_report(self):
         if self._results_bundles_count() < self.expected_bundle_count:
             self._count_results_bundles()
-        Progress.report("  bundles: primary: {}/{}, results: {}/{}".format(
-            self._primary_bundle_count(),
-            self.expected_bundle_count,
+        Progress.report("  bundles: results: {}/{}".format(
             self._results_bundles_count(),
-            self._primary_bundle_count()
+            self.expected_bundle_count
         ))
         return self._results_bundles_count()
 
@@ -183,6 +253,9 @@ class DatasetRunner:
     def _primary_bundle_count(self):
         self._count_primary_bundles()
         return len(self.primary_uuid_to_secondary_bundle_fqid_map)
+    
+    def _analysis_workflows_count(self):
+        return len(self.analysis_workflow_set)
 
     def _results_bundles_count(self):
         return len(list(v for v in self.primary_uuid_to_secondary_bundle_fqid_map.values() if v))
