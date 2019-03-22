@@ -1,4 +1,5 @@
 import os
+import json
 import requests
 import subprocess
 
@@ -45,7 +46,7 @@ class DatasetRunner:
         gcp_credentials_file_for_analysis = os.environ.get('GCP_ACCOUNT_ANALYSIS_INFO')
         if gcp_credentials_file_for_analysis:
             self.analysis_agent = AnalysisAgent(deployment=deployment, 
-                                                service_account_key=gcp_credentials_file_for_analysis)
+                                                service_account_key=json.loads(gcp_credentials_file_for_analysis))
 
     @property
     def primary_bundle_uuids(self):
