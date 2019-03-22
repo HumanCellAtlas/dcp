@@ -233,7 +233,7 @@ class DatasetRunner:
             self._primary_bundle_count(),
             self.expected_bundle_count
         ))
-        return self._primary_bundles_count()
+        return self._primary_bundle_count()
 
     def _count_secondary_bundles_and_report(self):
         if self._results_bundles_count() < self.expected_bundle_count:
