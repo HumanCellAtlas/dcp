@@ -23,7 +23,6 @@ class DatasetFixture:
     """
 
     def __init__(self, dataset_name, deployment):
-        self.s3_client = boto3.client('s3')
         self.name = dataset_name
         if deployment == "prod":
             # Metadata uses master branch for prod schemas
@@ -86,6 +85,7 @@ class DatasetFixture:
         self.spreadsheet.save(filename=self.metadata_spreadsheet_path)
 
     def _copy_sequence_file(self, source_file_name, target_file_name):
+        s3_client = boto3.client('s3')
         source_s3_prefix = self.config["orig_copy_files_location"]
         source_s3_path = f"{source_s3_prefix}{source_file_name}"
         s3_path_split = source_s3_path.replace("s3://", "").split("/", 1)
@@ -108,7 +108,7 @@ class DatasetFixture:
             'Key': target_key
         }
         print(f"copying {source_s3_path} to {target_s3_path}")
-        self.s3_client.copy(**upload_args)
+        s3_client.copy(**upload_args)
 
     def _fetch_row_with_headers(self, worksheet, row_idx):
         row = {}

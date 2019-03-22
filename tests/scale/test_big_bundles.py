@@ -13,6 +13,9 @@ class TestBigBundles(unittest.TestCase):
     def test_one_submission_with_1000_bundles(self):
         self._run(fixture_name='ss2_1000')
 
+    def test_one_submission_with_2000_bundles(self):
+        self._run(fixture_name='ss2_2000')
+
     def test_one_submission_with_4000_bundles(self):
         self._run(fixture_name='ss2_4000')
 
