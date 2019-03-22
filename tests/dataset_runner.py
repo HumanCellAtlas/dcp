@@ -201,7 +201,7 @@ class DatasetRunner:
             # TODO: remove the following line once there are no more scalability concerns of the analysis agent
             with self.analysis_agent.ignore_logging_msg():
                 try:
-                    workflows = self.analysis_agent.query_by_bundle(bundle_uuid=bundle_uuid)
+                    workflows = self.analysis_agent.query_by_bundle(bundle_uuid=bundle_uuid, with_labels=False)
 
                     # NOTE: this one-bundle-one-workflow mechanism might change in the future
                     if len(workflows) > 1:

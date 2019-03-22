@@ -126,7 +126,7 @@ class AnalysisAgent:
             }
         }
 
-        if additional_query_result_fields:
+        if with_labels:
             query_dict['additionalQueryResultFields'] = ['labels']
 
         if bundle_version:
