@@ -185,7 +185,7 @@ class DatasetRunner:
             Progress.report("WAITING FOR ANALYSIS WORKFLOW(s) TO FINISH...")
             WaitFor(
                 self._count_analysis_workflows_and_report
-            )
+            ).to_return_value(value=self.expected_bundle_count)
             
     def _count_analysis_workflows_and_report(self):
         if self._analysis_workflows_count() < self.expected_bundle_count:
