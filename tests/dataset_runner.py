@@ -190,7 +190,7 @@ class DatasetRunner:
     def _count_analysis_workflows_and_report(self):
         if self._analysis_workflows_count() < self.expected_bundle_count:
             self._count_analysis_workflows()
-        Progress.report("  analysis workflows: {}/{}".format(
+        Progress.report("  successful analysis workflows: {}/{}".format(
             self._analysis_workflows_count(),
             self.expected_bundle_count
         ))

@@ -78,7 +78,7 @@ class Workflow(EntityBase):
         """
         return hash((self.uuid, self.name, self.status))
 
-    def __str__(self, prefix="", verbose=False):
+    def __str__(self, prefix="\t", verbose=False):
 
         workflow_info = colored(f"{prefix}Workflow {self.uuid}\n", 'green') + \
                                 f"{prefix}    name={self.name}\n" \
