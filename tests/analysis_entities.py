@@ -76,7 +76,7 @@ class Workflow(EntityBase):
         Also, in Python3 world, since key lookups are always followed by the equality check, we could care less
         about the hash collisions here.
         """
-        return hash((self.uuid, self.name, self.status))
+        return hash((self.uuid, self.name))
 
     def __str__(self, prefix="\t", verbose=False):
 

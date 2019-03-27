@@ -34,7 +34,7 @@ class AnalysisAgent:
     @staticmethod
     @contextmanager
     def ignore_logging_msg(highest_level=logging.CRITICAL):
-        """A context manager that will prevent any logging messages triggered during the body from being processed.
+        """A context manager that will prevent any logging messages triggered within the context.
 
         Referred to https://gist.github.com/simon-weber/7853144
         two kind-of hacks here:
@@ -140,7 +140,7 @@ class AnalysisAgent:
         all_workflows = [Workflow(wf) for wf in result['results']]
         return all_workflows
 
-    def query_by_project_uuid(self, project_uuid, with_labels=True):
+    def query_by_project_uuid(self, project_uuid, with_labels=False):
         """Query the analysis workflows by the HCA DCP Ingest submission project-UUID, which is essentially one of the
             workflow labels.
 
@@ -162,6 +162,43 @@ class AnalysisAgent:
         query_dict = {
             "label": {
                 "project_uuid": project_uuid
+            }
+        }
+        if with_labels:
+            query_dict['additionalQueryResultFields'] = ['labels']
+        
+        query_dict['label']['caas-collection-name'] = self.cromwell_collection
+
+        response = cwm_api.query(query_dict=query_dict, auth=self.auth)
+        response.raise_for_status()
+        result = response.json()
+        all_workflows = [Workflow(wf) for wf in result['results']]
+        return all_workflows
+
+    def query_by_project_shortname(self, project_shortname, with_labels=False):
+        """Query the analysis workflows by the HCA DCP Ingest submission project-shortname, which is essentially one of the
+            workflow labels.
+
+        TODO: consolidate this function with the above "project_uuid" so we can re-use a lot of code
+
+        Note, due to the open issue: https://github.com/broadinstitute/cromwell/issues/3115, if the result of workflows
+        are more than ~1000, this function will very likely raise an error. The `with_labels` is a flag controlling the
+        behavior of whether to query the workflows asking for the labels in the response, by default it's set to True,
+        so please set it to False if you don't want to risk getting error responses.
+
+        Args:
+            project_shortname (str): HCA DCP Ingest submission project-shortname.
+            with_labels (bool): Optional, whether to return workflow labels in the results. By default, it's False.
+
+        Returns:
+            List[Workflow]: A list of Workflow objects. E.g. [Workflow_1, ..., Workflow_100]
+
+        Raises:
+            requests.exceptions.HTTPError: When the request to Secondary-analysis service (Cromwell) failed.
+        """
+        query_dict = {
+            "label": {
+                "project_shortname": project_shortname
             }
         }
         if with_labels:
