@@ -1,5 +1,41 @@
 # Release Notes
 
+## Staging 2019/03/27
+### Ingest
+
+### Upload
+#### Broker v0.8.9.rc
+* Fixed uploading of file metadata
+
+#### Core v0.9.0.rc
+* Updated process of assigning UUIDs to exported bundles
+* Fixed format of version timestamp
+
+#### Exporter v0.8.0.rc
+* Updated handling of bundle UUID and version timestamp
+* Added handling for duplicate export messages
+
+### Upload v4.2.6
+* Switch Batch cluster instance types from "m4" to "m5" with updated validation ami
+* changes to allow for clean delete of unused environments
+* fix for s3 load to account for recently uploaded files
+* change log group retention in days to match dcp expectations
+* Change validator timeout to 1hr
+* Lock jsonschema at 2.6.0
+* remove lock/unlock api functionality
+* update health check to not be nested within /v1 and check health of db
+* Don't trigger monitoring daemons for non standard environments
+* use dynamic maintainence window for rds
+* Always use Docker images with version numbers
+
+### Metadata Schema
+* module/process/sequencing/plate_based_sequencing.json - v3.0.0
+* Changed well and plate ID to label. Fixes #837.
+* type/biomaterial/cell_suspension.json - v11.0.0
+* Changed well and plate ID to label. Fixes #837.
+* Updates to ‘property_migrations.json’ file for programmatically looking up where fields have moved.
+
+
 ## Staging 2019/03/13
 
 ### Ingest
