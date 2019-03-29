@@ -205,17 +205,17 @@ class DatasetRunner:
             self._batch_count_analysis_workflows_by_project_shortname()
         if self._results_bundles_count() < self.expected_bundle_count:
             self._count_results_bundles()
-        Progress.report("  bundles: primary: {0}/{1}, results: {2}/{3} \n  workflows: running: {4}/{5}, \
-                        succeeded: {6}/{7}, failed: {8}/{9}".format(
+        Progress.report("  primary bundles: {0}/{1} \n  workflows: running: {2}/{3}, \
+                        succeeded: {4}/{5}, failed: {6}/{7} \n   results bundles: {8}/{9} ".format(
             self._primary_bundle_count(),
             self.expected_bundle_count,
-            self._results_bundles_count(),
-            self._primary_bundle_count(),
             self._ongoing_analysis_workflows_count(),
             self._primary_bundle_count(),
             self._successful_analysis_workflows_count(),
             self._primary_bundle_count(),
             self._failed_analysis_workflows_count(),
+            self._primary_bundle_count(),
+            self._results_bundles_count(),
             self._primary_bundle_count()
         ))
         return self._results_bundles_count()
