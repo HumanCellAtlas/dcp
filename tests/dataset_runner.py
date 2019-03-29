@@ -61,6 +61,27 @@ class DatasetRunner:
         return list(self.primary_uuid_to_secondary_bundle_fqid_map.values())
 
     def run(self, dataset_fixture, run_name_prefix="test"):
+        """The entrypoint for running the tests.
+        
+        Note: we use different logic for scaling tests (tests that with a prefix of "scale") and 
+        non-scaling tests (e.g. integration test) during the polling process, to save money and 
+        resources. 
+
+        1. If it's in the scaling test mode, once the bundles get exported, the runner will poll
+        the following info altogether:
+            - primary bundles count
+            - ongoing analysis workflows count
+            - successful analysis workflows count
+            - secondary bundles count
+        so the progress in DSS and Analysis is tracked simultaneously
+        and single workflow failure won't interfere the test
+        
+        2. If the test is not a scaling test, we'd like to poll the following info step by step:
+            - primary bundles count
+            - analysis workflows (name, id, status)
+            - secondary bundles count
+        so if any of the steps failed, the test will fail early instead of timing out.
+        """
         self.dataset = dataset_fixture
         self.set_project_shortname(run_name_prefix)
         self.upload_spreadsheet_and_create_submission()
@@ -72,22 +93,9 @@ class DatasetRunner:
             self.complete_submission()
             if run_name_prefix == "scale":
                 # == Scaling Logic ==
-                # if the test is in the scaling mode, we'd like to poll the following info altogether:
-                #     - primary bundles count
-                #     - ongoing analysis workflows count
-                #     - successful analysis workflows count
-                #     - secondary bundles count
-                # so the progress in DSS and Analysis is tracked simultaneously
-                # and single workflow failure won't interfere the test
                 self.wait_for_primary_bundles_analysis_workflows_and_results_bundles()
             else:
                 # == Non-scaling Logic ==
-                # if the test is not a scaling test, we'd like to poll the following info step by step:
-                #     - primary bundles count
-                #     - analysis workflows (name, id, status)
-                #     - secondary bundles count
-                # so if any of the steps failed, the test will fail early instead of timing out
-                # this will save us time and money
                 self.wait_for_primary_bundles()
                 self.wait_for_analysis_workflows()
                 self.wait_for_secondary_bundles()
@@ -187,10 +195,10 @@ class DatasetRunner:
         Progress.report("WAITING FOR PRIMARY BUNDLE(s), ANALYSIS WORKFLOWS AND RESULTS BUNDLE(s)...")
         self.expected_bundle_count = self.dataset.config["expected_bundle_count"]
         WaitFor(
-            self._count_primary_bundles_analysis_workflows_and_results_bundles_and_report
+            self._count_primary_bundles_analysis_workflows_and_results_bundles
         ).to_return_value(value=self.expected_bundle_count)
 
-    def _count_primary_bundles_analysis_workflows_and_results_bundles_and_report(self):
+    def _count_primary_bundles_analysis_workflows_and_results_bundles(self):
         if self._primary_bundle_count() < self.expected_bundle_count:
             self._count_primary_bundles()
         if self._analysis_workflows_count() < self.expected_bundle_count:
@@ -263,10 +271,10 @@ class DatasetRunner:
                             raise Exception(f"The status of workflow {workflow.uuid} is: {workflow.status}")
                         if workflow.status == 'Succeeded':
                             if workflow not in self.analysis_workflow_set:
-                                Progress.report(f"    workflow succeeded for bundle {bundle_uuid}: \n {workflow}")
+                                Progress.report(f"    workflow succeeded for bundle {bundle_uuid}: \n     {workflow}")
                                 self.analysis_workflow_set.add(workflow)
                         else:
-                                Progress.report(f"    Found workflow for bundle {bundle_uuid}: \n {workflow}")
+                                Progress.report(f"    Found workflow for bundle {bundle_uuid}: \n     {workflow}")
                 except requests.exceptions.HTTPError:
                     # Progress.report("ENCOUNTERED AN ERROR FETCHING WORKFLOW INFO, RETRY NEXT TIME...")
                     continue
