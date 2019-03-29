@@ -103,7 +103,7 @@ class AnalysisAgent:
         assert len(all_workflows) == total_count == 1
         return Workflow(all_workflows[0])
 
-    def query_by_bundle(self, bundle_uuid, bundle_version=None, with_labels=True):
+    def query_by_bundle(self, bundle_uuid, bundle_version=None, with_labels=False):
         """Query the analysis workflows by their workflow-UUID.
 
         Note, due to the open issue: https://github.com/broadinstitute/cromwell/issues/3115, if the result of workflows
