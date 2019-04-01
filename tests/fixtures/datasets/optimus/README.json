@@ -1,5 +1,5 @@
 {
   "data_files_location": "s3://org-humancellatlas-dcp-test-data/optimus/",
-  "spreadsheet_location": "https://raw.github.com/HumanCellAtlas/metadata-schema/se-update-optimus-test-files/infrastructure_testing_files/current/dcp_integration_test_metadata_1_optimus_10X_bundle.xlsx",
+  "spreadsheet_location": "https://raw.github.com/HumanCellAtlas/metadata-schema/DEPLOYMENT/infrastructure_testing_files/current/dcp_integration_test_metadata_1_optimus_10X_bundle.xlsx",
   "expected_bundle_count": 1
 }
