@@ -212,7 +212,7 @@ class TestOptimusRun(TestEndToEndDCP):
     def test_optimus_run(self):
         runner = DatasetRunner(deployment=self.deployment)
 
-        with Timeout(180 * 60) as to:  # timeout after 3 hours
+        with Timeout(210 * 60) as to:  # timeout after 3 hours
             self.ingest_store_and_analyze_dataset(runner, dataset_fixture='optimus')
             try:
                 self.assertEqual(1, len(runner.primary_bundle_uuids))
