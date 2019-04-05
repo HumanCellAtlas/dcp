@@ -117,47 +117,75 @@ class TestSmartSeq2Run(TestEndToEndDCP):
             except:
                 pass
 
-        # runner.cleanup_primary_and_result_bundles()
+        runner.cleanup_primary_and_result_bundles()
 
         if to.did_timeout:
             raise TimeoutError("test timed out")
 
 
-class Test10xRun(TestEndToEndDCP):
+class TestOptimusRun(TestEndToEndDCP):
 
-    CELLRANGER_10X_ANALYSIS_OUTPUT_FILES_REGEXES = [
-        re.compile('metrics\_summary\.csv$'),
-        re.compile('possorted\_genome\_bam\.bam$'),
-        re.compile('possorted\_genome\_bam\.bam\.bai$'),
-        re.compile('barcodes\.tsv$'),
-        re.compile('genes\.tsv$'),
-        re.compile('matrix\.mtx$'),
-        re.compile('filtered\_gene\_bc\_matrices\_h5.h5$'),
-        re.compile('raw\_gene\_bc\_matrices\_h5.h5$'),
-        re.compile('raw\_barcodes\.tsv$'),
-        re.compile('raw\_genes\.tsv$'),
-        re.compile('raw\_matrix\.mtx$'),
-        re.compile('molecule\_info\.h5$'),
-        re.compile('web\_summary\.html$')
+    OPTIMUS_10X_ANALYSIS_OUTPUT_FILES_REGEXES = [
+        re.compile('merged\.bam$'),
+        re.compile('sparse\_counts\.npz$'),
+        re.compile('sparse\_counts\_row\_index\.npy$'),
+        re.compile('sparse\_counts\_col\_index\.npy$'),
+        re.compile('merged-cell-metrics\.csv\.gz$'),
+        re.compile('merged-gene-metrics\.csv\.gz$'),
+        re.compile('empty\_drops\_result\.csv$'),
+        re.compile('^.+zarr!\.zattrs$'),
+        re.compile('^.+zarr!\.zgroup$'),
+        re.compile('^.+zarr!expression_matrix!\.zgroup$'),
+        re.compile('^.+zarr!expression_matrix!cell_id!\.zarray$'),
+        re.compile('^.+zarr!expression_matrix!cell_id!0$'),
+        re.compile('^.+zarr!expression_matrix!cell_id!1$'),
+        re.compile('^.+zarr!expression_matrix!cell_metadata_numeric!\.zarray$'),
+        re.compile('^.+zarr!expression_matrix!cell_metadata_numeric!0\.0$'),
+        re.compile('^.+zarr!expression_matrix!cell_metadata_numeric_name!\.zarray$'),
+        re.compile('^.+zarr!expression_matrix!cell_metadata_numeric_name!0$'),
+        re.compile('^.+zarr!expression_matrix!expression!\.zarray$'),
+        re.compile('^.+zarr!expression_matrix!expression!0\.0$'),
+        re.compile('^.+zarr!expression_matrix!expression!0\.1$'),
+        re.compile('^.+zarr!expression_matrix!expression!0\.2$'),
+        re.compile('^.+zarr!expression_matrix!expression!0\.3$'),
+        re.compile('^.+zarr!expression_matrix!expression!0\.4$'),
+        re.compile('^.+zarr!expression_matrix!expression!0\.5$'),
+        re.compile('^.+zarr!expression_matrix!expression!1\.0$'),
+        re.compile('^.+zarr!expression_matrix!expression!1\.1$'),
+        re.compile('^.+zarr!expression_matrix!expression!1\.2$'),
+        re.compile('^.+zarr!expression_matrix!expression!1\.3$'),
+        re.compile('^.+zarr!expression_matrix!expression!1\.4$'),
+        re.compile('^.+zarr!expression_matrix!expression!1\.5$'),
+        re.compile('^.+zarr!expression_matrix!gene_id!\.zarray$'),
+        re.compile('^.+zarr!expression_matrix!gene_id!0$'),
+        re.compile('^.+zarr!expression_matrix!gene_id!1$'),
+        re.compile('^.+zarr!expression_matrix!gene_id!2$'),
+        re.compile('^.+zarr!expression_matrix!gene_id!3$'),
+        re.compile('^.+zarr!expression_matrix!gene_id!4$'),
+        re.compile('^.+zarr!expression_matrix!gene_id!5$'),
+        re.compile('^.+zarr!expression_matrix!gene_metadata_numeric!\.zarray$'),
+        re.compile('^.+zarr!expression_matrix!gene_metadata_numeric!0\.0$'),
+        re.compile('^.+zarr!expression_matrix!gene_metadata_numeric_name!\.zarray$'),
+        re.compile('^.+zarr!expression_matrix!gene_metadata_numeric_name!0$')
     ]
 
-    def test_10x_run(self):
+    def test_optimus_run(self):
         runner = DatasetRunner(deployment=self.deployment)
 
-        with Timeout(110 * 60) as to:  # timeout after 1 hour and 50 minutes
-            self.ingest_store_and_analyze_dataset(runner, dataset_fixture='10x')
+        with Timeout(210 * 60) as to:  # timeout after 3.5 hours (same as Gitlab runner setting)
+            self.ingest_store_and_analyze_dataset(runner, dataset_fixture='optimus')
             try:
                 self.assertEqual(1, len(runner.primary_bundle_uuids))
                 self.assertEqual(1, len(runner.secondary_bundle_uuids))
                 expected_files = self.expected_results_bundle_files(runner.primary_bundle_uuids[0],
-                                                                    self.CELLRANGER_10X_ANALYSIS_OUTPUT_FILES_REGEXES)
+                                                                    self.OPTIMUS_10X_ANALYSIS_OUTPUT_FILES_REGEXES)
                 results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuids[0])
-    
+
                 self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
             except:
                 pass
 
-        # runner.cleanup_primary_and_result_bundles()
+        runner.cleanup_primary_and_result_bundles()
 
         if to.did_timeout:
             raise TimeoutError("test timed out")

@@ -1,5 +1,98 @@
 # Release Notes
 
+## Staging 2019/03/27
+### Ingest
+
+### Upload
+#### Broker v0.8.9.rc
+* Fixed uploading of file metadata
+
+#### Core v0.9.0.rc
+* Updated process of assigning UUIDs to exported bundles
+* Fixed format of version timestamp
+
+#### Exporter v0.8.0.rc
+* Updated handling of bundle UUID and version timestamp
+* Added handling for duplicate export messages
+
+### Upload v4.2.6
+* Switch Batch cluster instance types from "m4" to "m5" with updated validation ami
+* changes to allow for clean delete of unused environments
+* fix for s3 load to account for recently uploaded files
+* change log group retention in days to match dcp expectations
+* Change validator timeout to 1hr
+* Lock jsonschema at 2.6.0
+* remove lock/unlock api functionality
+* update health check to not be nested within /v1 and check health of db
+* Don't trigger monitoring daemons for non standard environments
+* use dynamic maintainence window for rds
+* Always use Docker images with version numbers
+
+### Metadata Schema
+* module/process/sequencing/plate_based_sequencing.json - v3.0.0
+* Changed well and plate ID to label. Fixes #837.
+* type/biomaterial/cell_suspension.json - v11.0.0
+* Changed well and plate ID to label. Fixes #837.
+* Updates to ‘property_migrations.json’ file for programmatically looking up where fields have moved.
+
+## Staging 2019/03/13
+
+### Ingest
+#### Core v0.8.5.rc
+* Exclude property_migrations file when retrieving latest schemas from s3 bucket listing
+* Log INFO messages
+* Fix intermittent issue where file validation fails due to many validation events
+* Find by validation ID using the ID of the validation job
+* Always setting to DRAFT when updating a file's cloudUrl/checksums
+
+#### Validator v0.6.1.rc
+* Bug fix validating files which do not trigger job
+* Handling errors
+* Added checking of checksum when triggering validation job
+* Added methods in ingest-client for fetching file checksum info
+* Bug fix when refusing to validate File resources with no content/metadata
+* Security patches
+* Targetting a newer version of the fastq validation image
+
+### Upload Service v4.2.4
+* Use write/read for s3 consistency on s3 put
+
+### Azul deployed/staging/2019-03-13__10-49
+
+* 96dfd2f9 Fix: DSS proxy test fails on integration deployment
+* c0b82d25 Prevent echoing environment variables containing secrets
+* 53e40c09 Gitlab posts status check on Github
+* 104ec775 Add missing Gitlab permissions for deploying a main branch
+* e8e044a6 Improve integration testing of subscriptions
+* 3de56679 Add sandbox deployment for validating PRs and CI/CD experiments
+* c8dd5483 Document CI/CD on Gitlab
+* 1202d507 Improve `make clean` and clean cached HCA swagger spec
+* a26d4619 Force destruction of non-empty buckets if applicable
+* ff217aaa Minor cosmetic fixes
+* e28d3599 Continuous deployment for lesser environments (#239)
+* 1f795b42 Add `auto_apply` and `auto_deploy` targets to terraform/Makefile
+* 3400fd38 Add AWS service model and script that produces it
+* a30cb73e Gitlab builds custom Docker image to run actual build on
+* 8bed2fe9 Ensure that tests don't use instance profile credentials
+* 280a3a1b Fix: Manifest requests use wrong type for Retry-After
+* 1772f7da Integration test honors Retry-After header (#752)
+* caf7fb0f Cosmetic fixes to integration test
+* 9ff12972 Validate syntax for incoming notifications (#736)
+* 973b28e7 Changed notification endpoint response status code from 200 to 202
+* eb744299 Include DOS file URL in BDBag (#749)
+* 4adccda1 Removed duplicate `indexer_endpoint` property in Config (#728)
+* a485f3a2 Fix sorting by `fileSize` in service (#713)
+* b66023d1 Pass `subscription_type` when subscribing to DSS (#771)
+* 921c6f7a Fix `sample_id` to be specimen's `document_id` (#744)
+* 2bbd08df Fix bdbag upload to S3 (#743)
+* 06ca56c7 Test deletion of updated bundle
+* 54eb3cde Test deletion of bundle sharing entities with non-deleted bundles (#424)
+* f82cc6f7 Refactor azul.config so that `azul` doesn't import `azul.deployment`
+* d1158705 Convert static config properties to attributes
+* 4876f101 Separate out Terraform state related to Gitlab resources (#239)
+* 971e8d1e Remove duplicated config properties
+
+
 ## Staging 2019/03/20
 
 ### Ingest v0.6.2.rc
@@ -123,63 +216,6 @@ Version: deployed/staging/2019-03-20__08-46
 * Changed library_construction_approach to library_construction_method to be consistent with other protocols. Fixes #807.
 * Changed sequencing_approach to sequencing_method to be consistent with other protocols. Fixes #807.
 * New `property_migrations.json` files added for programmatically looking up where fields have moved.
-
-## Staging 2019/03/13
-
-### Ingest
-#### Core v0.8.5.rc
-* Exclude property_migrations file when retrieving latest schemas from s3 bucket listing
-* Log INFO messages
-* Fix intermittent issue where file validation fails due to many validation events
-* Find by validation ID using the ID of the validation job
-* Always setting to DRAFT when updating a file's cloudUrl/checksums
-
-#### Validator v0.6.1.rc
-* Bug fix validating files which do not trigger job
-* Handling errors
-* Added checking of checksum when triggering validation job
-* Added methods in ingest-client for fetching file checksum info
-* Bug fix when refusing to validate File resources with no content/metadata
-* Security patches
-* Targetting a newer version of the fastq validation image
-
-### Upload Service v4.2.4
-* Use write/read for s3 consistency on s3 put
-
-### Azul deployed/staging/2019-03-13__10-49
-
-* 96dfd2f9 Fix: DSS proxy test fails on integration deployment
-* c0b82d25 Prevent echoing environment variables containing secrets
-* 53e40c09 Gitlab posts status check on Github
-* 104ec775 Add missing Gitlab permissions for deploying a main branch
-* e8e044a6 Improve integration testing of subscriptions
-* 3de56679 Add sandbox deployment for validating PRs and CI/CD experiments
-* c8dd5483 Document CI/CD on Gitlab
-* 1202d507 Improve `make clean` and clean cached HCA swagger spec
-* a26d4619 Force destruction of non-empty buckets if applicable
-* ff217aaa Minor cosmetic fixes
-* e28d3599 Continuous deployment for lesser environments (#239)
-* 1f795b42 Add `auto_apply` and `auto_deploy` targets to terraform/Makefile
-* 3400fd38 Add AWS service model and script that produces it
-* a30cb73e Gitlab builds custom Docker image to run actual build on
-* 8bed2fe9 Ensure that tests don't use instance profile credentials
-* 280a3a1b Fix: Manifest requests use wrong type for Retry-After
-* 1772f7da Integration test honors Retry-After header (#752)
-* caf7fb0f Cosmetic fixes to integration test
-* 9ff12972 Validate syntax for incoming notifications (#736)
-* 973b28e7 Changed notification endpoint response status code from 200 to 202
-* eb744299 Include DOS file URL in BDBag (#749)
-* 4adccda1 Removed duplicate `indexer_endpoint` property in Config (#728)
-* a485f3a2 Fix sorting by `fileSize` in service (#713)
-* b66023d1 Pass `subscription_type` when subscribing to DSS (#771)
-* 921c6f7a Fix `sample_id` to be specimen's `document_id` (#744)
-* 2bbd08df Fix bdbag upload to S3 (#743)
-* 06ca56c7 Test deletion of updated bundle
-* 54eb3cde Test deletion of bundle sharing entities with non-deleted bundles (#424)
-* f82cc6f7 Refactor azul.config so that `azul` doesn't import `azul.deployment`
-* d1158705 Convert static config properties to attributes
-* 4876f101 Separate out Terraform state related to Gitlab resources (#239)
-* 971e8d1e Remove duplicated config properties
 
 ## Staging 2019/03/06
 
