@@ -60,7 +60,8 @@
 
 ### Optimus pipeline: v0.4.0
 
-## Azul deployed/staging/2019-03-20__08-46
+## Azul 
+Version: deployed/staging/2019-03-20__08-46
 * dbe86cbd Fix: DSS proxy test fails on integration deployment
 * e86d1fb7 Fix handling of missing permissions boundary (#239)
 * 720478a0 Refined timeout conditions (#785)
