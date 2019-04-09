@@ -19,7 +19,7 @@
 * Add formatter and linting check in tests
 
 ## Data Portal
-### Azul
+### Azul deployed/prod/2019-04-09__08-59
 * Fix: staging subscription query
 * Don't require new projects to be whitelisted in staging
 * Merge branch 'develop' into integration
@@ -31,7 +31,7 @@
 * Update Gitlab CE from 11.8.0 to 11.8.3
 * Add cell_suspension.selected_cell_type (#800)
 * Delete file_metadata_to_csv.py (#848)
-* Hard-code subscription ID in synthetic reindexer notifiactions (#382)
+* Hard-code subscription ID in synthetic re-indexer notifications (#382)
 * kibana-proxy.pl uses containers for signing proxy and Kibana
 * Clean-up README.md
 * Fixed error responses for `/repository/{entity}/{uuid}` endpoints (#355, #448)
