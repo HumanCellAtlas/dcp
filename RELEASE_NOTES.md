@@ -19,7 +19,7 @@
 * Add formatter and linting check in tests
 
 ## Data Portal
-### Azul deployed/prod/2019-04-09__08-59
+### Azul deployed/prod/2019-04-09__08-59 (d91f3b10)
 * Fix: staging subscription query
 * Don't require new projects to be whitelisted in staging
 * Merge branch 'develop' into integration
