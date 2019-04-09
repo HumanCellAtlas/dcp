@@ -105,8 +105,8 @@ class TestSmartSeq2Run(TestEndToEndDCP):
         runner = DatasetRunner(deployment=self.deployment)
 
         with Timeout(110 * 60) as to:  # timeout after 1 hour and 50 minutes
-            self.ingest_store_and_analyze_dataset(runner, dataset_fixture='Smart-seq2')
             try:
+                self.ingest_store_and_analyze_dataset(runner, dataset_fixture='Smart-seq2')
                 self.assertEqual(1, len(runner.primary_bundle_uuids))
                 self.assertEqual(1, len(runner.secondary_bundle_uuids))
                 expected_files = self.expected_results_bundle_files(runner.primary_bundle_uuids[0],
@@ -114,10 +114,8 @@ class TestSmartSeq2Run(TestEndToEndDCP):
                 results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuids[0])
     
                 self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
-            except:
-                pass
-
-        runner.cleanup_primary_and_result_bundles()
+            finally:
+                runner.cleanup_primary_and_result_bundles()
 
         if to.did_timeout:
             raise TimeoutError("test timed out")
@@ -173,8 +171,8 @@ class TestOptimusRun(TestEndToEndDCP):
         runner = DatasetRunner(deployment=self.deployment)
 
         with Timeout(210 * 60) as to:  # timeout after 3.5 hours (same as Gitlab runner setting)
-            self.ingest_store_and_analyze_dataset(runner, dataset_fixture='optimus')
             try:
+                self.ingest_store_and_analyze_dataset(runner, dataset_fixture='optimus')
                 self.assertEqual(1, len(runner.primary_bundle_uuids))
                 self.assertEqual(1, len(runner.secondary_bundle_uuids))
                 expected_files = self.expected_results_bundle_files(runner.primary_bundle_uuids[0],
@@ -182,10 +180,8 @@ class TestOptimusRun(TestEndToEndDCP):
                 results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuids[0])
 
                 self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
-            except:
-                pass
-
-        runner.cleanup_primary_and_result_bundles()
+            finally:
+                runner.cleanup_primary_and_result_bundles()
 
         if to.did_timeout:
             raise TimeoutError("test timed out")

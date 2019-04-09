@@ -1,5 +1,7 @@
 # Data Coordination Platform
 
+[![Snyk Vulnerabilities for GitHub Repo (Specific Manifest)](https://img.shields.io/snyk/vulnerabilities/github/HumanCellAtlas/dcp/requirements.txt.svg?style=flat-square&label=Snyk%20Scripts%20Vulnerabilities&logo=Snyk)](https://snyk.io/test/github/HumanCellAtlas/dcp?targetFile=requirements.txt)
+
 This repository servers two purposes.
 
 1. It contains the manifest of which versions of which components
