@@ -2,6 +2,55 @@
 
 <!-- newest release at the top please) -->
 
+# Prod 2019/04/09
+
+## Ingest
+### Ingest-ui v0.9.0
+* Configuring whitelisted domains thru env vars
+### Ingest-validator v0.6.3
+* Robust nack()ing of unprocessable messages
+
+## Secondary Analysis
+### Optimus v1.0.0
+* The first major version release for the Optimus pipeline
+### Falcon v0.3.0 
+* Add status endpoint to check health of falcon threads
+* Add snyk github integration
+* Add formatter and linting check in tests
+
+## Data Portal
+### Azul deployed/prod/2019-04-09__08-59 (d91f3b10)
+* Fix: staging subscription query
+* Don't require new projects to be whitelisted in staging
+* Merge branch 'develop' into integration
+* Run `terraform plan` before `apply -auto-approve` on Gitlab
+* Include `prod`'s URL shortening bucket in security boundary
+* Grant Gitlab write access to Elasticsearch log groups (#825)
+* Add Gitlab instance for `prod` (#748)
+* Fix merge error in Terraform config for Gitlab
+* Update Gitlab CE from 11.8.0 to 11.8.3
+* Add cell_suspension.selected_cell_type (#800)
+* Delete file_metadata_to_csv.py (#848)
+* Hard-code subscription ID in synthetic re-indexer notifications (#382)
+* kibana-proxy.pl uses containers for signing proxy and Kibana
+* Clean-up README.md
+* Fixed error responses for `/repository/{entity}/{uuid}` endpoints (#355, #448)
+* Update cheatsheet for deployment / promotion (#797)
+* Revert "Have Gitlab create deployment tags (on gitlab fork)"
+* Have Gitlab create deployment tags (on gitlab fork)
+* Don't require new projects to be whitelisted in staging
+* Exclude old Tissue Sensitivity project on `prod` (#870)
+* Skip obsolete bundle versions when reindexing (#868)
+
+## Metadata Schema
+### module/protocol/channel.json - v2.0.3
+### type/protocol/imaging/imaging_protocol.json - v11.0.13
+### type/project/project.json - v11.1.0
+* Added optional biostudies_accesssion field. Fixes #852.
+
+
+
+
 # Prod 2019/04/02
 
 ## Ingest
