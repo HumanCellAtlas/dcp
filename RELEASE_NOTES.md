@@ -1,5 +1,77 @@
 # Release Notes
 
+## Staging 2019/04/04
+### Ingest
+#### Validator v0.6.3.rc
+* Validator fixes for non-recoverable errors
+
+#### UI v0.1.0.rc
+* UI release
+
+### Upload v4.2.7
+* No important functional changes.
+
+### Secondary Analysis
+#### Optimus v0.1.0
+* The first major version release for the Optimus pipeline.
+
+#### Falcon v0.3.0
+* Add status endpoint to check health of falcon threads
+* Add snyk github integration
+* Add formatter and linting check in tests
+
+### Data Portal
+#### Azul deployed/staging/2019-04-04__09-23 (b158c00)
+* Don't require new projects to be whitelisted in staging
+* Run `terraform plan` before `apply -auto-approve` on Gitlab
+* Include `prod`'s URL shortening bucket in security boundary
+* Grant Gitlab write access to Elasticsearch log groups (#825)
+* Add Gitlab instance for `prod` (#748)
+* Update Gitlab CE from 11.8.0 to 11.8.3
+* Add cell_suspension.selected_cell_type (#800)
+* Delete file_metadata_to_csv.py (#848)
+* Hard-code subscription ID in synthetic reindexer notifiactions (#382)
+* kibana-proxy.pl uses containers for signing proxy and Kibana
+* Clean-up README.md
+* Fixed error responses for `/repository/{entity}/{uuid}` endpoints (#355, #448)
+* Update cheatsheet for deployment / promotion (#797)
+* Revert "Have Gitlab create deployment tags (on gitlab fork)"
+* Have Gitlab create deployment tags (on gitlab fork)
+* Don't require new projects to be whitelisted in staging
+* Fix manifest integration test on `integration` (#847)
+* Include Grafana dashboard definition for Data Portal and Browser (#815)
+* Updates Grafana dashboard uid and name for Azul (#816)
+* Blocks csv, txt, pdf and all zarr! (except .zarr!.zattrs) files  (#807)
+* Ignores files blocked by data-browser (#807)
+* Added option to split tsv by project (#807)
+* Added file_metadata_to_csv.py to /scripts (#807)
+* Names of TSV files in BDBag use plural (#842)
+* Omit content disposition header from BDBag responses (#841)
+* Skip indexing part of integration test on `prod`
+* Consolidate Elasticsearch instances for lesser main deployments (#809)
+* Pin dcplib to 1.5.1 as 1.6.0 breaks the build
+* Add BDBag support to new manifest endpoint (#827)
+* Make manifest column names consistent with metadata schema (#792)
+* Relax assertion on `file_version` in DRS endpoint (#828)
+* Moved bundle deletion functionality to AzulClient
+* Require auth for notifications (#96)
+* Changing definition of self.indexer_url in AzulClient
+* Renamed Reindexer class to AzulClient
+* Check BDBag endpoint during integration test (#565)
+* Enable monitoring and Grafana publishing in sandbox deployment
+* Distinguish Azul and Data Portal monitoring resources (#787)
+* Consolidate Elasticsearch instances for lesser main deployments (#809)
+* Pin dcplib to 1.5.1 as 1.6.0 breaks the build
+
+### Metadata Schema
+* module/protocol/channel.json - v2.0.3
+* type/protocol/imaging/imaging_protocol.json - v11.0.13
+* type/project/project.json - v11.1.0
+* Changed example and guidelines in filter_range. Fixes#878.
+* Changed example and guidelines in filter_range. Fixes#878.
+* Added optional biostudies_accesssion field. Fixes #852.
+
+
 ## Staging 2019/03/27
 ### Ingest
 
