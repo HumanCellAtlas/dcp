@@ -1,5 +1,18 @@
 # Release Notes
 
+## Staging 2019/04/10
+### Ingest
+#### Ingest-ui v0.9.1.rc
+* Presenting all validation errors
+
+### Data Browser
+#### Azul 857fcaebca2d6905532ab3debfdb672c4d18d318
+* 5523064 Minimal support for imaging data sets (#881)
+* b344ea9 Rename `es_results` to `hits` in indexer tests
+* 9ab393a Add test for filtering by project UUID aka `projectId` (#796)
+* fe5b68e Include DRS endpoint in integration test (#789, #790)
+* 760388b Work around AWS Step Function's eventual consistency (#877)
+
 ## Staging 2019/04/04
 ### Ingest
 #### Validator v0.6.3.rc
