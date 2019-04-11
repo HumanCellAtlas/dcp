@@ -24,7 +24,7 @@ deployed_component_versions:
   greenbox:
     greenbox-falcon: v0.3.0
     greenbox-lira: v0.19.0
-    greenbox-pipeline-tools: v0.48.1
+    greenbox-pipeline-tools: v0.48.2
     greenbox-skylab:
       smartseq2: smartseq2_v2.2.0
       tenx: optimus_v1.0.0
