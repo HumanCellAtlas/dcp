@@ -130,7 +130,7 @@ class TestOptimusRun(TestEndToEndDCP):
         re.compile('sparse\_counts\_col\_index\.npy$'),
         re.compile('merged-cell-metrics\.csv\.gz$'),
         re.compile('merged-gene-metrics\.csv\.gz$'),
-        #re.compile('empty\_drops\_result\.csv$'),
+        re.compile('empty\_drops\_result\.csv$'),
         re.compile('^.+zarr!\.zattrs$'),
         re.compile('^.+zarr!\.zgroup$'),
         re.compile('^.+zarr!expression_matrix!\.zgroup$'),
