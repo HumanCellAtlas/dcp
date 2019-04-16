@@ -16,8 +16,8 @@
 * Update and add settings for the linting test
 * Pass empty drops output to submit wdl
 
-## Data Portal
-### Azul 4847ce79732b4606332fde9439c7cd64241308b6
+## Azul 
+### Version: 4847ce79732b4606332fde9439c7cd64241308b6
 * 4847ce79 Exclude old Mouse Melanoma project on `prod` (#895)
 * 5523064b Minimal support for imaging data sets (#881)
 * b344ea9c Rename `es_results` to `hits` in indexer tests
