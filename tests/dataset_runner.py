@@ -369,20 +369,42 @@ class DatasetRunner:
         ).to_return_value(value=True)
 
     def _assert_data_browser_bundles(self, project_shortname):
-        try:
-            expected_bundle_uuids = set(self.primary_bundle_uuids).union(self.secondary_bundle_uuids)
-            files = self.azul_agent.get_entities_by_project('files', project_shortname)
-            bundle_uuids = {bundle['bundleUuid'] for file in files for bundle in file['bundles']}
-            assert bundle_uuids == expected_bundle_uuids
-            project_shortnames = {project_short_name for file in files for project in file['projects']
-                                  for project_short_name in project['projectShortname']}
-            assert project_shortnames == {project_shortname}
-        except AssertionError as e:
-            Progress.report(f"Exception occurred: {e}")
+        # Numbers here correspond to references to files for each bundle (AKA contributions). We must wait for all files
+        # references to be indexed before we continue to cleanup in order to avoid potential races.
+        # A file reference is a contribution if it appears in the bundle with "indexed": false.
+        # For ss2 we have 2 fastqs in the primary bundle, the 2 fastqs and 18 other contributions from the secondary;
+        # for optimus we have 3 fastqs in the primary bundle; the 3 fastqs and 7 other contributions from the secondary;
+        # for a total of 22 and 13 contributions respectively for each project
+        num_contributions_by_project = {'Smart-seq2': 22, 'optimus': 14}
+        expected_bundle_uuids = set(self.primary_bundle_uuids).union(self.secondary_bundle_uuids)
+        files = self.azul_agent.get_entities_by_project('files', project_shortname)
+        bundle_uuids = {bundle['bundleUuid'] for file in files for bundle in file['bundles']}
+        # We're care only about the intersection because it's possible for other bundles to reference the same files
+        bundle_uuids.intersection_update(expected_bundle_uuids)
+        project_shortnames = {project_short_name
+                              for file in files
+                              for project in file['projects']
+                              for project_short_name in project['projectShortname']}
+        num_contributions = sum(1 for f in files for b in f['bundles'] if b['bundleUuid'] in expected_bundle_uuids)
+
+        Progress.report(f"{len(bundle_uuids)}/{len(expected_bundle_uuids)} distinct bundles")
+        Progress.report(f"{num_contributions}/{num_contributions_by_project[self.dataset.name]}"
+                        f" distinct file contributions")
+
+        if num_contributions < num_contributions_by_project[self.dataset.name]:
             return False
+        elif num_contributions > num_contributions_by_project[self.dataset.name]:
+            raise AssertionError('More contributions than expected were found in the Azul index')
+
+        if bundle_uuids < expected_bundle_uuids:
+            return False
+
+        if project_shortnames:
+            assert project_shortnames == {project_shortname}
         else:
-            Progress.report(f"{len(bundle_uuids)}/{len(expected_bundle_uuids)}")
-            return True
+            return False
+
+        return True
 
     def _assert_project_removed_from_azul(self):
         results_empty = [len(self.azul_agent.get_entities_by_project(entity, self.project_shortname)) == 0
