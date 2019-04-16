@@ -2,6 +2,31 @@
 
 <!-- newest release at the top please) -->
 
+# Prod 2019/04/16
+
+## Ingest
+### Ingest-ui v0.9.1
+* Presenting all validation errors
+
+## Secondary Analysis
+### Pipeline-tools: v0.48.2
+* Comment out conditions for checking jenkins tests in pull approve
+* Add snyk check
+* Add security.txt file to indicate where security issues should be logged
+* Update and add settings for the linting test
+* Pass empty drops output to submit wdl
+
+## Data Portal
+### Azul 4847ce79732b4606332fde9439c7cd64241308b6
+* 4847ce79 Exclude old Mouse Melanoma project on `prod` (#895)
+* 5523064b Minimal support for imaging data sets (#881)
+* b344ea9c Rename `es_results` to `hits` in indexer tests
+* 9ab393a7 Add test for filtering by project UUID aka `projectId` (#796)
+* fe5b68e2 Include DRS endpoint in integration test (#789, #790)
+* 760388bc Work around AWS Step Function's eventual consistency (#877)
+* 2339f348 Don't require new projects to be whitelisted in staging
+
+
 # Prod 2019/04/09
 
 ## Ingest
