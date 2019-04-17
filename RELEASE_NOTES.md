@@ -1,5 +1,29 @@
 # Release Notes
 
+## Staging 2019/04/17
+
+## Secondary Analysis
+### Optimus optimus_v1.0.0_increase_empty_drops_memory
+* Increase the memory allocated to the Optimus RunEmptyDrops task 
+
+## Azul
+### Version: acac64791e271c2a46069ce8f950b2f0ba9f98e1
+* 4847ce79 Exclude old Mouse Melanoma project on `prod` (#895)
+* fc06b2e4 Add facet for sequencing_protocol.paired_end (#867)
+* fe2f9fe6 Increase CloudWatch log retention to 1827 days (#832)
+* d63ec67f Indexer logs the time needed to download bundle metadata
+* b622852e Fix: /repository/…/{uuid} only works for projects (#879)
+* 5ca1f11e Prevent tagging on wrong deployment
+* 8c62e847 [1/2] Filters used in IT are more portable between deployments
+* fe8ee3cf [2/2] Filters used in IT are more portable between deployments
+* ae3d5967 Support for multiple files per BDBag TSV row (#866)
+* 67d3c5fd Refactor manifest TSV generation
+* dd7ff978 Added script for uploading metadata TSVs to a S3 bucket (#860)
+* 3a3b394b Add --no-ff flag to README section about releases (#891)
+* 1b9e0af0 Add timestamp to integration test logging (#858)
+* ec9def7b README describes getting personal Google Cloud credentials (#872)
+
+
 ## Staging 2019/04/10
 ### Ingest
 #### Ingest-ui v0.9.1.rc
