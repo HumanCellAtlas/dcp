@@ -27,6 +27,10 @@ class DataStoreAgent:
         except SwaggerAPIException:
             return []
 
+    def search_iterate(self, query, replica='aws'):
+        for hit in self.client.post_search.iterate(replica=replica, es_query=query):
+            yield hit
+
     def download_bundle(self, bundle_uuid, target_folder):
         Progress.report(f"Downloading bundle {bundle_uuid}:\n")
         manifest = self.bundle_manifest(bundle_uuid)

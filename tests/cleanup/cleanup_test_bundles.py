@@ -1,0 +1,49 @@
+#!/usr/bin/env python3
+
+import os
+import unittest
+
+from ..data_store_agent import DataStoreAgent
+
+class CleanupTestBundles(unittest.TestCase):
+    test_bundle_query = {
+      "query": {
+        "bool": {
+          "should": [
+            {
+              "prefix": {
+                "files.project_json.project_core.project_short_name": "prod"
+              }
+            }
+          ],
+          "must_not": [
+            {
+              "match": {
+                "files.analysis_process_json.type.text": "analysis"
+              }
+            }
+          ]
+        }
+      }
+    }
+
+    def setUp(self):
+        self.data_store = DataStoreAgent(deployment="prod")
+
+    def test_find_test_bundles(self):
+        for fqid in self._test_bundles():
+            print(fqid)
+
+    def test_tombstone_test_bundles(self):
+        for fqid in self._test_bundles():
+            uuid, version = fqid.split(".", 1)
+            print("Tombstoning bundle", uuid, version)
+            self.data_store.tombstone_bundle(uuid)
+
+    def _test_bundles(self):
+        for hit in self.data_store.search_iterate(self.test_bundle_query):
+            yield hit['bundle_fqid']
+
+
+if __name__ == '__main__':
+    unittest.main()
