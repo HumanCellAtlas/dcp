@@ -243,7 +243,7 @@ class DatasetRunner:
             self._successful_analysis_workflows_count(),
             self.expected_bundle_count
         ))
-        return self._analysis_workflows_count()
+        return self._successful_analysis_workflows_count()
 
     def _batch_count_analysis_workflows_by_project_shortname(self):
         """This should only be used for the scaling test"""
