@@ -90,10 +90,11 @@ class AnalysisAgent:
         """
         query_dict = {
             'id': uuid,
-            'additionalQueryResultFields': ['labels']
+            'additionalQueryResultFields': ['labels'],
+            'label': {
+                'caas-collection-name': self.cromwell_collection
+            }
         }
-        
-        query_dict['label']['caas-collection-name'] = self.cromwell_collection
 
         response = cwm_api.query(query_dict=query_dict, auth=self.auth)
         response.raise_for_status()

@@ -116,9 +116,9 @@ class TestSmartSeq2Run(TestEndToEndDCP):
                 self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
             finally:
                 runner.cleanup_primary_and_result_bundles()
-                runner.cleanup_analysis_workflows()
 
         if to.did_timeout:
+            runner.cleanup_analysis_workflows()
             raise TimeoutError("test timed out")
 
 
@@ -183,9 +183,9 @@ class TestOptimusRun(TestEndToEndDCP):
                 self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
             finally:
                 runner.cleanup_primary_and_result_bundles()
-                runner.cleanup_analysis_workflows()
 
         if to.did_timeout:
+            runner.cleanup_analysis_workflows()
             raise TimeoutError("test timed out")
 
 
