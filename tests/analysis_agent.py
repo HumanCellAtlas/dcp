@@ -211,3 +211,21 @@ class AnalysisAgent:
         result = response.json()
         all_workflows = [Workflow(wf) for wf in result['results']]
         return all_workflows
+
+    def abort_workflow(self, uuid):
+        """Abort a running analysis workflow in Cromwell by its workflow-UUID.
+
+        Args:
+            uuid (str): Secondary-analysis service (Cromwell) workflow UUID.
+
+        Returns:
+            requests.Response.json: JSON response from Cromwell.
+
+        Raises:
+            requests.exceptions.HTTPError: When the request to Secondary-analysis service (Cromwell) failed.
+
+        """
+        response = cwm_api.abort(uuid=uuid, auth=self.auth)
+        response.raise_for_status()
+        result = response.json()
+        return result
