@@ -2,6 +2,24 @@
 
 <!-- newest release at the top please) -->
 
+# Prod 2019/04/23
+
+## Azul 
+### Version: d7c2e6d0dde94f884da91a8a77e9defc8a5a8c22
+* fc06b2e Add facet for sequencing_protocol.paired_end (#867)
+* fe2f9fe Increase CloudWatch log retention to 1827 days (#832)
+* d63ec67 Indexer logs the time needed to download bundle metadata
+* b622852 Fix: /repository/…/{uuid} only works for projects (#879)
+* 5ca1f11 Prevent tagging on wrong deployment
+* 8c62e84 Filters used in IT are more portable between deployments
+* fe8ee3c Filters used in IT are more portable between deployments
+* ae3d596 Support for multiple files per BDBag TSV row (#866)
+* 67d3c5f Refactor manifest TSV generation
+* dd7ff97 Added script for uploading metadata TSVs to a S3 bucket (#860)
+* 3a3b394 Add --no-ff flag to README section about releases (#891)
+* 1b9e0af Add timestamp to integration test logging (#858)
+
+
 # Prod 2019/04/16
 
 ## Ingest
