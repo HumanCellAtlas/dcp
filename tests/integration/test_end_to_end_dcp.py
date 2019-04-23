@@ -118,6 +118,7 @@ class TestSmartSeq2Run(TestEndToEndDCP):
                 runner.cleanup_primary_and_result_bundles()
 
         if to.did_timeout:
+            runner.cleanup_analysis_workflows()
             raise TimeoutError("test timed out")
 
 
@@ -184,6 +185,7 @@ class TestOptimusRun(TestEndToEndDCP):
                 runner.cleanup_primary_and_result_bundles()
 
         if to.did_timeout:
+            runner.cleanup_analysis_workflows()
             raise TimeoutError("test timed out")
 
 
