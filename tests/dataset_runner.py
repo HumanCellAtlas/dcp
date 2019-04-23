@@ -237,13 +237,13 @@ class DatasetRunner:
             ).to_return_value(value=self.expected_bundle_count)
             
     def _count_analysis_workflows_and_report(self):
-        if self._analysis_workflows_count() < self.expected_bundle_count:
+        if self._successful_analysis_workflows_count() < self.expected_bundle_count:
             self._count_analysis_workflows()
         Progress.report("  successful analysis workflows: {}/{}".format(
-            self._analysis_workflows_count(),
+            self._successful_analysis_workflows_count(),
             self.expected_bundle_count
         ))
-        return self._analysis_workflows_count()
+        return self._successful_analysis_workflows_count()
 
     def _batch_count_analysis_workflows_by_project_shortname(self):
         """This should only be used for the scaling test"""
@@ -261,6 +261,7 @@ class DatasetRunner:
             with self.analysis_agent.ignore_logging_msg():
                 try:
                     workflows = self.analysis_agent.query_by_bundle(bundle_uuid=bundle_uuid, with_labels=False)
+                    self.analysis_workflow_set.update(workflows)
 
                     # NOTE: this one-bundle-one-workflow mechanism might change in the future
                     if len(workflows) > 1:
@@ -270,11 +271,9 @@ class DatasetRunner:
                         if workflow.status in ('Failed', 'Aborted', 'Aborting'):
                             raise Exception(f"The status of workflow {workflow.uuid} is: {workflow.status}")
                         if workflow.status == 'Succeeded':
-                            if workflow not in self.analysis_workflow_set:
-                                Progress.report(f"    workflow succeeded for bundle {bundle_uuid}: \n     {workflow}")
-                                self.analysis_workflow_set.add(workflow)
+                            Progress.report(f"    workflow succeeded for bundle {bundle_uuid}: \n     {workflow}")
                         else:
-                                Progress.report(f"    Found workflow for bundle {bundle_uuid}: \n     {workflow}")
+                            Progress.report(f"    Found workflow for bundle {bundle_uuid}: \n     {workflow}")
                 except requests.exceptions.HTTPError:
                     # Progress.report("ENCOUNTERED AN ERROR FETCHING WORKFLOW INFO, RETRY NEXT TIME...")
                     continue
@@ -412,6 +411,13 @@ class DatasetRunner:
         Progress.report("Project removed from index files: {}, projects: {}, specimens: {}".format(*results_empty))
         return all(results_empty)
 
+    def _assert_workflows_are_aborted(self, workflows):
+        statuses = []
+        for analysis_workflow in workflows:
+            workflow = self.analysis_agent.query_by_workflow_uuid(uuid=analysis_workflow.uuid)
+            statuses.append(workflow.status)
+        return all([status == 'Aborted' for status in statuses])
+
     def cleanup_primary_and_result_bundles(self):
         for primary_bundle_uuid, secondary_bundle_fqid in self.primary_uuid_to_secondary_bundle_fqid_map.items():
             self.data_store.tombstone_bundle(primary_bundle_uuid)
@@ -421,6 +427,15 @@ class DatasetRunner:
         Progress.report("WAITING FOR BUNDLES TO BE REMOVED FROM AZUL ")
         WaitFor(
             self._assert_project_removed_from_azul
+        ).to_return_value(True)
+
+    def cleanup_analysis_workflows(self):
+        ongoing_workflows = [wf for wf in self.analysis_workflow_set if wf.status in ('Submitted', 'On Hold', 'Running')]
+        for analysis_workflow in ongoing_workflows:
+            self.analysis_agent.abort_workflow(uuid=analysis_workflow.uuid)
+        Progress.report("WAITING FOR WORKFLOW(S) TO BE ABORTED IN CROMWELL")
+        WaitFor(
+            self._assert_workflows_are_aborted, ongoing_workflows
         ).to_return_value(True)
 
     def retrieve_zarr_output_from_matrix_service(self):
