@@ -2,7 +2,7 @@
 
 # Staging 2019/04/24
 ## Data Store
-### Version:
+### Version:  2019-04-24-15-26-53-staging.release
 * 9098aa1 Bundle manifest memcache replica specific (#2068)
 * 559c6bf Amend secret checking error handling to catch return code. (#2063)
 * 8d81cc6 Raise if an error occurs while secret checking. (#2062)
