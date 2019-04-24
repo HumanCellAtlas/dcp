@@ -1,7 +1,76 @@
 # Release Notes
 
 # Staging 2019/04/17
+## Data Store
+### Version:
+* 9098aa1 Bundle manifest memcache replica specific (#2068)
+* 559c6bf Amend secret checking error handling to catch return code. (#2063)
+* 8d81cc6 Raise if an error occurs while secret checking. (#2062)
+* b4c834c Modify file names in metadata document (#2060)
+* 07b271d Lambda invocation test examines correct JSON object (#2061)
+* 7b483c5 Consistent JMESPath metadata doc inclusion (#2059)
+* 8433503 Production Smoke Tests (#2029)
+* 91049a0 Spelling error. (#2056)
+* 7af5da0 modifed description for /PUT/Collection (#2046)
+* ccbc514 Dynamic DynamoDB Table Fetching (#2052)
+* 7631c96 Send deletion JMESPath notifications (#2049)
+* 0216271 Lambda invoke test outputs complete response (#2053)
+* cb82880 Event relay forwards object deletion events. (#2048)
+* 9194e61 Bucket var input for caching. (#2051)
+* 1598f97 Bundle manifest memcaching (#2043)
+* abca05a Use s3 multipart upload for large bundle manifests (#2020)
+* f43a376 Parallelize JMESPath notification delivery (#2034)
+* b7a95c3 Add parallelization to JMESPath filter doc construction (#2033)
+* 7c68322 Exclude very large bundle manifests from ES document (#2031)
+* ce468b0 Give travis access to notify-v2 queue (#2040)
+* 1cbd5bf changed owner tag (#2035)
+* 42fce7b Owner Tagging Fix (#2026)
+* ec6732a Resource Tagging with Terraform (#2010)
+* 2639cf5 Dissalow PATCH on tombstoned bundles (#2018)
+* 174f133 PATCH /bundle sets new version correctly (#2017)
+* 02aceec Add paging to collections. (#2013)
+* faa9bf7 Add a root collections endpoint. (#2006)
+* ca1d1d3 parallelize bundle file verification (#1992)
+* 71d1ed8 Increase collection verification parallelization (#1995)
+* 5458255 Increase Lambda mem+cpu (#1994)
+* ddc278e Verify deployment  environment variables (#1979)
+* 6e55050 Increase max number of botocore connections (#1993)
+* 6c19414 Update Readme.md Flow
+* 2c9194b Remove dangling reference from infra (#1988)
+* afc6b98 Additional test cases for JWT Audience (#1970)
+* 7a8080b Retain Elasicsearch logs for 5 years (#1987)
+* 2a6a009 Add support for PATCH /bundle (#1978)
+* 65c2410 Implement trufflehog test check. (#1985)
+* 13f1a1b Centralize SECURITY.md, and delete security.txt. (#1983)
+* dbc2942 Add script to ensure consistent credentials. (#1967)
+* 1785abc Swagger docs: follow common style (#1974)
+* 5eb9007 Fix ACM_CERTIFICATE_IDENTIFIER in environment.prod (#1969)
+* 99a25ac Update swagger with explicit retry-after headers. (#1961)
+* 6185db1 Add a security.txt file. (#1965)
+* cfc210a Update deployment documentation (closes 1902)
+* e8bc74a Truncate ci-cd.json to get around the file size restriction AWS imposes. (#1962)
+* 99cdd1d Update get file description. (#1958)
+* 58bd8e5 Fix JMESPath notification race condition (#1956)
+* a12ef7e Change prod bucket names for new encrypted buckets. (#1953)
+* 35f1e49 Add swagger descriptions based on dcp-cli issue #221. (#1930)
+* b925bbd Travis dynamoDB permission additions. (#1954)
+* 7d6ca5b removed hard-coded reference (#1942)
+* 80c6b1a Document subscriptions in swagger (#1916)
+* 519e27a Support GET /bundle paging (#1913)
+* 5b63819 FIx JMESPath notification eventing bug (#1928)
 
+## Azul
+### Version: a55ab35db79e7e079d1512c24b4bc0e0c4e491bc
+* a1deea7 Fix: Terra requires name of first column to end in `_id` (#911)
+* 51d8848 Fix: Terra rejects `.` in column names (#912)
+* 8bf8aae Fix: Terra requires `samples.tsv`, rejects `bundles.tsv` in BDBag (#910)
+* a1b5854 Added security.txt (#761)
+* d5deca6 Added script to disable/reenable lambdas (#238)
+
+
+
+
+# Staging 2019/04/17
 ## Secondary Analysis
 ### Optimus optimus_v1.0.0_increase_empty_drops_memory
 * Increase the memory allocated to the Optimus RunEmptyDrops task 
