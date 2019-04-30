@@ -2,6 +2,48 @@
 
 <!-- newest release at the top please) -->
 
+# Prod 2019/04/30
+## Ingest
+### Validator v0.6.4
+* Only perform file validation if the the File metadata document is valid
+
+## Data Store
+### Version: 2019-04-30-15-17-36-prod.release
+* modified description for /PUT/Collection (#2046)
+* Send deletion JMESPath notifications (#2049)
+* Exclude very large bundle manifests from ES document (#2031)
+* Resource Tagging with Terraform (#2010)
+* Add paging to collections. (#2013)
+* Update Readme.md Flow
+* Retain Elasicsearch logs for 5 years (#1987)
+* Add support for PATCH /bundle (#1978)
+* Centralize SECURITY.md, and delete security.txt. (#1983)
+* Swagger docs: follow common style (#1974)
+* Update swagger with explicit retry-after headers. (#1961)
+* Add a security.txt file. (#1965)
+* Update deployment documentation (closes 1902)
+* Update get file description. (#1958)
+* Change prod bucket names for new encrypted buckets. (#1953)
+* Add swagger descriptions based on dcp-cli issue #221. (#1930)
+* Document subscriptions in swagger (#1916)
+* Support GET /bundle paging (#1913)
+* Fix JMESPath notification eventing bug (#1928)
+
+## Secondary Analysis
+### Pipeline-tools v0.48.3
+* Update version of dcp cli to use at least version 5.1.0, which includes a fix for uploading large files
+
+## Azul
+### Version: 62164e4ec502b9a3549ff537b972e46397a4578a
+* 62164e4 Exclude old BM_PC dataset in prod (#944)
+* 46dc3ec Exclude old neuron_diff dataset in prod (#915)
+* a1deea7 Fix: Terra requires name of first column to end in `_id` (#911)
+* 51d8848 Fix: Terra rejects `.` in column names (#912)
+* 8bf8aae Fix: Terra requires `samples.tsv`, rejects `bundles.tsv` in BDBag (#910)
+* a1b5854 Added security.txt (#761)
+* d5deca6 Added script to disable/reenable lambdas (#238)
+
+
 # Prod 2019/04/23
 
 ## Azul 
