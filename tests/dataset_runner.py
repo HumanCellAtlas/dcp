@@ -407,8 +407,8 @@ class DatasetRunner:
 
     def _assert_project_removed_from_azul(self):
         results_empty = [len(self.azul_agent.get_entities_by_project(entity, self.project_shortname)) == 0
-                         for entity in ['files', 'projects', 'specimens']]
-        Progress.report("Project removed from index files: {}, projects: {}, specimens: {}".format(*results_empty))
+                         for entity in ['files', 'projects', 'samples']]
+        Progress.report("Project removed from index files: {}, projects: {}, samples: {}".format(*results_empty))
         return all(results_empty)
 
     def _assert_workflows_are_aborted(self, workflows):
