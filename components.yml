@@ -29,4 +29,4 @@ deployed_component_versions:
       smartseq2: smartseq2_v2.2.0
       tenx: optimus_v1.0.0_increase_empty_drops_memory
   data-store: integration-2018-08-15-05-55-50.release
-  azul: 8a9be436100bab455b312daf95b0fbc4b1ae2151
+  azul: deployed/integration/2019-05-02__19-17 aa1e0617569f77449cacdd37e59cc771522dafd8
