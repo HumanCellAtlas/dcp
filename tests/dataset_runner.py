@@ -1,8 +1,8 @@
 import os
+import json
 import requests
 import subprocess
 
-from typing import Set
 from urllib.parse import urlparse
 from datetime import datetime
 import boto3
@@ -10,6 +10,7 @@ import boto3
 from .azul_agent import AzulAgent
 from .data_store_agent import DataStoreAgent
 from .ingest_agents import IngestUIAgent, IngestApiAgent
+from .analysis_agent import AnalysisAgent
 from .matrix_agent import MatrixAgent
 from .utils import Progress
 from .wait_for import WaitFor
@@ -28,6 +29,7 @@ class DatasetRunner:
         self.ingest_broker = IngestUIAgent(deployment=deployment)
         self.ingest_api = IngestApiAgent(deployment=deployment)
         self.data_store = DataStoreAgent(deployment=deployment)
+        self.analysis_agent = None
         self.azul_agent = AzulAgent(deployment=deployment)
         self.matrix_agent = MatrixAgent(deployment=deployment)
         self.dataset = None
@@ -39,6 +41,12 @@ class DatasetRunner:
         self.expected_bundle_count = None
         self.primary_uuid_to_secondary_bundle_fqid_map = {}
         self.failure_reason = None
+        self.analysis_workflow_set = set([])
+
+        gcp_credentials_file_for_analysis = os.environ.get('GCP_ACCOUNT_ANALYSIS_INFO')
+        if gcp_credentials_file_for_analysis:
+            self.analysis_agent = AnalysisAgent(deployment=deployment, 
+                                                service_account_key=json.loads(gcp_credentials_file_for_analysis))
 
     @property
     def primary_bundle_uuids(self):
@@ -53,6 +61,27 @@ class DatasetRunner:
         return list(self.primary_uuid_to_secondary_bundle_fqid_map.values())
 
     def run(self, dataset_fixture, run_name_prefix="test"):
+        """The entrypoint for running the tests.
+        
+        Note: we use different logic for scaling tests (tests that with a prefix of "scale") and 
+        non-scaling tests (e.g. integration test) during the polling process, to save money and 
+        resources. 
+
+        1. If it's in the scaling test mode, once the bundles get exported, the runner will poll
+        the following info altogether:
+            - primary bundles count
+            - ongoing analysis workflows count
+            - successful analysis workflows count
+            - secondary bundles count
+        so the progress in DSS and Analysis is tracked simultaneously
+        and single workflow failure won't interfere the test
+        
+        2. If the test is not a scaling test, we'd like to poll the following info step by step:
+            - primary bundles count
+            - analysis workflows (name, id, status)
+            - secondary bundles count
+        so if any of the steps failed, the test will fail early instead of timing out.
+        """
         self.dataset = dataset_fixture
         self.set_project_shortname(run_name_prefix)
         self.upload_spreadsheet_and_create_submission()
@@ -62,10 +91,17 @@ class DatasetRunner:
         self.wait_for_envelope_to_be_validated()
         if self.export_bundles:
             self.complete_submission()
-            self.wait_for_primary_and_results_bundles()
-            if self.dataset.name == "Smart-seq2":
-                self.retrieve_zarr_output_from_matrix_service()
-                self.retrieve_loom_output_from_matrix_service()
+            if run_name_prefix == "scale":
+                # == Scaling Logic ==
+                self.wait_for_primary_bundles_analysis_workflows_and_results_bundles()
+            else:
+                # == Non-scaling Logic ==
+                self.wait_for_primary_bundles()
+                self.wait_for_analysis_workflows()
+                self.wait_for_secondary_bundles()
+            #if self.dataset.name == "Smart-seq2" or self.dataset.name == "optimus":
+            #    self.retrieve_zarr_output_from_matrix_service()
+            #    self.retrieve_loom_output_from_matrix_service()
             self.assert_data_browser_bundles()
 
         if self.failure_reason:
@@ -149,27 +185,119 @@ class DatasetRunner:
         if response.status_code != requests.codes.accepted:
             raise RuntimeError(f"PUT {submit_url} returned {response.status_code}: {response.content}")
         Progress.report("  done.\n")
-
-    def wait_for_primary_and_results_bundles(self):
+    
+    def wait_for_primary_bundles_analysis_workflows_and_results_bundles(self):
         """
-        We used to wait for all primary bundles to be created before starting to look for results.
+        We wait for all primary bundles to be created before starting to look for results in non-scaling tests.
         It appears that with large submissions, results can start to appear before bundle export is finished,
-        so we now monitor both kinds of bundles simultaneously.
+        so we monitor both kinds of bundles simultaneously in scaling tests.
         """
-        Progress.report("WAITING FOR PRIMARY AND RESULTS BUNDLE(s) TO BE CREATED...")
+        Progress.report("WAITING FOR PRIMARY BUNDLE(s), ANALYSIS WORKFLOWS AND RESULTS BUNDLE(s)...")
         self.expected_bundle_count = self.dataset.config["expected_bundle_count"]
         WaitFor(
-            self._count_primary_and_secondary_bundles
+            self._count_primary_bundles_analysis_workflows_and_results_bundles
         ).to_return_value(value=self.expected_bundle_count)
 
-    def _count_primary_and_secondary_bundles(self):
+    def _count_primary_bundles_analysis_workflows_and_results_bundles(self):
         if self._primary_bundle_count() < self.expected_bundle_count:
             self._count_primary_bundles()
+        if self._analysis_workflows_count() < self.expected_bundle_count:
+            self._batch_count_analysis_workflows_by_project_shortname()
         if self._results_bundles_count() < self.expected_bundle_count:
             self._count_results_bundles()
-        Progress.report("  bundles: primary: {}/{}, results: {}/{}".format(
+        Progress.report("  primary bundles: {0}/{1} \n  workflows: running: {2}/{3}, \
+                        succeeded: {4}/{5}, failed: {6}/{7} \n   results bundles: {8}/{9} ".format(
             self._primary_bundle_count(),
             self.expected_bundle_count,
+            self._ongoing_analysis_workflows_count(),
+            self._primary_bundle_count(),
+            self._successful_analysis_workflows_count(),
+            self._primary_bundle_count(),
+            self._failed_analysis_workflows_count(),
+            self._primary_bundle_count(),
+            self._results_bundles_count(),
+            self._primary_bundle_count()
+        ))
+        return self._results_bundles_count()
+
+    def wait_for_primary_bundles(self):
+        Progress.report("WAITING FOR PRIMARY BUNDLE(s) TO BE CREATED...")
+        self.expected_bundle_count = self.dataset.config["expected_bundle_count"]
+        WaitFor(
+            self._count_primary_bundles_and_report
+        ).to_return_value(value=self.expected_bundle_count)
+
+    def wait_for_analysis_workflows(self):
+        if not self.analysis_agent:
+            Progress.report("NO CREDENTIALS PROVIDED FOR ANALYSIS AGENT, SKIPPING WORKFLOW(s) CHECK...")
+        else:
+            Progress.report("WAITING FOR ANALYSIS WORKFLOW(s) TO FINISH...")
+            WaitFor(
+                self._count_analysis_workflows_and_report
+            ).to_return_value(value=self.expected_bundle_count)
+            
+    def _count_analysis_workflows_and_report(self):
+        if self._successful_analysis_workflows_count() < self.expected_bundle_count:
+            self._count_analysis_workflows()
+        Progress.report("  successful analysis workflows: {}/{}".format(
+            self._successful_analysis_workflows_count(),
+            self.expected_bundle_count
+        ))
+        return self._successful_analysis_workflows_count()
+
+    def _batch_count_analysis_workflows_by_project_shortname(self):
+        """This should only be used for the scaling test"""
+        # TODO: remove the following line once there are no more scalability concerns of the analysis agent
+        with self.analysis_agent.ignore_logging_msg():
+            try:
+                workflows = self.analysis_agent.query_by_project_shortname(project_shortname=self.project_shortname, with_labels=False)
+                self.analysis_workflow_set.update(workflows)
+            except requests.exceptions.HTTPError:
+                Progress.report("  something went wrong when querying workflows, skipping for this time...")
+
+    def _count_analysis_workflows(self):
+        for bundle_uuid in self.submission_envelope.bundles():
+            # TODO: remove the following line once there are no more scalability concerns of the analysis agent
+            with self.analysis_agent.ignore_logging_msg():
+                try:
+                    workflows = self.analysis_agent.query_by_bundle(bundle_uuid=bundle_uuid, with_labels=False)
+                    self.analysis_workflow_set.update(workflows)
+
+                    # NOTE: this one-bundle-one-workflow mechanism might change in the future
+                    if len(workflows) > 1:
+                        raise Exception(f"Bundle {bundle_uuid} triggered more than one workflow: {workflows}")
+                    elif len(workflows) == 1:
+                        workflow = workflows[0]
+                        if workflow.status in ('Failed', 'Aborted', 'Aborting'):
+                            raise Exception(f"The status of workflow {workflow.uuid} is: {workflow.status}")
+                        if workflow.status == 'Succeeded':
+                            Progress.report(f"    workflow succeeded for bundle {bundle_uuid}: \n     {workflow}")
+                        else:
+                            Progress.report(f"    Found workflow for bundle {bundle_uuid}: \n     {workflow}")
+                except requests.exceptions.HTTPError:
+                    # Progress.report("ENCOUNTERED AN ERROR FETCHING WORKFLOW INFO, RETRY NEXT TIME...")
+                    continue
+
+    def wait_for_secondary_bundles(self):
+        Progress.report("WAITING FOR RESULTS BUNDLE(s) TO BE CREATED...")
+        self.expected_bundle_count = self.dataset.config["expected_bundle_count"]
+        WaitFor(
+            self._count_secondary_bundles_and_report
+        ).to_return_value(value=self.expected_bundle_count)
+    
+    def _count_primary_bundles_and_report(self):
+        if self._primary_bundle_count() < self.expected_bundle_count:
+            self._count_primary_bundles()
+        Progress.report("  bundles: primary: {}/{}".format(
+            self._primary_bundle_count(),
+            self.expected_bundle_count
+        ))
+        return self._primary_bundle_count()
+
+    def _count_secondary_bundles_and_report(self):
+        if self._results_bundles_count() < self.expected_bundle_count:
+            self._count_results_bundles()
+        Progress.report("  bundles: results: {}/{}".format(
             self._results_bundles_count(),
             self._primary_bundle_count()
         ))
@@ -184,6 +312,24 @@ class DatasetRunner:
     def _primary_bundle_count(self):
         self._count_primary_bundles()
         return len(self.primary_uuid_to_secondary_bundle_fqid_map)
+    
+    def _analysis_workflows_count(self):
+        return len(self.analysis_workflow_set)
+
+    def _ongoing_analysis_workflows_count(self):
+        return len(
+            list(filter(lambda wf: wf.status in ('Submitted', 'On Hold', 'Running'), self.analysis_workflow_set))
+        )
+
+    def _successful_analysis_workflows_count(self):
+        return len(
+            list(filter(lambda wf: wf.status == 'Succeeded', self.analysis_workflow_set))
+        )
+
+    def _failed_analysis_workflows_count(self):
+        return len(
+            list(filter(lambda wf: wf.status in ('Failed', 'Aborting', 'Aborted'), self.analysis_workflow_set))
+        )
 
     def _results_bundles_count(self):
         return len(list(v for v in self.primary_uuid_to_secondary_bundle_fqid_map.values() if v))
@@ -222,20 +368,55 @@ class DatasetRunner:
         ).to_return_value(value=True)
 
     def _assert_data_browser_bundles(self, project_shortname):
-        try:
-            expected_bundle_uuids = set(self.primary_bundle_uuids).union(self.secondary_bundle_uuids)
-            files = self.azul_agent.get_files_py_project(project_shortname)
-            bundle_uuids = {bundle['bundleUuid'] for file in files for bundle in file['bundles']}
-            assert bundle_uuids == expected_bundle_uuids
-            project_shortnames = {project_short_name for file in files for project in file['projects']
-                                  for project_short_name in project['projectShortname']}
-            assert project_shortnames == {project_shortname}
-        except AssertionError as e:
-            Progress.report(f"Exception occurred: {e}")
+        # Numbers here correspond to references to files for each bundle (AKA contributions). We must wait for all files
+        # references to be indexed before we continue to cleanup in order to avoid potential races.
+        # A file reference is a contribution if it appears in the bundle with "indexed": false.
+        # For ss2 we have 2 fastqs in the primary bundle, the 2 fastqs and 18 other contributions from the secondary;
+        # for optimus we have 3 fastqs in the primary bundle; the 3 fastqs and 7 other contributions from the secondary;
+        # for a total of 22 and 13 contributions respectively for each project
+        num_contributions_by_project = {'Smart-seq2': 22, 'optimus': 14}
+        expected_bundle_uuids = set(self.primary_bundle_uuids).union(self.secondary_bundle_uuids)
+        files = self.azul_agent.get_entities_by_project('files', project_shortname)
+        bundle_uuids = {bundle['bundleUuid'] for file in files for bundle in file['bundles']}
+        # We're care only about the intersection because it's possible for other bundles to reference the same files
+        bundle_uuids.intersection_update(expected_bundle_uuids)
+        project_shortnames = {project_short_name
+                              for file in files
+                              for project in file['projects']
+                              for project_short_name in project['projectShortname']}
+        num_contributions = sum(1 for f in files for b in f['bundles'] if b['bundleUuid'] in expected_bundle_uuids)
+
+        Progress.report(f"{len(bundle_uuids)}/{len(expected_bundle_uuids)} distinct bundles")
+        Progress.report(f"{num_contributions}/{num_contributions_by_project[self.dataset.name]}"
+                        f" distinct file contributions")
+
+        if num_contributions < num_contributions_by_project[self.dataset.name]:
             return False
+        elif num_contributions > num_contributions_by_project[self.dataset.name]:
+            raise AssertionError('More contributions than expected were found in the Azul index')
+
+        if bundle_uuids < expected_bundle_uuids:
+            return False
+
+        if project_shortnames:
+            assert project_shortnames == {project_shortname}
         else:
-            Progress.report(f"{len(bundle_uuids)}/{len(expected_bundle_uuids)}")
-            return True
+            return False
+
+        return True
+
+    def _assert_project_removed_from_azul(self):
+        results_empty = [len(self.azul_agent.get_entities_by_project(entity, self.project_shortname)) == 0
+                         for entity in ['files', 'projects', 'samples']]
+        Progress.report("Project removed from index files: {}, projects: {}, samples: {}".format(*results_empty))
+        return all(results_empty)
+
+    def _assert_workflows_are_aborted(self, workflows):
+        statuses = []
+        for analysis_workflow in workflows:
+            workflow = self.analysis_agent.query_by_workflow_uuid(uuid=analysis_workflow.uuid)
+            statuses.append(workflow.status)
+        return all([status == 'Aborted' for status in statuses])
 
     def cleanup_primary_and_result_bundles(self):
         for primary_bundle_uuid, secondary_bundle_fqid in self.primary_uuid_to_secondary_bundle_fqid_map.items():
@@ -243,6 +424,19 @@ class DatasetRunner:
             if secondary_bundle_fqid is not None:
                 secondary_bundle_uuid = secondary_bundle_fqid.split('.')[0]
                 self.data_store.tombstone_bundle(secondary_bundle_uuid)
+        Progress.report("WAITING FOR BUNDLES TO BE REMOVED FROM AZUL ")
+        WaitFor(
+            self._assert_project_removed_from_azul
+        ).to_return_value(True)
+
+    def cleanup_analysis_workflows(self):
+        ongoing_workflows = [wf for wf in self.analysis_workflow_set if wf.status in ('Submitted', 'On Hold', 'Running')]
+        for analysis_workflow in ongoing_workflows:
+            self.analysis_agent.abort_workflow(uuid=analysis_workflow.uuid)
+        Progress.report("WAITING FOR WORKFLOW(S) TO BE ABORTED IN CROMWELL")
+        WaitFor(
+            self._assert_workflows_are_aborted, ongoing_workflows
+        ).to_return_value(True)
 
     def retrieve_zarr_output_from_matrix_service(self):
         request_id = self.matrix_agent.post_matrix_request(self.secondary_bundle_fqids)
