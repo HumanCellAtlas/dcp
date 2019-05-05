@@ -1,0 +1,7 @@
+{
+  "data_files_location": "s3://org-humancellatlas-dcp-test-data/ss2-2000/",
+  "spreadsheet_location": "https://raw.github.com/HumanCellAtlas/metadata-schema/DEPLOYMENT/infrastructure_testing_files/current/dcp_integration_test_metadata_1_SS2_bundle.xlsx",
+  "expected_bundle_count": 2000,
+  "generate_scaled_spreadsheet": true,
+  "orig_copy_files_location": "s3://org-humancellatlas-dcp-test-data/smart-seq2-one-bundle/"
+}

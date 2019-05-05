@@ -51,7 +51,7 @@ class DatasetFixture:
         for row_idx in range(2, num_rows_to_copy + 1):
             new_row = row_to_copy.copy()
             new_row["cell_suspension.biomaterial_core.biomaterial_id"] = row_to_copy["cell_suspension.biomaterial_core.biomaterial_id"].replace("1", str(row_idx))
-            new_row["cell_suspension.plate_based_sequencing.plate_id"] = row_to_copy["cell_suspension.plate_based_sequencing.plate_id"] + 1
+            new_row["cell_suspension.plate_based_sequencing.plate_label"] = row_to_copy["cell_suspension.plate_based_sequencing.plate_label"] + 1
             new_row["cell_suspension.plate_based_sequencing.well_id"] = f"A{row_idx}"
             cell_suspension_tab.append(list(new_row.values()))
         self.spreadsheet.save(filename=self.metadata_spreadsheet_path)
