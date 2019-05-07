@@ -23,10 +23,10 @@ deployed_component_versions:
     ingest-ui: v0.5.0.rc
   greenbox:
     greenbox-falcon: v0.3.0
-    greenbox-lira: v0.19.0
+    greenbox-lira: v0.20.0
     greenbox-pipeline-tools: v0.49.1
     greenbox-skylab:
-      smartseq2: smartseq2_v2.2.0
-      tenx: optimus_v1.0.0_increase_empty_drops_memory
+      smartseq2: smartseq2_v2.3.0
+      tenx: optimus_v1.1.0
   data-store: integration-2018-08-15-05-55-50.release
   azul: deployed/integration/2019-05-02__19-17 aa1e0617569f77449cacdd37e59cc771522dafd8
