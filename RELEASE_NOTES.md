@@ -35,8 +35,8 @@
 ## Secondary Analysis
 ### Pipeline-tools v0.49.1
 * Update metadata schema when formatting analysis results:
-* Change process/protocol_type to type
-* Change file_format to format
+    * Change process/protocol_type to type
+    * Change file_format to format
 * Update to metadata-api library release/1.0b15
 * Subscriptions queries process_type -> type, dissociation_method -> method
 
