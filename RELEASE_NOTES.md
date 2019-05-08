@@ -45,7 +45,7 @@
 * Samples Tab
 
 ## Azul
-### Version: 53f0b12c25364a8c5f527ad2119fee48df096b40
+### Version: 6a3639a97acc46cde7d98530c604f777ecee99fd
 * 947b099a Absorb addtion of paging to `GET /bundles/{uuid}` in DSS
 * f051f862 Fix projectSummary.donorCount (#953)
 * a09ff818 Expose secondary analysis workflow type (#896)
