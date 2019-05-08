@@ -1,5 +1,128 @@
 # Release Notes
 
+# Staging 2019/05/08 
+## Ingest
+### Ingest-ui v0.9.2.rc
+* Setting of row height automatically to show all validation errors
+* Do not allow creation of project metadata thru UI
+ 
+## Upload  v4.3.1
+* Remove "list upload area" REST API endpoint
+* Added client-side checksumming (temporarily disabled).
+* Much Internal refactoring and cleanup.
+
+## Data Store
+### Version: 2019-05-08-02-45-24-staging.release
+* Improve `PUT /files/{uuid}` description
+* Clarify and fix test expectations
+* Add basic indexing for collections.
+* Fix multipart sync completion criteria
+* Simplify GitLab job definitions
+* Prod Smoke Test Query
+* Change String Comparison
+* Isolate Terraform State File Buckets
+* Remove trufflehog dependency
+* Update TF to remove DEPRECATED messages
+* Increase GS client connection pool size
+* Cache for content type like 'application/json; foo'
+* Sync daemon sets destination content-type equal to source
+* Update subscription_v2 ddb interface calls
+* Use dynamoDB methods in async_state
+* Abstract out dynamoDB functionality from subscriptions
+
+## Secondary Analysis
+### Pipeline-tools v0.49.1
+* Update metadata schema when formatting analysis results:
+    * Change process/protocol_type to type
+    * Change file_format to format
+* Update to metadata-api library release/1.0b15
+* Subscriptions queries process_type -> type, dissociation_method -> method
+
+## Data Browser
+### Version: 156f751de3b693ffa8dabcb78ee7550bcee5fe7f
+* Samples Tab
+
+## Azul
+### Version: 53f0b12c25364a8c5f527ad2119fee48df096b40
+* 947b099a Absorb addtion of paging to `GET /bundles/{uuid}` in DSS
+* f051f862 Fix projectSummary.donorCount (#953)
+* a09ff818 Expose secondary analysis workflow type (#896)
+* dc3b3f95 Upgrade to metadata-api 1.0b15 (#957) (Absorbs metadata schema changes)
+* 2f38c58e Fix: freezing and sorting of JSON objects with None values
+* caa917d9 Fix unused imports
+* ae04ee61 One manifest row per occurrence of a file in a bundle (#955) Fixes https://github.com/HumanCellAtlas/dcp-cli/issues/327
+* bbd155ac Create bundles index (#903)
+* 5e2becff Travis build scans for secrets committed accidentally (#764)
+* 28fd68ec Securely store keys for notification HMAC and Google service account (#794)
+* ad82e394 Securely store keys for notification HMAC and Google service account (#794)
+* 3ffe606d Handle multiple bundles per file in manifest integration test
+* dc6d87be Manifest integration test filters on test project
+* c053f1fd Refine Gitlab pipline
+* a6c4e90f Updated urllib3 to 1.24.2 (#927)
+* e11fbb2f Fixes to deployment section of README (#888)
+* e3a3590d Fix test query filter for samples tab changes
+* 62164e4e Exclude old BM_PC dataset in prod (#944)
+* 46dc3eca Exclude old neuron_diff dataset in prod (#915)
+* 71f8e1e0 Nest projectId under project termFacet (#894)
+* 239f0fa4 Replace Specimens tab with Samples tab (#707)
+* 54f332bc Eliminate indirection in cart item config
+* 0fd69736 Added validation for manifest types (#839)
+
+## Metadata Schema
+### Versions
+* core/biomaterial/biomaterial_core.json - v8.1.0
+* core/file/file_core.json - v6.0.0
+* core/procces/process_core.json - v10.0.0
+* module/biomaterial/death.json - 5.5.0
+* module/biomaterial/preservation_storage.json - v6.1.0
+* module/ontology/contributor_role_ontology.json - v1.0.0
+* module/process/purchased_reagents.json - v6.1.0
+* module/project/contact.json - v8.0.0
+* module/project/publication.json - v6.0.0
+* module/protocol/probe.json - v1.1.0
+* module/protocol/target.json - v1.1.0
+* type/biomaterial/cell_line.json - v14.3.0
+* type/biomaterial/cell_suspension.json - v13.1.0
+* type/biomaterial/donor_organism.json - v15.3.0
+* type/biomaterial/imaged_specimen.json - v3.1.0
+* type/biomaterial/organoid.json - v11.1.0
+* type/biomaterial/specimen_from_organism.json - v10.2.0
+* type/file/analysis_file.json - v6.0.0
+* type/file/image_file.json - v2.0.0
+* type/file/reference_file.json - v3.0.0
+* type/file/sequence_file.json - v9.0.0
+* type/file/supplementary_file.json - v2.0.0
+* type/process/analysis/analysis_process.json - v11.0.1
+* type/process/process.json - v9.0.0
+* type/project/project.json - v14.0.0
+* type/protocol/analysis/analysis_protocol.json - v9.0.0
+* type/protocol/biomaterial_collection/collection_protocol.json - v9.1.0
+* type/protocol/biomaterial_collection/differentiation_protocol.json - v2.1.0
+* type/protocol/biomaterial_collection/dissociation_protocol.json - v6.1.0
+* type/protocol/biomaterial_collection/enrichment_protocol.json - v3.0.0
+* type/protocol/biomaterial_collection/ipsc_induction_protocol.json - v3.1.0
+* type/protocol/imaging/imaging_preparation_protocol.json - v2.1.0
+* type/protocol/imaging/imaging_protocol.json - v11.1.0
+* type/protocol/protocol.json - v7.0.0
+* type/protocol/sequencing/library_preparation_protocol.json - v6.1.0
+
+### Functionality
+* Changed protocol_type to type. Fixes #931.
+* Changed contact_name to name. Fixes #927.
+* Changed file_format to format. Fixes #375.
+* Changed selected_cell_type to selected_cell_types. Fixes #923.
+* Changed ipsc_induction_method to method, ipsc_induction_factors to reprogramming_factors, protocol_reagents to reagents. Removed ipsc_induction_produced_in_house. Fixes #926.
+* Added new probe.json module. Fixes #813.
+* Changed process_location to location and operator to operators. Fixes #930.
+* Changed enrichment_method to method, min_size_selected to minimum_size and max_size_selected to maximum_size. Fixes #925.
+* Changed differentiation_method to method. Fixes #924.
+* Changed biosd_biomaterial to biosamples_accession and insdc_biomaterial to insdc_sample_accession. Fixes #929
+* Changed publication_title to title and publication_url to url. Fixes #928.
+* Changed cell_line_type to type. Fixes #935.
+* Changed project_role from enum to ontology. Fixes #894
+* Added new contributor_role_ontology schema. Fixes #893.
+
+
 # Staging 2019/04/24
 ## Data Store
 ### Version:  2019-04-24-15-26-53-staging.release
