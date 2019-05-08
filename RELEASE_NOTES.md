@@ -4,7 +4,7 @@
 
 # Prod 2019/05/08
 ## Ingest
-### Ingest-ui v0.9.2.rc
+### Ingest-ui v0.9.2
 * Setting of row height automatically to show all validation errors
 * Do not allow creation of project metadata thru UI
  
