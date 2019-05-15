@@ -1,5 +1,27 @@
 # Release Notes
 
+# Staging 2019/05/15 
+## Azul
+### Version: 13e721394f1de12d39fa1ec2ad2205357f1f04f0
+* 975fd08 Make indexing of organs more consistent (#977)
+* e98e0e3 Exclude old EMTAB5061 dataset (#1000)
+* 79b4b85 Fix spelling in exclusion comment
+* 60dbd43 Exclude old/incorrect pancreas6decades data (#999)
+* cc26e06 Exclude old pancreas6decades dataset (#978)
+* 23f4fe6 Fix: update version of metadata-api
+* 1cf7f03 Remove translation lookups from transform_summary
+* ad7ee57 Get SummaryResponse organCount from samples
+* 276f96f Index cell_line fields (#930)
+* b59050f BDBag and manifest TSV use same set of fields (#892)
+* 9a497f4 Add deletion to integration test (#838)
+* d39ecef Ignore Retry-After from DSS for small file downloads (#686)
+* 3d8b2ba Update urllib3 to 1.24.3 (#970)
+* e4b2a95 Refine lambda timeouts for clarity and consistency
+* d5cf682 Patch DSS client to use direct bucket access if possible (#942)
+* 2cdd42a Remove unused integration test property
+
+
+
 # Staging 2019/05/08 
 ## Ingest
 ### Ingest-ui v0.9.2.rc
