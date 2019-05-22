@@ -5,6 +5,9 @@
 ### Exporter v0.8.1.rc
 * Do not inform user when there’s a failure creating a duplicate bundle
 
+### UI v0.9.4.rc
+* Use Fusillade integration
+
 ## Azul
 ### Version: bb092dafe26477887baba63d6ed016b8ee2ec4c1
 * 589a787 (gitlab.dev/develop, develop) Fix: BDBag archive contains non-deterministic directory name (#991)
