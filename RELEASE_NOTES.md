@@ -10,7 +10,7 @@
 
 ## Azul
 ### Version: bb092dafe26477887baba63d6ed016b8ee2ec4c1
-* 589a787 (gitlab.dev/develop, develop) Fix: BDBag archive contains non-deterministic directory name (#991)
+* 589a787 Fix: BDBag archive contains non-deterministic directory name (#991)
 * 42fcc67 Tweak ACM certificate settings
 * ce89f1d Add config method to detect main deployments
 * 38246b9 Reformat Terraform config template
