@@ -1,5 +1,35 @@
 # Release Notes
 
+# Staging 2019/05/22 
+## Ingest
+### Exporter v0.8.1.rc
+* Do not inform user when there’s a failure creating a duplicate bundle
+
+### UI v0.9.4.rc
+* Use Fusillade integration
+
+## Azul
+### Version: bb092dafe26477887baba63d6ed016b8ee2ec4c1
+* 589a787 Fix: BDBag archive contains non-deterministic directory name (#991)
+* 42fcc67 Tweak ACM certificate settings
+* ce89f1d Add config method to detect main deployments
+* 38246b9 Reformat Terraform config template
+* ce21bfb Fix: 500 error with cell suspensions linked to sample without organ
+* 2d4e509 Combine workflow and version facets (#985)
+* 0767cf4 Rename get_hits to be more explicit
+* 4ed62e0 Revert to previous version of deleted entities (#986)
+
+## Metadata
+### Versions:
+* type/protocol/imaging/imaging_protocol.json schema - v11.1.1
+* type/process/process.json - v9.1.0
+
+### Functionality:
+* Fixed probe field to reference correct schema. Fixes #980.
+* Added optional start_time and end_time fields. Fixes #742.
+* Archived unused 10x integration test spreadsheet. Fixes #957.
+
+
 # Staging 2019/05/15 
 ## Azul
 ### Version: 13e721394f1de12d39fa1ec2ad2205357f1f04f0
