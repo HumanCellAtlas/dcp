@@ -181,8 +181,8 @@ class TestOptimusRun(TestEndToEndDCP):
                 results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuids[0])
 
                 self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
-            # finally:
-            #     runner.cleanup_primary_and_result_bundles()
+            finally:
+                runner.cleanup_primary_and_result_bundles()
 
         if to.did_timeout:
             runner.cleanup_analysis_workflows()
