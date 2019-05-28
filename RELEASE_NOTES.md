@@ -1,6 +1,27 @@
 # Release Notes
 
 <!-- newest release at the top please) -->
+# Prod 2019/05/28
+## Ingest
+- UI v0.9.4.rc
+- Use Fusillade integration
+
+## Upload  v4.3.2
+- Add validation-scheduler and area-deletion lambdas to Big Red Button commands (`uploadctl` `runlevel` `stop/start/status`)
+- Upgrade urllib3 for security
+- Put API Gateway ID in terraform.tfvars instead of searching for it during deploys
+
+## Metadata Schema
+### Versions
+- imaging_protocol.json schema - v11.1.1
+- process.json - v9.1.0
+
+### Functionality
+
+- Fixed probe field to reference correct schema. Fixes #980.
+- Added optional start_time and end_time fields. Fixes #742.
+- Archived unused 10x integration test spreadsheet. Fixes #957.
+
 
 # Prod 2019/05/08
 ## Ingest
