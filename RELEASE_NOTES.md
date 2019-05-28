@@ -11,15 +11,6 @@
 - Upgrade urllib3 for security
 - Put API Gateway ID in terraform.tfvars instead of searching for it during deploys
 
-## Data Browser
-### Version: fb8587e4176aad2341df284429b276fef87bdd6b
-- Fb8587e Update manifest modal layout  #499
-- d506f9f Added download buttons to manifest modal. Closes #499 (#652)
-- 4389fb5 Removed curl command from matrix copy. #625 (#650)
-- 2345a67 Removed retry on error from /health. #637 (#648)
-- b489cc7 Update project view for new samples API Closes #643
-- a21f5cc fix for #640 Use samples instead of specimens on project list for organ and organ part.
-
 ## Metadata Schema
 ### Versions
 - imaging_protocol.json schema - v11.1.1
