@@ -41,11 +41,11 @@
 
 ## Secondary-analysis
 ### Pipeline-tools: v0.50.2 -> v0.51.1
--Raise HTTP error for 409 responses.
--Add Adapter for single-end SS2 scientific pipeline.
--Remove references to gtf_file in ss2 adapters.
--Add adapter static JSON for mouse data for Optimus.
--Upgrade to use smartseq2_v2.4.0 for smartseq2_v2.3.0
+- Raise HTTP error for 409 responses.
+- Add Adapter for single-end SS2 scientific pipeline.
+- Remove references to gtf_file in ss2 adapters.
+- Add adapter static JSON for mouse data for Optimus.
+- Upgrade to use smartseq2_v2.4.0 for smartseq2_v2.3.0
 
 # Staging 2019/05/22 
 ## Ingest
