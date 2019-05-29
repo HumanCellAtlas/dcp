@@ -1,6 +1,72 @@
 # Release Notes
 
 <!-- newest release at the top please) -->
+
+
+# Prod 2019/05/29 (Azul, Data Browser and Portal only)
+
+## Data Portal
+
+Version: 2d33115b38a708fe74b0f651debc5f47906e5fa9
+
+- 2d33115 Updated project search to use project ID closes #the-matrix-reloaded 627
+
+## Data Browser
+
+Version: b391593d64e76614074076bb4a5ce716eb2455e1
+
+- b391593 Facet pairedEnd added to filter and project detail page. (#658)
+- 6b666ac Paired End added to table (#657)
+- fb8587e update manifest modal layout
+- d506f9f Added download buttons to manifest modal. Closes #499 (#652)
+- 4389fb5 Removed curl command from matrix copy. #625 (#650)
+- 2345a67 Removed retry on error from /health. #637 (#648)
+- b489cc7 Update project view for new samples API Closes #643
+
+## Azul
+
+Version: 8ffcd07fed4ef08cda45e070b7d1d701fa7c43fe
+
+- 8ffcd07f Hot fix failing IT in prod (#1049)
+- 3cdf6844 Revert "REVERT ME: Whitelist pre-reingestion projects for Japan demo"
+- 98226d09 Exclude old fetal-maternal interface dataset in prod (#1025)
+- 3097b1a3 Exclude old cell_hashing (rsatija) dataset in prod (#1024)
+- 67db667c Exclude old 10x_mouse_brain dataset in prod (#1023)
+- 7a0e7a4a Exclude old CD4+_lymphocytes (EGEOD106540) dataset in prod (#1019)
+- 2e8a0ffc Exclude old neuron_diff dataset in prod (#1018)
+- 4a1c4238 Exclude old bone marrow (ido_amit) dataset in prod (#1017)
+- 807f39c8 Exclude old cardiomyocytes_basu (basu) dataset in prod (#1016)
+- 825f5ebc Exclude old kidney_biopsy_scRNA-seq (humphreys) dataset in prod (#1015)
+- 31fe1e50 Exclude old mouse melanoma dataset in prod (#1014)
+- 742d8d06 Exclude old tissue sensitivity dataset in prod (#1013)
+- 78ff3671 Exclude old cerebral organoid dataset in prod (#1005)
+- 5a9901fd Exclude secondary "peer" and "Regev-ICA" bundles
+- f24962b1 Revert "REVERT ME: Whitelist pre-reingestion projects for Japan demo"
+- 1797cd92 Revert "REVERT ME: Whitelist pre-reingestion projects for Japan demo"
+- 9d15b62e REVERT ME: Whitelist pre-reingestion projects for Japan demo
+- b6a54219 REVERT ME: Whitelist pre-reingestion projects for Japan demo
+- 589a787b Fix: BDBag archive contains non-deterministic directory name (#991)
+- 0682c9a6 Fix: 500 error with cell suspensions linked to sample without organ
+- 42fcc67d Tweak ACM certificate settings
+- ce89f1d5 Add config method to detect main deployments
+- 38246b99 Reformat Terraform config template
+- ce21bfb2 Fix: 500 error with cell suspensions linked to sample without organ
+- 2d4e509b Combine workflow and version facets (#985)
+- 0767cf41 Rename get_hits to be more explicit
+- 4ed62e06 Revert to previous version of deleted entities (#986)
+- 975fd08c Make indexing of organs more consistent (#977)
+- 1cf7f03e Remove translation lookups from transform_summary
+- ad7ee575 Get SummaryResponse organCount from samples
+- 276f96f4 Index cell_line fields (#930)
+- b59050fd BDBag and manifest TSV use same set of fields (#892)
+- 9a497f46 Add deletion to integration test (#838)
+- d39ecef5 Ignore Retry-After from DSS for small file downloads (#686)
+- 3d8b2bab Update urllib3 to 1.24.3 (#970)
+- e4b2a959 Refine lambda timeouts for clarity and consistency
+- d5cf6828 Patch DSS client to use direct bucket access if possible (#942)
+- 2cdd42a4 Remove unused integration test property
+
+
 # Prod 2019/05/28
 ## Ingest
 - UI v0.9.4.rc
