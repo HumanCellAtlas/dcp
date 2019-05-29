@@ -1,5 +1,52 @@
 # Release Notes
 
+# Staging 2019/05/28
+## Ingest
+### Exporter 0.8.2.rc
+- Minor changes to prevent creation of Pika connections unncessarily.
+
+## Data Store
+### 2019-05-29-15-42-27-staging.release
+- fix tests/test_api.py test mode (#2165)
+- Storage operations errors log object info (#2164)
+- Async state convenience methods and bug fixes (#2136)
+- Use STANDARD storage class to mark non-cached checkout objects (#2152)
+- Resume unfinished GS copies (#2135)
+- Increase file checkout test timeouts (#2163)
+- Expose TimedThread exceptions to caller (#2157)
+- Separate GCP and AWS collections paging testing. (#2162)
+- Add short retry to get-item test (#2161)
+- Specify replicas in sync test content-type (#2158)
+- Change how content-type is propagated when caching. (#2154)
+- Remove trailing whitespace
+- Direct URLs for Files (#2138)
+- Updated Authorization Endpoint Checks (#2146)
+- Operation to repair file blob metadata (#2123)
+- Verify checksums on `PUT /file/{uuid}` (closes #2000)
+- update lambda-iam for accessing resource by tag (#2131)
+- Update TTL (#2130)
+- Pull logging into copy clients (#2134)
+- We don't use travis for deploys anymore; update release.sh doc accordingly (#2132)
+- Add verification storage operations (#2121)
+- improve bucket maping util (#2120)
+- Fix typo in checksum parsing
+- Increase operations daemon log level (#2119)
+- Operations utils (#2115)
+- Operatios cloud executor (#2114)
+- Operations CLI framework (#2111)
+- Revert most pylib versions so that they fit in the lambda's size limit. (#2116)
+- Add retries to PUT collection method when testing. (#2112)
+- Add python shebangs to scripts. (#2110)
+- Bump dependencies. (#2088)
+
+## Secondary-analysis
+### Pipeline-tools: v0.50.2 -> v0.51.1
+- Raise HTTP error for 409 responses.
+- Add Adapter for single-end SS2 scientific pipeline.
+- Remove references to gtf_file in ss2 adapters.
+- Add adapter static JSON for mouse data for Optimus.
+- Upgrade to use smartseq2_v2.4.0 for smartseq2_v2.3.0
+
 # Staging 2019/05/22 
 ## Ingest
 ### Exporter v0.8.1.rc
