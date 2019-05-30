@@ -411,12 +411,12 @@ class DatasetRunner:
         Progress.report("Project removed from index files: {}, projects: {}, samples: {}".format(*results_empty))
         return all(results_empty)
 
-    def _assert_workflows_are_aborted(self, workflows):
+    def _assert_workflows_are_terminated(self, workflows):
         statuses = []
         for analysis_workflow in workflows:
             workflow = self.analysis_agent.query_by_workflow_uuid(uuid=analysis_workflow.uuid)
             statuses.append(workflow.status)
-        return all([status == 'Aborted' for status in statuses])
+        return all([status in ('Aborted', 'Succeeded', 'Failed') for status in statuses])
 
     def cleanup_primary_and_result_bundles(self):
         for primary_bundle_uuid, secondary_bundle_fqid in self.primary_uuid_to_secondary_bundle_fqid_map.items():
@@ -432,10 +432,13 @@ class DatasetRunner:
     def cleanup_analysis_workflows(self):
         ongoing_workflows = [wf for wf in self.analysis_workflow_set if wf.status in ('Submitted', 'On Hold', 'Running')]
         for analysis_workflow in ongoing_workflows:
-            self.analysis_agent.abort_workflow(uuid=analysis_workflow.uuid)
+            try:
+                self.analysis_agent.abort_workflow(uuid=analysis_workflow.uuid)
+            except requests.HTTPError as e:
+                Progress.report(f"An error occurred: {e}")
         Progress.report("WAITING FOR WORKFLOW(S) TO BE ABORTED IN CROMWELL")
         WaitFor(
-            self._assert_workflows_are_aborted, ongoing_workflows
+            self._assert_workflows_are_terminated, ongoing_workflows
         ).to_return_value(True)
 
     def retrieve_zarr_output_from_matrix_service(self):
