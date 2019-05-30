@@ -16,6 +16,7 @@ from .utils import Progress
 from .wait_for import WaitFor
 
 MINUTE = 60
+JOB_MANAGER_URL = "https://job-manager.caas-prod.broadinstitute.org"
 
 
 class DatasetRunner:
@@ -269,7 +270,7 @@ class DatasetRunner:
                     elif len(workflows) == 1:
                         workflow = workflows[0]
                         if workflow.status in ('Failed', 'Aborted', 'Aborting'):
-                            raise Exception(f"The status of workflow {workflow.uuid} is: {workflow.status}")
+                            raise Exception(f"The status of workflow {workflow.uuid} is: {workflow.status} \n For debugging, you might want to look into: {JOB_MANAGER_URL}/jobs/{workflow.uuid}")
                         if workflow.status == 'Succeeded':
                             Progress.report(f"    workflow succeeded for bundle {bundle_uuid}: \n     {workflow}")
                         else:
