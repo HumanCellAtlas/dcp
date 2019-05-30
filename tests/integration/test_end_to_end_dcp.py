@@ -171,7 +171,7 @@ class TestOptimusRun(TestEndToEndDCP):
     def test_optimus_run(self):
         runner = DatasetRunner(deployment=self.deployment)
 
-        with Timeout(210 * 60) as to:  # timeout after 3.5 hours (same as Gitlab runner setting)
+        with Timeout(240 * 60) as to:  # timeout after 4hrs (less than the Gitlab runner setting) to allow for test cleanup
             try:
                 self.ingest_store_and_analyze_dataset(runner, dataset_fixture='optimus')
                 self.assertEqual(1, len(runner.primary_bundle_uuids))
