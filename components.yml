@@ -27,6 +27,6 @@ deployed_component_versions:
     greenbox-pipeline-tools: v0.51.1
     greenbox-skylab:
       smartseq2: smartseq2_v2.4.0
-      tenx: optimus_v1.1.0
+      tenx: optimus_v1.2.0
   data-store: integration-2018-08-15-05-55-50.release
   azul: deployed/integration/2019-05-02__19-17 aa1e0617569f77449cacdd37e59cc771522dafd8
