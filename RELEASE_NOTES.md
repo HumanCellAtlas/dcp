@@ -1,5 +1,78 @@
 # Release Notes
 
+# Staging 2019/06/05
+## Ingest
+### Exporter v0.8.3.rc:be11bc4
+- Fix submissions stuck in Processing due to failed state tracker bundle complete notification
+
+### UI v0.9.5.rc:bb98f1c
+- Make Fusillade url configurable thru env var
+- Fix greetings and picture display
+
+## Secondary Analysis
+### Optimus v1.2.0
+- Increase disk size for TagGeneExon scaled by input size
+- Improve Performance of SplitBamByCellBarcode
+
+## Data Portal
+Version(s): 46c81edabefc01119b093327e758d7c3ceb074fa
+- 46c81ed Update README.md
+- 1c69b99 Update readme for git-secrets
+- 640a038 update gatsby version
+- c021f9c Sticky header. Modification for Browse Metadata: Move TOC to RHS and prevent TOC from scrolling off screen (#436).
+- 1ebb111 TOC
+- b6eabf2 Updated summary response to handle new API. Resolves #452.
+
+## Data Browser
+Version(s): e25307f53b0d2bedb16f15e4b25773ee2b030f95
+- e25307f Update README.md
+- a8dacb5 update readme for git-secrets
+- 7622d6b Verify table heading/column names are readable on 13'' mac laptop screen. Resolves #649. (#677)
+- bf0b323 Remove daos (#676)
+- 80dcbd4 update node and npm versions for building and npm update
+- 61f998e Fix for metadata column width. Modification to Update column name display to add an extra row and move counts below baseline. Resolves #664. (#671)
+- 7b59be2 Update column name display to add an extra row and move counts below baseline. (#670)
+- 4e3e222 Updated data tables to use generic data source. Resolves #660. (#669)
+- e0c51ec Updated summary to match new API. Resolves #656. (#661)
+- 363d5d7 Added maintenance mode banner to prod. Resolves #663. (#668)
+
+## Azul
+Version(s): 6e5f6ca3512938e8b532eb80a5b3d7edf6d1c1bb
+
+- dcc46a4 DELETE ME: Disable `make subscribe` on Gitlab
+- 7b4aa6d Fix: certain summaries truncated to 10 terms (#1047)
+- fd06455 Return `gs://…` url with DRS endpoint (#920)
+- 8ffcd07 Hot fix failing IT in prod (#1049)
+- 3cdf684 Revert "REVERT ME: Whitelist pre-reingestion projects for Japan demo"
+- 98226d0 Exclude old fetal-maternal interface dataset in prod (#1025)
+- 3097b1a Exclude old cell_hashing (rsatija) dataset in prod (#1024)
+- 67db667 Exclude old 10x_mouse_brain dataset in prod (#1023)
+- 7a0e7a4 Exclude old CD4+_lymphocytes (EGEOD106540) dataset in prod (#1019)
+- 2e8a0ff Exclude old neuron_diff dataset in prod (#1018)
+- 4a1c423 Exclude old bone marrow (ido_amit) dataset in prod (#1017)
+- 807f39c Exclude old cardiomyocytes_basu (basu) dataset in prod (#1016)
+- 825f5eb Exclude old kidney_biopsy_scRNA-seq (humphreys) dataset in prod (#1015)
+- 31fe1e5 Exclude old mouse melanoma dataset in prod (#1014)
+- 742d8d0 Exclude old tissue sensitivity dataset in prod (#1013)
+- 78ff367 Exclude old cerebral organoid dataset in prod (#1005)
+- 5a9901f Exclude secondary "peer" and "Regev-ICA" bundles
+- f24962b Revert "REVERT ME: Whitelist pre-reingestion projects for Japan demo"
+- 1797cd9 Revert "REVERT ME: Whitelist pre-reingestion projects for Japan demo"
+- 6310b7e Add imaging-specific facets (#885)
+- 65cf8cb Ensure integration tests always clean up bundles (#994)
+- 4e10eda Make trufflehog rules file hidden
+- f9510c7 Require `git secrets` to be installed (#755)
+- 36bbc58 Speed up indexing tests with  (#1040)
+- c7d39b7 Revert "Return `gs://` url with DRS endpoint (#920)"
+- 2c4a8b2 Return `gs://` url with DRS endpoint (#920)
+- f083e0c Add DRS alias domain for service lambda (#918)
+- 6b753af Add utility for interning immutable value objects
+- 08f34b0 Cosmetics
+- 9d15b62 REVERT ME: Whitelist pre-reingestion projects for Japan demo
+- b6a5421 REVERT ME: Whitelist pre-reingestion projects for Japan demo
+- cc04d30 REVERT ME: Whitelist pre-reingestion projects for Japan demo
+
+
 # Staging 2019/05/28
 ## Ingest
 ### Exporter 0.8.2.rc
