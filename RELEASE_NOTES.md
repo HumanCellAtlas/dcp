@@ -2,10 +2,10 @@
 
 # Staging 2019/06/05
 ## Ingest
-### Exporter v0.8.3.rc:be11bc4
+### Exporter v0.8.3.rc
 - Fix submissions stuck in Processing due to failed state tracker bundle complete notification
 
-### UI v0.9.5.rc:bb98f1c
+### UI v0.9.5.rc
 - Make Fusillade url configurable thru env var
 - Fix greetings and picture display
 
