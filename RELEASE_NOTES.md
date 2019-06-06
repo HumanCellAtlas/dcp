@@ -1,6 +1,13 @@
 # Release Notes
 
 <!-- newest release at the top please) -->
+# Prod 2019/06/06
+## Secondary Analysis
+### Optimus v1.2.0
+- Increase disk size for TagGeneExon scaled by input size
+- Improve Performance of SplitBamByCellBarcode
+
+
 # Prod 2019/05/28
 ## Ingest
 - UI v0.9.4.rc
