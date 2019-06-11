@@ -1,6 +1,86 @@
 # Release Notes
 
 <!-- newest release at the top please) -->
+# Prod 2019/06/11
+## Ingest
+### Core v0.9.1
+* Added endpoints to find bundles by project UUID
+### Exporter v0.8.4
+* Retries when alerting state-tracker of completed bundles
+* Improved connection management to AMQP broker
+
+## Data Store
+### Version: e0932c28634a407c96cd8e175321ecb3cc07c7aa
+* fix tests/test_api.py test mode (#2165)
+* Storage operations errors log object info (#2164)
+* Async state convenience methods and bug fixes (#2136)
+* Use STANDARD storage class to mark non-cached checkout objects (#2152)
+* Resume unfinished GS copies (#2135)
+* Increase file checkout test timeouts (#2163)
+* Expose TimedThread exceptions to caller (#2157)
+* Separate GCP and AWS collections paging testing. (#2162)
+* Add short retry to get-item test (#2161)
+* Specify replicas in sync test content-type (#2158)
+* Change how content-type is propagated when caching. (#2154)
+* Remove trailing whitespace
+* Direct URLs for Files (#2138)
+* Updated Authorization Endpoint Checks (#2146)
+* Operation to repair file blob metadata (#2123)
+* Verify checksums on `PUT /file/{uuid}` (closes #2000)
+* update lambda-iam for accessing resource by tag (#2131)
+* Update TTL (#2130)
+* Pull logging into copy clients (#2134)
+* We don't use travis for deploys anymore; update release.sh doc accordingly (#2132)
+* Add verification storage operations (#2121)
+* improve bucket mapping util (#2120)
+* Fix typo in checksum parsing
+* Increase operations daemon log level (#2119)
+* Operations utils (#2115)
+* Operations cloud executor (#2114)
+* Operations CLI framework (#2111)
+* Revert most pylib versions so that they fit in the lambda's size limit. (#2116)
+* Add retries to PUT collection method when testing. (#2112)
+* bucket names hot patch
+* Add python shebangs to scripts. (#2110)
+* Bump dependencies. (#2088)
+
+## Data Portal
+### Version(s): 46c81edabefc01119b093327e758d7c3ceb074fa
+* 46c81ed Update README.md
+* 1c69b99 Update readme for git-secrets
+* 640a038 update gatsby version
+* c021f9c Sticky header. Modification for Browse Metadata: Move TOC to RHS and prevent TOC from scrolling off screen (#436).
+* 1ebb111 TOC
+* b6eabf2 Updated summary response to handle new API. Resolves #452.
+
+## Data Browser
+### Version(s): e25307f53b0d2bedb16f15e4b25773ee2b030f95
+* e25307f Update README.md
+* a8dacb5 update readme for git-secrets
+* 7622d6b Verify table heading/column names are readable on 13'' mac laptop screen. Resolves #649. (#677)
+* bf0b323 Remove daos (#676)
+* 80dcbd4 update node and npm versions for building and npm update
+* 61f998e Fix for metadata column width. Modification to Update column name display to add an extra row and move counts below baseline. Resolves #664. (#671)
+* 7b59be2 Update column name display to add an extra row and move counts below baseline. (#670)
+* 4e3e222 Updated data tables to use generic data source. Resolves #660. (#669)
+* e0c51ec Updated summary to match new API. Resolves #656. (#661)
+* 363d5d7 Added maintenance mode banner to prod. Resolves #663. (#668)
+
+## Azul
+### Version(s): 4b02a27109ff8e15b2bff0fdaea36f09edeec194
+* 7b4aa6d Fix: certain summaries truncated to 10 terms (#1047)
+* fd06455 Return `gs://…` url with DRS endpoint (#920)
+* 6310b7e Add imaging-specific facets (#885)
+* 65cf8cb Ensure integration tests always clean up bundles (#994)
+* 4e10eda Make trufflehog rules file hidden
+* f9510c7 Require `git secrets` to be installed (#755)
+* 36bbc58 Speed up indexing tests with  (#1040)
+* c7d39b7 Revert "Return `gs://` url with DRS endpoint (#920)"
+* 2c4a8b2 Return `gs://` url with DRS endpoint (#920)
+* f083e0c Add DRS alias domain for service lambda (#918)
+* 6b753af Add utility for interning immutable value objects
+
+
 # Prod 2019/06/06
 ## Secondary Analysis
 ### Optimus v1.2.0
