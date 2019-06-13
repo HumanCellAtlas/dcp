@@ -2,6 +2,114 @@
 
 # Staging 2019/06/05
 ## Ingest
+
+## Upload
+
+## Data Store
+Version: 74b216e20ba34156dcd2d1c17469296200dadb6e
+* [easy] Use the same regex for all uuids. (#2185)
+* Retry V2 notifications every 6 hours for 3 days (#2169)
+* Miscellaneous fixes (#2188)
+* Revert "Begin DSS builder (#1149)" (#2187)
+* Add operation to trigger sync (#2180)
+* Use sqs batch send from dcplib (#2179)
+* bump requirements (#2186)
+* Remove notifier-v2 retries for non-existent objects (#2183)
+* Remove indexer retries for non-existent objects (#2182)
+* Add operation to verify entity replication (#2178)
+* Lambda Layers (#2168)
+* Lambda Tagging (#2150)
+
+
+## Secondary Analysis
+### Pipeline-tools v0.52.0
+* Make the pipeline-tools input processor more tolerant with sequencing output formats.
+
+## Data Portal
+
+## Data Browser
+Version(s): 63fda8f7227637cd37b350f10e3d4915399ce901
+* 63fda8f Fixed set of pagination on select of facet. Resolves #675. (#683)
+* f760f16 Added protection against bad data. Standardized binding of project and project row mapping. Added specs. Resolves #674. (#682)
+* 4a47efc Updated specs.
+* 353daf2 Enabled export to terra in dev and ux-dev. Resolves #680. (#681)
+
+## Azul
+Version(s): ef51cb90836c68d4b7e9ef32279b633026a97257
+* 6b3cac4 Fix `git log` example in README
+* 49cf081 Add CONTRIBUTING document (#750)
+* 98676bf Check current branch before `make reindex`, `make subscribe` et al (#1061)
+* c4235bc Refactor `KeywordSearchResponse.make_sample()` again
+* 9116b94 Remove unused import, shebang
+* e7b905a Refactor `KeywordSearchResponse.make_sample()`
+* 76900d8 Add effectiveOrgan facet (#1022)
+* f83bc9b Optimize imports in HCA transformer
+* 8131914 Eliminate obsolete suppression of PyCharm warning
+* 51a28c2 Pull up sample discovery method into Transformer base class
+* 044d6ae Fix more type warnings in HCA transformer module
+* 5d484af Suppress deprecation warning in HCA transformer module
+* 04deeda Reorder classes in HCA transformers module
+* 73e98d5 Removed unused import; fix quoting
+* 4bc7438 [4 of 4] Make …_dict functions methods of the Transformer class
+* 176d8a2 [3 of 4] Make …_dict functions methods of the Transformer class
+* 5bb187f [2 of 4] Make …_dict functions methods of the Transformer class
+* 481c023 [1 of 4] Make …_dict functions methods of the Transformer class
+* 7bfd343 Fix: `git secrets` check fails in sub directories (#1057)
+* dd8e22a Replace `*` with `sample` in manifests (#1055)
+* 994b57e Exclude `contents.metadata` from being indexed (#1020)
+* 07ba957 Add `/health/progress`, test service endpoints in `/health` (#971)
+* 9bf8238 Add `metadata` field to documents in bundles index (#965, #966)
+* c37d439 Reformat `metadata_generator`
+* 3c55b87 Introducing Simon's script for generating metadata csv
+* 2eed794 Rewrite parsing of ES index names
+* a6a4499 Add separate index for cell suspensions (#1038)
+
+## Metadata Schema
+Version(s): 
+* death: 5.5.1
+* contact: 8.0.1
+* channel: 2.0.4
+* provenance: 1.0.4
+* cell_line: 14.3.1
+* cell_suspension: 13.1.1
+* donor_organism: 15.3.2
+* imaged_specimen: 3.1.1
+* organoid: 11.1.2
+* specimen_from_organism: 10.2.1
+* analysis_file: 6.0.1
+* image_file: 2.0.1
+* reference_file: 3.0.1
+* sequence_file: 9.0.1
+* supplementary_file: 2.0.1
+* analysis_process: 11.0.2
+* process: 9.1.1
+* project: 14.0.2
+* analysis_protocol: 9.0.1
+* aggregate_generation_protocol: 2.0.1
+* collection_protocol: 9.1.1
+* differentiation_protocol: 2.1.1
+* Dissociation_protocol: 6.1.1
+* enrichment_protocol: 3.0.1
+* ipsc_induction_protocol: 3.1.2
+* imaging_preparation_protocol: 2.1.1
+* imaging_protocol: 11.1.3
+* protocol: 7.0.1
+* library_preparation_protocol: 6.1.1
+* sequencing_protocol: 10.0.2
+
+Functionality:
+* Switched to pre-commit commit package
+* Added pull approve functionality
+* Changed travis conf file for multi-stage build
+* Changed print statements to errors for linter musts
+* Added check for required ontology schema properties
+* Added the linter to the pre-commit hook
+* Added python to travis. Added call to linter.
+
+
+
+# Staging 2019/06/05
+## Ingest
 ### Exporter v0.8.3.rc
 - Fix submissions stuck in Processing due to failed state tracker bundle complete notification
 
