@@ -1,5 +1,47 @@
 # Release Notes
 
+# Staging 2019/06/26
+## Azul
+Version(s): 9fbf3283a6f5c6b20d5a6be22dbb9d7fc08a4e52
+* 1a9f8e6 Modify deletion notifications for integration tests
+* 03408e7 Add test for direct file access fallback
+* 0b1345a Prevent failure during teardown (#1049)
+* 4de2892 Use direct access for DSS bundles
+* 1e8dea4 Remove notebooks directory
+* 816ce71 Fix type warning
+* 7992c30 Speed up reading aggregates, using source filter
+* 6dac2a9 [2/2] Fix races from indexing deletions (#611)
+* f435634 [1/2] Fix races from indexing deletions (#611)
+* 4a3d240 Fix races from indexing deletions (#611)
+* e19f8d4 Isolate test fixtures for service tests (#1064)
+* a26526d Rename manifest test file
+* 1f10ee9 REVERT ME: Avoid dash and brackets in BDBag column names (#1091)
+* feeaadc Parallelize API endpoint health checks (#1085)
+* fbbea21 Fix: /health/progress is not lazy and  therefore slow (#1084)
+* 8f979e0 Add test for laziness of /health/foo (#1084)
+* b244b34 Parallelize API endpoint health checks (#1085)
+* 976ad06 Use DistinctAccumulator in CellSuspensionAggregator (#1039)
+* 09a24cf REVERT ME: Avoid dots in entity ID column of Terra TSV (#1071)
+* cf43fa6 REVERT ME: Switch from bundle to participant for Terra (#1070)
+
+## Metadata Schema
+Versions
+* File_core: 6.1.0
+* file_content_ontology: 1.0.0
+* file_format_ontology: 1.0.0
+* analysis_file: 6.1.0
+* image_file: 2.1.0
+* reference_file: 3.1.0
+* sequence_file: 9.1.0
+* supplementary_file: 2.1.0
+
+Functionality
+* Added new file_format_ontology ontology schema.
+* Added optional content_description field.
+* Added new file_content_ontology schema. 
+* Updated integration test spreadsheets to contain new optional content_description field.
+
+
 # Staging 2019/06/05
 ## Ingest
 
