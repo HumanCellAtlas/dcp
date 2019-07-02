@@ -1,6 +1,77 @@
 # Release Notes
 
 <!-- newest release at the top please) -->
+
+# Prod 2019/07/02
+## Data Store 2019-07-02-15-33-47-prod.release-1-ga23f0ed
+* De-register percolate queries across all indices (#2196)
+* [easy] Use the same regex for all uuids. (#2185)
+* Retry V2 notifications every 6 hours for 3 days (#2169) 
+* Miscellaneous fixes (#2188) 
+* Revert "Begin DSS builder (#1149)" (#2187) 
+* Add operation to trigger sync (#2180) 
+* Use sqs batch send from dcplib (#2179) 
+* bump requirements (#2186) 
+* Remove notifier-v2 retries for non-existent objects (#2183) 
+* Remove indexer retries for non-existent objects (#2182) 
+* Add operation to verify entity replication (#2178) 
+* Lambda Layers (#2168) 
+* Lambda Tagging (#2150)
+
+## Metadata Schema
+### Optimus 1.2.0
+* reverting from Optimus 1.3.0 due to an error which was discovered
+
+## Metadata Schema
+### Versions
+* death: 5.5.1
+* contact: 8.0.1
+* channel: 2.0.4
+* provenance: 1.0.4
+* cell_line: 14.3.1
+* cell_suspension: 13.1.1
+* donor_organism: 15.3.2
+* imaged_specimen: 3.1.1
+* organoid: 11.1.2
+* specimen_from_organism: 10.2.1
+* analysis_file: 6.1.0
+* image_file: 2.1.0
+* reference_file: 3.1.0
+* sequence_file: 9.1.0
+* supplementary_file: 2.1.0
+* analysis_process: 11.0.2
+* process: 9.1.1
+* project: 14.0.2
+* analysis_protocol: 9.0.1
+* aggregate_generation_protocol: 2.0.1
+* collection_protocol: 9.1.1
+* differentiation_protocol: 2.1.1
+* Dissociation_protocol: 6.1.1
+* enrichment_protocol: 3.0.1
+* ipsc_induction_protocol: 3.1.2
+* imaging_preparation_protocol: 2.1.1
+* imaging_protocol: 11.1.3
+* protocol: 7.0.1
+* library_preparation_protocol: 6.1.1
+* sequencing_protocol: 10.0.2
+* file_core - 6.1.0
+* file_content_ontology - 1.0.0
+* file_format_ontology - 1.0.0
+
+### Functionality
+* Switched to pre-commit commit package
+* Added pull approve functionality
+* Changed travis conf file for multi-stage build
+* Changed print statements to errors for linter musts
+* Added check for required ontology schema properties
+* Added the linter to the pre-commit hook
+* Added python to travis. Added call to linter.
+* Added new file_format_ontology ontology schema.
+* Added optional content_description field.
+* Added new file_content_ontology schema.
+* Updated integration test spreadsheets to contain new optional content_description field.
+
+
 # Prod 2019/06/11
 ## Ingest
 ### Core v0.9.1
