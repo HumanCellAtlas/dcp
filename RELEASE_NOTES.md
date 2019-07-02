@@ -19,6 +19,10 @@
 * Lambda Tagging (#2150)
 
 ## Metadata Schema
+### Optimus 1.2.0
+* reverting from Optimus 1.3.0 due to an error which was discovered
+
+## Metadata Schema
 ### Versions
 * death: 5.5.1
 * contact: 8.0.1
