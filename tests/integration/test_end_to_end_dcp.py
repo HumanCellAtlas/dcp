@@ -104,7 +104,8 @@ class TestSmartSeq2Run(TestEndToEndDCP):
     def test_smartseq2_run(self):
         runner = DatasetRunner(deployment=self.deployment)
 
-        with Timeout(110 * 60) as to:  # timeout after 1 hour and 50 minutes
+        _1_hr_50_min = 110 * 60
+        with Timeout(_1_hr_50_min) as time_limit:
             try:
                 self.ingest_store_and_analyze_dataset(runner, dataset_fixture='Smart-seq2')
                 self.assertEqual(1, len(runner.primary_bundle_uuids))
@@ -112,12 +113,12 @@ class TestSmartSeq2Run(TestEndToEndDCP):
                 expected_files = self.expected_results_bundle_files(runner.primary_bundle_uuids[0],
                                                                     self.SS2_ANALYSIS_OUTPUT_FILES_REGEXES)
                 results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuids[0])
-    
+
                 self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
             finally:
                 runner.cleanup_primary_and_result_bundles()
 
-        if to.did_timeout:
+        if time_limit.did_timeout:
             runner.cleanup_analysis_workflows()
             raise TimeoutError("test timed out")
 
