@@ -63,6 +63,9 @@ class TestEndToEndDCP(unittest.TestCase):
         self.assertEqual(len(files), 0, f"Found extra file(s) in bundle: {list((f['name'] for f in files))}")
 
 
+_1_hr_50_min = 110 * 60
+
+
 class TestSmartSeq2Run(TestEndToEndDCP):
 
     SS2_ANALYSIS_OUTPUT_FILES_REGEXES = [
@@ -104,23 +107,37 @@ class TestSmartSeq2Run(TestEndToEndDCP):
     def test_smartseq2_run(self):
         runner = DatasetRunner(deployment=self.deployment)
 
-        _1_hr_50_min = 110 * 60
+        def run_checks(*args, **kwargs):
+            self.assertEqual(1, len(runner.primary_bundle_uuids))
+            self.assertEqual(1, len(runner.secondary_bundle_uuids))
+            expected_files = self.expected_results_bundle_files(runner.primary_bundle_uuids[0],
+                                                                self.SS2_ANALYSIS_OUTPUT_FILES_REGEXES)
+            results_bundle_manifest = self.data_store.bundle_manifest(
+                runner.secondary_bundle_uuids[0])
+
+            self.check_manifest_contains_exactly_these_files(results_bundle_manifest,
+                                                             expected_files)
+
+        self._run_first_submission(post_condition=run_checks)
+
+    def test_update(self):
+        runner = DatasetRunner(deployment=self.deployment)
+        self._run_first_submission(test_runner=runner)
+
+    def _run_first_submission(self, test_runner=None, post_condition=None):
+        runner = test_runner if test_runner else DatasetRunner(deployment=self.deployment)
         with Timeout(_1_hr_50_min) as time_limit:
             try:
                 self.ingest_store_and_analyze_dataset(runner, dataset_fixture='Smart-seq2')
-                self.assertEqual(1, len(runner.primary_bundle_uuids))
-                self.assertEqual(1, len(runner.secondary_bundle_uuids))
-                expected_files = self.expected_results_bundle_files(runner.primary_bundle_uuids[0],
-                                                                    self.SS2_ANALYSIS_OUTPUT_FILES_REGEXES)
-                results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuids[0])
-
-                self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
+                if post_condition:
+                    post_condition(runner)
             finally:
                 runner.cleanup_primary_and_result_bundles()
 
         if time_limit.did_timeout:
             runner.cleanup_analysis_workflows()
             raise TimeoutError("test timed out")
+
 
 
 class TestOptimusRun(TestEndToEndDCP):
