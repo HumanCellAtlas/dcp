@@ -26,6 +26,13 @@ dcp_wide_test_SS2:
   script:
     - python -m unittest tests.integration.test_end_to_end_dcp.TestSmartSeq2Run.test_smartseq2_run
 
+dcp_wide_test_metadata_update:
+  stage: dcp_wide_test
+  only:
+    - task/metadata-update
+  script:
+    - python -m unittest tests.integration.test_end_to_end_dcp.TestSmartSeq2Run.test_update
+
 dcp_wide_test_optimus:
   stage: dcp_wide_test
   only:
