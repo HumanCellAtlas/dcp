@@ -9,7 +9,7 @@ before_script:
   - apt-get -y update
   - apt-get -y install jq
   - pip install -r requirements.txt
-  - export DEPLOYMENT_ENV=$CI_COMMIT_REF_NAME
+  - export DEPLOYMENT_ENV=integration
   - export SWAGGER_URL="https://dss.$DEPLOYMENT_ENV.data.humancellatlas.org/v1/swagger.json"
   - mkdir -p ~/.config/hca
   - jq -n .DSSClient.swagger_url=env.SWAGGER_URL > ~/.config/hca/config.$DEPLOYMENT_ENV.json
