@@ -17,7 +17,7 @@ class TestEndToEndDCP(unittest.TestCase):
     def setUp(self):
         self.deployment = os.environ.get('DEPLOYMENT_ENV', None)
         if self.deployment not in DEPLOYMENTS:
-            raise RuntimeError(f"CI_COMMIT_REF_NAME environment variable must be one of {DEPLOYMENTS}")
+            raise RuntimeError(f"DEPLOYMENT_ENV environment variable must be one of {DEPLOYMENTS}")
         self.data_store = DataStoreAgent(deployment=self.deployment)
 
     def ingest_store_and_analyze_dataset(self, runner, dataset_fixture):
