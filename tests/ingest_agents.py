@@ -2,6 +2,7 @@ import json
 import requests
 import os
 
+from ingest.api.ingestapi import IngestApi
 from ingest.utils.s2s_token_client import S2STokenClient
 from ingest.utils.token_manager import TokenManager
 
@@ -35,12 +36,20 @@ class IngestApiAgent:
         self.deployment = deployment
         self.ingest_api_url = self._ingest_api_url()
         self.ingest_auth_agent = IngestAuthAgent()
+        self.ingest_api = IngestApi(url=self.ingest_api_url)
+        self.ingest_api.set_token(self.ingest_auth_agent.get_auth_token())
 
     def project(self, project_id):
         return IngestApiAgent.Project(project_id=project_id, ingest_api_agent=self)
 
     def submission(self, submission_id):
         return IngestApiAgent.SubmissionEnvelope(envelope_id=submission_id, ingest_api_agent=self)
+
+    def new_submission(self, is_update=False):
+        new_submission = self.ingest_api.create_submission(update_submission=is_update)
+        #TODO submission id cannot be easily extracted from the result of create submission request;
+        # might need to update the Submission agent for this
+        return self.submission(new_submission.id)
 
     def iter_submissions(self):
         for page in self.iter_pages('/submissionEnvelopes', page_size=500):
@@ -185,7 +194,7 @@ class IngestAuthAgent:
         self.s2s_token_client.setup_from_file(gcp_credentials_file)
         self.token_manager = TokenManager(token_client=self.s2s_token_client)
 
-    def _get_auth_token(self):
+    def get_auth_token(self):
         """Generate self-issued JWT token
 
         :return string auth_token: OAuth0 JWT token
@@ -199,7 +208,7 @@ class IngestAuthAgent:
         :return dict headers: A header with necessary token information to talk to Auth0 authentication required endpoints.
         """
         headers = {
-            "Authorization": f"Bearer {self._get_auth_token()}"
+            "Authorization": f"Bearer {self.get_auth_token()}"
         }
         return headers
 
