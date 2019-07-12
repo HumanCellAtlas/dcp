@@ -1,4 +1,6 @@
 import json
+import logging
+
 import requests
 import os
 
@@ -47,9 +49,7 @@ class IngestApiAgent:
 
     def new_submission(self, is_update=False):
         new_submission = self.ingest_api.create_submission(update_submission=is_update)
-        #TODO submission id cannot be easily extracted from the result of create submission request;
-        # might need to update the Submission agent for this
-        return self.submission(new_submission.id)
+        logging.info(new_submission)
 
     def iter_submissions(self):
         for page in self.iter_pages('/submissionEnvelopes', page_size=500):
