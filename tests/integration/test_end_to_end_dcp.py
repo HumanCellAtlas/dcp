@@ -114,7 +114,7 @@ class TestSmartSeq2Run(TestEndToEndDCP):
 
     def test_update(self):
         runner = DatasetRunner(deployment=self.deployment)
-        self._run_first_submission(test_runner=runner)
+        #self._run_first_submission(test_runner=runner)
         runner.ingest_api.new_submission()
 
     def _run_first_submission(self, test_runner=None, post_condition=None):
