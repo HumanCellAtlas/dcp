@@ -114,9 +114,17 @@ class TestSmartSeq2Run(TestEndToEndDCP):
 
     def test_update(self):
         runner = DatasetRunner(deployment=self.deployment)
-        #self._run_first_submission(test_runner=runner)
-        submission = runner.ingest_api.new_submission(is_update=True)
-        Progress.report(f'Update submission id: {submission.envelope_id}')
+        self._run_first_submission(test_runner=runner)
+        original_submission = runner.submission_envelope
+        update_submission = runner.ingest_api.new_submission(is_update=True)
+        Progress.report(f'Update submission id: {update_submission.envelope_id}')
+        biomaterials = original_submission.metadata_documents('biomaterial')
+        for biomaterial in biomaterials:
+            content = biomaterial['content']
+            name = content['biomaterial_core']['biomaterial_name']
+            updated_name = f'UPDATED {name}'
+            content['biomaterial_core']['biomaterial_name'] = updated_name
+            update_submission.add_metadata('biomaterial', content, update=True)
 
     def _run_first_submission(self, test_runner=None, post_condition=None):
         runner = test_runner if test_runner else DatasetRunner(deployment=self.deployment)
