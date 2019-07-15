@@ -115,7 +115,8 @@ class TestSmartSeq2Run(TestEndToEndDCP):
     def test_update(self):
         runner = DatasetRunner(deployment=self.deployment)
         #self._run_first_submission(test_runner=runner)
-        runner.ingest_api.new_submission()
+        submission = runner.ingest_api.new_submission()
+        Progress.report(submission)
 
     def _run_first_submission(self, test_runner=None, post_condition=None):
         runner = test_runner if test_runner else DatasetRunner(deployment=self.deployment)
@@ -131,7 +132,6 @@ class TestSmartSeq2Run(TestEndToEndDCP):
         if time_limit.did_timeout:
             runner.cleanup_analysis_workflows()
             raise TimeoutError("test timed out")
-
 
 
 class TestOptimusRun(TestEndToEndDCP):
