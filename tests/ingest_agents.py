@@ -180,7 +180,7 @@ class IngestApiAgent:
             self._check_metadata_type(metadata_type)
             endpoint_path = _pluralized_type[metadata_type]
             metadata_link = self._link_to(endpoint_path)
-            params = {'updatingUuid': self.uuid()} if update else {}
+            params = {'updatingUuid': self.uuid} if update else {}
             self.api.post(metadata_link, metadata_content, params=params)
 
         @staticmethod
