@@ -38,7 +38,6 @@ class IngestApiAgent:
         self.deployment = deployment
         self.ingest_api_url = self._ingest_api_url()
         self.ingest_auth_agent = IngestAuthAgent()
-        self.ingest_api.set_token(self.ingest_auth_agent.get_auth_token())
         self._set_up_ingest_client()
 
     def _set_up_ingest_client(self):
