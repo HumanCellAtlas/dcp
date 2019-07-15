@@ -8,6 +8,13 @@ from ingest.api.ingestapi import IngestApi
 from ingest.utils.s2s_token_client import S2STokenClient
 from ingest.utils.token_manager import TokenManager
 
+_pluralized_type = {
+    'biomaterial': 'biomaterials',
+    'process': 'processes',
+    'file': 'files',
+    'project': 'projects',
+    'protocol': 'protocols'
+}
 
 class IngestUIAgent:
 
@@ -104,6 +111,12 @@ class IngestApiAgent:
         else:
             raise RuntimeError(f"GET {url} got {response}")
 
+    def post(self, url, content, params={}):
+        auth_header = self.ingest_auth_agent.make_auth_header()
+        response = requests.post(url, json=content, headers=auth_header, params=params)
+        response.raise_for_status()
+        return response.json()
+
     def _ingest_api_url(self):
         if self.deployment == 'prod':
             return "https://api.ingest.data.humancellatlas.org"
@@ -135,7 +148,6 @@ class IngestApiAgent:
     class SubmissionEnvelope:
 
         # May be primed wih data, or of you supply an ID, we will go get the data
-
         def __init__(self, ingest_api_agent, envelope_id=None, data=None):
             if not envelope_id and not data:
                 raise RuntimeError("either envelope_id or data must be provided")
@@ -149,10 +161,34 @@ class IngestApiAgent:
                 self.envelope_id = data['_links']['self']['href'].split('/')[-1]
 
         def __str__(self):
-            return f"SubmissionEnvelope(id={self.envelope_id}, uuid={self.uuid}, status={self.status})"
+            return f"SubmissionEnvelope(id={self.envelope_id}, uuid={self.uuid}, " \
+                f"status={self.status})"
+
+        def _link_to(self, property):
+            return self.data['_links'][property]['href']
 
         def files(self):
             return self.api.get_all(self.data['_links']['files']['href'], 'files')
+
+        def metadata_documents(self, metadata_type: str = None):
+            self._check_metadata_type(metadata_type)
+            result_type = _pluralized_type[metadata_type]
+            metadata_link = self._link_to(result_type)
+            return self.api.get_all(metadata_link, result_type)
+
+        def add_metadata(self, metadata_type, metadata_content, update=False):
+            self._check_metadata_type(metadata_type)
+            endpoint_path = _pluralized_type[metadata_type]
+            metadata_link = self._link_to(endpoint_path)
+            params = {'updatingUuid': self.uuid()} if update else {}
+            self.api.post(metadata_link, metadata_content, params=params)
+
+        @staticmethod
+        def _check_metadata_type(metadata_type):
+            if not metadata_type:
+                raise RuntimeError('`metadata_type` must be specified')
+            if not metadata_type in _pluralized_type:
+                raise KeyError(f'Unknown metadata type [{metadata_type}].')
 
         def iter_files(self):
             url = self.data['_links']['files']['href']
