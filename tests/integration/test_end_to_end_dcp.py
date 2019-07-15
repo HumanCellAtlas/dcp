@@ -116,7 +116,7 @@ class TestSmartSeq2Run(TestEndToEndDCP):
         runner = DatasetRunner(deployment=self.deployment)
         #self._run_first_submission(test_runner=runner)
         submission = runner.ingest_api.new_submission()
-        Progress.report(submission)
+        Progress.report(str(submission))
 
     def _run_first_submission(self, test_runner=None, post_condition=None):
         runner = test_runner if test_runner else DatasetRunner(deployment=self.deployment)
