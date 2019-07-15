@@ -38,8 +38,13 @@ class IngestApiAgent:
         self.deployment = deployment
         self.ingest_api_url = self._ingest_api_url()
         self.ingest_auth_agent = IngestAuthAgent()
-        self.ingest_api = IngestApi(url=self.ingest_api_url)
         self.ingest_api.set_token(self.ingest_auth_agent.get_auth_token())
+        self._set_up_ingest_client()
+
+    def _set_up_ingest_client(self):
+        self.ingest_api = IngestApi(url=self.ingest_api_url)
+        auth_header = self.ingest_auth_agent.make_auth_header()
+        self.ingest_api.set_token(auth_header['Authorization'])
 
     def project(self, project_id):
         return IngestApiAgent.Project(project_id=project_id, ingest_api_agent=self)
