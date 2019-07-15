@@ -52,7 +52,8 @@ class IngestApiAgent:
         return IngestApiAgent.SubmissionEnvelope(envelope_id=submission_id, ingest_api_agent=self)
 
     def new_submission(self, is_update=False):
-        return self.ingest_api.create_submission(update_submission=is_update)
+        submission_data = self.ingest_api.create_submission(update_submission=is_update)
+        return IngestApiAgent.SubmissionEnvelope(ingest_api_agent=self, data=submission_data)
 
     def iter_submissions(self):
         for page in self.iter_pages('/submissionEnvelopes', page_size=500):
