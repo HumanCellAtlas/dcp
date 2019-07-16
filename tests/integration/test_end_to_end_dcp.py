@@ -6,6 +6,7 @@ import unittest
 
 from ingest.importer.submission import Submission
 
+from tests.wait_for import WaitFor
 from ..utils import Progress, Timeout
 from ..data_store_agent import DataStoreAgent
 from ..dataset_fixture import DatasetFixture
@@ -130,6 +131,8 @@ class TestSmartSeq2Run(TestEndToEndDCP):
             content['biomaterial_core']['biomaterial_name'] = updated_name
             original_uuid = biomaterial["uuid"]["uuid"]
             update_submission.add_biomaterial(content, update_target_uuid=original_uuid)
+        Progress.report('Checking validation status of update submission...')
+        WaitFor(update_submission.check_validation).to_return_value(True)
 
     def _run_first_submission(self, test_runner=None, post_condition=None):
         runner = test_runner if test_runner else DatasetRunner(deployment=self.deployment)
