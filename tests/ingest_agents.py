@@ -174,12 +174,15 @@ class IngestApiAgent:
             metadata_link = self._link_to(result_type)
             return self.api.get_all(metadata_link, result_type)
 
-        def add_metadata(self, metadata_type, metadata_content, update=False):
+        def _add_metadata(self, metadata_type, metadata_content, update=False):
             self._check_metadata_type(metadata_type)
             endpoint_path = _pluralized_type[metadata_type]
             metadata_link = self._link_to(endpoint_path)
             params = {'updatingUuid': self.uuid} if update else {}
             self.api.post(metadata_link, metadata_content, params=params)
+
+        def add_biomaterial(self, biomaterial_content, update=False):
+            self._add_metadata('biomaterial', biomaterial_content, update=update)
 
         @staticmethod
         def _check_metadata_type(metadata_type):

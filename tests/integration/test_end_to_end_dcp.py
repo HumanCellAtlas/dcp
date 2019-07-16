@@ -128,7 +128,9 @@ class TestSmartSeq2Run(TestEndToEndDCP):
             name = content['biomaterial_core']['biomaterial_name']
             updated_name = f'UPDATED {name}'
             content['biomaterial_core']['biomaterial_name'] = updated_name
-            update_submission.add_metadata('biomaterial', content, update=True)
+            updated_id = f"updated_{content['biomaterial_core']['biomaterial_id']}"
+            content['biomaterial_core']['biomaterial_id'] = updated_id
+            update_submission.add_biomaterial(content, update=True)
 
     def _run_first_submission(self, test_runner=None, post_condition=None):
         runner = test_runner if test_runner else DatasetRunner(deployment=self.deployment)
