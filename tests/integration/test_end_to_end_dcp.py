@@ -133,6 +133,8 @@ class TestSmartSeq2Run(TestEndToEndDCP):
             update_submission.add_biomaterial(content, update_target_uuid=original_uuid)
         Progress.report('Checking validation status of update submission...')
         WaitFor(update_submission.check_validation).to_return_value(True)
+        Progress.report('Completing update submission...')
+        update_submission.complete()
 
     def _run_first_submission(self, test_runner=None, post_condition=None):
         runner = test_runner if test_runner else DatasetRunner(deployment=self.deployment)

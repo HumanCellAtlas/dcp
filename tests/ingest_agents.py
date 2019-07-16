@@ -117,6 +117,15 @@ class IngestApiAgent:
         response.raise_for_status()
         return response.json()
 
+    def put(self, url, content=None):
+        auth_header = self.ingest_auth_agent.make_auth_header()
+        if content:
+            response = requests.put(url, json=content, headers=auth_header)
+        else:
+            response = requests.put(url, headers=auth_header)
+        response.raise_for_status()
+        return response.json()
+
     def _ingest_api_url(self):
         if self.deployment == 'prod':
             return "https://api.ingest.data.humancellatlas.org"
@@ -164,8 +173,8 @@ class IngestApiAgent:
             return f"SubmissionEnvelope(id={self.envelope_id}, uuid={self.uuid}, " \
                 f"status={self.status})"
 
-        def _link_to(self, property):
-            return self.data['_links'][property]['href']
+        def _link_to(self, endpoint_path):
+            return self.data['_links'][endpoint_path]['href']
 
         def files(self):
             return self.api.get_all(self.data['_links']['files']['href'], 'files')
@@ -229,6 +238,10 @@ class IngestApiAgent:
             url = self.data['_links']['bundleManifests']['href']
             manifests = self.api.get_all(url, 'bundleManifests')
             return [manifest['bundleUuid'] for manifest in manifests]
+
+        def complete(self):
+            completion_endpoint = self._link_to('submit')
+            self.api.put(completion_endpoint)
 
         def _load(self):
             self.data = self.api.get(f"/submissionEnvelopes/{self.envelope_id}")
