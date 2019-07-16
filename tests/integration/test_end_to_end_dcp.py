@@ -130,6 +130,7 @@ class TestSmartSeq2Run(TestEndToEndDCP):
             content['biomaterial_core']['biomaterial_name'] = updated_name
             updated_id = f"updated_{content['biomaterial_core']['biomaterial_id']}"
             content['biomaterial_core']['biomaterial_id'] = updated_id
+            Progress.report(str(content))
             update_submission.add_biomaterial(content, update=True)
 
     def _run_first_submission(self, test_runner=None, post_condition=None):
