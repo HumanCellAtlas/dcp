@@ -135,9 +135,8 @@ class TestSmartSeq2Run(TestEndToEndDCP):
         bundle_biomaterials = list(filter(biomaterial_filter, target_bundle['bundle']['files']))
 
         update_biomaterials = update_submission.metadata_documents('biomaterial')
-        # reformat version to match with DSS version
-        ingest_biomaterial_versions = map(lambda biomaterial: biomaterial['dcpVersion'][:-1],
-                                          update_biomaterials)
+        format_version = lambda biomaterial: biomaterial['dcpVersion'][:-1].replace(':', '')
+        ingest_biomaterial_versions = list(map(format_version, update_biomaterials))
 
         for bundle_biomaterial in bundle_biomaterials:
             # take out the last 4 chars to match with the Ingest versioning system
