@@ -131,21 +131,7 @@ class TestSmartSeq2Run(TestEndToEndDCP):
         update_bundle_uuids = self._complete_submission(update_submission)
         target_bundle = self.data_store.bundle_manifest(bundle_uuid=update_bundle_uuids[0])
 
-        biomaterial_filter = lambda file: 'metadata/biomaterial' in file['content-type']
-        bundle_biomaterials = list(filter(biomaterial_filter, target_bundle['bundle']['files']))
-
-        update_biomaterials = update_submission.metadata_documents('biomaterial')
-        format_version = lambda biomaterial: biomaterial['dcpVersion'][:-1].replace(':', '')
-        ingest_biomaterial_versions = list(map(format_version, update_biomaterials))
-
-        Progress.report(f'Expected versions: {ingest_biomaterial_versions}')
-
-        for bundle_biomaterial in bundle_biomaterials:
-            # take out the last 4 chars to match with the Ingest versioning system
-            dss_version = bundle_biomaterial['version'][:-4]
-            if dss_version not in ingest_biomaterial_versions:
-                raise AssertionError(f'File {bundle_biomaterial["name"]} with version '
-                                     f'{bundle_biomaterial["version"]} was not updated.')
+        self._assert_bundle_files_updated(target_bundle, update_submission)
 
     @staticmethod
     def _update_biomaterials(original_submission, update_submission):
@@ -166,6 +152,23 @@ class TestSmartSeq2Run(TestEndToEndDCP):
         update_bundle_uuids = update_submission.bundles()
         Progress.report(f'Updated bundles {update_bundle_uuids}')
         return update_bundle_uuids
+
+    @staticmethod
+    def _assert_bundle_files_updated(target_bundle, update_submission):
+        biomaterial_filter = lambda file: 'metadata/biomaterial' in file['content-type']
+        bundle_biomaterials = list(filter(biomaterial_filter, target_bundle['bundle']['files']))
+
+        ingest_biomaterials = update_submission.metadata_documents('biomaterial')
+        format_version = lambda biomaterial: biomaterial['dcpVersion'][:-1].replace(':', '')
+        ingest_biomaterial_versions = list(map(format_version, ingest_biomaterials))
+
+        for bundle_biomaterial in bundle_biomaterials:
+            # take out the last 4 chars to match with the Ingest versioning system
+            dss_version = bundle_biomaterial['version'][:-4]
+            if dss_version not in ingest_biomaterial_versions:
+                raise AssertionError(f'File {bundle_biomaterial["name"]} with version '
+                                     f'{bundle_biomaterial["version"]} was not updated. '
+                                     f'Expected versions {ingest_biomaterial_versions}')
 
     def _run_first_submission(self, test_runner=None, post_condition=None):
         runner = test_runner if test_runner else DatasetRunner(deployment=self.deployment)
