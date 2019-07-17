@@ -123,6 +123,16 @@ class TestSmartSeq2Run(TestEndToEndDCP):
         original_submission = runner.ingest_api.submission('5d2c6c593a09e500082c9b77')
         update_submission = runner.ingest_api.new_submission(is_update=True)
         Progress.report(f'Update submission id: {update_submission.envelope_id}')
+        self._update_biomaterials(original_submission, update_submission)
+
+        Progress.report('Checking validation status of update submission...')
+        WaitFor(update_submission.check_validation).to_return_value(True)
+
+        update_bundle_uuids = self._complete_submission(update_submission)
+        target_bundle = self.data_store.bundle_manifest(bundle_uuid=update_bundle_uuids[0])
+
+    @staticmethod
+    def _update_biomaterials(original_submission, update_submission):
         biomaterials = original_submission.metadata_documents('biomaterial')
         for biomaterial in biomaterials:
             content = biomaterial['content']
@@ -131,16 +141,15 @@ class TestSmartSeq2Run(TestEndToEndDCP):
             content['biomaterial_core']['biomaterial_name'] = updated_name
             original_uuid = biomaterial["uuid"]["uuid"]
             update_submission.add_biomaterial(content, update_target_uuid=original_uuid)
-        Progress.report('Checking validation status of update submission...')
-        WaitFor(update_submission.check_validation).to_return_value(True)
+
+    @staticmethod
+    def _complete_submission(update_submission):
         Progress.report('Completing update submission...')
         update_submission.complete()
         WaitFor(update_submission.bundles).to_return_any_value()
         update_bundle_uuids = update_submission.bundles()
         Progress.report(f'Updated bundles {update_bundle_uuids}')
-        target_bundle = self.data_store.bundle_manifest(bundle_uuid=update_bundle_uuids[0])
-        Progress.report(str(target_bundle))
-
+        return update_bundle_uuids
 
     def _run_first_submission(self, test_runner=None, post_condition=None):
         runner = test_runner if test_runner else DatasetRunner(deployment=self.deployment)
