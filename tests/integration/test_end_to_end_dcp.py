@@ -131,6 +131,20 @@ class TestSmartSeq2Run(TestEndToEndDCP):
         update_bundle_uuids = self._complete_submission(update_submission)
         target_bundle = self.data_store.bundle_manifest(bundle_uuid=update_bundle_uuids[0])
 
+        biomaterial_filter = lambda file: 'metadata/biomaterial' in file['content-type']
+        bundle_biomaterials = list(filter(biomaterial_filter, target_bundle['bundle']['files']))
+
+        update_biomaterials = update_submission.metadata_documents('biomaterial')
+        # reformat version to match with DSS version
+        ingest_biomaterial_versions = map(lambda biomaterial: biomaterial['dcpVersion'][:-1],
+                                          update_biomaterials)
+
+        for bundle_biomaterial in bundle_biomaterials:
+            # take out the last 4 chars to match with the Ingest versioning system
+            dss_version = bundle_biomaterial['version'][:-4]
+            if dss_version not in ingest_biomaterial_versions:
+                raise AssertionError(f'File {bundle_biomaterial["name"]} was not updated.')
+
     @staticmethod
     def _update_biomaterials(original_submission, update_submission):
         biomaterials = original_submission.metadata_documents('biomaterial')
