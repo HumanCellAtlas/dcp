@@ -116,18 +116,19 @@ class TestSmartSeq2Run(TestEndToEndDCP):
         self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
 
     def test_update(self):
+        # given:
         runner = DatasetRunner(deployment=self.deployment)
-        #self._run_first_submission(test_runner=runner)
-        #original_submission = runner.submission_envelope
-        # using fixed id for quick test
-        original_submission = runner.ingest_api.submission('5d2c6c593a09e500082c9b77')
+        self._run_first_submission(test_runner=runner)
+        original_submission = runner.submission_envelope
         update_submission = runner.ingest_api.new_submission(is_update=True)
         Progress.report(f'Update submission id: {update_submission.envelope_id}')
         self._update_biomaterials(original_submission, update_submission)
 
+        # when:
         Progress.report('Checking validation status of update submission...')
         WaitFor(update_submission.check_validation).to_return_value(True)
 
+        # then:
         update_bundle_uuids = self._complete_submission(update_submission)
         Progress.report(f'Bundle UUIDs {update_bundle_uuids}.')
 
