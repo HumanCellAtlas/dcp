@@ -136,8 +136,11 @@ class TestSmartSeq2Run(TestEndToEndDCP):
         Progress.report('Completing update submission...')
         update_submission.complete()
         WaitFor(update_submission.bundles).to_return_any_value()
-        update_bundles = update_submission.bundles()
-        Progress.report(f'Updated bundles {update_bundles}')
+        update_bundle_uuids = update_submission.bundles()
+        Progress.report(f'Updated bundles {update_bundle_uuids}')
+        target_bundle = self.data_store.bundle_manifest(bundle_uuid=update_bundle_uuids[0])
+        Progress.report(str(target_bundle))
+
 
     def _run_first_submission(self, test_runner=None, post_condition=None):
         runner = test_runner if test_runner else DatasetRunner(deployment=self.deployment)
