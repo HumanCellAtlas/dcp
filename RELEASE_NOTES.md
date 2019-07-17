@@ -1,5 +1,35 @@
 # Release Notes
 
+# Staging 2019/07/15
+## Ingest
+### Core v0.9.2.rc
+* APIs for performing simple updates to bundles
+* APIs for viewing JSONPatch diffs when performing updates
+* Search submissions by project
+* Disabled “Submit” button when linking hasn’t yet been completed(spreadsheet submissions only)
+* Now using Java 11, Spring boot 2
+### Exporter v0.8.5.rc
+* Handles update submissions and performs simple bundle updates as necessary
+* Separate AMQP listener for update messages
+* Duplicate links in links.json fix
+### Broker v0.9.0.rc
+* Handles update spreadsheets
+* Providing a mechanism for generating and downloading update-spreadsheets from submitted spreadsheets
+### UI v0.9.6.rc
+* Widgets for uploading and downloading an update-spreadsheet
+* Paginated project dashboard
+* Widget to search for projects by title, shortname, etc.
+* Submissions table view inside the projects tab
+### Validator v0.6.5.rc
+* Added ontology validation keyword
+* Ontology service updates
+* Fastq validator subprocess fix
+### Staging manager v0.5.4.rc
+* ingest-client library updates, refactoring
+### State tracker v0.7.5.rc
+* Now using Java 11
+
+
 # Staging 2019/06/26
 ## Azul
 Version(s): 9fbf3283a6f5c6b20d5a6be22dbb9d7fc08a4e52
