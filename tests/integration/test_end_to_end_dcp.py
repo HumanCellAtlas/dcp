@@ -138,11 +138,14 @@ class TestSmartSeq2Run(TestEndToEndDCP):
         format_version = lambda biomaterial: biomaterial['dcpVersion'][:-1].replace(':', '')
         ingest_biomaterial_versions = list(map(format_version, update_biomaterials))
 
+        Progress.report(f'Expected versions: {ingest_biomaterial_versions}')
+
         for bundle_biomaterial in bundle_biomaterials:
             # take out the last 4 chars to match with the Ingest versioning system
             dss_version = bundle_biomaterial['version'][:-4]
             if dss_version not in ingest_biomaterial_versions:
-                raise AssertionError(f'File {bundle_biomaterial["name"]} was not updated.')
+                raise AssertionError(f'File {bundle_biomaterial["name"]} with version '
+                                     f'{bundle_biomaterial["version"]} was not updated.')
 
     @staticmethod
     def _update_biomaterials(original_submission, update_submission):
