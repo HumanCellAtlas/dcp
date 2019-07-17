@@ -20,18 +20,13 @@ class WaitFor:
         logger.debug(f"WaitFor {self.func.__name__}")
 
     def to_return_value(self, value=None, timeout_seconds=None):
-        self.start_time = time.time()
-        timeout_at = self.start_time + timeout_seconds if timeout_seconds else None
+        def assert_expected_value(returned_value): return returned_value == value
 
-        while True:
-            retval = self.func(*self.func_args)
-            Progress.report(f"  {self.func.__name__} returned {retval}")
-            if retval == value:
-                return retval
-            if timeout_at and time.time() > timeout_at:
-                raise TimedOut(f"Function {self.func.__name__} did not return value {value} " +
-                               f" within {timeout_seconds} seconds")
-            self._sleep_until_next_check_time()
+        def handle_timeout(*args):
+            raise TimedOut(f"Function {self.func.__name__} did not return value {value} " +
+                           f" within {timeout_seconds} seconds")
+
+        self._do_expect_function_to_return(assert_expected_value, handle_timeout)
 
     def to_return_any_value(self, timeout_seconds=None):
         def assert_non_empty_value(returned_value): return returned_value
