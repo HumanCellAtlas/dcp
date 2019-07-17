@@ -129,6 +129,7 @@ class TestSmartSeq2Run(TestEndToEndDCP):
         WaitFor(update_submission.check_validation).to_return_value(True)
 
         update_bundle_uuids = self._complete_submission(update_submission)
+        Progress.report(f'Bundle UUIDs {update_bundle_uuids}.')
         target_bundle = self.data_store.bundle_manifest(bundle_uuid=update_bundle_uuids[0])
 
         self._assert_bundle_files_updated(target_bundle, update_submission)
