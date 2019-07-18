@@ -2,6 +2,44 @@
 
 <!-- newest release at the top please) -->
 
+# Prod 2019/07/17 Hotfix
+## Ingest
+### Core v0.9.2
+* APIs for performing simple updates to bundles
+* APIs for viewing JSONPatch diffs when performing updates
+* Search submissions by project
+* Disabled “Submit” button when linking hasn’t yet been completed(spreadsheet submissions only)
+* Now using Java 11, Spring boot 2
+
+###  Exporter v0.8.6
+* Handles update submissions and performs simple bundle updates as necessary
+* Separate AMQP listener for update messages
+* Duplicate links in links.json fix
+* Fix date format check
+
+### Broker v0.9.1
+* Handles update spreadsheets
+* Providing a mechanism for generating and downloading update-spreadsheets from submitted spreadsheets
+* Fix updating of file metadata when data file is uploaded first
+    
+### UI v0.9.6
+* Widgets for uploading and downloading an update-spreadsheet
+* Paginated project dashboard
+* Widget to search for projects by title, shortname, etc.
+* Submissions table view inside the projects tab
+    
+### Validator v0.6.5
+* Added ontology validation keyword
+* Ontology service updates
+* fastq subprocess fix
+    
+### Staging manager v0.5.4
+* ingest-client library updates, refactoring
+    
+### State tracker v0.7.5
+* Now using Java 11
+
+
 # Prod 2019/07/02
 ## Data Store 2019-07-02-15-33-47-prod.release-1-ga23f0ed
 * De-register percolate queries across all indices (#2196)
