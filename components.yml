@@ -22,9 +22,9 @@ deployed_component_versions:
     ingest-state-tracking: v0.6.0.rc
     ingest-ui: v0.5.0.rc
   greenbox:
-    greenbox-falcon: v0.3.0
+    greenbox-falcon: v0.4.1
     greenbox-lira: v0.20.0
-    greenbox-pipeline-tools: v0.51.1
+    greenbox-pipeline-tools: v0.55.0
     greenbox-skylab:
       smartseq2: smartseq2_v2.4.0
       tenx: optimus_v1.2.0
