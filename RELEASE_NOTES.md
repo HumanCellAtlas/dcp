@@ -1,5 +1,109 @@
 # Release Notes
 
+# Staging 2019/07/17
+
+## Ingest
+### Exporter v0.8.6.rc
+* Fix date format check
+### Validator v0.6.5.rc
+* (same version) fastq subprocess fix
+### Broker v0.9.1.rc
+* Fix updating of file metadata when data file is uploaded first
+
+## Upload
+### Version: v4.4.1
+* Before uploading a file, check to see if the file has already been uploaded by checking its filename and checksums and if it has, skip uploading it and return the file that already exists.
+* Validation of clientside checksum against serverside checksum calculation
+* fix for deregistering job definitions as part of deployments
+
+## Data Store
+### Version 2019-07-17-15-50-19-staging.release
+* Verify content type. (#2258)
+* remove hmac_secret_key from GET/FIND Subscriptions  (#2251)
+* Remove unused code. (#2257)
+* Checkout cached files when PUT file is called. (#2246)
+* [EZ] GET/ Subscription_v1 HMAC Key Change (#2247)
+* removing fargate folder (#2252)
+* Fix typo in PUT subscription docstring (#2250)
+* remove dss-monitor-fargate references (#2245)
+* Adjust smoketest to wait a bit longer when downloading after a sync. (#2243)
+* /FIND Subscriptions HMAC_SECRET_KEY (#2238)
+* Parallelize local storage ops (#2234)
+* Add operation to trigger Elasticsearch indexer (#2235)
+* /GET Subscriptions HMAC Key (#2237)
+* Don't change part layout when fixing object metadata (#2232)
+* Storage ops accept input keys file in JSON format (#2228)
+* Make prod test job dependent on deploy (#2233)
+* Refactor indexer event parsing (#2224)
+* create large bundle sync test (#2223)
+* dependency bump: urllib1.25.3 (#2209)
+* Parallelize bundle tombstone script (#2217)
+* README Changes (#2208)
+* Parallelize sync manifest deps check (#2221)
+* increase sync daemon timeout to 900s (#2220)
+* updated iam / cron for fargate (#2219)
+* Include type for firecloud checkout viewer (#2218)
+* Storage operations improvements (#2199)
+* Allow Terra user read access to Google checkout bucket
+* DSS Monitor Independent Deploy (#2201)
+* Reformat request to analytics log message. (#2200)
+* DSS Lambda Monitoring (#2198)
+* De-register percolate queries across all indices (#2196)
+* [Easy] Increase smoketest sync wait to 120s (#2195)
+* Simplify operations job-id handling (#2194)
+* [Easy] Fix sync operation logger bug (#2193)
+
+## Secondary Analysis
+### Pipeline tools: v0.55.0
+* Add functions to get bundle-specific inputs for SmartSeq2 (paired end) and Optimus that determine whether a data bundle should be re-analyzed
+    
+### Falcon: v0.4.1
+* Fixes an issue with the noop implementation in v0.4.0
+
+## Azul
+### Version a56c023891b09ddf2b7ab1389ee7e436ca877279
+* 98771f3 Revert "Reduce /health check frequency in Route53 to decrease load on ES"
+* b9baf84 Make 'file_format' a single value (#612)
+* 45a9e97 Revert "Revert metadata field in index roll back (#965, #966)"
+* 54a27cd Reduce /health check frequency in Route53 to decrease load on ES
+* d2a3951 Eliminate PyCharm warnings in test_hca_indexer.py
+* 8c65faf Simplify index writer creation and customization
+* 0ba619e Fix formatting
+* 07ecce3 Fix unused import
+* efeace9 Use the same writer for unit tests and deployment
+* f5718ae Duplicate notifications for integration tests
+* f1cebf6 Document --shared option for subscriptions script
+* 17a780f Add unsubscribe target to Makefile
+* 61dcd69 Support duplicate notification (#947)
+* a72bac1 Add test for duplicate notifications (#947)
+* 57e7f84 Refactor aggregation code slightly for clarity
+* 3a35b0a Hot Fix: Exclude API endpoints call from health check to reduce load
+* fb98182 Changed project_shortname to project_short_name (#191)
+* 16205cb Revert metadata field in index roll back (#965, #966)
+* e35dfc2 Remove excluded list and exclude whitelisted project (#1112)
+* 22cfc66 Generate 'full metadata' TSV by optimizing on memory (#967, #968)
+* 9be159b Bundles index disallows indexing of the metadata field
+* 4598c53 Use JSON for filters (#537)
+* 3b24935 Reduce manifest download request during Locust scale test (#931)
+* 6a35619 Correct sorting and format parameters in locust test
+* e5153d5 Exclude another neuron_diff dupe
+* 98a7bfd Exclude test projects on prod
+
+## Metadata Schema
+### Versions
+* file_content_ontology:1.0.1 
+* analysis_file: 6.1.1 
+* image_file: 2.1.1 
+* file_core: 6.1.1 
+* supplementary_file: 2.1.1 
+* reference_file: 3.1.1 
+* sequence_file: 9.1.1 
+
+### Functionality Changes
+* No functionality changes.
+
+
+
 # Staging 2019/07/15
 ## Ingest
 ### Core v0.9.2.rc
