@@ -2,6 +2,11 @@
 
 <!-- newest release at the top please) -->
 
+# Prod 2019/07/19 Hotfix
+## Ingest
+### Optimus v1.3.1
+* This is a fix for the gene id and also we store gene id to gene name map into the zrr files.
+
 # Prod 2019/07/17 Hotfix
 ## Ingest
 ### Core v0.9.2
