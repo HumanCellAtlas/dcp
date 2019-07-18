@@ -81,7 +81,7 @@
 * fb98182 Changed project_shortname to project_short_name (#191)
 * 16205cb Revert metadata field in index roll back (#965, #966)
 * e35dfc2 Remove excluded list and exclude whitelisted project (#1112)
-* 22cfc66 Generate `full metadata' TSV by optimizing on memory (#967, #968)
+* 22cfc66 Generate 'full metadata' TSV by optimizing on memory (#967, #968)
 * 9be159b Bundles index disallows indexing of the metadata field
 * 4598c53 Use JSON for filters (#537)
 * 3b24935 Reduce manifest download request during Locust scale test (#931)
