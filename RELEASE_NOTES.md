@@ -1,5 +1,11 @@
 # Release Notes
 
+# Staging 2019/07/18
+## Ingest
+### Optimus v1.3.1
+* This is a fix for the gene id and also we store gene id to gene name map into the zrr files.
+  
+
 # Staging 2019/07/17
 
 ## Ingest
