@@ -162,11 +162,16 @@ class TestOptimusRun(TestEndToEndDCP):
         re.compile('^.+zarr!expression_matrix!gene_id!3$'),
         re.compile('^.+zarr!expression_matrix!gene_id!4$'),
         re.compile('^.+zarr!expression_matrix!gene_id!5$'),
+        re.compile('^.+zarr!expression_matrix!gene_metadata_string!\.zarray$'),
+        re.compile('^.+zarr!expression_matrix!gene_metadata_string!0\.0$'),
+        re.compile('^.+zarr!expression_matrix!gene_metadata_string_name!\.zarray$'),
+        re.compile('^.+zarr!expression_matrix!gene_metadata_string_name!0$'),
         re.compile('^.+zarr!expression_matrix!gene_metadata_numeric!\.zarray$'),
         re.compile('^.+zarr!expression_matrix!gene_metadata_numeric!0\.0$'),
         re.compile('^.+zarr!expression_matrix!gene_metadata_numeric_name!\.zarray$'),
         re.compile('^.+zarr!expression_matrix!gene_metadata_numeric_name!0$')
     ]
+
 
     def test_optimus_run(self):
         runner = DatasetRunner(deployment=self.deployment)
