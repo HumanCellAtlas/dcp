@@ -105,7 +105,7 @@ class TestSmartSeq2Run(TestEndToEndDCP):
     ]
 
     def test_smartseq2_run(self):
-        self._run_first_submission(post_condition=self._assert_bundle_creation_succeeded)
+        self._run_end_to_end_test_template(post_condition=self._assert_bundle_creation_succeeded)
 
     def _assert_bundle_creation_succeeded(self, runner, *args, **kwargs):
         self.assertEqual(1, len(runner.primary_bundle_uuids))
@@ -116,9 +116,11 @@ class TestSmartSeq2Run(TestEndToEndDCP):
         self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
 
     def test_update(self):
+        self._run_end_to_end_test_template(post_condition=self._run_update_test)
+
+    def _run_update_test(self, runner, *args, **kwargs):
         # given:
-        runner = DatasetRunner(deployment=self.deployment)
-        self._run_first_submission(test_runner=runner)
+        self._run_end_to_end_test_template(test_runner=runner)
         original_submission = runner.submission_envelope
         update_submission = runner.ingest_api.new_submission(is_update=True)
         Progress.report(f'Update submission id: {update_submission.envelope_id}')
@@ -152,7 +154,7 @@ class TestSmartSeq2Run(TestEndToEndDCP):
         Progress.report(f'Updated bundles {update_bundle_uuids}')
         return update_bundle_uuids
 
-    def _run_first_submission(self, test_runner=None, post_condition=None):
+    def _run_end_to_end_test_template(self, test_runner=None, post_condition=None):
         runner = test_runner if test_runner else DatasetRunner(deployment=self.deployment)
         _1_hr_50_min = 110 * 60
         with Timeout(_1_hr_50_min) as time_limit:
