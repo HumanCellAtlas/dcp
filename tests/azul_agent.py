@@ -1,5 +1,5 @@
-import json
 import requests
+import urllib.parse
 
 
 class AzulAgent:
@@ -26,13 +26,15 @@ class AzulAgent:
         >>> len(files) == 0
         True
         """
-        filters = {'project': {'is': [project_shortname]}}
+        filters = {'file': {'project': {'is': [project_shortname]}}}
         files = []
         size = 100
-        params = dict(filters=json.dumps(filters), size=str(size))
+        # Yes, the value of the filters parameter is a Python literal, not JSON.
+        # https://github.com/DataBiosphere/azul/issues/537
+        params = dict(filters=str(filters), size=str(size))
         while True:
-            url = self.azul_url + f'/repository/{entity_type}'
-            response = self.https_session.request('GET', url, params=params)
+            url = self.azul_url + f'/repository/{entity_type}?' + urllib.parse.urlencode(params, safe="{}/'")
+            response = self.https_session.request('GET', url)
             response.raise_for_status()
             body = response.json()
             hits = body['hits']
