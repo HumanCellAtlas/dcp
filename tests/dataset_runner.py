@@ -154,7 +154,7 @@ class DatasetRunner:
         Progress.report("STAGING FILES using hca cli...")
         self.select_upload_area()
         self.upload_files()
-        self.forget_about_upload_area()
+        #self.forget_about_upload_area()
 
     def select_upload_area(self):
         upload_area_s3_location = f"s3://org-humancellatlas-upload-{self.deployment}/{self.upload_area_uuid}/"
