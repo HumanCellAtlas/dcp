@@ -116,12 +116,12 @@ class TestSmartSeq2Run(TestEndToEndDCP):
         self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
 
     def test_update(self):
-        self._run_update_test(runner=DatasetRunner(deployment=self.deployment))
+        self._run_end_to_end_test_template(post_condition=self._run_update_test)
 
     def _run_update_test(self, runner, *args, **kwargs):
         # given:
-        # self._run_end_to_end_test_template(test_runner=runner)
-        original_submission = runner.ingest_api.submission('5d3706ff3a09e500082fae21')
+        self._run_end_to_end_test_template(test_runner=runner)
+        original_submission = runner.ingest_api.submission(runner.submission_id)
         update_submission = runner.ingest_api.new_submission(is_update=True)
         Progress.report(f'Update submission id: {update_submission.envelope_id}')
         self._update_biomaterials(original_submission, update_submission)
