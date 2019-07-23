@@ -99,7 +99,7 @@ class DatasetRunner:
                 # == Non-scaling Logic ==
                 self.wait_for_primary_bundles()
                 Progress.report('Waiting for submission to complete...')
-                WaitFor(self.submission_envelope.check_status).to_return_value('complete')
+                WaitFor(self.submission_envelope.check_status).to_return_str('complete')
 
                 #self.wait_for_analysis_workflows()
                 #self.wait_for_secondary_bundles()
