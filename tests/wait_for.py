@@ -37,6 +37,23 @@ class WaitFor:
 
         self._do_expect_function_to_return(assert_non_empty_value, handle_timeout)
 
+    def to_return_str(self, expected: str = None, case_sensitive = False, timeout_seconds=None):
+        def assert_matches_string(returned_value):
+            matches = False
+            if case_sensitive:
+                matches = str(returned_value).lower() == expected.lower()
+            else:
+                matches = str(returned_value) == expected
+            return matches
+
+        def handle_timeout(returned_value):
+            raise TimedOut(f'Function {self.func.__name__} returned "{returned_value}" '
+                           f'expected to match with "{expected}" within {timeout_seconds} '
+                           f'seconds')
+
+        self._do_expect_function_to_return(assert_matches_string, handle_timeout)
+
+
     def _do_expect_function_to_return(self, assertion_on_returned_value, timeout_handler,
                                       timeout_seconds=None):
         self.start_time = time.time()

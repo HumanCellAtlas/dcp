@@ -219,6 +219,10 @@ class IngestApiAgent:
                 raise Exception("envelope status is Invalid")
             return self.status in ['Valid', 'Submitted']
 
+        def check_status(self):
+            self._load()
+            return self.status
+
         @property
         def status(self):
             return self.data['submissionState']

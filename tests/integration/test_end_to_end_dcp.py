@@ -121,7 +121,7 @@ class TestSmartSeq2Run(TestEndToEndDCP):
     def _run_update_test(self, runner, *args, **kwargs):
         # given:
         self._run_end_to_end_test_template(test_runner=runner)
-        original_submission = runner.ingest_api.submission(runner.submission_id)
+        original_submission = runner.submission_envelope
         update_submission = runner.ingest_api.new_submission(is_update=True)
         Progress.report(f'Update submission id: {update_submission.envelope_id}')
         self._update_biomaterials(original_submission, update_submission)
