@@ -39,8 +39,7 @@ class WaitFor:
 
     def to_return_str(self, expected: str = None, case_sensitive = False, timeout_seconds=None):
         def assert_matches_string(returned_value):
-            matches = False
-            if case_sensitive:
+            if not case_sensitive:
                 matches = str(returned_value).lower() == expected.lower()
             else:
                 matches = str(returned_value) == expected
