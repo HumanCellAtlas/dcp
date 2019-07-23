@@ -98,6 +98,9 @@ class DatasetRunner:
             else:
                 # == Non-scaling Logic ==
                 self.wait_for_primary_bundles()
+                Progress.report('Waiting for submission to complete...')
+                WaitFor(self.submission_envelope.check_status).to_return_value('complete')
+
                 #self.wait_for_analysis_workflows()
                 #self.wait_for_secondary_bundles()
             #if self.dataset.name == "Smart-seq2" or self.dataset.name == "optimus":
