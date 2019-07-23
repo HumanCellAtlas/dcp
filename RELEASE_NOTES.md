@@ -2,6 +2,145 @@
 
 <!-- newest release at the top please) -->
 
+# Prod 2019/07/23
+## Upload
+### Version: v4.4.2
+* Before uploading a file, check to see if the file has already been uploaded by checking its filename and checksums and if it has, skip uploading it and return the file that already exists.
+* Validation of clientside checksum against serverside checksum calculation
+* fix for deregistering job definitions as part of deployments
+* Updated resources for batch jobs
+
+## Data Store
+### Version: 2019-07-23-15-14-25-prod.release
+* Verify content type. (#2258)
+* remove hmac_secret_key from GET/FIND Subscriptions  (#2251)
+* Remove unused code. (#2257)
+* Checkout cached files when PUT file is called. (#2246)
+* [EZ] GET/ Subscription_v1 HMAC Key Change (#2247)
+* removing fargate folder (#2252)
+* Fix typo in PUT subscription docstring (#2250)
+* remove dss-monitor-fargate references (#2245)
+* Adjust smoketest to wait a bit longer when downloading after a sync. (#2243)
+* /FIND Subscriptions HMAC_SECRET_KEY (#2238)
+* Parallelize local storage ops (#2234)
+* Add operation to trigger Elasticsearch indexer (#2235)
+* /GET Subscriptions HMAC Key (#2237)
+* Don't change part layout when fixing object metadata (#2232)
+* Storage ops accept input keys file in JSON format (#2228)
+* Make prod test job dependent on deploy (#2233)
+* Refactor indexer event parsing (#2224)
+* create large bundle sync test (#2223)
+* dependency bump: urllib1.25.3 (#2209)
+* Parallelize bundle tombstone script (#2217)
+* README Changes (#2208)
+* Parallelize sync manifest deps check (#2221)
+* increase sync daemon timeout to 900s (#2220)
+* updated iam / cron for fargate (#2219)
+* Include type for firecloud checkout viewer (#2218)
+* Storage operations improvements (#2199)
+* Allow Terra user read access to Google checkout bucket
+* DSS Monitor Independent Deploy (#2201)
+* Reformat request to analytics log message. (#2200)
+* DSS Lambda Monitoring (#2198)
+* De-register percolate queries across all indices (#2196)
+* [Easy] Increase smoketest sync wait to 120s (#2195)
+* Simplify operations job-id handling (#2194)
+* [Easy] Fix sync operation logger bug (#2193)
+
+## Data Browser
+### Version(s): b9bff65285efca2b5855f6836270469a8de7bbf3
+* b9bff65 Updated references to removed projectSummary. Resolves #713. (#714)
+* 70f16a5 update matrix and tsv download urls
+* 1b40df3 update metadata url to use https and new cloudfront
+* c8d51e7 Project matrix (#704)
+* 6fcd3f3 Updated parse of health response to match new API. Resolves #678. (#702)
+* 87fbe14 Updated search parameter values. (#701)
+* 2701d50 Matrix manifest (#700)
+* 521887a Get Data: Project Detail Page Updates Two Column Layout. Show query logic in selected terms list. Resolves 624. Resolves 689. (#697)
+* ba9685b Get Data: Project Detail Page Updates Two Column Layout. Resolves #689. (#695)
+* 1dfd471 Show query logic in selected terms list and update selected facet chips. Resolves #591. Resolves #624. (#693)
+* 0a86e18 Update Azul healthcheck endopoint to /health/progress. Resolves #678
+
+## Azul
+### Version(s): 0d86e3e96729a9c2426d0cd7f79cb6f9b541972a
+* 98771f3 Revert "Reduce /health check frequency in Route53 to decrease load on ES"
+* b9baf84 Make 'file_format' a single value (#612)
+* 45a9e97 Revert "Revert metadata field in index roll back (#965, #966)"
+* 54a27cd Reduce /health check frequency in Route53 to decrease load on ES
+* d2a3951 Eliminate PyCharm warnings in test_hca_indexer.py
+* 8c65faf Simplify index writer creation and customization
+* 0ba619e Fix formatting
+* 07ecce3 Fix unused import
+* efeace9 Use the same writer for unit tests and deployment
+* f5718ae Duplicate notifications for integration tests
+* f1cebf6 Document --shared option for subscriptions script
+* 17a780f Add unsubscribe target to Makefile
+* 61dcd69 Support duplicate notification (#947)
+* a72bac1 Add test for duplicate notifications (#947)
+* 57e7f84 Refactor aggregation code slightly for clarity
+* 3a35b0a Hot Fix: Exclude API endpoints call from health check to reduce load
+* fb98182 Changed project_shortname to project_short_name (#191)
+* 16205cb Revert metadata field in index roll back (#965, #966)
+* e35dfc2 Remove excluded list and exclude whitelisted project (#1112)
+* 22cfc66 Generate 'full metadata' TSV by optimizing on memory (#967, #968)
+* 9be159b Bundles index disallows indexing of the metadata field
+* 4598c53 Use JSON for filters (#537)
+* 3b24935 Reduce manifest download request during Locust scale test (#931)
+* 6a35619 Correct sorting and format parameters in locust test
+* 1a9f8e6 Modify deletion notifications for integration tests
+* 03408e7 Add test for direct file access fallback
+* 0b1345a Prevent failure during teardown (#1049)
+* 4de2892 Use direct access for DSS bundles
+* 1e8dea4 Remove notebooks directory
+* 816ce71 Fix type warning
+* 7992c30 Speed up reading aggregates, using source filter
+* 6dac2a9 [2/2] Fix races from indexing deletions (#611)
+* f435634 [1/2] Fix races from indexing deletions (#611)
+* 4a3d240 Fix races from indexing deletions (#611)
+* e19f8d4 Isolate test fixtures for service tests (#1064)
+* a26526d Rename manifest test file
+* 1f10ee9 REVERT ME: Avoid dash and brackets in BDBag column names (#1091)
+* feeaadc Parallelize API endpoint health checks (#1085)
+* fbbea21 Fix: /health/progress is not lazy and  therefore slow (#1084)
+* 8f979e0 Add test for laziness of /health/foo (#1084)
+* b244b34 Parallelize API endpoint health checks (#1085)
+* ffdd34b Fix: /health/progress is not lazy and  therefore slow (#1084)
+* 9b29a39 Add test for laziness of /health/foo (#1084)
+* 976ad06 Use DistinctAccumulator in CellSuspensionAggregator (#1039)
+* 09a24cf REVERT ME: Avoid dots in entity ID column of Terra TSV (#1071)
+* cf43fa6 REVERT ME: Switch from bundle to participant for Terra (#1070)
+* 6b3cac4 Fix `git log` example in README
+* 49cf081 Add CONTRIBUTING document (#750)
+* 98676bf Check current branch before `make reindex`, `make subscribe` et al (#1061)
+* c4235bc Refactor `KeywordSearchResponse.make_sample()` again
+* 9116b94 Remove unused import, shebang
+* e7b905a Refactor `KeywordSearchResponse.make_sample()`
+* 76900d8 Add effectiveOrgan facet (#1022)
+* f83bc9b Optimize imports in HCA transformer
+* 8131914 Eliminate obsolete suppression of PyCharm warning
+* 51a28c2 Pull up sample discovery method into Transformer base class
+* 044d6ae Fix more type warnings in HCA transformer module
+* 5d484af Suppress deprecation warning in HCA transformer module
+* 04deeda Reorder classes in HCA transformers module
+* 73e98d5 Removed unused import; fix quoting
+* 4bc7438 [4 of 4] Make …_dict functions methods of the Transformer class
+* 176d8a2 [3 of 4] Make …_dict functions methods of the Transformer class
+* 5bb187f [2 of 4] Make …_dict functions methods of the Transformer class
+* 481c023 [1 of 4] Make …_dict functions methods of the Transformer class
+* 7bfd343 Fix: `git secrets` check fails in sub directories (#1057)
+* dd8e22a Replace `*` with `sample` in manifests (#1055)
+* 994b57e Exclude `contents.metadata` from being indexed (#1020)
+* 07ba957 Add `/health/progress`, test service endpoints in `/health` (#971)
+* 9bf8238 Add `metadata` field to documents in bundles index (#965, #966)
+* c37d439 Reformat `metadata_generator`
+* 3c55b87 Introducing Simon's script for generating metadata csv
+* 2eed794 Rewrite parsing of ES index names
+* a6a4499 Add separate index for cell suspensions (#1038)
+* a332176 Revert "DELETE ME: Disable `make subscribe` on Gitlab"
+
+
+
+
 # Prod 2019/07/19 Hotfix
 ## Ingest
 ### Optimus v1.3.1
