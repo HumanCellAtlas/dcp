@@ -103,7 +103,7 @@ class DatasetRunner:
             #if self.dataset.name == "Smart-seq2" or self.dataset.name == "optimus":
             #    self.retrieve_zarr_output_from_matrix_service()
             #    self.retrieve_loom_output_from_matrix_service()
-            self.assert_data_browser_bundles()
+            # self.assert_data_browser_bundles()
 
         if self.failure_reason:
             raise RuntimeError(self.failure_reason)
