@@ -162,7 +162,8 @@ class TestSmartSeq2Run(TestEndToEndDCP):
                 if post_condition:
                     post_condition(runner)
             finally:
-                runner.cleanup_primary_and_result_bundles()
+                # runner.cleanup_primary_and_result_bundles()
+                pass
 
         if time_limit.did_timeout:
             runner.cleanup_analysis_workflows()
