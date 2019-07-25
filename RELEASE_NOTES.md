@@ -2,6 +2,11 @@
 
 <!-- newest release at the top please) -->
 
+# Prod Hot-fix 2019/07/25
+## Secondary Analysis
+### Lira
+* Updated subscription queries for SmartSeq2 and Optimus to only get notified of testing data to unblock updating existing submissions.
+
 # Prod 2019/07/23
 ## Upload
 ### Version: v4.4.2
