@@ -6,7 +6,7 @@
 * Put back authentication for PUT & PATCH requests
 
 ## Data Store
-### Version: To Be Determined
+### Version: 2019-07-24-17-32-47-staging.release
 * Retry-After header values added for 500 responses.
 * Add operation to output bundle metadata document.
 * Use a tempdir in smoketest when downloading.
