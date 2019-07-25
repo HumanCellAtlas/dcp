@@ -14,12 +14,12 @@ deployed_component_versions:
   azul: deployed/prod/2019-03-12__08-17
   data-browser: fb8587e4176aad2341df284429b276fef87bdd6b
   secondary-analysis:
-    falcon: v0.3.0
+    falcon: v0.4.1
     lira: v0.20.0
-    pipeline-tools: v0.51.1
+    pipeline-tools: v0.55.0
     skylab:
       smartseq2: smartseq2_v2.4.0
-      tenx: optimus_v1.2.0
+      tenx: optimus_v1.3.1
   ingest:
     ingest-accessioner: v0.5.0
     ingest-broker: v0.8.8
