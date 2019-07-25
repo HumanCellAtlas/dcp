@@ -31,6 +31,7 @@ dcp_wide_test_metadata_update:
   stage: dcp_wide_test
   only:
     - integration
+    - staging
   script:
     - python -m unittest tests.integration.test_end_to_end_dcp.TestSmartSeq2Run.test_update
 
