@@ -12,14 +12,7 @@ class CleanupTestBundles(unittest.TestCase):
           "should": [
             {
               "prefix": {
-                "files.project_json.project_core.project_short_name": "prod"
-              }
-            }
-          ],
-          "must_not": [
-            {
-              "match": {
-                "files.analysis_process_json.type.text": "analysis"
+                "files.project_json.project_core.project_short_name": "prod/"
               }
             }
           ]
