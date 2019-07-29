@@ -8,6 +8,10 @@
 * Improve error-handling in confirm submission step
 * Add default maxRetries to Optimus workflows
 
+## Skylab
+### Optimus: optimus_v1.3.2
+* Increase memory allocated to RunEmptyDrops task
+
 # Prod Hot-fix 2019/07/25
 ## Secondary Analysis
 ### Lira
