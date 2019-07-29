@@ -4,6 +4,12 @@
 
 # Prod Hot-fix 2019/07/25
 ## Secondary Analysis
+### Pipeline-tools: v0.56.0
+* Improve error-handling in confirm submission step
+* Add default maxRetries to Optimus workflows
+
+# Prod Hot-fix 2019/07/25
+## Secondary Analysis
 ### Lira
 * Updated subscription queries for SmartSeq2 and Optimus to only get notified of testing data to unblock updating existing submissions.
 
