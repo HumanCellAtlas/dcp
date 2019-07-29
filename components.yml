@@ -19,7 +19,7 @@ deployed_component_versions:
     pipeline-tools: v0.56.0
     skylab:
       smartseq2: smartseq2_v2.4.0
-      tenx: optimus_v1.3.1
+      tenx: optimus_v1.3.2
   ingest:
     ingest-accessioner: v0.5.0
     ingest-broker: v0.8.8
