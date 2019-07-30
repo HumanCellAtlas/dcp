@@ -1,5 +1,24 @@
 # Release Notes
 
+# Staging 2019/07/24
+## Ingest
+### Core v0.9.2.rc
+* Put back authentication for PUT & PATCH requests
+
+## Data Store
+### Version: 2019-07-24-17-32-47-staging.release
+* Retry-After header values added for 500 responses.
+* Add operation to output bundle metadata document.
+* Use a tempdir in smoketest when downloading.
+* Extend test_creation_date_updated time.
+
+## Azul
+### Version(s): 2e08ea3b036a4d6c94a7ac77994fc74ec8408e59
+* 4c42c3d Retire /repository/files/export endpoint (#586)
+* 438dade Use HMAC key ID instead of secret for idempotent subscriptions (#993)
+* 82d898e Remove projectSummary from response (#1021)
+
+
 # Staging 2019/07/18
 ## Ingest
 ### Optimus v1.3.1
