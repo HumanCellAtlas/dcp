@@ -76,10 +76,14 @@
 ### Optimus: optimus_v1.3.2
 * Increase memory allocated to RunEmptyDrops task
 
-# Prod Hot-fix 2019/07/25
-## Secondary Analysis
-### Lira
+### Lira v0.20.0
 * Updated subscription queries for SmartSeq2 and Optimus to only get notified of testing data to unblock updating existing submissions.
+
+### Falcon v0.4.1
+* Fixes an issue with the noop implementation in v0.4.0
+* Add a security.txt file to indicate where security issues should be logged
+* Update falcon linting settings
+* Add logic to not run a workflow on data that have already been run in Cromwell based on a "hash-id" label
 
 # Prod 2019/07/23
 ## Upload
