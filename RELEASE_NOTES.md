@@ -2,6 +2,70 @@
 
 <!-- newest release at the top please) -->
 
+# Prod 2019/07/31
+## Ingest
+### Core v0.9.2
+* Put back authentication for PUT & PATCH requests
+
+## Data Store
+### Version 2d05ab4c429452c1977857c9d347a59befa2fa91
+* 2d05ab4 - Retry-After header values added for 500 responses. (#2144)
+* 9c71a79 - Add operation to output bundle metadata document (#2244)
+* d1c2b59 - Use a tempdir in smoketest when downloading. (#2260)
+* 99a8bce - Extend test_creation_date_updated time. (#2263)
+
+## Secondary Analysis
+### Pipeline-tools v0.56.1
+* Increase the number of maxRetries for Optimus workflows.
+* Improve error-handling in confirm submission step.
+* Add default maxRetries to Optimus workflows.
+
+## Data Portal
+### Version de786aa91b1a8e0343db0901c398654b9587f139
+* 6132385 update gatsby config for moved content dir
+* b4fa82f closes #410, #468 set metadata content repo and read content repo outside of npm
+* 3c9a60d content bump for exploring projects
+* 07bd9c4 Add 'Draft Mode' for documents. Resolves #444. (#460)
+* 2992e8f Bug fix conflicting banner messages with mobile menu. (#461)
+* 4d81f3d update gitlab to only test prod in prod and lower in lower
+
+## Data Browser
+### Version d23546df5aa61840f608f49506bf1441e0989feb
+* d23546d Removed maintenance banner. Resolves #738. Resolves #739. (#740)
+* 9ad9040 On the projects detail page make the publications blue and clickable like a link (instead of view here) for publications that have a link. Resolves #735. (#737)
+* ada2745 Fix link style on system down message. Resolves #638. (#736)
+* 018ffa0 setup cache control for other environments
+* 3fd22da fix bucket name
+* 2f12e80 test index.html cache contol in dev
+* 5d9d083 Removed unsued package-lock.json. Resolves #723.
+* ca170d3 Change project table 'Download/Export' heading to 'Project Downloads'. Partial completion of project matrix download UI nits (#721). Resolves #728. (#734)
+* dec6d6e Fixed matrix HEAD requests on pagination/filter. Resolves #722. (#727)
+* 45dc00f Security updates (#726)
+* 9fdd029 Refactored matrix URL to match manifest. Resolves #717. (#720)
+* 070cbef Updated tests. Resolves #707. (#719)
+* 5c8c7ee Dupe meta url (#718)
+* 9aa3ae7 Prepared matrix download on project list. Resolves #707. (#715)
+* 1f83489 Update project list metadata download link
+
+## Azul
+### Version 8aa9b0c1957c4ee904dbccf6cdab417b1df3217d
+* 4c42c3d Retire /repository/files/export endpoint (#586)
+* 438dade Use HMAC key ID instead of secret for idempotent subscriptions (#993)
+* 82d898e Remove projectSummary from response (#1021)
+
+## Metadata Schema
+### Versions
+* file_content_ontology.json v1.0.1
+* analysis_file.json v6.1.1
+* image_file.json v2.1.1
+* file_core.json v6.1.1
+* supplementary_file.json v2.1.1
+* reference_file.json v3.1.1
+* sequence_file.json v9.1.1
+### Functionality Changes
+* None
+
+
 # Prod Hot-fix 2019/07/25
 ## Secondary Analysis
 ### Pipeline-tools: v0.56.0
