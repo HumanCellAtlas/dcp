@@ -1,11 +1,9 @@
-import json
 import os
 
 from hca.dss import DSSClient
 from hca.util.exceptions import SwaggerAPIException
 
-from . import logger
-from .utils import Progress
+from utils import Progress
 
 
 class DataStoreAgent:

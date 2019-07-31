@@ -1,23 +1,20 @@
 #!/usr/bin/env python3
-
 import os
+import sys
 import unittest
 
-from ..data_store_agent import DataStoreAgent
+pkg_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))  # noqa
+sys.path.insert(0, pkg_root)  # noqa
+
+from data_store_agent import DataStoreAgent
 
 class CleanupTestBundles(unittest.TestCase):
     test_bundle_query = {
-      "query": {
-        "bool": {
-          "should": [
-            {
-              "prefix": {
+        "query": {
+            "prefix": {
                 "files.project_json.project_core.project_short_name": "prod/"
-              }
             }
-          ]
         }
-      }
     }
 
     def setUp(self):
