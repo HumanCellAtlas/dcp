@@ -23,7 +23,7 @@ class AnalysisAgent:
         """
         self.deployment = deployment
         self.cromwell_url = 'https://cromwell.caas-prod.broadinstitute.org'
-        self.cromwell_collection = 'lira-test' if self.deployment == 'integration' else f'lira-{self.deployment}'
+        self.cromwell_collection = 'lira-int' if self.deployment == 'integration' else f'lira-{self.deployment}'
         self.auth = self._get_auth(service_account_key)
 
     def _get_auth(self, service_account_key):
