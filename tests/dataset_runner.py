@@ -100,9 +100,7 @@ class DatasetRunner:
                 self.wait_for_primary_bundles()
                 self.wait_for_analysis_workflows()
                 self.wait_for_secondary_bundles()
-            #if self.dataset.name == "Smart-seq2" or self.dataset.name == "optimus":
-            #    self.retrieve_zarr_output_from_matrix_service()
-            #    self.retrieve_loom_output_from_matrix_service()
+
             self.assert_data_browser_bundles()
 
         if self.failure_reason:
@@ -222,11 +220,13 @@ class DatasetRunner:
         return self._results_bundles_count()
 
     def wait_for_primary_bundles(self):
-        Progress.report("WAITING FOR PRIMARY BUNDLE(s) TO BE CREATED...")
+        Progress.report('Waiting for submission to complete...')
+        WaitFor(self.submission_envelope.check_status).to_return_str('complete')
         self.expected_bundle_count = self.dataset.config["expected_bundle_count"]
-        WaitFor(
-            self._count_primary_bundles_and_report
-        ).to_return_value(value=self.expected_bundle_count)
+        primary_bundles_count = self._primary_bundle_count()
+        if primary_bundles_count != self.expected_bundle_count:
+            raise RuntimeError(f'Expected {self.expected_bundle_count} primary bundles, but only '
+                               f'got {primary_bundles_count}')
 
     def wait_for_analysis_workflows(self):
         if not self.analysis_agent:
