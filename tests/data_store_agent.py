@@ -1,10 +1,8 @@
-import json
 import os
 
 from hca.dss import DSSClient
 from hca.util.exceptions import SwaggerAPIException
 
-from . import logger
 from .utils import Progress
 
 
@@ -26,6 +24,10 @@ class DataStoreAgent:
             return response['results']
         except SwaggerAPIException:
             return []
+
+    def search_iterate(self, query, replica='aws'):
+        for hit in self.client.post_search.iterate(replica=replica, es_query=query):
+            yield hit
 
     def download_bundle(self, bundle_uuid, target_folder):
         Progress.report(f"Downloading bundle {bundle_uuid}:\n")
