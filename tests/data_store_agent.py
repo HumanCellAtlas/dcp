@@ -3,7 +3,7 @@ import os
 from hca.dss import DSSClient
 from hca.util.exceptions import SwaggerAPIException
 
-from utils import Progress
+from tests.utils import Progress
 
 
 class DataStoreAgent:
