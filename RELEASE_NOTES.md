@@ -23,10 +23,6 @@
 ### Optimus v1.3.3
 * Disable the preemptible for `Calculate Cell Metrics`
 
-## Skylab
-### Optimus: optimus_v1.3.3 (hot-fix)
-* Disable the preemptible for `Calculate Cell Metrics`.
-
 # Prod 2019/07/31
 ## Ingest
 ### Core v0.9.2
