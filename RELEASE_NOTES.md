@@ -19,6 +19,10 @@
 ### Validator v0.6.6
 * Multiple file validation jobs fix
 
+## Secondary-Analysis
+### Optimus v1.3.3
+* Disable the preemptible for `Calculate Cell Metrics`
+
 ## Skylab
 ### Optimus: optimus_v1.3.3 (hot-fix)
 * Disable the preemptible for `Calculate Cell Metrics`.
