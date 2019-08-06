@@ -2,6 +2,24 @@
 
 <!-- newest release at the top please) -->
 
+# Prod 2019/08/06
+## Ingest
+### Broker v0.9.2
+* Fix reporting of submission error
+
+### Core v0.9.3
+* Fix failure in POSTing submission endpoint
+
+### Exporter v0.8.7
+* Reinstantiate DSS client to prevent token expiration
+
+### UI v0.9.7
+* Removing button to do retry when metadata is invalid
+
+### Validator v0.6.6
+* Multiple file validation jobs fix
+
+
 # Prod Hot-fix 2019/07/25
 ## Secondary Analysis
 ### Pipeline-tools: v0.56.0

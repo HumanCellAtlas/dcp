@@ -16,17 +16,17 @@ deployed_component_versions:
   secondary-analysis:
     falcon: v0.4.1
     lira: v0.20.0
-    pipeline-tools: v0.56.0
+    pipeline-tools: v0.56.1
     skylab:
       smartseq2: smartseq2_v2.4.0
       tenx: optimus_v1.3.2
   ingest:
     ingest-accessioner: v0.5.0
-    ingest-broker: v0.8.8
-    ingest-core: v0.8.4
-    ingest-exporter: v0.7.7
+    ingest-broker: v0.9.2
+    ingest-core: v0.9.3
+    ingest-exporter: v0.8.7
     ingest-staging-manager: v0.5.1
     ingest-state-tracking: v0.7.0
-    ingest-validator: v0.6.0
-    ingest-ui: v0.9.4
+    ingest-validator: v0.6.6
+    ingest-ui: v0.9.7
   data-store: 2019-03-12-15-15-14-prod.release
