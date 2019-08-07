@@ -9,25 +9,26 @@ deployed_component_versions:
   # component-identifier: component-version
   # e.g.
   # ingest: v0.1.2
-  azul: ef51cb90836c68d4b7e9ef32279b633026a97257
-  data-store: 74b216e20ba34156dcd2d1c17469296200dadb6e
+  azul: 1ed1df5d13cec6a6aa400f35e358a5271ffd8cc1
+  data-store: 2019-07-24-17-32-47-staging.release
   data-browser: 63fda8f7227637cd37b350f10e3d4915399ce901
-  greenbox:
-    greenbox-falcon: v0.3.0
-    greenbox-lira: v0.20.0
-    greenbox-pipeline-tools: v0.52.0
-    greenbox-skylab:
+  data-portal: 507c03bde51c195e1e2a7a80252dcf1743002529
+  secondary-analysis:
+    falcon: v0.4.1
+    lira: v0.20.0
+    pipeline-tools: v0.56.1
+    skylab:
       smartseq2: smartseq2_v2.4.0
-      tenx: optimus_v1.2.0
+      optimus: v1.3.3
   ingest:
     ingest-accesioner: v0.5.0.rc
     ingest-archiver: 0.1.1
-    ingest-broker: v0.8.9.rc
-    ingest-core: v0.9.0.rc
-    ingest-exporter: v0.8.3.rc
-    ingest-staging-manager: v0.5.3.rc
-    ingest-state-tracking: v0.7.2.rc
-    ingest-ui: v0.9.5.rc
-    ingest-validator: v0.6.3.rc
+    ingest-broker: v0.9.2
+    ingest-core: v0.9.3
+    ingest-exporter: v0.8.7
+    ingest-staging-manager: v0.5.4
+    ingest-state-tracking: v0.7.5
+    ingest-ui: v0.10.0.rc
+    ingest-validator: v0.6.6
   metadata-schema: http://api.ingest.staging.data.humancellatlas.org/schemas/search/latestSchemas
-  upload: v4.2.7
+  upload: v4.4.3

@@ -1,5 +1,86 @@
 # Release Notes
 
+# Staging 2019/08/07
+## Ingest
+### UI v0.10.0.rc
+* Upgraded to Angular 8
+
+## Upload
+### Version: 4.4.3
+* Internal Cleanup
+
+## Data Store
+### Version: "2019-08-07-15-16-08-staging.release"
+* dd76aa9 Update wheels (#2286)
+* 6a2c2c4 Broad Integration Test Accounts update (#2283)
+* b74823c Notify V2 Payload Context (#2277)
+* 208caeb Add retries within collections testing. (#2274)
+* 4797c01 Operations for managing the ES index and subscriptions (#2269)
+* ffc5e76 Use better name for verify sync op (#2278)
+* c6a768b Increase concurrency safety of sync cleanup (#2272)
+
+## Data Portal
+### Version: 507c03bde51c195e1e2a7a80252dcf1743002529
+* 507c03b null in summary response cause portal to go blank. Resolves #480.
+
+## Azul
+### Version(s): 1ed1df5d13cec6a6aa400f35e358a5271ffd8cc1
+* 42a2bd1 Fix None filter crashes summary response (#1199)
+* 7fc1292 Change SQS reset instructions to use purge script (#758)
+* bd7273b Add a script for resetting the indexer (#451)
+* 081d13c Eliminate instance loggers & use of .format in logs (#419)
+* bff0fce Fix app, test and script logging (#419, #1175)
+* 4f6d286 Fix source code formatting
+* a037b4a Eliminate logging though root logger (#419)
+* 8020008 Remove non-applicable comment
+* 5fa76f4 Inline useless constants in service/app.py
+* a7df459 Optimized imports
+* 5856a86 [2/2] Fix translated None values (#1179)
+* 6221ab9 Declare missing fields in SummaryRepresentation
+* 01960a7 [1/2] Fix translated None values (#1179)
+* fafea91 [2/2] Eliminate empty columns in full TSV (#1147)
+* 1635559 [1/2] Eliminate empty columns in full TSV (#1147)
+* ec868c6 Add 'full' metadata format validation to integration test suite (#1171)
+* 370ba09 CONTRIBUTING.rst states meaning of PR assignment
+* d25c091 Validate 'format' param for manifest generation and set 'tsv' as default
+* 4589ac2 Save RAM by uploading full TSV in multiple parts (#1134)
+* ead9e03 Fix: multipart TSV upload leaks memory
+* 346d99f Rename methods for full TSV generation
+* 97bd9ea Fix doctests in elastic_request_builder.py
+* 479feed Absorb browser domain move from `prod.data` to `data`
+* e15f6ca Removed catch-all except statement in BaseSummaryResponse (#421)
+* 8863c8d Disable date and numeric detection for mappings in ES indexes (#1152)
+* 3fb640d Introduce test that reproduces bug in dynamic mapping ES (#1152)
+* 7fbb4ea Revert "Hotfix: Can't index `HPSI human cerebral organoids`" (#1152)
+* d898068 Elaborate on promotions in README
+* a05d442 Remove project exclusions on `prod` (#1161)
+* 0ab37e9 Add `make delete` target to only delete indices
+* b432f4d Partially revert logging changes (3a0dc5f, #637)
+* af6e1f5 Temporary removal of broken doctest (#989)
+* d537d81 Translate None values for Elasticsearch (#989)
+* 1641039 Check for existing sitecustomize.py for envhook (#608)
+* d1c7401 Add `file_uuid` and `file_version` columns to full metadata TSV (#1068)
+* 74237ed Incorporate changes from original hca_bundle_to_csv (#1068)
+* b2c9d97 Document tag for artificial notifications (#995)
+* 4f96c54 Log transaction IDs during remote reindex (#1030)
+* 3a0dc5f Fix: Importing app.py overrides test logging config (#637)
+* ae36559 Fix formatting in local_integration_test.py
+* fe009fc Fix: Direct bundle access does not check preconditions (#1153)
+* 3e45be4 Upgrade Terraform to version 0.12.5 (#1145)
+* 9261873 Pin version of Terraform null provider
+* 5fb2500 Rename elasticsearch in health endpoint
+* a8c1661 Reduce load caused by health endpoint (#1124)
+* b12a3f7 Consolidate health check configurations
+* a159d3b Revert "Hot Fix: Exclude API endpoints call from health check to reduce load"
+* 32dfccd [2/2] Add ability to requeue failed notifications (#1002)
+* 1eac659 [1/2] Add ability to requeue failed notifications (#1002)
+* 162deab Hotfix: Can't index `HPSI human cerebral organoids` project (#1152)
+* d3f4a72 Make organism age range searchable via contains, within and intersects (#512)
+* 4c42c3d Retire /repository/files/export endpoint (#586)
+* 438dade Use HMAC key ID instead of secret for idempotent subscriptions (#993)
+* 82d898e Remove projectSummary from response (#1021)
+
+
 # Staging 2019/07/24
 ## Ingest
 ### Core v0.9.2.rc
@@ -26,7 +107,6 @@
   
 
 # Staging 2019/07/17
-
 ## Ingest
 ### Exporter v0.8.6.rc
 * Fix date format check
