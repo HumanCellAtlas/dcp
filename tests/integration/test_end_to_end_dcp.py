@@ -4,6 +4,9 @@ import os
 import re
 import unittest
 
+from ingest.importer.submission import Submission
+
+from tests.wait_for import WaitFor
 from ..utils import Progress, Timeout
 from ..data_store_agent import DataStoreAgent
 from ..dataset_fixture import DatasetFixture
@@ -15,9 +18,9 @@ DEPLOYMENTS = ('dev', 'staging', 'integration', 'prod')
 class TestEndToEndDCP(unittest.TestCase):
 
     def setUp(self):
-        self.deployment = os.environ.get('CI_COMMIT_REF_NAME', None)
+        self.deployment = os.environ.get('DEPLOYMENT_ENV', None)
         if self.deployment not in DEPLOYMENTS:
-            raise RuntimeError(f"CI_COMMIT_REF_NAME environment variable must be one of {DEPLOYMENTS}")
+            raise RuntimeError(f"DEPLOYMENT_ENV environment variable must be one of {DEPLOYMENTS}")
         self.data_store = DataStoreAgent(deployment=self.deployment)
 
     def ingest_store_and_analyze_dataset(self, runner, dataset_fixture):
@@ -102,22 +105,66 @@ class TestSmartSeq2Run(TestEndToEndDCP):
     ]
 
     def test_smartseq2_run(self):
-        runner = DatasetRunner(deployment=self.deployment)
+        self._run_end_to_end_test_template(post_condition=self._assert_bundle_creation_succeeded)
 
-        with Timeout(110 * 60) as to:  # timeout after 1 hour and 50 minutes
+    def _assert_bundle_creation_succeeded(self, runner, *args, **kwargs):
+        self.assertEqual(1, len(runner.primary_bundle_uuids))
+        self.assertEqual(1, len(runner.secondary_bundle_uuids))
+        expected_files = self.expected_results_bundle_files(runner.primary_bundle_uuids[0],
+                                                            self.SS2_ANALYSIS_OUTPUT_FILES_REGEXES)
+        results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuids[0])
+        self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
+
+    def test_update(self):
+        self._run_end_to_end_test_template(post_condition=self._run_update_test)
+
+    def _run_update_test(self, runner, *args, **kwargs):
+        # given:
+        original_submission = runner.submission_envelope
+        update_submission = runner.ingest_api.new_submission(is_update=True)
+        Progress.report(f'Update submission id: {update_submission.envelope_id}')
+        self._update_biomaterials(original_submission, update_submission)
+
+        # when:
+        Progress.report('Checking validation status of update submission...')
+        WaitFor(update_submission.check_validation).to_return_value(True)
+
+        # then:
+        update_bundle_uuids = self._complete_submission(update_submission)
+        Progress.report(f'Bundle UUIDs {update_bundle_uuids}.')
+
+    @staticmethod
+    def _update_biomaterials(original_submission, update_submission):
+        biomaterials = original_submission.metadata_documents('biomaterial')
+        for biomaterial in biomaterials:
+            content = biomaterial['content']
+            name = content['biomaterial_core']['biomaterial_name']
+            updated_name = f'UPDATED {name}'
+            content['biomaterial_core']['biomaterial_name'] = updated_name
+            original_uuid = biomaterial["uuid"]["uuid"]
+            update_submission.add_biomaterial(content, update_target_uuid=original_uuid)
+
+    @staticmethod
+    def _complete_submission(update_submission):
+        Progress.report('Completing update submission...')
+        update_submission.complete()
+        WaitFor(update_submission.bundles).to_return_any_value()
+        update_bundle_uuids = update_submission.bundles()
+        Progress.report(f'Updated bundles {update_bundle_uuids}')
+        return update_bundle_uuids
+
+    def _run_end_to_end_test_template(self, test_runner=None, post_condition=None):
+        runner = test_runner if test_runner else DatasetRunner(deployment=self.deployment)
+        _1_hr_50_min = 110 * 60
+        with Timeout(_1_hr_50_min) as time_limit:
             try:
                 self.ingest_store_and_analyze_dataset(runner, dataset_fixture='Smart-seq2')
-                self.assertEqual(1, len(runner.primary_bundle_uuids))
-                self.assertEqual(1, len(runner.secondary_bundle_uuids))
-                expected_files = self.expected_results_bundle_files(runner.primary_bundle_uuids[0],
-                                                                    self.SS2_ANALYSIS_OUTPUT_FILES_REGEXES)
-                results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuids[0])
-    
-                self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
+                if post_condition:
+                    post_condition(runner)
             finally:
                 runner.cleanup_primary_and_result_bundles()
 
-        if to.did_timeout:
+        if time_limit.did_timeout:
             runner.cleanup_analysis_workflows()
             raise TimeoutError("test timed out")
 
@@ -162,16 +209,21 @@ class TestOptimusRun(TestEndToEndDCP):
         re.compile('^.+zarr!expression_matrix!gene_id!3$'),
         re.compile('^.+zarr!expression_matrix!gene_id!4$'),
         re.compile('^.+zarr!expression_matrix!gene_id!5$'),
+        re.compile('^.+zarr!expression_matrix!gene_metadata_string!\.zarray$'),
+        re.compile('^.+zarr!expression_matrix!gene_metadata_string!0\.0$'),
+        re.compile('^.+zarr!expression_matrix!gene_metadata_string_name!\.zarray$'),
+        re.compile('^.+zarr!expression_matrix!gene_metadata_string_name!0$'),
         re.compile('^.+zarr!expression_matrix!gene_metadata_numeric!\.zarray$'),
         re.compile('^.+zarr!expression_matrix!gene_metadata_numeric!0\.0$'),
         re.compile('^.+zarr!expression_matrix!gene_metadata_numeric_name!\.zarray$'),
         re.compile('^.+zarr!expression_matrix!gene_metadata_numeric_name!0$')
     ]
 
+
     def test_optimus_run(self):
         runner = DatasetRunner(deployment=self.deployment)
 
-        with Timeout(210 * 60) as to:  # timeout after 3.5 hours (same as Gitlab runner setting)
+        with Timeout(240 * 60) as to:  # timeout after 4hrs (less than the Gitlab runner setting) to allow for test cleanup
             try:
                 self.ingest_store_and_analyze_dataset(runner, dataset_fixture='optimus')
                 self.assertEqual(1, len(runner.primary_bundle_uuids))
