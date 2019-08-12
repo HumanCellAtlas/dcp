@@ -420,6 +420,10 @@ class DatasetRunner:
         return all([status in ('Aborted', 'Succeeded', 'Failed') for status in statuses])
 
     def cleanup_primary_and_result_bundles(self):
+        RETAIN_BUNDLES = os.environ.get('RETAIN_BUNDLES')
+        if RETAIN_BUNDLES:
+            print("FLAG TO RETAIN BUNDLES IS SET. NO TOMBSTONING WILL OCCUR")
+            return
         for primary_bundle_uuid, secondary_bundle_fqid in self.primary_uuid_to_secondary_bundle_fqid_map.items():
             self.data_store.tombstone_bundle(primary_bundle_uuid)
             if secondary_bundle_fqid is not None:
