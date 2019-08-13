@@ -16,16 +16,18 @@ Before you can run the tests, you need to setup your environment:
 
 Instructions for running tests locally in python 3.6:
 
-Be aware that you will be uploading bundles to the staging deployment of the DCP and running secondary analysis.
+Be aware that you will be uploading bundles to the specified deployment (integration/staging/prod) of the DCP and running secondary analysis.
 The test currently takes about 120 minutes to run (longer for optimus, shorter for smart-seq-2).
 
-Also note that the test is currently setup to tombstone the bundles at the end of the run. You will need to set an env variable RETAIN_BUNDLES=True to disable this cleanup (ie if you need to retain the bundle for testing)
+    DEPLOYMENT_ENV={ENV} make
 
-    DEPLOYMENT_ENV=staging make
+To only run one of the pipelines, smart-seq2 for example, and retain the bundles (disable tombstoning) use Python 3.6:
+
+	RETAIN_BUNDLES=True DEPLOYMENT_ENV={ENV} python -m unittest tests.integration.test_end_to_end_dcp.TestSmartSeq2Run.test_smartseq2_run
 
 To only run one of the pipelines, smart-seq2 for example, use Python 3.6:
 
-    DEPLOYMENT_ENV=staging python -m unittest tests.integration.test_end_to_end_dcp.TestSmartSeq2Run.test_smartseq2_run
+    DEPLOYMENT_ENV={ENV} python -m unittest tests.integration.test_end_to_end_dcp.TestSmartSeq2Run.test_smartseq2_run
 
 ## Security Policy
 See our [Security Policy](SECURITY.md).
