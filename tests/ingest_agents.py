@@ -256,6 +256,8 @@ class IngestAuthAgent:
         """
         self.s2s_token_client = S2STokenClient()
         gcp_credentials_file = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
+        if not gcp_credentials_file:
+            raise Exception('GOOGLE_APPLICATION_CREDENTIALS env var not set.')
         self.s2s_token_client.setup_from_file(gcp_credentials_file)
         self.token_manager = TokenManager(token_client=self.s2s_token_client)
 
