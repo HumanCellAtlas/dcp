@@ -15,7 +15,7 @@
 * Display project uuid in submission view
 
 ## Data Store
-### Version: f9cc3c3eabdf2e2b90943f76c1e3af4225869f0c
+### Version: 2019-08-14-16-06-17-staging.release
 * f9cc3c3 - (tag: 2019-08-10-19-48-30-integration.release, origin/integration) Terraform v0.12.6 compatibility updates (#2337) (2 days ago)
 * 5d1314a - Limit a user's v2 subscriptions to 100 per replica. (#2310) (3 days ago)
 * 0ea5a2f - Limit user v1 subscriptions to 100 per replica. (#2309) (3 days ago)
