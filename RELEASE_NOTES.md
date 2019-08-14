@@ -2,6 +2,81 @@
 
 <!-- newest release at the top please) -->
 
+# Prod 2019/08/13
+## Ingest
+### UI: v0.10.0
+* Disabled retry-validation workaround button
+* Upgraded Angular to version 8, NodeJS to 12.7.0
+
+### Core: v0.9.3
+* Fixed bug when attempting to parse submission errors from the importer/exporter
+
+### Broker: v0.9.2
+* Fixed bug when sending submission errors to ingest-core
+
+## Upload
+### Version: 4.4.3
+* Internal cleanup
+
+## Data Portal
+### Version(s): d03ee3cbd3299028688424620cad4f6a2cc88e3c
+* d03ee3c Replace icons on home page and contribute page. First pass - home page only. #450. (#476)
+* 507c03b null in summary response cause portal to go blank. Resolves #480.
+
+
+## Data Store
+### Version: dd76aa91b74e7e02c70f3f5c7e8a0541cf92f409
+* 6a2c2c4 - Broad Integration Test Accounts update (#2283) (3 weeks ago)
+* b74823c - Notify V2 Payload Context (#2277) (3 weeks ago)
+* 208caeb - Add retries within collections testing. (#2274) (3 weeks ago)
+* 4797c01 - Operations for managing the ES index and subscriptions (#2269) (3 weeks ago)
+* ffc5e76 - Use better name for verify sync op (#2278) (3 weeks ago)
+* c6a768b - Increase concurrency safety of sync cleanup (#2272) (3 weeks ago)
+
+## Azul
+### Version(s): 729ec15646e5dbd6a14da7d2e0c597f523de0711
+*  45daaaa Fix: None filter crashes summary response (#1199, PR #1201)
+*  04e6ee0 Add a script for resetting the indexer (#451, PR #1182)
+*  3da1db4 Fix app, test and script logging (#419, #1175, PR #1189)
+*  ad89518 Fix: Service response leaks `null` substitutes (#1179, PR #1180)
+*  a373baf Eliminate empty columns in full TSV (#1147, PR #1160)
+*  de423c2 Add 'full' TSV format validation to integration test (#1171, PR #1187)
+*  370ba09 CONTRIBUTING.rst states meaning of PR assignment
+*  e8f6e13 Fix: Creating full TSV manifest without filter yields Chalice error (#1134, PR #1142)
+*  258576a Backport: Remove project exclusions on `prod` (#1161)
+*  479feed Absorb browser domain move from `prod.data` to `data`
+*  a05d442 Remove project exclusions on `prod` (#1161)
+*  301bdba Eliminate catch-all except clause in `BaseSummaryResponse` (#421, PR #1181)
+*  a2f3445 Fix: Can't index `HPSI human cerebral organoids` (#1152, PR #1167)
+*  8863c8d Disable date and numeric detection for mappings in ES indexes (#1152)
+*  3fb640d Introduce test that reproduces bug in dynamic mapping ES (#1152)
+*  7fbb4ea Revert "Hotfix: Can't index `HPSI human cerebral organoids`" (#1152)
+*  d898068 Elaborate on promotions in README
+*  0ab37e9 Add `make delete` target to only delete indices
+*  b432f4d Partially revert logging changes (3a0dc5f, #637)
+*  af6e1f5 Temporary removal of broken doctest (#989)
+*  d537d81 Translate None values for Elasticsearch (#989)
+*  1641039 Check for existing sitecustomize.py for envhook (#608)
+*  d1c7401 Add `file_uuid` and `file_version` columns to full metadata TSV (#1068)
+*  74237ed Incorporate changes from original hca_bundle_to_csv (#1068)
+*  b2c9d97 Document tag for artificial notifications (#995)
+*  4f96c54 Log transaction IDs during remote reindex (#1030)
+*  3a0dc5f Fix: Importing app.py overrides test logging config (#637)
+*  ae36559 Fix formatting in local_integration_test.py
+*  fe009fc Fix: Direct bundle access does not check preconditions (#1153)
+*  3e45be4 Upgrade Terraform to version 0.12.5 (#1145)
+*  9261873 Pin version of Terraform null provider
+*  5fb2500 Rename elasticsearch in health endpoint
+*  a8c1661 Reduce load caused by health endpoint (#1124)
+*  b12a3f7 Consolidate health check configurations
+*  a159d3b Revert "Hot Fix: Exclude API endpoints call from health check to reduce load"
+*  32dfccd [2/2] Add ability to requeue failed notifications (#1002)
+*  1eac659 [1/2] Add ability to requeue failed notifications (#1002)
+*  f0b0c96 Backport: Hotfix: Can't index `HPSI human cerebral organoids` project (#1152)
+*  d3f4a72 Make organism age range searchable via contains, within and intersects (#512)
+
+
+
 # Prod 2019/08/06
 ## Ingest
 ### Broker v0.9.2
