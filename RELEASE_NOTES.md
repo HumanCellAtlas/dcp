@@ -1,5 +1,115 @@
 # Release Notes
 
+# Staging 2019/08/14
+## Ingest
+### Core v0.9.4.rc
+* Memory-optimized findAssays() for stability
+* Updated primary and secondary submission documentation
+* New API endpoints for linking process to input bundle and input files
+
+### Exporter v0.8.8.rc
+* Exporting major/minor schema versions in provenance
+* Fix null:null submission error
+
+### UI v0.10.1.rc
+* Display project uuid in submission view
+
+## Data Store
+### Version: 2019-08-14-16-06-17-staging.release
+* f9cc3c3 - (tag: 2019-08-10-19-48-30-integration.release, origin/integration) Terraform v0.12.6 compatibility updates (#2337) (2 days ago)
+* 5d1314a - Limit a user's v2 subscriptions to 100 per replica. (#2310) (3 days ago)
+* 0ea5a2f - Limit user v1 subscriptions to 100 per replica. (#2309) (3 days ago)
+* 7de0b14 - fixed integration test errors (#2326) (6 days ago)
+* 56259b5 - Delete Test Subscription (#2304) (7 days ago)
+* 04c0221 - Tagging Updates: Name (#2322) (7 days ago)
+* d564509 - Revert "1k item limit in PUT /collections (closes #2281)" (10 days ago)
+* 5679e8f - 1k item limit in PUT /collections (closes #2281) (10 days ago)
+* 7bc38dc - Remove unused infra variables (#2316) (11 days ago)
+* ee410fc - Bump requirements (#2288) (11 days ago)
+* debaa1f - Update Readme.md (#2290) (12 days ago)
+* 961601f - Use chalice request context (#2307) (13 days ago)
+* dcb00b2 - Require version in PUT /collections (closes #2280) (#2306) (13 days ago)
+* 45600d3 - update ENV (#2291) (2 weeks ago)
+* 003a314 - Make sync cleanup less flaky (#2289) (2 weeks ago)
+
+## Data Browser
+### Version(s): 54e7802c85edbcdcabc8ab1ad35965d1b463f279
+* 54e7802 Updated matrix supported query. (#800)
+* 75ae53b Associate contributors with their institute on the project detail page. Resolves #731. (#751)
+* c3cf5fd Updated filters during matrix partial query detection. Resolves #795. (#798)
+* 44e1612 Fixed jiggle of matrix download text. (#794)
+* b5be386 Updated get data summary title. Resolves #791. (#793)
+* 75fad73 Updated tests.
+* 06cbaa8 Updated get manifest/matrix  UI. Resolves #782. (#792)
+* 3336821 Add back HCA contributors to the project detail page. 733. (#789)
+* 969a3d5 Update dev to point to staging matrix service closes #790
+* e9bf396 Add Library Construction Method and Species to get Data Summary. 780. (#788)
+* 640d176 Updated manifest and matrix messaging. (#787)
+* 007f78f Completed get data flow. (#779)
+* af86961 Data Browser is gong to mobile/tablet portrait mode too quickly showing only 3 columns on a 13 inch MBP when not in full screen. Resolves #768. (#774)
+* 1c8fbba Return link on error page is broken. Resolves #763. (#771)
+
+## Azul
+### Version(s): e035e5195049f93e093961ef678a480a977dd350
+* 5232949 Test logs list thread name and timestamps (#1222, PR #1223)
+* 12902bd Initial request for full manifest returns no hits (#1219, PR #1220)
+* d94c253 Fix None filter for missing fields (#1202, PR #1214)
+* d543430 Update README.md with changes to promotion procedure
+* 90f3276 Refine documentation on AZUL_DEBUG (#419)
+* 9910a72 Disable indexer lambdas before purging queues (#1204)
+* cef3f21 Update pip req to 10.0.1 (#1195)
+
+## Metadata Schema
+## Versions
+* cell_morphology - v6.1.7
+* human_specific - v1.0.11
+* mouse_specific - v1.0.8
+* preservation_storage - v6.1.1
+* timecourse - v2.0.2
+* biological_macromolecule_ontology - v5.3.5
+* cell_cycle_ontology - v5.3.6
+* cell_type_ontology - v5.3.6
+* cellular_component_ontology - v1.0.5
+* development_stage_ontology - v5.3.6
+* disease_ontology - v5.3.8
+* enrichment_ontology - v1.2.6
+* ethnicity_ontology - v5.3.9
+* instrument_ontology - v5.3.6
+* length_unit_ontology - v5.3.5
+* library_amplification_ontology - v1.2.5
+* library_construction_ontology - v1.2.5
+* mass_unit_ontology - v5.3.5
+* microscopy_ontology - v1.0.5
+* probe - v1.1.1
+* provenance - v1.1.0
+* cell_line - v14.4.0
+* cell_suspension - v13.2.0
+* donor_organism - v15.4.0
+* imaged_specimen - v3.2.0
+* organoid - v11.2.0
+* specimen_from_organism - v10.3.0
+* analysis_file - v6.2.0
+* image_file - v2.2.0
+* reference_file - v3.2.0
+* sequence_file - v9.2.0
+* supplementary_file - v2.2.0
+* analysis_process - v11.1.0
+* project - v14.1.0
+* analysis_protocol - v9.1.0
+* aggregate_generation_protocol - v2.1.0
+* collection_protocol - v9.2.0
+* differentiation_protocol - v2.2.0
+* dissociation_protocol - v6.2.0
+* enrichment_protocol - v3.1.0
+* ipsc_induction_protocol - v3.2.0
+* imaging_preparation_protocol - v2.2.0
+* imaging_protocol - v11.2.0
+* protocol - v7.1.0
+* library_preparation_protocol - v6.2.0
+* sequencing_protocol - v10.1.0
+### Functional Changes
+* Added two optional fields to represent schema major and minor versions in provenance schema.
+
 # Staging 2019/08/07
 ## Ingest
 ### UI v0.10.0.rc
