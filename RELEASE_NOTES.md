@@ -32,9 +32,6 @@
 * 45600d3 - update ENV (#2291) (2 weeks ago)
 * 003a314 - Make sync cleanup less flaky (#2289) (2 weeks ago)
 
-## Secondary Analysis
-* No software updates. Subscription change only.
-
 ## Data Browser
 ### Version(s): 54e7802c85edbcdcabc8ab1ad35965d1b463f279
 * 54e7802 Updated matrix supported query. (#800)
