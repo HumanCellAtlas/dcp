@@ -112,7 +112,7 @@ if __name__ == "__main__":
         hca dss download --bundle-uuid {BUNDLE_UUID_PRINTED_FROM_SCRIPT) --replica {AWS OR GCP}
 6) Go ahead and open up some of the files in the directory to get a feel for what is contained within an analysis bundle, including an individual gene x cell matrix.
 
-#### Phase 4: Primary submission exporting
+#### Phase 4: Viewing project in the Browser
 **Components:** Data Store, Azul, Data Browser  
 **Description:** In this phase, you will be looking at your project in the data browser!
 1) This is more of an informational step. Just as analysis has a subscription to the data store, azul (the browser backend) has a subcription to all bundles in the data store. Azul will then do a partial download of the bundle and index it based on the facets that are made available for search and exploration in the data browser.
