@@ -1,5 +1,10 @@
 # Release Notes
 
+# Staging 2019/08/15
+## Secondary Analysis
+### Lira: no version change
+* Update configuration to support new metadata schema released on 8/14/2019
+
 # Staging 2019/08/14
 ## Ingest
 ### Core v0.9.4.rc
