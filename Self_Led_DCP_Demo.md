@@ -5,7 +5,8 @@
 
 **Components:** Ingest, Upload, Data store, Data pipelines/Analysis, Azul, Data Portal, Matrix
 
-**Reference Document:** https://docs.google.com/document/d/1-9k9tcuIc4aTuxIo-KAT34R_OSca0j9_3LDNJwqksBQ/edit#heading=h.kuwifzq1d62x. 
+**Reference Document:** https://docs.google.com/document/d/1-9k9tcuIc4aTuxIo-KAT34R_OSca0j9_3LDNJwqksBQ/edit#heading=h.kuwifzq1d62x.
+
 **Note:** This document was published in June 2018 so may have inconsistencies and steps missing. A v2 document will be published soon and linked here.)
 
 ### FAQ
