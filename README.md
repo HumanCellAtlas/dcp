@@ -30,7 +30,7 @@ To only run one of the pipelines, smart-seq2 for example, use Python 3.6:
     DEPLOYMENT_ENV={ENV} python -m unittest tests.integration.test_end_to_end_dcp.TestSmartSeq2Run.test_smartseq2_run
 
 ## Security Policy
-See our [Security Policy](SECURITY.md).
+See our [Security Policy](https://github.com/HumanCellAtlas/.github/blob/master/SECURITY.md).
 
 ## Operations Wiki
 See https://allspark.dev.data.humancellatlas.org/dcp-ops/docs/wikis/home.
