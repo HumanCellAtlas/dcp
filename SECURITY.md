@@ -67,3 +67,5 @@ this security policy.
 
 Past security advisories will be listed below.  We credit reporters for identifying
 security issues, although we keep your name confidential if you request it.
+
+:question: For information on our incident response process see [humancellatals/dcp-community/rfc/text/0009-Incident-Response-Plan](https://github.com/HumanCellAtlas/dcp-community/blob/master/rfcs/text/0009-Incident-Response-Plan.md)
