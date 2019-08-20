@@ -4,16 +4,19 @@
 
 # Prod 2019/08/20
 ## Ingest 
-### Core v0.9.4.rc
+### Core v0.9.4
 * Memory-optimized findAssays() for stability
 * Updated primary and secondary submission documentation
 * New API endpoints for linking process to input bundle and input files
     
-### Exporter v0.8.8.rc
+### Exporter v0.8.8
 * Exporting major/minor schema versions in provenance
 * Fix null:null submission error
     
-### UI v0.10.1.rc
+### UI v0.10.1
+* Display project uuid in submission view
+
+### Validator v0.6.7
 * Display project uuid in submission view
 
 ## Data Store
