@@ -2,6 +2,108 @@
 
 <!-- newest release at the top please) -->
 
+# Prod 2019/08/20
+## Ingest 
+### Core v0.9.4
+* Memory-optimized findAssays() for stability
+* Updated primary and secondary submission documentation
+* New API endpoints for linking process to input bundle and input files
+    
+### Exporter v0.8.8
+* Exporting major/minor schema versions in provenance
+* Fix null:null submission error
+    
+### UI v0.10.1
+* Display project uuid in submission view
+
+### Validator v0.6.7
+* Display project uuid in submission view
+
+## Data Store
+### Version c952076c08a3045f996f63241ac2ea42026d12e8
+* 62c60d9 - (tag: 2019-08-14-16-06-17-staging.release, tag: 2019-08-13-17-57-16-integration.release, origin/staging, origin/integration) Dedicated Trufflehog CI/CD stage (#2342) (7 days ago)
+* 03dea6f - Check the correct DCP branch status (#2339) (7 days ago)
+* 64ef9e3 - Fix daemon import test CI (#2338) (7 days ago)
+* f9cc3c3 - (tag: 2019-08-10-19-48-30-integration.release) Terraform v0.12.6 compatibility updates (#2337) (9 days ago)
+* 5d1314a - Limit a user's v2 subscriptions to 100 per replica. (#2310) (10 days ago)
+* 0ea5a2f - Limit user v1 subscriptions to 100 per replica. (#2309) (10 days ago)
+* 7de0b14 - fixed integration test errors (#2326) (13 days ago)
+* 56259b5 - Delete Test Subscription (#2304) (2 weeks ago)
+* 04c0221 - Tagging Updates: Name (#2322) (2 weeks ago)
+* d564509 - Revert "1k item limit in PUT /collections (closes #2281)" (2 weeks ago)
+* 5679e8f - 1k item limit in PUT /collections (closes #2281) (2 weeks ago)
+* 7bc38dc - Remove unused infra variables (#2316) (3 weeks ago)
+* ee410fc - Bump requirements (#2288) (3 weeks ago)
+* debaa1f - Update Readme.md (#2290) (3 weeks ago)
+* 961601f - Use chalice request context (#2307) (3 weeks ago)
+* dcb00b2 - Require version in PUT /collections (closes #2280) (#2306) (3 weeks ago)
+* 45600d3 - update ENV (#2291) (3 weeks ago)
+* 003a314 - Make sync cleanup less flaky (#2289) (3 weeks ago)
+
+## Azul
+### Version(s): 4c9fd20cf8a4ff818f2a7082b19ab4cb00821bbc
+* 6d07848 Test logs list thread name and timestamps (#1222)
+* 17b5aa8 Initial request for full manifest returns no hits (#1219)
+* 96150c8 Fix None filter for missing fields (#1202)
+* a2637e7 Update README.md with changes to promotion procedure
+* 0c83f55 Refine documentation on AZUL_DEBUG (#419)
+* c7fffb3 Refactor queue management script (#1204)
+* c48ebd1 Refactor lambda management script
+* cef3f21 Update pip req to 10.0.1 (#1195)
+
+## Metadata Schema
+### Version(s): 
+* cell_morphology - v6.1.7
+* human_specific - v1.0.11
+* mouse_specific - v1.0.8
+* preservation_storage - v6.1.1
+* timecourse - v2.0.2
+* biological_macromolecule_ontology - v5.3.5
+* cell_cycle_ontology - v5.3.6
+* cell_type_ontology - v5.3.6
+* cellular_component_ontology - v1.0.5
+* development_stage_ontology - v5.3.6
+* disease_ontology - v5.3.8
+* enrichment_ontology - v1.2.6
+* ethnicity_ontology - v5.3.9
+* instrument_ontology - v5.3.6
+* length_unit_ontology - v5.3.5
+* library_amplification_ontology - v1.2.5
+* library_construction_ontology - v1.2.5
+* mass_unit_ontology - v5.3.5
+* microscopy_ontology - v1.0.5
+* probe - v1.1.1
+* provenance - v1.1.0
+* cell_line - v14.4.0
+* cell_suspension - v13.2.0
+* donor_organism - v15.4.0
+* imaged_specimen - v3.2.0
+* organoid - v11.2.0
+* specimen_from_organism - v10.3.0
+* analysis_file - v6.2.0
+* image_file - v2.2.0
+* reference_file - v3.2.0
+* sequence_file - v9.2.0
+* supplementary_file - v2.2.0
+* analysis_process - v11.1.0
+* project - v14.1.0
+* analysis_protocol - v9.1.0
+* aggregate_generation_protocol - v2.1.0
+* collection_protocol - v9.2.0
+* differentiation_protocol - v2.2.0
+* dissociation_protocol - v6.2.0
+* enrichment_protocol - v3.1.0
+* ipsc_induction_protocol - v3.2.0
+* imaging_preparation_protocol - v2.2.0
+* imaging_protocol - v11.2.0
+* protocol - v7.1.0
+* library_preparation_protocol - v6.2.0
+* sequencing_protocol - v10.1.0
+
+### Functionality changes:
+* Added two optional fields to represent schema major and minor versions in provenance. Fixes#1076.
+
+
 # Prod 2019/08/13
 ## Ingest
 ### UI: v0.10.0

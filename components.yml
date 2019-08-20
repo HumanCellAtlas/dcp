@@ -11,7 +11,7 @@ deployed_component_versions:
   # ingest: v0.1.2
   upload: v4.4.3
   metadata-schema: http://api.ingest.data.humancellatlas.org/schemas/search/latestSchemas
-  azul: 729ec15646e5dbd6a14da7d2e0c597f523de0711
+  azul: 4c9fd20cf8a4ff818f2a7082b19ab4cb00821bbc
   data-browser: d23546df5aa61840f608f49506bf1441e0989feb
   data-portal: d03ee3cbd3299028688424620cad4f6a2cc88e3c
   secondary-analysis:
@@ -24,10 +24,10 @@ deployed_component_versions:
   ingest:
     ingest-accessioner: v0.5.0
     ingest-broker: v0.9.2
-    ingest-core: v0.9.3
-    ingest-exporter: v0.8.7
+    ingest-core: v0.9.4
+    ingest-exporter: v0.8.8
     ingest-staging-manager: v0.5.4
     ingest-state-tracking: v0.7.5
-    ingest-validator: v0.6.6
-    ingest-ui: v0.10.0
-  data-store: dd76aa91b74e7e02c70f3f5c7e8a0541cf92f409
+    ingest-validator: v0.6.7
+    ingest-ui: v0.10.1
+  data-store: c952076c08a3045f996f63241ac2ea42026d12e8
