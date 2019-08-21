@@ -1,9 +1,33 @@
 # Release Notes
 
+# Staging 2019/09/21
+## Data Store
+### Version: 1af301db8a5935e63b9407cfcebd86a184f3fa2c
+* 1af301d - (tag: 2019-08-19-21-44-19-integration.release, origin/integration) Revert "DSS/Operations: Checkout  (#2264)" (#2365) (2 days ago)
+* dea261a - DSS/Operations: Checkout  (#2264) (2 days ago)
+* ac88643 - remove hard-coded stage name in secrets tests (#2364) (2 days ago)
+* ad90efb - (tag: 2019-08-19-14-54-49-integration.release) This pins pyyaml <= 5.1 for aws cli compatibility (#2348) (5 days ago)
+* df13ac9 - Update like to security policy (#2361) (5 days ago)
+* 006e7d8 - Relax sync size limit (#2354) (5 days ago)
+* 63568a3 - Add secrets management to dss-ops script (#2325) (5 days ago)
+* 81df1db - Schema typo fix (s/it/is) (6 days ago)
+* de45167 - Assert we don't checkout to the main bucket (avoiding a sync error). (#2350) (7 days ago)
+* 53fc89a - Revert "Fix 500 on delete nonexistent bundle (fixes #1918)" (7 days ago)
+* 3b0fd70 - Fix 500 on delete nonexistent bundle (fixes #1918) (7 days ago)
+* ecde208 - Simplify release scripting (#2347) (8 days ago)
+* e44563e - More informative release status (#2345) (8 days ago)
+
+## Azul
+### Version 21f6ade6968ee1de16d29d755ab8f83b7875b3c4
+* 2c6d13b Receive Slack warning if fail queues are not empty (#1168)
+* 32a47ff [r] Re-enable date detection, unmap contents.metadata in ES (#1173)
+
+
 # Staging 2019/08/15
 ## Secondary Analysis
 ### Lira: no version change
 * Update configuration to support new metadata schema released on 8/14/2019
+
 
 # Staging 2019/08/14
 ## Ingest
@@ -276,7 +300,7 @@
 ## Secondary Analysis
 ### Pipeline tools: v0.55.0
 * Add functions to get bundle-specific inputs for SmartSeq2 (paired end) and Optimus that determine whether a data bundle should be re-analyzed
-    
+*  
 ### Falcon: v0.4.1
 * Fixes an issue with the noop implementation in v0.4.0
 
