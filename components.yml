@@ -9,8 +9,8 @@ deployed_component_versions:
   # component-identifier: component-version
   # e.g.
   # ingest: v0.1.2
-  azul: e035e5195049f93e093961ef678a480a977dd350
-  data-store: 2019-08-14-16-06-17-staging.release
+  azul: 21f6ade6968ee1de16d29d755ab8f83b7875b3c4
+  data-store: 1af301db8a5935e63b9407cfcebd86a184f3fa2c
   data-browser: 54e7802c85edbcdcabc8ab1ad35965d1b463f279
   data-portal: 507c03bde51c195e1e2a7a80252dcf1743002529
   secondary-analysis:
