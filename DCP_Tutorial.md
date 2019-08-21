@@ -127,8 +127,8 @@ if __name__ == "__main__":
 #### Phase 4: Viewing project in the Browser
 **Components:** Data Store, Azul, Data Browser  
 **Description:** In this phase, you will be looking at your project in the data browser!
-1) This is more of an informational step. Just as analysis has a subscription to the data store, azul (the browser backend) has a subcription to all bundles in the data store. Azul will then do a partial download of the bundle and index it based on the facets that are made available for search and exploration in the data browser.
-2) Replace the project UUID in the url and browse your project at `https://staging.data.humancellatlas.org/explore/projects/{YOUR_PROJECT_UUID}`
+1) This is more of an informational step. Just as Analysis has a subscription to the Data Store, Azul (the Data Browser backend service) has a subscription to all bundles in the Data Store. When Azul is notified about a new bundle, it will do a download of the metadata in the bundle and index it based on the facets that are made available for search and exploration in the Data Browser.
+2) Replace the project UUID in the URL and browse your project at `https://staging.data.humancellatlas.org/explore/projects/{YOUR_PROJECT_UUID}`
 
 #### Phase 5: Matrix Service
 **Components:** Matrix Service  
