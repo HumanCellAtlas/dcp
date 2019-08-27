@@ -31,7 +31,7 @@
 * 21d9d6f Re-enable date detection, unmap contents.metadata in ES (#1173)
 * 32a47ff [r] Re-enable date detection, unmap contents.metadata in ES (#1173)
 
- Prod 2019/08/20
+# Prod 2019/08/20
 ## Ingest 
 ### Core v0.9.4
 * Memory-optimized findAssays() for stability
