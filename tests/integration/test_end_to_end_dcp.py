@@ -133,6 +133,18 @@ class TestSmartSeq2Run(TestEndToEndDCP):
         update_bundle_uuids = self._complete_submission(update_submission)
         Progress.report(f'Bundle UUIDs {update_bundle_uuids}.')
 
+        # Check for analysis workflows if credentials are provided
+        update_analysis = runner.analysis_agent
+        if update_analysis:
+            WaitFor(self._check_for_aborted_analysis_workflow(update_analysis, runner.project_shortname)).to_return_value(True)
+            Progress.report(f'Workflow aborted.')
+
+    @staticmethod
+    def _check_for_aborted_analysis_workflow(update_analysis, project_shortname):
+        analysis_workflows = update_analysis.query_by_project_shortname(project_shortname)
+        aborted_analysis = [wf for wf in analysis_workflows if wf.status == 'Aborted']
+        return len(aborted_analysis) == 1  # Falcon aborts the workflow for the updated submission
+
     @staticmethod
     def _update_biomaterials(original_submission, update_submission):
         biomaterials = original_submission.metadata_documents('biomaterial')
