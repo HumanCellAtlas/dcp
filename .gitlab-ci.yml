@@ -6,6 +6,7 @@ stages:
   - 100_cell_test
 
 before_script:
+  - export CI_COMMIT_REF_NAME=integration
   - apt-get -y update
   - apt-get -y install jq
   - pip install -r requirements.txt
@@ -32,6 +33,7 @@ dcp_wide_test_metadata_update:
   only:
     - integration
     - staging
+    - se-modify-bundle-update-tests
   script:
     - python -m unittest tests.integration.test_end_to_end_dcp.TestSmartSeq2Run.test_update
 
