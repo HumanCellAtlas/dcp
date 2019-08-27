@@ -2,7 +2,36 @@
 
 <!-- newest release at the top please) -->
 
-# Prod 2019/08/20
+# 2019/08/27 Production Release Notes
+
+## Data Store
+### Version: 1af301db8a5935e63b9407cfcebd86a184f3fa2c
+
+* 1af301d - (tag: 2019-08-21-15-14-21-staging.release, tag: 2019-08-19-21-44-19-integration.release, origin/* * staging, origin/integration) Revert "DSS/Operations: Checkout  (#2264)" (#2365) (8 days ago)
+* dea261a - DSS/Operations: Checkout  (#2264) (8 days ago)
+* ac88643 - remove hard-coded stage name in secrets tests (#2364) (8 days ago)
+* ad90efb - (tag: 2019-08-19-14-54-49-integration.release) This pins pyyaml <= 5.1 for aws cli compatibility (#2348) (11 days ago)
+* df13ac9 - Update like to security policy (#2361) (11 days ago)
+* 006e7d8 - Relax sync size limit (#2354) (11 days ago)
+* 63568a3 - Add secrets management to dss-ops script (#2325) (11 days ago)
+* 81df1db - Schema typo fix (s/it/is) (12 days ago)
+* de45167 - Assert we don't checkout to the main bucket (avoiding a sync error). (#2350) (13 days ago)
+* 53fc89a - Revert "Fix 500 on delete nonexistent bundle (fixes #1918)" (13 days ago)
+* 3b0fd70 - Fix 500 on delete nonexistent bundle (fixes #1918) (13 days ago)
+* ecde208 - Simplify release scripting (#2347) (2 weeks ago)
+* e44563e - More informative release status (#2345) (2 weeks ago)
+
+## Azul
+### Version(s): e101fd2e81cb0f56fc025d756e6d6070ac3d9a5b
+
+* e101fd2 Merge branch 'staging' into prod
+* 21f6ade Merge branch 'integration' into staging
+* a64583c Merge branch 'develop' into integration
+* f4cd2c0 Receive Slack warning if fail queues are not empty (#1168)
+* 21d9d6f Re-enable date detection, unmap contents.metadata in ES (#1173)
+* 32a47ff [r] Re-enable date detection, unmap contents.metadata in ES (#1173)
+
+ Prod 2019/08/20
 ## Ingest 
 ### Core v0.9.4
 * Memory-optimized findAssays() for stability
