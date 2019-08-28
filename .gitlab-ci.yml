@@ -40,3 +40,10 @@ dcp_wide_test_optimus:
     - staging
   script:
     - python -m unittest tests.integration.test_end_to_end_dcp.TestOptimusRun.test_optimus_run
+
+dcp_wide_ss2_scale_test_4000:
+  stage: dcp_wide_test
+  only:
+    - scale-out-spreadsheet-and-files
+  script:
+    CI_COMMIT_REF_NAME=integration DEPLOYMENT_STAGE=integration python -m unittest tests.scale.test_big_bundles.TestBigBundles.test_one_submission_with_4000_bundles
