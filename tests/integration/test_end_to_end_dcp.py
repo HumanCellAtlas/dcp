@@ -3,6 +3,7 @@
 import os
 import re
 import unittest
+import requests
 
 from ingest.importer.submission import Submission
 
@@ -133,6 +134,12 @@ class TestSmartSeq2Run(TestEndToEndDCP):
         update_bundle_uuids = self._complete_submission(update_submission)
         Progress.report(f'Bundle UUIDs {update_bundle_uuids}.')
 
+        self.analysis_agent = runner.analysis_agent
+        self.primary_bundle = runner.primary_bundle_uuids[0]
+        self.analysis_workflow_set = set([])
+        self.expected_update_workflow_count = 1
+        self._wait_for_analysis_workflows()
+
     @staticmethod
     def _update_biomaterials(original_submission, update_submission):
         biomaterials = original_submission.metadata_documents('biomaterial')
@@ -152,6 +159,37 @@ class TestSmartSeq2Run(TestEndToEndDCP):
         update_bundle_uuids = update_submission.bundles()
         Progress.report(f'Updated bundles {update_bundle_uuids}')
         return update_bundle_uuids
+
+    def _wait_for_analysis_workflows(self):
+        if not self.analysis_agent:
+            Progress.report("NO CREDENTIALS PROVIDED FOR ANALYSIS AGENT, SKIPPING WORKFLOW(s) CHECK...")
+        else:
+            Progress.report("WAITING FOR UPDATED ANALYSIS WORKFLOW(s) TO ABORT...")
+            WaitFor(
+                self._count_aborted_analysis_workflows_and_report
+            ).to_return_value(value=self.expected_update_workflow_count)
+
+    def _count_aborted_analysis_workflows_and_report(self):
+        if self._aborted_analysis_workflows_count() < self.expected_update_workflow_count:
+            self._count_analysis_workflows()
+        Progress.report("  aborted analysis workflows: {}/{}".format(
+            self._aborted_analysis_workflows_count(),
+            self.expected_update_workflow_count
+        ))
+        return self._aborted_analysis_workflows_count()
+
+    def _count_analysis_workflows(self):
+        with self.analysis_agent.ignore_logging_msg():
+            try:
+                workflows = self.analysis_agent.query_by_bundle(self.primary_bundle)
+                self.analysis_workflow_set.update(workflows)
+            except requests.exceptions.HTTPError:
+                pass
+
+    def _aborted_analysis_workflows_count(self):
+        return len(
+            list(filter(lambda wf: wf.status in ('Aborting', 'Aborted'), self.analysis_workflow_set))
+        )
 
     def _run_end_to_end_test_template(self, test_runner=None, post_condition=None):
         runner = test_runner if test_runner else DatasetRunner(deployment=self.deployment)
