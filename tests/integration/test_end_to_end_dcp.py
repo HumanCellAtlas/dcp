@@ -184,7 +184,6 @@ class TestSmartSeq2Run(TestEndToEndDCP):
                 workflows = self.analysis_agent.query_by_bundle(self.primary_bundle)
                 self.analysis_workflow_set.update(workflows)
             except requests.exceptions.HTTPError:
-                # Progress.report("ENCOUNTERED AN ERROR FETCHING WORKFLOW INFO, RETRY NEXT TIME...")
                 pass
 
     def _aborted_analysis_workflows_count(self):
