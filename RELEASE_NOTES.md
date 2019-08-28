@@ -1,5 +1,19 @@
 # Release Notes
 
+# 2019/08/28 Staging Release Notes
+
+## Data Store
+### Version: fc8d411b022bfbc8c6c023e59c5e81476d0efe1d
+
+* fc8d411 - (HEAD -> integration, tag: 2019-08-27-14-32-26-integration.release, origin/master, origin/integration, origin/HEAD, master) Add retries to verification in _test_gs_cache(). (#2372) (21 hours ago)
+* 64ee180 - Added details of notify intervals (#2368) (4 days ago)
+* 2e73ab3 - Fix failing collections tests (5 days ago)
+* 258e4b5 - Add pagination response headers (closes #2287) (6 days ago)
+* c23811d - Fix improper markdown (#2367) (6 days ago)
+* 2feac5f - (origin/natanlao-limit-put-collections) Fix 500 on delete nonexistent bundle, again (fixes #1918) (#2351) (6 days ago)
+* 9fd58d3 - Add ttl to async db items. (#2363) (8 days ago)
+* d846f4d - DSS Operations: Checkout (#2366) (8 days ago)
+
 # Staging 2019/09/21
 ## Data Store
 ### Version: 1af301db8a5935e63b9407cfcebd86a184f3fa2c
@@ -243,7 +257,7 @@
 ## Ingest
 ### Optimus v1.3.1
 * This is a fix for the gene id and also we store gene id to gene name map into the zrr files.
-  
+
 
 # Staging 2019/07/17
 ## Ingest
@@ -335,13 +349,13 @@
 
 ## Metadata Schema
 ### Versions
-* file_content_ontology:1.0.1 
-* analysis_file: 6.1.1 
-* image_file: 2.1.1 
-* file_core: 6.1.1 
-* supplementary_file: 2.1.1 
-* reference_file: 3.1.1 
-* sequence_file: 9.1.1 
+* file_content_ontology:1.0.1
+* analysis_file: 6.1.1
+* image_file: 2.1.1
+* file_core: 6.1.1
+* supplementary_file: 2.1.1
+* reference_file: 3.1.1
+* sequence_file: 9.1.1
 
 ### Functionality Changes
 * No functionality changes.
@@ -416,7 +430,7 @@ Versions
 Functionality
 * Added new file_format_ontology ontology schema.
 * Added optional content_description field.
-* Added new file_content_ontology schema. 
+* Added new file_content_ontology schema.
 * Updated integration test spreadsheets to contain new optional content_description field.
 
 
@@ -485,7 +499,7 @@ Version(s): ef51cb90836c68d4b7e9ef32279b633026a97257
 * a6a4499 Add separate index for cell suspensions (#1038)
 
 ## Metadata Schema
-Version(s): 
+Version(s):
 * death: 5.5.1
 * contact: 8.0.1
 * channel: 2.0.4
@@ -648,7 +662,7 @@ Version(s): 6e5f6ca3512938e8b532eb80a5b3d7edf6d1c1bb
 - Add adapter static JSON for mouse data for Optimus.
 - Upgrade to use smartseq2_v2.4.0 for smartseq2_v2.3.0
 
-# Staging 2019/05/22 
+# Staging 2019/05/22
 ## Ingest
 ### Exporter v0.8.1.rc
 * Do not inform user when there’s a failure creating a duplicate bundle
@@ -689,7 +703,7 @@ Version(s): 6e5f6ca3512938e8b532eb80a5b3d7edf6d1c1bb
 * Archived unused 10x integration test spreadsheet. Fixes #957.
 
 
-# Staging 2019/05/15 
+# Staging 2019/05/15
 ## Azul
 ### Version: 13e721394f1de12d39fa1ec2ad2205357f1f04f0
 * 975fd08 Make indexing of organs more consistent (#977)
@@ -711,12 +725,12 @@ Version(s): 6e5f6ca3512938e8b532eb80a5b3d7edf6d1c1bb
 
 
 
-# Staging 2019/05/08 
+# Staging 2019/05/08
 ## Ingest
 ### Ingest-ui v0.9.2.rc
 * Setting of row height automatically to show all validation errors
 * Do not allow creation of project metadata thru UI
- 
+
 ## Upload  v4.3.1
 * Remove "list upload area" REST API endpoint
 * Added client-side checksumming (temporarily disabled).
@@ -905,7 +919,7 @@ Version(s): 6e5f6ca3512938e8b532eb80a5b3d7edf6d1c1bb
 # Staging 2019/04/17
 ## Secondary Analysis
 ### Optimus optimus_v1.0.0_increase_empty_drops_memory
-* Increase the memory allocated to the Optimus RunEmptyDrops task 
+* Increase the memory allocated to the Optimus RunEmptyDrops task
 
 ## Azul
 ### Version: acac64791e271c2a46069ce8f950b2f0ba9f98e1
@@ -1163,7 +1177,7 @@ Version(s): 6e5f6ca3512938e8b532eb80a5b3d7edf6d1c1bb
 
 ### Optimus pipeline: v0.4.0
 
-## Azul 
+## Azul
 Version: deployed/staging/2019-03-20__08-46
 * dbe86cbd Fix: DSS proxy test fails on integration deployment
 * e86d1fb7 Fix handling of missing permissions boundary (#239)
