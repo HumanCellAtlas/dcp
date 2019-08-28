@@ -10,7 +10,7 @@ deployed_component_versions:
   # e.g.
   # ingest: v0.1.2
   azul: 21f6ade6968ee1de16d29d755ab8f83b7875b3c4
-  data-store: 1af301db8a5935e63b9407cfcebd86a184f3fa2c
+  data-store: fc8d411b022bfbc8c6c023e59c5e81476d0efe1d
   data-browser: 54e7802c85edbcdcabc8ab1ad35965d1b463f279
   data-portal: 507c03bde51c195e1e2a7a80252dcf1743002529
   secondary-analysis:
