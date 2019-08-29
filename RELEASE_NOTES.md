@@ -1,7 +1,39 @@
 # Release Notes
 
-# 2019/08/28 Staging Release Notes
+# Staging 2019/08/29
+## Azul
+### Version: 641e310d16460bcf81d001a04dad42ba005247e4
+*  fc54ae8 Hotfix: upgrade Terraform version
+*  e7ee681 Purge queues during reindexing (#1185, PR #1231)
+*  b433157 Document process for deleting a deployment (#1054, PR #1232)
+*  889c8b6 Cache full manifests (#1138, PR #1215)
+*  b82b32b Various cosmetic fixes
+*  f4cd2c0 Receive Slack warning if fail queues are not empty (#1168)
+*  21d9d6f Re-enable date detection, unmap contents.metadata in ES (#1173)
+*  32a47ff [r] Re-enable date detection, unmap contents.metadata in ES (#1173)
 
+## Secondary Analysis
+### Lira v0.22.1
+* Fixes to Lira API definition
+* Add data store notifications to pub/sub queue
+* Update DSS subscription queries to pin to metadata schema versions
+* Use max_cromwell_retries config field to set Cromwell default workflow options
+* Add DSS subscription queries for test data
+* Remove outdated snyk badge
+* Fix linting tests
+* Remove deploy and scripts directory (moved to secondary-analysis-deploy repo)
+* Label every workflow with a hash of its bundle-specific inputs
+* Refactor the directory of subscriptions for better file organization
+* Update Optimus subscription to match human or mouse data
+* Add query for single-end SS2 bundles
+* Subscription query migration from ElasticSearch to JMESPath
+ 
+### Pipeline-tools v0.56.3
+* Remove data file checkout when only retrieving bundle metadata
+* Remove max_retries parameter from adapter WDLs so that it can be set by the workflow options file
+
+
+# 2019/08/28 Staging Release Notes
 ## Data Store
 ### Version: fc8d411b022bfbc8c6c023e59c5e81476d0efe1d
 
@@ -14,7 +46,7 @@
 * 9fd58d3 - Add ttl to async db items. (#2363) (8 days ago)
 * d846f4d - DSS Operations: Checkout (#2366) (8 days ago)
 
-# Staging 2019/09/21
+# Staging 2019/08/21
 ## Data Store
 ### Version: 1af301db8a5935e63b9407cfcebd86a184f3fa2c
 * 1af301d - (tag: 2019-08-19-21-44-19-integration.release, origin/integration) Revert "DSS/Operations: Checkout  (#2264)" (#2365) (2 days ago)
