@@ -9,14 +9,14 @@ deployed_component_versions:
   # component-identifier: component-version
   # e.g.
   # ingest: v0.1.2
-  azul: 21f6ade6968ee1de16d29d755ab8f83b7875b3c4
+  azul: 641e310d16460bcf81d001a04dad42ba005247e4
   data-store: fc8d411b022bfbc8c6c023e59c5e81476d0efe1d
   data-browser: 54e7802c85edbcdcabc8ab1ad35965d1b463f279
   data-portal: 507c03bde51c195e1e2a7a80252dcf1743002529
   secondary-analysis:
     falcon: v0.4.1
-    lira: v0.20.0
-    pipeline-tools: v0.56.1
+    lira: v0.22.1
+    pipeline-tools: v0.56.3
     skylab:
       smartseq2: smartseq2_v2.4.0
       optimus: v1.3.3
