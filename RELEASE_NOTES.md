@@ -33,7 +33,7 @@
 * Remove max_retries parameter from adapter WDLs so that it can be set by the workflow options file
 
 
-# 2019/08/28 Staging Release Notes
+# Staging 2019/08/28
 ## Data Store
 ### Version: fc8d411b022bfbc8c6c023e59c5e81476d0efe1d
 
