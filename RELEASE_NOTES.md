@@ -4,6 +4,19 @@
 
 # 2019/09/03 Production Release Notes
 
+## Data Store
+### Version: fc8d411b022bfbc8c6c023e59c5e81476d0efe1d
+
+* fc8d411 - (tag: 2019-08-28-15-43-56-staging.release, tag: 2019-08-27-14-32-26-integration.release, origin/staging, origin/integration) Add retries to verification in _test_gs_cache(). (#2372) (8 days ago)
+* 64ee180 - Added details of notify intervals (#2368) (11 days ago)
+* 2e73ab3 - Fix failing collections tests (12 days ago)
+* 258e4b5 - Add pagination response headers (closes #2287) (12 days ago)
+* c23811d - Fix improper markdown (#2367) (13 days ago)
+* 2feac5f - (origin/natanlao-limit-put-collections) Fix 500 on delete nonexistent bundle, again (fixes #1918) (#2351) (13 days ago)
+* 9fd58d3 - Add ttl to async db items. (#2363) (2 weeks ago)
+* d846f4d - DSS Operations: Checkout (#2366) (2 weeks ago)
+
+
 ## Azul
 ### Version(s): 493d2c6a3e02c5d25fb929c0be4bf84c4a0a8ce1
 
