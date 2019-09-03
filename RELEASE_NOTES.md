@@ -2,6 +2,33 @@
 
 <!-- newest release at the top please) -->
 
+# 2019/09/03 Production Release Notes
+
+## Azul
+### Version(s): 493d2c6a3e02c5d25fb929c0be4bf84c4a0a8ce1
+
+*  e7ee681 Purge queues during reindexing (#1185, PR #1231)
+*  b433157 Document process for deleting a deployment (#1054, PR #1232)
+*  6ed60f3 Add missing target to .PHONY in Makefile
+*  f9e960b Add `make` check for personal deployments
+*  889c8b6 Cache full manifests (#1138, PR #1215)
+*  a217844 Reduce code duplication and fix formatting of manifest tests
+*  1a9559a Reorder lambda policy for clarity
+*  478ad38 Avoid 403 when accessing missing objects in DSS bucket
+*  dab847b Change `/health/all` to `/health/`
+*  b013197 Explicitly activate `responses` in test_laziness
+*  44dc573 Remove FIXME refering to ticket closed as `won't fix`
+*  70bbec1 Fix missing test logger configuration
+*  74e2dfd Optimize imports in azul.time
+*  fc44fb1 Renamed manifest tests to be more descriptive
+*  3b71b54 Log ES requests at DEBUG level, not INFO
+*  6e543c9 Fix formatting
+*  415a3f1 Fix type check warnings with translate_fields
+*  f4b73e6 Remove handling of sets when translating fields
+*  f4cd2c0 Receive Slack warning if fail queues are not empty (#1168)
+*  21d9d6f Re-enable date detection, unmap contents.metadata in ES (#1173)
+
+
 # 2019/08/27 Production Release Notes
 
 ## Data Store
@@ -32,16 +59,16 @@
 * 32a47ff [r] Re-enable date detection, unmap contents.metadata in ES (#1173)
 
 # Prod 2019/08/20
-## Ingest 
+## Ingest
 ### Core v0.9.4
 * Memory-optimized findAssays() for stability
 * Updated primary and secondary submission documentation
 * New API endpoints for linking process to input bundle and input files
-    
+
 ### Exporter v0.8.8
 * Exporting major/minor schema versions in provenance
 * Fix null:null submission error
-    
+
 ### UI v0.10.1
 * Display project uuid in submission view
 
@@ -81,7 +108,7 @@
 * cef3f21 Update pip req to 10.0.1 (#1195)
 
 ## Metadata Schema
-### Version(s): 
+### Version(s):
 * cell_morphology - v6.1.7
 * human_specific - v1.0.11
 * mouse_specific - v1.0.8
@@ -475,21 +502,21 @@
 * Handles update spreadsheets
 * Providing a mechanism for generating and downloading update-spreadsheets from submitted spreadsheets
 * Fix updating of file metadata when data file is uploaded first
-    
+
 ### UI v0.9.6
 * Widgets for uploading and downloading an update-spreadsheet
 * Paginated project dashboard
 * Widget to search for projects by title, shortname, etc.
 * Submissions table view inside the projects tab
-    
+
 ### Validator v0.6.5
 * Added ontology validation keyword
 * Ontology service updates
 * fastq subprocess fix
-    
+
 ### Staging manager v0.5.4
 * ingest-client library updates, refactoring
-    
+
 ### State tracker v0.7.5
 * Now using Java 11
 
@@ -498,16 +525,16 @@
 ## Data Store 2019-07-02-15-33-47-prod.release-1-ga23f0ed
 * De-register percolate queries across all indices (#2196)
 * [easy] Use the same regex for all uuids. (#2185)
-* Retry V2 notifications every 6 hours for 3 days (#2169) 
-* Miscellaneous fixes (#2188) 
-* Revert "Begin DSS builder (#1149)" (#2187) 
-* Add operation to trigger sync (#2180) 
-* Use sqs batch send from dcplib (#2179) 
-* bump requirements (#2186) 
-* Remove notifier-v2 retries for non-existent objects (#2183) 
-* Remove indexer retries for non-existent objects (#2182) 
-* Add operation to verify entity replication (#2178) 
-* Lambda Layers (#2168) 
+* Retry V2 notifications every 6 hours for 3 days (#2169)
+* Miscellaneous fixes (#2188)
+* Revert "Begin DSS builder (#1149)" (#2187)
+* Add operation to trigger sync (#2180)
+* Use sqs batch send from dcplib (#2179)
+* bump requirements (#2186)
+* Remove notifier-v2 retries for non-existent objects (#2183)
+* Remove indexer retries for non-existent objects (#2182)
+* Add operation to verify entity replication (#2178)
+* Lambda Layers (#2168)
 * Lambda Tagging (#2150)
 
 ## Metadata Schema
@@ -678,7 +705,7 @@
 ### Ingest-ui v0.9.2
 * Setting of row height automatically to show all validation errors
 * Do not allow creation of project metadata thru UI
- 
+
 ## Upload  v4.3.1
 * Remove "list upload area" REST API endpoint
 * Added client-side checksumming (temporarily disabled).
@@ -839,7 +866,7 @@
 
 # Prod 2019/04/23
 
-## Azul 
+## Azul
 ### Version: d7c2e6d0dde94f884da91a8a77e9defc8a5a8c22
 * fc06b2e Add facet for sequencing_protocol.paired_end (#867)
 * fe2f9fe Increase CloudWatch log retention to 1827 days (#832)
@@ -869,7 +896,7 @@
 * Update and add settings for the linting test
 * Pass empty drops output to submit wdl
 
-## Azul 
+## Azul
 ### Version: 4847ce79732b4606332fde9439c7cd64241308b6
 * 4847ce79 Exclude old Mouse Melanoma project on `prod` (#895)
 * 5523064b Minimal support for imaging data sets (#881)
@@ -891,7 +918,7 @@
 ## Secondary Analysis
 ### Optimus v1.0.0
 * The first major version release for the Optimus pipeline
-### Falcon v0.3.0 
+### Falcon v0.3.0
 * Add status endpoint to check health of falcon threads
 * Add snyk github integration
 * Add formatter and linting check in tests
