@@ -2,6 +2,18 @@
 
 <!-- newest release at the top please) -->
 
+# 2019/09/04 Production Adhoc Release Notes
+
+## Ingest
+### Core (dbbb72af)
+* Added persistence support for keeping track of staged metadata files.
+### Exporter (97016aa)
+* Modified file staging mechanism to address file staging issues.
+### Broker (4fe6c05)
+* Updated error message handling.
+### UI (f03686d)
+* Added support for new error message operations.
+
 # 2019/09/03 Production Release Notes
 
 ## Data Store
