@@ -1,5 +1,43 @@
 # Release Notes
 
+# Staging 2019/09/04
+
+## Secondary Analysis
+### Pipeline-tools: v0.56.4
+* Fix getting metadata for bundles in the production data store.
+
+### Falcon: v0.4.3
+* Get labels when de-duping to properly prioritize duplicate on-hold workflows.
+* Update logic for determining whether to release an on-hold workflow to handle duplicate notifications or updates in quick succession.
+
+## Azul
+### Version(s): de23fd421c9d38fd95c06f0061afeddc39bc1686
+*  8563bb7 Change DRS URI to use stable hostname (#919, PR #1241)
+*  e2614eb Add Content-Disposition header to full manifest (#1139, PR #1216)
+*  e8df9a9 Fix type checker warnings (PR #1235)
+*  6744159 Inline silly method
+*  c4b2577 Remove unused code
+*  88acc08 Simplify use of abstract class
+*  3649a95 Fix name warnings
+*  05e4c81 Fix type miscellaneous type check warnings
+*  9e4ca04 Remove unused code
+*  4823f46 Fix source code formatting
+*  d26206e Improve distinction between mutable and immutable JSON
+
+## Metadata Schema
+### Version(s): 
+* biomaterial_core.json - v8.2.0
+* specimen_from_organism.json - v10.4.0
+* cell_suspension.json - v13.3.0
+* imaged_specimen.json - v3.3.0
+* cell_line.json - v14.5.0
+* donor_organism.json - v15.5.0
+* organoid.json - v11.3.0
+
+### Functionality:
+* Changed RegEx pattern matching for version_number on biomaterial_core to be less loose.
+* Changed RegEx pattern matching for insdc_sample_accession to avoid matching "|" on first character.
+
 # Staging 2019/08/29
 ## Azul
 ### Version: 641e310d16460bcf81d001a04dad42ba005247e4
