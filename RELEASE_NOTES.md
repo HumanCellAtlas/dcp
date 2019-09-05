@@ -15,14 +15,6 @@
 *  8563bb7 Change DRS URI to use stable hostname (#919, PR #1241)
 *  e2614eb Add Content-Disposition header to full manifest (#1139, PR #1216)
 *  e8df9a9 Fix type checker warnings (PR #1235)
-*  6744159 Inline silly method
-*  c4b2577 Remove unused code
-*  88acc08 Simplify use of abstract class
-*  3649a95 Fix name warnings
-*  05e4c81 Fix type miscellaneous type check warnings
-*  9e4ca04 Remove unused code
-*  4823f46 Fix source code formatting
-*  d26206e Improve distinction between mutable and immutable JSON
 
 ## Metadata Schema
 ### Version(s): 
