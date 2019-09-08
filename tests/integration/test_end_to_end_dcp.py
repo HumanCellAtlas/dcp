@@ -9,10 +9,12 @@ from ingest.importer.submission import Submission
 
 from tests.wait_for import WaitFor
 from ..utils import Progress, Timeout
+from ..cloudwatch_handler import CloudwatchHandler
 from ..data_store_agent import DataStoreAgent
 from ..dataset_fixture import DatasetFixture
 from ..dataset_runner import DatasetRunner
 
+cloudwatch_handler = CloudwatchHandler()
 DEPLOYMENTS = ('dev', 'staging', 'integration', 'prod')
 
 
@@ -192,6 +194,7 @@ class TestSmartSeq2Run(TestEndToEndDCP):
         )
 
     def _run_end_to_end_test_template(self, test_runner=None, post_condition=None):
+        cloudwatch_handler.put_metric_data('dcp-ss2-test-invocation', 1)
         runner = test_runner if test_runner else DatasetRunner(deployment=self.deployment)
         _1_hr_50_min = 110 * 60
         with Timeout(_1_hr_50_min) as time_limit:
@@ -199,11 +202,15 @@ class TestSmartSeq2Run(TestEndToEndDCP):
                 self.ingest_store_and_analyze_dataset(runner, dataset_fixture='Smart-seq2')
                 if post_condition:
                     post_condition(runner)
+            except:
+                cloudwatch_handler.put_metric_data('dcp-ss2-test-failure', 1)
+                raise
             finally:
                 runner.cleanup_primary_and_result_bundles()
 
         if time_limit.did_timeout:
             runner.cleanup_analysis_workflows()
+            cloudwatch_handler.put_metric_data('dcp-ss2-test-failure', 1)
             raise TimeoutError("test timed out")
 
 
@@ -257,10 +264,9 @@ class TestOptimusRun(TestEndToEndDCP):
         re.compile('^.+zarr!expression_matrix!gene_metadata_numeric_name!0$')
     ]
 
-
     def test_optimus_run(self):
+        cloudwatch_handler.put_metric_data('dcp-optimus-test-invocation', 1)
         runner = DatasetRunner(deployment=self.deployment)
-
         with Timeout(240 * 60) as to:  # timeout after 4hrs (less than the Gitlab runner setting) to allow for test cleanup
             try:
                 self.ingest_store_and_analyze_dataset(runner, dataset_fixture='optimus')
@@ -271,11 +277,15 @@ class TestOptimusRun(TestEndToEndDCP):
                 results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuids[0])
 
                 self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
+            except:
+                cloudwatch_handler.put_metric_data('dcp-optimus-test-failure', 1)
+                raise
             finally:
                 runner.cleanup_primary_and_result_bundles()
 
         if to.did_timeout:
             runner.cleanup_analysis_workflows()
+            cloudwatch_handler.put_metric_data('dcp-optimus-test-failure', 1)
             raise TimeoutError("test timed out")
 
 
