@@ -7,6 +7,9 @@
 * Fix bug in passing deployment to dss_client
 * Fix to handle bundles missing lane index
 
+### Skylab: optimus_v1.3.5
+* Increase memory for GeneSortBam, CellSortBam, CalculateCellMetrics and CorrectUMItools
+
 # Staging 2019/09/04
 
 ## Secondary Analysis
