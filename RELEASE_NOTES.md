@@ -1,5 +1,12 @@
 # Release Notes
 
+# Staging 2019/09/09
+
+## Secondary Analysis
+### Pipeline-tools: v0.56.6
+* Fix bug in passing deployment to dss_client
+* Fix to handle bundles missing lane index
+
 # Staging 2019/09/04
 
 ## Secondary Analysis
