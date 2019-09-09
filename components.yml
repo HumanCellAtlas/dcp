@@ -16,10 +16,10 @@ deployed_component_versions:
   secondary-analysis:
     falcon: v0.4.3
     lira: v0.22.1
-    pipeline-tools: v0.56.4
+    pipeline-tools: v0.56.6
     skylab:
       smartseq2: smartseq2_v2.4.0
-      optimus: v1.3.3
+      optimus: v1.3.5
   ingest:
     ingest-accesioner: v0.5.0.rc
     ingest-archiver: 0.1.1
