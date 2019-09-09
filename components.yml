@@ -24,9 +24,9 @@ deployed_component_versions:
   greenbox:
     greenbox-falcon: v0.4.3
     greenbox-lira: v0.22.1
-    greenbox-pipeline-tools: v0.56.4
+    greenbox-pipeline-tools: v0.56.6
     greenbox-skylab:
       smartseq2: smartseq2_v2.4.0
-      tenx: optimus_v1.3.3
+      tenx: optimus_v1.3.5
   data-store: integration-2018-08-15-05-55-50.release
   azul: deployed/integration/2019-05-02__19-17 aa1e0617569f77449cacdd37e59cc771522dafd8
