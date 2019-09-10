@@ -60,6 +60,9 @@
 * cell_line.json - v14.5.0
 * donor_organism.json - v15.5.0
 * organoid.json - v11.3.0
+
+### Functionality:
+
 * Fixed RegEx loose pattern matching in biomaterial_core schema_version and insdc_sample_accession properties
 
 ## Data Browser
