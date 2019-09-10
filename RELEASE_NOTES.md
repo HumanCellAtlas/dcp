@@ -31,6 +31,10 @@
 * Remove data file checkout when only retrieving bundle metadata
 * Remove max_retries parameter from adapter WDLs so that it can be set by the workflow options file
 
+## Falcon: v0.4.3
+* Get labels when de-duping to properly prioritize duplicate on-hold workflows
+* Update logic for determining whether to release an on-hold workflow to handle duplicate notifications or updates in quick succession
+
 ## Azul
 ### Version(s): 1c201594c23e1f9355ec8305dcebfcf9f6be92c5
 
