@@ -10,6 +10,7 @@ before_script:
   - apt-get -y install jq
   - pip install -r requirements.txt
   - export DEPLOYMENT_ENV=$CI_COMMIT_REF_NAME
+  - export AWS_DEFAULT_REGION=us-east-1
   - export SWAGGER_URL="https://dss.data.humancellatlas.org/v1/swagger.json"
   - mkdir -p ~/.config/hca
   - jq -n .DSSClient.swagger_url=env.SWAGGER_URL > ~/.config/hca/config.$CI_COMMIT_REF_NAME.json
