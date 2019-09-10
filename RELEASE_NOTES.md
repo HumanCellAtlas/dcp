@@ -2,6 +2,77 @@
 
 <!-- newest release at the top please) -->
 
+# 2019/09/10 Production Release Notes
+
+## Secondary Analysis
+## Version(s):
+## Lira: v0.22.1
+* Fixes to Lira API definition
+* Add data store notifications to pub/sub queue
+* Update DSS subscription queries to pin to metadata schema versions
+* Use max_cromwell_retries config field to set Cromwell default workflow options
+* Add DSS subscription queries for test data
+* Remove outdated snyk badge
+* Fix linting tests
+* Remove deploy and scripts directory (moved to secondary-analysis-deploy repo)
+* Label every workflow with a hash of its bundle-specific inputs
+* Refactor the directory of subscriptions for better file organization
+* Update Optimus subscription to match human or mouse data
+* Add query for single-end SS2 bundles
+* Subscription query migration from ElasticSearch to JMESPath
+
+## Skylab: optimus_v1.3.5
+* Increase memory for GeneSortBam, CellSortBam, CalculateCellMetrics and CorrectUMItools
+
+## Pipeline-tools: v0.56.6
+* Fix bug in passing deployment to dss_client
+* Fix to handle bundles missing lane index
+* Fix getting metadata for bundles in the production data store
+* Remove data file checkout when only retrieving bundle metadata
+* Remove max_retries parameter from adapter WDLs so that it can be set by the workflow options file
+
+## Falcon: v0.4.3
+* Get labels when de-duping to properly prioritize duplicate on-hold workflows
+* Update logic for determining whether to release an on-hold workflow to handle duplicate notifications or updates in quick succession
+
+## Azul
+### Version(s): 1c201594c23e1f9355ec8305dcebfcf9f6be92c5
+
+* 6723a51 Add DRS domain to sandbox deployment
+* 2270875 Change to DRS URI (#919)
+* 942d7eb Add Content-Disposition header to the full TSV (#1139)
+* dd19699 Inline silly method
+* c602003 Remove unused code
+* 1ab9146 Simplify use of abstract class
+* f1351cb Fix name warnings
+* 7a90379 Fix type miscellaneous type check warnings
+* 2679001 Remove unused code
+* 691208a Fix source code formatting
+* 8351e25 Improve distinction between mutable and immutable JSON
+
+## Metadata Schema
+### Version(s):
+
+* biomaterial_core.json - v8.2.0
+* specimen_from_organism.json - v10.4.0
+* cell_suspension.json - v13.3.0
+* imaged_specimen.json - v3.3.0
+* cell_line.json - v14.5.0
+* donor_organism.json - v15.5.0
+* organoid.json - v11.3.0
+
+### Functionality:
+
+* Fixed RegEx loose pattern matching in biomaterial_core schema_version and insdc_sample_accession properties
+
+## Data Browser
+### Version: 4f57e772d1a1a1d1ce48edcf943bd599d84fafe7
+
+* 4f57e77 Add a link to the data release policy to all project pages. Resolves #775. (#847)
+* d927091 Create tests to cover Terra functionality in get data flow. Resolves #757. (#844)
+* 07025f1 Fixed display of check mark on download of TSV. Resolves #843. (#846)
+* 8e424ee Added poll for TSV on project table and detail. Resolves #712. (#842)
+
 # 2019/09/04 Production Adhoc Release Notes
 
 ## Ingest
