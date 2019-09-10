@@ -49,14 +49,14 @@
 ## Metadata Schema
 ### Version(s):
 
-### biomaterial_core.json - v8.2.0
-### specimen_from_organism.json - v10.4.0
-### cell_suspension.json - v13.3.0
-### imaged_specimen.json - v3.3.0
-### cell_line.json - v14.5.0
-### donor_organism.json - v15.5.0
-### organoid.json - v11.3.0
-### Fixed RegEx loose pattern matching in biomaterial_core schema_version and insdc_sample_accession properties
+* biomaterial_core.json - v8.2.0
+* specimen_from_organism.json - v10.4.0
+* cell_suspension.json - v13.3.0
+* imaged_specimen.json - v3.3.0
+* cell_line.json - v14.5.0
+* donor_organism.json - v15.5.0
+* organoid.json - v11.3.0
+* Fixed RegEx loose pattern matching in biomaterial_core schema_version and insdc_sample_accession properties
 
 ## Data Browser
 ### Version: 4f57e772d1a1a1d1ce48edcf943bd599d84fafe7
