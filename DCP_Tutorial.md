@@ -6,15 +6,14 @@
 **Components:** Ingestion Service, Upload Service, Data Storage Service, Data Pipelines Service, Azul Service, Data Portal, Matrix Service
 
 **Reference Document:** https://docs.google.com/document/d/1-9k9tcuIc4aTuxIo-KAT34R_OSca0j9_3LDNJwqksBQ/edit#heading=h.kuwifzq1d62x.
-
-**Note:** This document was published in June 2018 so may have inconsistencies and steps missing. A v2 document will be published soon and linked here.)
+**Note:** This document was published in June 2018 so may have inconsistencies and steps missing. A v2 document will be published soon and linked here.
 
 ### FAQ
 **How can I make edits to this document?**
 Create a PR in the DCP repository.
 
 **Who do I contact if I encounter any any issues while following the steps?**
-Feel free reach out to #dcp-ops-help, create an issue in the DCP repository, or ping Parth.
+Feel free reach out to #dcp-ops-help or create an issue in the DCP repository.
 
 **Do I need to have a certain level of technical proficiency to follow the steps?**
 Technical proficiency should not be a requirement. Please reach out if you encounter any issues, as this indicates that the instructions need additions or modifications.
