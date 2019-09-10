@@ -7,7 +7,7 @@ import boto3
 
 class CloudwatchHandler:
     def __init__(self):
-        self.namespace = f"dcp-dcp-test-{os.environ['DEPLOYMENT_ENV']}"
+        self.namespace = f"dcp-wide-test-{os.environ['DEPLOYMENT_ENV']}"
         self._client = boto3.client("cloudwatch", region_name=os.environ['AWS_DEFAULT_REGION'])
 
     def put_metric_data(self,
