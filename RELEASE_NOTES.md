@@ -5,7 +5,7 @@
 
 ## Secondary Analysis
 ## Version(s):
-## Lira: v0.22.2
+### Lira: v0.22.2
 * Update pipeline-tools version to fix getting metadata from the production data store
 * Add config flag for testing mode
 * Add hash-id backfill script
