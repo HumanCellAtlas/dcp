@@ -1,6 +1,14 @@
 # Release Notes
 
 <!-- newest release at the top please) -->
+# 2019/09/11 Hotfix Release Notes
+
+## Secondary Analysis
+## Version(s):
+## Lira: v0.22.2
+* Update pipeline-tools version to fix getting metadata from the production data store
+* Add config flag for testing mode
+* Add hash-id backfill script
 
 # 2019/09/10 Production Release Notes
 
