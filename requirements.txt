@@ -7,3 +7,4 @@ awscli
 hca-ingest
 cromwell-tools>=1.1.2
 termcolor
+jsonschema

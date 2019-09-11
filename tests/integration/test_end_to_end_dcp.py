@@ -8,11 +8,11 @@ import requests
 from ingest.importer.submission import Submission
 
 from tests.wait_for import WaitFor
-from ..utils import Progress, Timeout
-from ..cloudwatch_handler import CloudwatchHandler
-from ..data_store_agent import DataStoreAgent
-from ..dataset_fixture import DatasetFixture
-from ..dataset_runner import DatasetRunner
+from tests.utils import Progress, Timeout
+from tests.cloudwatch_handler import CloudwatchHandler
+from tests.data_store_agent import DataStoreAgent
+from tests.dataset_fixture import DatasetFixture
+from tests.dataset_runner import DatasetRunner
 
 cloudwatch_handler = CloudwatchHandler()
 DEPLOYMENTS = ('dev', 'staging', 'integration', 'prod')

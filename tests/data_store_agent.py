@@ -56,5 +56,8 @@ class DataStoreAgent:
                     else:
                         break
 
+    def get_file(self, file_uuid, replica='aws'):
+        return self.client.get_file(replica=replica, uuid=file_uuid)
+
     def tombstone_bundle(self, bundle_uuid, replica='aws'):
         self.client.delete_bundle(replica=replica, uuid=bundle_uuid, reason="DCP-wide integration test")
