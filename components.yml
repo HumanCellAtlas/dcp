@@ -16,7 +16,7 @@ deployed_component_versions:
   data-portal: d03ee3cbd3299028688424620cad4f6a2cc88e3c
   secondary-analysis:
     falcon: v0.4.3
-    lira: v0.22.1
+    lira: v0.22.2
     pipeline-tools: v0.56.6
     skylab:
       smartseq2: smartseq2_v2.4.0
