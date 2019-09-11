@@ -10,6 +10,13 @@
 * Add config flag for testing mode
 * Add hash-id backfill script
 
+## Ingest
+## Version(s)
+### Core: 2c5f56c
+* Handling bundle manifest null fields
+* Logging unhandled exporting exceptions
+* Updated primary submission documentation
+
 # 2019/09/10 Production Release Notes
 
 ## Secondary Analysis
