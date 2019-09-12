@@ -50,6 +50,20 @@
 * Changed RegEx pattern matching for version_number on biomaterial_core to be less loose.
 * Changed RegEx pattern matching for insdc_sample_accession to avoid matching "|" on first character.
 
+# Staging 2019/09/02 (hotfix)
+## Ingest
+## Version(s)
+### Core (v0.10.0)
+* Added persistence support for keeping track of staged metadata files
+* Submission Errors Repository
+### Exporter (v0.9.0)
+* Modified file staging mechanism to address file staging issues.
+* Broker (v0.10.0)
+* Updated error message handling.
+### UI (v0.11.0)
+Added support for new error message operations.
+
+
 # Staging 2019/08/29
 ## Azul
 ### Version: 641e310d16460bcf81d001a04dad42ba005247e4
