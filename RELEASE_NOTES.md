@@ -1,5 +1,25 @@
 # Release Notes
 
+# Staging 2019/09/11
+## Ingest
+## Version(s)
+### Core: c54cf190
+* Tracking uuid of staged metadata files
+* Handling bundle manifest null fields
+* Logging unhandled exporting exceptions
+* Updated primary submission documentation
+
+### Exporter: 311950c
+* Fix simple updates issue when staging shar    ed metadata files among bundles
+
+### Validator: e52fafb
+* Fix retrying of file validation
+* Security Fixes
+
+### UI: f42dac1
+* Remove unnecessary logging
+* Added link to project view from the submission view
+
 # Staging 2019/09/04
 
 ## Secondary Analysis
