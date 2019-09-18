@@ -30,7 +30,7 @@
 * 150332c6 Remove BFG redaction from TruffleHog and gitsecrets config (#1194, PR #1263)
 * b0f8367e Document fix for hung test containers on Gitlab (PR #1258)
 * 8ddf31f7 Change DOS URIs to use `drs` scheme (#1252, PR #1255)
-a7f73b6b Display Swagger UI with docs from app.py (#1163, PR #1227)
+* a7f73b6b Display Swagger UI with docs from app.py (#1163, PR #1227)
 * 2df19463 Improve automation of PR branch squashing (#1245, PR #1254)
 * 9390d465 Assorted README changes (PR #1250)
 * 65abdda7 Make request config a plugin method (#1234)
