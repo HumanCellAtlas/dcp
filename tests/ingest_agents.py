@@ -2,9 +2,17 @@ import json
 import requests
 import os
 
+from ingest.api.ingestapi import IngestApi
 from ingest.utils.s2s_token_client import S2STokenClient
 from ingest.utils.token_manager import TokenManager
 
+_pluralized_type = {
+    'biomaterial': 'biomaterials',
+    'process': 'processes',
+    'file': 'files',
+    'project': 'projects',
+    'protocol': 'protocols'
+}
 
 class IngestUIAgent:
 
@@ -35,12 +43,22 @@ class IngestApiAgent:
         self.deployment = deployment
         self.ingest_api_url = self._ingest_api_url()
         self.ingest_auth_agent = IngestAuthAgent()
+        self._set_up_ingest_client()
+
+    def _set_up_ingest_client(self):
+        self.ingest_api = IngestApi(url=self.ingest_api_url)
+        auth_header = self.ingest_auth_agent.make_auth_header()
+        self.ingest_api.set_token(auth_header['Authorization'])
 
     def project(self, project_id):
         return IngestApiAgent.Project(project_id=project_id, ingest_api_agent=self)
 
     def submission(self, submission_id):
         return IngestApiAgent.SubmissionEnvelope(envelope_id=submission_id, ingest_api_agent=self)
+
+    def new_submission(self, is_update=False):
+        submission_data = self.ingest_api.create_submission(update_submission=is_update)
+        return IngestApiAgent.SubmissionEnvelope(ingest_api_agent=self, data=submission_data)
 
     def iter_submissions(self):
         for page in self.iter_pages('/submissionEnvelopes', page_size=500):
@@ -91,6 +109,21 @@ class IngestApiAgent:
         else:
             raise RuntimeError(f"GET {url} got {response}")
 
+    def post(self, url, content, params={}):
+        auth_header = self.ingest_auth_agent.make_auth_header()
+        response = requests.post(url, json=content, headers=auth_header, params=params)
+        response.raise_for_status()
+        return response.json()
+
+    def put(self, url, content=None):
+        auth_header = self.ingest_auth_agent.make_auth_header()
+        if content:
+            response = requests.put(url, json=content, headers=auth_header)
+        else:
+            response = requests.put(url, headers=auth_header)
+        response.raise_for_status()
+        return response.json()
+
     def _ingest_api_url(self):
         if self.deployment == 'prod':
             return "https://api.ingest.data.humancellatlas.org"
@@ -122,7 +155,6 @@ class IngestApiAgent:
     class SubmissionEnvelope:
 
         # May be primed wih data, or of you supply an ID, we will go get the data
-
         def __init__(self, ingest_api_agent, envelope_id=None, data=None):
             if not envelope_id and not data:
                 raise RuntimeError("either envelope_id or data must be provided")
@@ -136,10 +168,38 @@ class IngestApiAgent:
                 self.envelope_id = data['_links']['self']['href'].split('/')[-1]
 
         def __str__(self):
-            return f"SubmissionEnvelope(id={self.envelope_id}, uuid={self.uuid}, status={self.status})"
+            return f"SubmissionEnvelope(id={self.envelope_id}, uuid={self.uuid}, " \
+                f"status={self.status})"
+
+        def _link_to(self, endpoint_path):
+            return self.data['_links'][endpoint_path]['href']
 
         def files(self):
             return self.api.get_all(self.data['_links']['files']['href'], 'files')
+
+        def metadata_documents(self, metadata_type: str = None):
+            self._check_metadata_type(metadata_type)
+            result_type = _pluralized_type[metadata_type]
+            metadata_link = self._link_to(result_type)
+            return self.api.get_all(metadata_link, result_type)
+
+        def add_biomaterial(self, biomaterial_content, update_target_uuid: str = None):
+            return self._add_metadata('biomaterial', biomaterial_content,
+                               update_target_uuid=update_target_uuid)
+
+        def _add_metadata(self, metadata_type, metadata_content, update_target_uuid: str = None):
+            self._check_metadata_type(metadata_type)
+            endpoint_path = _pluralized_type[metadata_type]
+            metadata_link = self._link_to(endpoint_path)
+            params = {'updatingUuid': update_target_uuid} if update_target_uuid else {}
+            return self.api.post(metadata_link, metadata_content, params=params)
+
+        @staticmethod
+        def _check_metadata_type(metadata_type):
+            if not metadata_type:
+                raise RuntimeError('`metadata_type` must be specified')
+            if not metadata_type in _pluralized_type:
+                raise KeyError(f'Unknown metadata type [{metadata_type}].')
 
         def iter_files(self):
             url = self.data['_links']['files']['href']
@@ -150,6 +210,16 @@ class IngestApiAgent:
         def reload(self):
             self._load()
             return self
+
+        def check_validation(self):
+            self._load()
+            if self.status == 'Invalid':
+                raise Exception("envelope status is Invalid")
+            return self.status in ['Valid', 'Submitted']
+
+        def check_status(self):
+            self._load()
+            return self.status
 
         @property
         def status(self):
@@ -171,6 +241,10 @@ class IngestApiAgent:
             manifests = self.api.get_all(url, 'bundleManifests')
             return [manifest['bundleUuid'] for manifest in manifests]
 
+        def complete(self):
+            completion_endpoint = self._link_to('submit')
+            self.api.put(completion_endpoint)
+
         def _load(self):
             self.data = self.api.get(f"/submissionEnvelopes/{self.envelope_id}")
 
@@ -182,10 +256,12 @@ class IngestAuthAgent:
         """
         self.s2s_token_client = S2STokenClient()
         gcp_credentials_file = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
+        if not gcp_credentials_file:
+            raise Exception('GOOGLE_APPLICATION_CREDENTIALS env var not set.')
         self.s2s_token_client.setup_from_file(gcp_credentials_file)
         self.token_manager = TokenManager(token_client=self.s2s_token_client)
 
-    def _get_auth_token(self):
+    def get_auth_token(self):
         """Generate self-issued JWT token
 
         :return string auth_token: OAuth0 JWT token
@@ -199,7 +275,7 @@ class IngestAuthAgent:
         :return dict headers: A header with necessary token information to talk to Auth0 authentication required endpoints.
         """
         headers = {
-            "Authorization": f"Bearer {self._get_auth_token()}"
+            "Authorization": f"Bearer {self.get_auth_token()}"
         }
         return headers
 

@@ -1,5 +1,65 @@
 # Release Notes
 
+# Staging 2019/09/18
+## Ingest
+## Version(s):
+### Broker (bbd176a)
+* Added support for multiple submission errors.
+* Fix linking of entities
+
+## Upload Service
+## Version(s): v4.4.4
+* No significant functionality changes
+
+# Data Store
+## Version: fbb073543290082aab4f2950c5a71858bde4ba4f
+* fbb0735 - (tag: 2019-09-09-14-43-05-integration.release, origin/integration) Adding a document to explain the action and resource relationship for… (#2395) (13 days ago)
+* fa24dd1 - (origin/master-copy) Requirements Update (#2410) (2 weeks ago)
+* 2263c9e - Increase dss notify workers. (#2408) (2 weeks ago)
+* 4a3416b - Revert "Bump httpie from 1.0.2 to 1.0.3 (#2397)" (#2401) (3 weeks ago)
+* ef3476b - Bump httpie from 1.0.2 to 1.0.3 (#2397) (3 weeks ago)
+* 71957eb - Fix flaky test: TestFileApi.test_file_get_checkout . (#2396) (3 weeks ago)
+
+# Azul
+## Version(s): b191eda878a28335b795e1067406d38edb06cc81
+* d1002020 Change BDBag column header names from `dos` to `drs` (#1279, PR #1280)
+* 367099f9 Remove prefix for 'integration' integration test (#1282, PR #1285)
+* 4b265f4e Generalise aggregation field translations (#1191, PR #1246)
+* 4f1fb842 Tweak README instructions for determining when to reindex (PR #1267)
+* 74690a19 Quote file name in Content-Disposition header of full manifests (#1247, PR #1261)
+* 150332c6 Remove BFG redaction from TruffleHog and gitsecrets config (#1194, PR #1263)
+* b0f8367e Document fix for hung test containers on Gitlab (PR #1258)
+* 8ddf31f7 Change DOS URIs to use `drs` scheme (#1252, PR #1255)
+* a7f73b6b Display Swagger UI with docs from app.py (#1163, PR #1227)
+* 2df19463 Improve automation of PR branch squashing (#1245, PR #1254)
+* 9390d465 Assorted README changes (PR #1250)
+* 65abdda7 Make request config a plugin method (#1234)
+* cbe399aa Update changelog generation command in README (PR #1236)
+* 433c03a1 Clarify contribution guidelines on logging and string interpolation (PR #1239)
+
+
+
+# Staging 2019/09/11
+## Ingest
+## Version(s)
+### Core: c54cf190
+* Tracking uuid of staged metadata files
+* Handling bundle manifest null fields
+* Logging unhandled exporting exceptions
+* Updated primary submission documentation
+
+### Exporter: 311950c
+* Fix simple updates issue when staging shar    ed metadata files among bundles
+
+### Validator: e52fafb
+* Fix retrying of file validation
+* Security Fixes
+
+### UI: f42dac1
+* Remove unnecessary logging
+* Added link to project view from the submission view
+
+
 # Staging 2019/09/09
 
 ## Secondary Analysis
@@ -9,6 +69,7 @@
 
 ### Skylab: optimus_v1.3.5
 * Increase memory for GeneSortBam, CellSortBam, CalculateCellMetrics and CorrectUMItools
+
 
 # Staging 2019/09/04
 
@@ -27,7 +88,7 @@
 *  e8df9a9 Fix type checker warnings (PR #1235)
 
 ## Metadata Schema
-### Version(s): 
+### Version(s):
 * biomaterial_core.json - v8.2.0
 * specimen_from_organism.json - v10.4.0
 * cell_suspension.json - v13.3.0
@@ -39,6 +100,20 @@
 ### Functionality:
 * Changed RegEx pattern matching for version_number on biomaterial_core to be less loose.
 * Changed RegEx pattern matching for insdc_sample_accession to avoid matching "|" on first character.
+
+# Staging 2019/09/02 (hotfix)
+## Ingest
+## Version(s)
+### Core (v0.10.0)
+* Added persistence support for keeping track of staged metadata files
+* Submission Errors Repository
+### Exporter (v0.9.0)
+* Modified file staging mechanism to address file staging issues.
+* Broker (v0.10.0)
+* Updated error message handling.
+### UI (v0.11.0)
+Added support for new error message operations.
+
 
 # Staging 2019/08/29
 ## Azul
@@ -67,7 +142,7 @@
 * Update Optimus subscription to match human or mouse data
 * Add query for single-end SS2 bundles
 * Subscription query migration from ElasticSearch to JMESPath
- 
+
 ### Pipeline-tools v0.56.3
 * Remove data file checkout when only retrieving bundle metadata
 * Remove max_retries parameter from adapter WDLs so that it can be set by the workflow options file

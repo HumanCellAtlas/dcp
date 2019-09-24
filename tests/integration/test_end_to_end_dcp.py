@@ -3,21 +3,27 @@
 import os
 import re
 import unittest
+import requests
 
+from ingest.importer.submission import Submission
+
+from tests.wait_for import WaitFor
 from ..utils import Progress, Timeout
+from ..cloudwatch_handler import CloudwatchHandler
 from ..data_store_agent import DataStoreAgent
 from ..dataset_fixture import DatasetFixture
 from ..dataset_runner import DatasetRunner
 
+cloudwatch_handler = CloudwatchHandler()
 DEPLOYMENTS = ('dev', 'staging', 'integration', 'prod')
 
 
 class TestEndToEndDCP(unittest.TestCase):
 
     def setUp(self):
-        self.deployment = os.environ.get('CI_COMMIT_REF_NAME', None)
+        self.deployment = os.environ.get('DEPLOYMENT_ENV', None)
         if self.deployment not in DEPLOYMENTS:
-            raise RuntimeError(f"CI_COMMIT_REF_NAME environment variable must be one of {DEPLOYMENTS}")
+            raise RuntimeError(f"DEPLOYMENT_ENV environment variable must be one of {DEPLOYMENTS}")
         self.data_store = DataStoreAgent(deployment=self.deployment)
 
     def ingest_store_and_analyze_dataset(self, runner, dataset_fixture):
@@ -102,23 +108,109 @@ class TestSmartSeq2Run(TestEndToEndDCP):
     ]
 
     def test_smartseq2_run(self):
-        runner = DatasetRunner(deployment=self.deployment)
+        self._run_end_to_end_test_template(post_condition=self._assert_bundle_creation_succeeded)
 
-        with Timeout(110 * 60) as to:  # timeout after 1 hour and 50 minutes
+    def _assert_bundle_creation_succeeded(self, runner, *args, **kwargs):
+        self.assertEqual(1, len(runner.primary_bundle_uuids))
+        self.assertEqual(1, len(runner.secondary_bundle_uuids))
+        expected_files = self.expected_results_bundle_files(runner.primary_bundle_uuids[0],
+                                                            self.SS2_ANALYSIS_OUTPUT_FILES_REGEXES)
+        results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuids[0])
+        self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
+
+    def test_update(self):
+        self._run_end_to_end_test_template(post_condition=self._run_update_test)
+
+    def _run_update_test(self, runner, *args, **kwargs):
+        # given:
+        original_submission = runner.submission_envelope
+        update_submission = runner.ingest_api.new_submission(is_update=True)
+        Progress.report(f'Update submission id: {update_submission.envelope_id}')
+        self._update_biomaterials(original_submission, update_submission)
+
+        # when:
+        Progress.report('Checking validation status of update submission...')
+        WaitFor(update_submission.check_validation).to_return_value(True)
+
+        # then:
+        update_bundle_uuids = self._complete_submission(update_submission)
+        Progress.report(f'Bundle UUIDs {update_bundle_uuids}.')
+
+        self.analysis_agent = runner.analysis_agent
+        self.primary_bundle = runner.primary_bundle_uuids[0]
+        self.analysis_workflow_set = set([])
+        self.expected_update_workflow_count = 1
+        self._wait_for_analysis_workflows()
+
+    @staticmethod
+    def _update_biomaterials(original_submission, update_submission):
+        biomaterials = original_submission.metadata_documents('biomaterial')
+        for biomaterial in biomaterials:
+            content = biomaterial['content']
+            name = content['biomaterial_core']['biomaterial_name']
+            updated_name = f'UPDATED {name}'
+            content['biomaterial_core']['biomaterial_name'] = updated_name
+            original_uuid = biomaterial["uuid"]["uuid"]
+            update_submission.add_biomaterial(content, update_target_uuid=original_uuid)
+
+    @staticmethod
+    def _complete_submission(update_submission):
+        Progress.report('Completing update submission...')
+        update_submission.complete()
+        WaitFor(update_submission.bundles).to_return_any_value()
+        update_bundle_uuids = update_submission.bundles()
+        Progress.report(f'Updated bundles {update_bundle_uuids}')
+        return update_bundle_uuids
+
+    def _wait_for_analysis_workflows(self):
+        if not self.analysis_agent:
+            Progress.report("NO CREDENTIALS PROVIDED FOR ANALYSIS AGENT, SKIPPING WORKFLOW(s) CHECK...")
+        else:
+            Progress.report("WAITING FOR UPDATED ANALYSIS WORKFLOW(s) TO ABORT...")
+            WaitFor(
+                self._count_aborted_analysis_workflows_and_report
+            ).to_return_value(value=self.expected_update_workflow_count)
+
+    def _count_aborted_analysis_workflows_and_report(self):
+        if self._aborted_analysis_workflows_count() < self.expected_update_workflow_count:
+            self._count_analysis_workflows()
+        Progress.report("  aborted analysis workflows: {}/{}".format(
+            self._aborted_analysis_workflows_count(),
+            self.expected_update_workflow_count
+        ))
+        return self._aborted_analysis_workflows_count()
+
+    def _count_analysis_workflows(self):
+        with self.analysis_agent.ignore_logging_msg():
+            try:
+                workflows = self.analysis_agent.query_by_bundle(self.primary_bundle)
+                self.analysis_workflow_set.update(workflows)
+            except requests.exceptions.HTTPError:
+                pass
+
+    def _aborted_analysis_workflows_count(self):
+        return len(
+            list(filter(lambda wf: wf.status in ('Aborting', 'Aborted'), self.analysis_workflow_set))
+        )
+
+    def _run_end_to_end_test_template(self, test_runner=None, post_condition=None):
+        cloudwatch_handler.put_metric_data('dcp-ss2-test-invocation', 1)
+        runner = test_runner if test_runner else DatasetRunner(deployment=self.deployment)
+        _1_hr_50_min = 110 * 60
+        with Timeout(_1_hr_50_min) as time_limit:
             try:
                 self.ingest_store_and_analyze_dataset(runner, dataset_fixture='Smart-seq2')
-                self.assertEqual(1, len(runner.primary_bundle_uuids))
-                self.assertEqual(1, len(runner.secondary_bundle_uuids))
-                expected_files = self.expected_results_bundle_files(runner.primary_bundle_uuids[0],
-                                                                    self.SS2_ANALYSIS_OUTPUT_FILES_REGEXES)
-                results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuids[0])
-    
-                self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
+                if post_condition:
+                    post_condition(runner)
+            except:
+                cloudwatch_handler.put_metric_data('dcp-ss2-test-failure', 1)
+                raise
             finally:
                 runner.cleanup_primary_and_result_bundles()
 
-        if to.did_timeout:
+        if time_limit.did_timeout:
             runner.cleanup_analysis_workflows()
+            cloudwatch_handler.put_metric_data('dcp-ss2-test-failure', 1)
             raise TimeoutError("test timed out")
 
 
@@ -172,10 +264,9 @@ class TestOptimusRun(TestEndToEndDCP):
         re.compile('^.+zarr!expression_matrix!gene_metadata_numeric_name!0$')
     ]
 
-
     def test_optimus_run(self):
+        cloudwatch_handler.put_metric_data('dcp-optimus-test-invocation', 1)
         runner = DatasetRunner(deployment=self.deployment)
-
         with Timeout(240 * 60) as to:  # timeout after 4hrs (less than the Gitlab runner setting) to allow for test cleanup
             try:
                 self.ingest_store_and_analyze_dataset(runner, dataset_fixture='optimus')
@@ -186,11 +277,15 @@ class TestOptimusRun(TestEndToEndDCP):
                 results_bundle_manifest = self.data_store.bundle_manifest(runner.secondary_bundle_uuids[0])
 
                 self.check_manifest_contains_exactly_these_files(results_bundle_manifest, expected_files)
+            except:
+                cloudwatch_handler.put_metric_data('dcp-optimus-test-failure', 1)
+                raise
             finally:
                 runner.cleanup_primary_and_result_bundles()
 
         if to.did_timeout:
             runner.cleanup_analysis_workflows()
+            cloudwatch_handler.put_metric_data('dcp-optimus-test-failure', 1)
             raise TimeoutError("test timed out")
 
 
