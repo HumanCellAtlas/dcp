@@ -6,6 +6,8 @@
 ## Secondary Analysis
 ## Version(s): N/A
 
+* Update subscription queries to specify latest metadata versions and trigger analysis off of ingested datasets (not just testing data).
+
 ## Data Store
 ## Version: fbb073543290082aab4f2950c5a71858bde4ba4f
 
