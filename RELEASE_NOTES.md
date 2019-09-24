@@ -1,6 +1,41 @@
 # Release Notes
 
 <!-- newest release at the top please) -->
+# 2019/09/24 Prod Release Notes
+
+## Secondary Analysis
+## Version(s): N/A
+
+* Update subscription queries to specify latest metadata versions and trigger analysis off of ingested datasets (not just testing data).
+
+## Data Store
+## Version: fbb073543290082aab4f2950c5a71858bde4ba4f
+
+* fbb0735 - (tag: 2019-09-18-15-32-10-staging.release, tag: 2019-09-09-14-43-05-integration.release, origin/staging) Adding a document to explain the action and resource relationship for… (#2395) (3 weeks ago)
+* fa24dd1 - (origin/master-copy) Requirements Update (#2410) (4 weeks ago)
+* 2263c9e - Increase dss notify workers. (#2408) (4 weeks ago)
+* 4a3416b - Revert "Bump httpie from 1.0.2 to 1.0.3 (#2397)" (#2401) (4 weeks ago)
+* ef3476b - Bump httpie from 1.0.2 to 1.0.3 (#2397) (4 weeks ago)
+* 71957eb - Fix flaky test: TestFileApi.test_file_get_checkout . (#2396) (4 weeks ago)
+
+## Azul
+## Version(s): 4b9cacd802e0233a43add740614e8d2618d8f912
+
+* 367099f Remove prefix for 'integration' integration test (#1282, PR #1285)
+* 4b265f4 Generalise aggregation field translations (#1191, PR #1246)
+* 4f1fb84 Tweak README instructions for determining when to reindex (PR #1267)
+* 74690a1 Quote file name in Content-Disposition header of full manifests (#1247, PR #1261)
+* 150332c Remove BFG redaction from TruffleHog and gitsecrets config (#1194, PR #1263)
+* b0f8367 Document fix for hung test containers on Gitlab (PR #1258)
+* 8ddf31f Change DOS URIs to use `drs` scheme (#1252, PR #1255)
+* a7f73b6 Display Swagger UI with docs from app.py (#1163, PR #1227)
+* 2df1946 Improve automation of PR branch squashing (#1245, PR #1254)
+* 9390d46 Assorted README changes (PR #1250)
+* 65abdda Make request config a plugin method (#1234)
+* cbe399a Update changelog generation command in README (PR #1236)
+* 433c03a Clarify contribution guidelines on logging and string interpolation (PR #1239)
+* 2d2138e Hotfix: Quote file name in CD header of full manifests (#1266, PR #1268)
+* b3a2852 Quote file name in Content-Disposition header of full manifests (#1247)
 
 # 2019/09/13 Hotfix Release Notes
 ## Ingest
