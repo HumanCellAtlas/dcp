@@ -60,7 +60,7 @@
 * Added link to project view from the submission view
 
 
-# Staging 2019/09/09
+# Staging 2019/09/09 (hotfix)
 
 ## Secondary Analysis
 ### Pipeline-tools: v0.56.6
