@@ -1,5 +1,44 @@
 # Release Notes
 
+# Staging 2019/09/25
+## Ingest
+## Version(s):
+
+* Core: v0.11.0.rc
+* Removed un-needed internal message reorder buffers
+* Security patches
+
+* Broker: v0.11.0.rc
+* Pinning schemas in saved spreadsheets to ensure that updates spreadsheets are parsed as they were when originally submitted
+* Raising errors when encountering unexpected spreadsheet columns instead of ignoring
+
+* Exporter: v0.9.1.rc
+* Client libs ++
+
+* UI: v0.12.0
+* Using submission UUIDs instead of db primary key IDs in submission views
+* Travis tests, docker builds, + github badges
+* Project list view filters test submissions/projects by default
+* Security patches
+
+## Data Store
+## Version: 4b10ceea51249995cbe89ba9f109dcb980188a01
+
+* 4b10cee - (HEAD -> integration, origin/integration) Fix signature in daemons/dss-notify-v2/app.py (#2449) (25 hours ago)
+* 8910328 - Define the API to retrieve and playback events (#2435) (25 hours ago)
+* 8ba6787 - Use the flash-flood library to record bundle events (#2434) (4 days ago)
+* 91a381d - Define the bucket hosting DSS event data (#2433) (5 days ago)
+* 9b69d3d - Add SSM parameter store functionality to dss-ops (#2432) (6 days ago)
+* fa26b6d - Add response-content-disposition to GET /file. (#2371) (7 days ago)
+* f8ffee9 - Bump cloud-blobstore version to 3.2.0. (#2431) (7 days ago)
+* c6b42d7 - Bump httpie from 1.0.2 to 1.0.3 (closes #2404) (7 days ago)
+* 68784a6 - forgot to fix this endpoint here too (#2430) (8 days ago)
+* 9c74f3b - DSS SmokeTest: Test Order (#2428) (8 days ago)
+* acdb110 - Bundle: enumeration (#2318) (8 days ago)
+* 561cfb3 - [easy] Add file-type and file-size for ttfb fetching. (#2425) (11 days ago)
+* 4d85a89 - update terraform in docker file (#2424) (11 days ago)
+
+
 # Staging 2019/09/18
 ## Ingest
 ## Version(s):
