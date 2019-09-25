@@ -4,22 +4,8 @@
 ## Ingest
 ## Version(s):
 
-* Core: v0.11.0.rc
-* Removed un-needed internal message reorder buffers
-* Security patches
-
 * Broker: v0.11.0.rc
-* Pinning schemas in saved spreadsheets to ensure that updates spreadsheets are parsed as they were when originally submitted
 * Raising errors when encountering unexpected spreadsheet columns instead of ignoring
-
-* Exporter: v0.9.1.rc
-* Client libs ++
-
-* UI: v0.12.0
-* Using submission UUIDs instead of db primary key IDs in submission views
-* Travis tests, docker builds, + github badges
-* Project list view filters test submissions/projects by default
-* Security patches
 
 ## Data Store
 ## Version: 4b10ceea51249995cbe89ba9f109dcb980188a01
