@@ -36,6 +36,7 @@ dcp_wide_test_optimus:
 
 find_test_bundles:
   stage: find_test_bundles
+  when: on_failure
   only:
     - prod
   script:
@@ -43,7 +44,7 @@ find_test_bundles:
 
 tombstone_test_bundles:
   stage: cleanup_test_bundles
-  when: manual
+  when: on_failure
   only:
     - prod
   script:
