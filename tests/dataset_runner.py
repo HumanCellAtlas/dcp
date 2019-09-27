@@ -102,7 +102,6 @@ class DatasetRunner:
                 self.wait_for_secondary_bundles()
 
             self.assert_data_browser_bundles()
-            self.retrieve_loom_output_from_matrix_service()
 
         if self.failure_reason:
             raise RuntimeError(self.failure_reason)
@@ -447,8 +446,14 @@ class DatasetRunner:
             self._assert_workflows_are_terminated, ongoing_workflows
         ).to_return_value(True)
 
+    def retrieve_zarr_output_from_matrix_service(self):
+        request_id = self.matrix_agent.post_matrix_request(self.secondary_bundle_fqids)
+        WaitFor(
+            self.matrix_agent.get_matrix_request, request_id
+        ).to_return_value(value="Complete")
+
     def retrieve_loom_output_from_matrix_service(self):
         request_id = self.matrix_agent.post_matrix_request(self.secondary_bundle_fqids, "loom")
         WaitFor(
             self.matrix_agent.get_matrix_request, request_id
-        ).to_return_value(value="Complete", timeout_seconds=600)
+        ).to_return_value(value="Complete")
