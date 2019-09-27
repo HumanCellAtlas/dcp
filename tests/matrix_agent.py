@@ -1,4 +1,5 @@
 import requests
+from urllib3 import Retry
 import json
 
 from .utils import Progress
@@ -17,10 +18,18 @@ class MatrixAgent:
         self.headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
 
     def post_matrix_request(self, bundle_fqids, format="loom"):
-        data = {
-            'filter': self._generate_request_filter(bundle_fqids),
-            'format': format
+        data = {}
+        data['filter'] = {
+            'op': "or",
+            'value': [
+                {
+                    'op': "=",
+                    'field': "dss_bundle_fqid",
+                    'value': bundle_fqid
+                } for bundle_fqid in bundle_fqids
+            ]
         }
+        data['format'] = format
         response = requests.post(f"{self.service_url}/matrix",
                                  data=json.dumps(data),
                                  headers=self.headers)
@@ -35,25 +44,3 @@ class MatrixAgent:
         data = response.json()
         status = data["status"]
         return status
-
-    @staticmethod
-    def _generate_request_filter(bundle_fqids):
-        assert bundle_fqids
-
-        if len(bundle_fqids) == 1:
-            return {
-                'op': "=",
-                'field': "dss_bundle_fqid",
-                'value': bundle_fqids[0]
-            }
-        else:
-            return {
-                'op': "or",
-                'value': [
-                    {
-                        'op': "=",
-                        'field': "dss_bundle_fqid",
-                        'value': bundle_fqid
-                    } for bundle_fqid in bundle_fqids
-                ]
-            }
