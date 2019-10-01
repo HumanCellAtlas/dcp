@@ -2,13 +2,12 @@ image: python:3.6
 
 stages:
   - dcp_wide_test
-  - 1000_cell_test
-  - 100_cell_test
 
 before_script:
   - apt-get -y update
   - apt-get -y install jq
   - pip install -r requirements.txt
+  - export CI_COMMIT_REF_NAME=integration
   - export DEPLOYMENT_ENV=$CI_COMMIT_REF_NAME
   - export AWS_DEFAULT_REGION=us-east-1
   - export SWAGGER_URL="https://dss.$DEPLOYMENT_ENV.data.humancellatlas.org/v1/swagger.json"
@@ -43,3 +42,10 @@ dcp_wide_test_optimus:
     - staging
   script:
     - python -m unittest tests.integration.test_end_to_end_dcp.TestOptimusRun.test_optimus_run
+
+dcp_wide_ss2_scale_test_4000:
+  stage: dcp_wide_test
+  only:
+    - scale-out-spreadsheet-and-files
+  script:
+    CI_COMMIT_REF_NAME=integration DEPLOYMENT_STAGE=integration python -m unittest tests.scale.test_big_bundles.TestBigBundles.test_one_submission_with_4000_bundles

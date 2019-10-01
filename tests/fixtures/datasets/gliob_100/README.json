@@ -1,5 +1,0 @@
-{
-  "data_files_location": "s3://org-humancellatlas-dcp-test-data/gliob_100/",
-  "spreadsheet_location": "https://raw.github.com/HumanCellAtlas/metadata-schema/DEPLOYMENT/infrastructure_testing_files/current/dcp_scale_test_metadata_100_glioblastoma_cells.xlsx",
-  "expected_bundle_count": 100
-}
