@@ -5,6 +5,7 @@ import subprocess
 
 from urllib.parse import urlparse
 from datetime import datetime
+from jsonschema import validate
 import boto3
 
 from .azul_agent import AzulAgent
@@ -98,6 +99,7 @@ class DatasetRunner:
             else:
                 # == Non-scaling Logic ==
                 self.wait_for_primary_bundles()
+                self.assert_valid_schema_versions_in_provenance()
                 self.wait_for_analysis_workflows()
                 self.wait_for_secondary_bundles()
 
@@ -228,6 +230,20 @@ class DatasetRunner:
         if primary_bundles_count != self.expected_bundle_count:
             raise RuntimeError(f'Expected {self.expected_bundle_count} primary bundles, but only '
                                f'got {primary_bundles_count}')
+
+    def assert_valid_schema_versions_in_provenance(self):
+        primary_bundles = [self.data_store.bundle_manifest(bundle_uuid, "aws") for bundle_uuid in self.submission_envelope.bundles()]
+
+        metadata_files = []
+        for bundle in primary_bundles:
+            metadata_file_manifests = filter(lambda file: "metadata" in file["content-type"], bundle["bundle"]["files"])
+            metadata_files.extend([self.data_store.get_file(file["uuid"], "aws") for file in metadata_file_manifests])
+
+        for metadata_file in metadata_files:
+            schema_url = metadata_file["describedBy"]
+            schema = requests.get(schema_url).json()
+            validate(metadata_file, schema=schema)
+
 
     def wait_for_analysis_workflows(self):
         if not self.analysis_agent:
