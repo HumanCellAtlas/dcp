@@ -1,6 +1,35 @@
 # Release Notes
 
 <!-- newest release at the top please) -->
+# 2019/10/02 Prod Release Notes
+
+## Ingest
+##Version(s):
+###Broker v0.10.1
+* Fix linking
+###Validator v0.6.8
+* Fix retrying of file validation
+* Security Fixes
+###UI v0.11.1
+* Remove unnecessary logging
+* Added link to project view from the submission view
+
+## Data Store
+##Version: 4b10ceea51249995cbe89ba9f109dcb980188a01
+* 4b10cee - (tag: 2019-09-25-17-08-46-staging.release, origin/staging, origin/integration) Fix signature in daemons/dss-notify-v2/app.py (#2449) (7 days ago)
+* 8910328 - Define the API to retrieve and playback events (#2435) (7 days ago)
+* 8ba6787 - Use the flash-flood library to record bundle events (#2434) (10 days ago)
+* 91a381d - Define the bucket hosting DSS event data (#2433) (10 days ago)
+* 9b69d3d - Add SSM parameter store functionality to dss-ops (#2432) (12 days ago)
+* fa26b6d - Add response-content-disposition to GET /file. (#2371) (13 days ago)
+* f8ffee9 - Bump cloud-blobstore version to 3.2.0. (#2431) (13 days ago)
+* c6b42d7 - Bump httpie from 1.0.2 to 1.0.3 (closes #2404) (13 days ago)
+* 68784a6 - forgot to fix this endpoint here too (#2430) (13 days ago)
+* 9c74f3b - DSS SmokeTest: Test Order (#2428) (2 weeks ago)
+* acdb110 - Bundle: enumeration (#2318) (2 weeks ago)
+* 561cfb3 - [easy] Add file-type and file-size for ttfb fetching. (#2425) (2 weeks ago)
+* 4d85a89 - update terraform in docker file (#2424) (2 weeks ago)
+
 # 2019/09/24 Prod Release Notes
 
 ## Secondary Analysis
