@@ -4,7 +4,6 @@
 # 2019/10/02 Prod Release Notes
 
 ## Ingest
-## Version(s):
 ### Broker v0.10.1
 * Fix linking
 ### Validator v0.6.8
@@ -15,7 +14,7 @@
 * Added link to project view from the submission view
 
 ## Data Store
-## Version: 4b10ceea51249995cbe89ba9f109dcb980188a01
+### Version: 4b10ceea51249995cbe89ba9f109dcb980188a01
 * 4b10cee - (tag: 2019-09-25-17-08-46-staging.release, origin/staging, origin/integration) Fix signature in daemons/dss-notify-v2/app.py (#2449) (7 days ago)
 * 8910328 - Define the API to retrieve and playback events (#2435) (7 days ago)
 * 8ba6787 - Use the flash-flood library to record bundle events (#2434) (10 days ago)
