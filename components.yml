@@ -23,11 +23,11 @@ deployed_component_versions:
       tenx: optimus_v1.3.5
   ingest:
     ingest-accessioner: v0.5.0
-    ingest-broker: v0.10.0
+    ingest-broker: v0.10.1
     ingest-core: c54cf190
     ingest-exporter: 311950c
     ingest-staging-manager: v0.5.4
     ingest-state-tracking: v0.7.5
-    ingest-validator: v0.6.7
-    ingest-ui: v0.11.0
-  data-store: fbb073543290082aab4f2950c5a71858bde4ba4f
+    ingest-validator: v0.6.8
+    ingest-ui: v0.11.1
+  data-store: 4b10ceea51249995cbe89ba9f109dcb980188a01
