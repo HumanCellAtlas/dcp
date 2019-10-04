@@ -1,5 +1,37 @@
 # Release Notes
 
+# Staging 2019/10/03
+##Ingest
+###Version(s):
+
+### Broker (8d62167)
+* List of parsing errors
+* Pinned schema version in submitted spreadsheets
+### UI (afd4397)
+* Security fixes
+* Hide spreadsheet upload component while loading submission
+
+## Azul
+### Version(s): 5b0a3a7969c0ea4fc1fc417d4b84dbed7877cada
+* bb61965 Fix broken log messages in MiniDSS (PR #1328)
+* f6e7794 Update portal integration UUIDs (#1324, PR #1327)
+* a2f9817 Add tests of request logging (#1079, PR #1301)
+* 408c337 Archive artifacts from secrets clean-up with BFG (#1194, PR #1308)
+* b156985  Add `GET /integrations` API endpoint (#1243, PR #1288)
+* 491c2a6 Add generic request/response logging (#1079, PR #1281)
+* 719dbda Add script for copying bundle between DSS instances (#386)
+* 45eb222 Modify work-around for zarray files (#1302, PR #1304)
+* 08b78f3 Fix bugs in apidev.py script (#1291, PR #1296)
+* 74d2dee More type checker fixes (PR #1294)
+* 574742f Explain deploying for apidev.py docs (#1292)
+* a696d76 Switch sandbox and dev to DSS integration (#1282, #1311)
+* 4fe28c3 Added assertion to validate full manifest file name (#1283, PR #1293)
+* 2545676 Automatically provision Azul/DB health checks in DCP-wide composite #(1150, PR #1150)
+* d3dc27e Validate request parameters (#840, #240, PR #1135) 
+* 2fdb8f3 Backport hotfix for #1282 to develop (PR #1287)
+* d100202 Change BDBag column header names from `dos` to `drs` (#1279, PR #1280)  
+* d3562ff Add Github action for labeling new issues `orange`
+
 # Staging 2019/09/25
 ## Ingest
 ## Version(s):
