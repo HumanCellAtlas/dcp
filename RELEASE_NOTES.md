@@ -1,8 +1,8 @@
 # Release Notes
 
 # Staging 2019/10/03
-##Ingest
-###Version(s):
+## Ingest
+### Version(s):
 
 ### Broker (8d62167)
 * List of parsing errors
