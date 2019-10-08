@@ -1,6 +1,36 @@
 # Release Notes
 
 <!-- newest release at the top please) -->
+# 2019/10/08 Prod Release Notes
+## Ingest
+### Broker (8d62167)
+* Return list of parsing errors
+* Pinned schema version in submitted spreadsheets
+### UI (afd4397)
+* Security fixes
+* Hide spreadsheet upload component while loading submission
+* Hide Integration Tests from Project List
+
+## Azul
+### Version(s): 077b4e033a7bc834f785afd398786906b23b7c61
+* bb61965f Fix broken log messages in MiniDSS (PR #1328)
+* f6e77949 Update portal integration UUIDs (#1324, PR #1327)
+* a2f9817c Add tests of request logging (#1079, PR #1301)
+* 408c3374 Archive artifacts from secrets clean-up with BFG (#1194, PR #1308)
+* b1569858  Add `GET /integrations` API endpoint (#1243, PR #1288)
+* 491c2a65 Add generic request/response logging (#1079, PR #1281)
+* 719dbda1 Add script for copying bundle between DSS instances (#386)
+* 45eb2228 Modify work-around for zarray files (#1302, PR #1304)
+* 08b78f35 Fix bugs in apidev.py script (#1291, PR #1296)
+* 74d2dee4 More type checker fixes (PR #1294)
+* 574742fd Explain deploying for apidev.py docs (#1292)
+* a696d76c Switch sandbox and dev to DSS integration (#1282, #1311)
+* 4fe28c39 Added assertion to validate full manifest file name (#1283, PR #1293)
+* 2545676b Automatically provision Azul/DB health checks in DCP-wide composite #(1150, PR #1150)
+* d3dc27ef Validate request parameters (#840, #240, PR #1135)
+* 2fdb8f3d Backport hotfix for #1282 to develop (PR #1287)
+* d1002020 Change BDBag column header names from `dos` to `drs` (#1279, PR #1280)
+
 # 2019/10/02 Prod Release Notes
 
 ## Ingest
