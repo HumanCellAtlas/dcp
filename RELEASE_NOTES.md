@@ -98,14 +98,14 @@
 # 2019/09/13 Hotfix Release Notes
 ## Ingest
 ## Version(s)
-### Core: c54cf190
+### Core: v0.10.1
 * Tracking uuid of staged metadata files
 * Handling bundle manifest null fields
 * Logging unhandled exporting exceptions
 * Updated primary submission documentation
 
-### Exporter: 311950c
-* Fix simple updates issue when staging shar    ed metadata files among bundles
+### Exporter: v0.10.0
+* Fix simple updates issue when staging shared metadata files among bundles
 
 # 2019/09/11 Hotfix Release Notes
 ## Secondary Analysis
