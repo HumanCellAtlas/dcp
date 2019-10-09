@@ -32,10 +32,10 @@
 * Add the ability to disable call-caching in the prep task using a timestamp parameter
 * Remove file format input parameter (moved into the pipeline-tools code)
 * Migrate the following existing adapter pipelines and associated inputs from the pipeline-tools repo:
-- optimus
-- cellranger
-- smartseq2-paired-end
-- smartseq2-single-end
+   *  optimus
+   *  cellranger
+   *  smartseq2-paired-end
+   *  smartseq2-single-end
 * Migrate the submit pipeline from the pipeline-tools repo.
 * Add readme files for the repo and the pipelines added to the repo.
 
