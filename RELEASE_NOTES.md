@@ -3,10 +3,10 @@
 <!-- newest release at the top please) -->
 # 2019/10/08 Prod Release Notes
 ## Ingest
-### Broker (8d62167)
+### Broker v0.10.2
 * Return list of parsing errors
 * Pinned schema version in submitted spreadsheets
-### UI (afd4397)
+### UI v0.11.2
 * Security fixes
 * Hide spreadsheet upload component while loading submission
 * Hide Integration Tests from Project List
