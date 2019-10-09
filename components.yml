@@ -9,26 +9,26 @@ deployed_component_versions:
   # component-identifier: component-version
   # e.g.
   # ingest: v0.1.2
-  azul: 5b0a3a7969c0ea4fc1fc417d4b84dbed7877cada
+  azul: 38a5d8222232a2c43492ba06a70ddc10c9ba5500
   data-store: 4b10ceea51249995cbe89ba9f109dcb980188a01
   data-browser: 54e7802c85edbcdcabc8ab1ad35965d1b463f279
   data-portal: 507c03bde51c195e1e2a7a80252dcf1743002529
   secondary-analysis:
     falcon: v0.4.3
-    lira: v0.22.1
-    pipeline-tools: v0.56.6
+    lira: v0.22.3
+    adapter-pipelines: v1.1.0
     skylab:
       smartseq2: smartseq2_v2.4.0
-      optimus: v1.3.5
+      optimus: optimus_v1.3.5
   ingest:
     ingest-accesioner: v0.5.0.rc
     ingest-archiver: 0.1.1
     ingest-broker: 8d62167
-    ingest-core: c54cf190
+    ingest-core: dfdcbe0
     ingest-exporter: 311950c
     ingest-staging-manager: v0.5.4
     ingest-state-tracking: v0.7.5
-    ingest-ui: afd4397
-    ingest-validator: e52fafb
+    ingest-ui: 2e1cd40
+    ingest-validator: 9ddaeaf
   metadata-schema: http://api.ingest.staging.data.humancellatlas.org/schemas/search/latestSchemas
   upload: v4.4.4
