@@ -23,7 +23,7 @@ deployed_component_versions:
     ingest-ui: v0.5.0.rc
   secondary-analysis:
     falcon: v0.4.3
-    lira: v0.22.5
+    lira: v0.22.6
     adapter-pipelines: v1.1.0
     skylab:
       smartseq2: smartseq2_v2.4.0
