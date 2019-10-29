@@ -11,13 +11,13 @@ deployed_component_versions:
   # ingest: v0.1.2
   upload: v4.4.3
   metadata-schema: http://api.ingest.data.humancellatlas.org/schemas/search/latestSchemas
-  azul: 077b4e033a7bc834f785afd398786906b23b7c61
+  azul: 5f4994f51ee1277f7e5f278d234afd00ee89c919
   data-browser: 4f57e772d1a1a1d1ce48edcf943bd599d84fafe7
   data-portal: d03ee3cbd3299028688424620cad4f6a2cc88e3c
   secondary-analysis:
     falcon: v0.4.3
-    lira: v0.22.2
-    pipeline-tools: v0.56.6
+    lira: v0.22.3
+    pipeline-tools: v1.1.0
     skylab:
       smartseq2: smartseq2_v2.4.0
       tenx: optimus_v1.3.5

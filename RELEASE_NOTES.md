@@ -1,6 +1,40 @@
 # Release Notes
 
 <!-- newest release at the top please) -->
+# 2019/10/29 Prod Release Notes
+## Secondary Analysis
+### Version(s): 
+#### Lira: v0.22.2 -> v0.22.3
+* Write the timestamp to inputs for adapters
+* Update the SmartSeq2 query to match mouse data and remove the unnecessary "should" clause
+* Update testing data to reflect moving adapter pipelines into a new repo
+* Update scripts that get/create/delete DSS subscriptions to use elasticsearch as the default query type
+* Turn on subscriptions for mouse ss2 and mouse 10x data.
+
+#### pipeline-tools: v0.56.6 -> v1.1.0
+* Migrate the following existing adapter pipelines and associated inputs from the pipeline-tools repo:
+optimus
+* cellranger
+* smartseq2-paired-end
+* smartseq2-single-end
+* Migrate the submit pipeline from the pipeline-tools repo.
+* Add readme files for the repo and the pipelines added to the repo.
+* Add the ability to disable call-caching in the prep task using a timestamp parameter
+* Remove file format input parameter (moved into the pipeline-tools code)
+
+## Azul
+### Version(s): 5f4994f51ee1277f7e5f278d234afd00ee89c919
+* 58d3124d Fix deployment destruction, make example use DSS integration (#1334, PR #1336)
+* ba4f1a39 Remove `reindex.py --sync` and suppress deletions in TEST_MODE (#1276, PR #1310)
+* 70703f27 Monitor latency for Azul health checks (#1151, PR #1321)
+* 9805f3d5 Ensure tearDown runs when tests are cancelled (#1298, PR #1300)
+* 0d1f0330 Cache health check response to reduce service load (#1224, PR #1297)
+* b263edaf Prevent signature expiration in copy bundles script (#1325, PR #1326)
+* 572d62c9 Fix: CloudWatch Alarm resolution does show up on Slack (#1233, PR #1322)
+* 5b80bff6 Rename `tsv` format to `compact` & `bdbag` to `terra.bdbag` (#1086, PR #1306)
+* 207f1963 Fix: DSS staging bucket swap (PR #1331)
+
+
 # 2019/10/08 Prod Release Notes
 ## Ingest
 ### Broker v0.10.2
