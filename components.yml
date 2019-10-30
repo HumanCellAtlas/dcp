@@ -9,13 +9,13 @@ deployed_component_versions:
   # component-identifier: component-version
   # e.g.
   # ingest: v0.1.2
-  azul: 38a5d8222232a2c43492ba06a70ddc10c9ba5500
+  azul: aa37d092448782225ee792720bc0dfb290eaeaf3
   data-store: 4b10ceea51249995cbe89ba9f109dcb980188a01
   data-browser: 54e7802c85edbcdcabc8ab1ad35965d1b463f279
   data-portal: 507c03bde51c195e1e2a7a80252dcf1743002529
   secondary-analysis:
     falcon: v0.4.3
-    lira: v0.22.3
+    lira: v0.22.6
     adapter-pipelines: v1.1.0
     skylab:
       smartseq2: smartseq2_v2.4.0
