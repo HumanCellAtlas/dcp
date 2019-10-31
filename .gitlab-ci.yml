@@ -10,7 +10,7 @@ before_script:
   - apt-get -y update
   - apt-get -y install jq
   - pip install -r requirements.txt
-  - export DEPLOYMENT_ENV="integration"
+  - export DEPLOYMENT_ENV=$CI_COMMIT_REF_NAME
   - export AWS_DEFAULT_REGION=us-east-1
   - export SWAGGER_URL="https://dss.$DEPLOYMENT_ENV.data.humancellatlas.org/v1/swagger.json"
   - mkdir -p ~/.config/hca
@@ -34,7 +34,6 @@ dcp_wide_test_metadata_update:
   only:
     - integration
     - staging
-    - aa_download_update_spreadsheet
   script:
     - python -m unittest tests.integration.test_end_to_end_dcp.TestSmartSeq2Run.test_update
 
