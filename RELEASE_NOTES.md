@@ -1,6 +1,47 @@
 # Release Notes
 
 <!-- newest release at the top please) -->
+# 2019/11/05 Prod Release Notes
+## Ingest
+### Version(s):
+#### UI v0.11.3
+* Security fixes
+#### Exporter v0.10.1
+* Pointing to latest ingest client version which is using new SchemaTemplate & SchemaParser
+#### Staging Manager v0.5.5
+* Pointing to latest ingest client version which is using new SchemaTemplate & SchemaParser
+#### Validator v0.6.9
+* Return INVALID ValidationReport when describedBy schema can't be retrieved
+
+## Secondary Analysis
+### Lira: v0.22.3 -> v0.22.6
+* Pass pipeline version from the Lira config to the workflow inputs
+* Add monitoring image from the Lira config to the workflow options (if defined)
+* Fix monitoring image set-up to record workflow metadata in BigQuery
+* Fix path to final workflow log directory
+
+## Azul
+### Version: 77e059d62a314db11d4af9818db8929fe0dbfb81 
+* cae54095 Fully qualify dynamodb-local image reference (#1380, PR #1381)
+* 3788b6a5 Add -U to `pip` invocation in README (PR #1375)
+* c52d4918 Remove SCEA E-EHCA-1 portal integration (#1372, PR #1373)
+* 7d521adf Remove SCP495 study from portals db (#1360, PR #1362)
+* f5ad4bdb Improve deployment cleanup process (#1303, PR #1307)
+* f0db7c71 Refactor DSS client creation; upgrade metadata-api (#1365, PR #1366)
+* 7e977eea Add entity_ids param to integrations endpoint (#1318, PR # 1329)
+* 405d79da Add azul.dss to doctests (PR #1363)
+* d084b147 Enforce source code formatting rules (#1358, PR #1359)
+* 7e317af0 Enforce pep8 (#1355, PR #1356)
+* 460cb781 Rename local_integration_test to integration_test (#1348, PR #1351)
+* 5c8eeb51 Add Xena portal integrations (#1345, PR #1346)
+* bb892538 Generate release notes with script (PR #1349)
+* b67bb4f1 [r] Include fields that allow CLI downloads for full manifest (#1273, PR #1343)
+* f183e9d5 Format OpenAPI spec JSON for apidev.py (PR #1341)
+* 34f465a9 Update SCEA portal details (#1337, PR #1339)
+* f2cd57e1 Limit 'size' parameter to 1000 or less (#1257, PR #1323)
+* f35c804f Prefix TEST_MODE with AZUL_ and reduce chance of leaving it set (#1316, #1317, PR #1332)
+
+
 # 2019/10/29 Prod Release Notes
 ## Secondary Analysis
 ### Version(s): 
