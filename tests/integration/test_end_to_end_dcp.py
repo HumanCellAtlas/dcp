@@ -216,6 +216,7 @@ class TestSmartSeq2Run(TestEndToEndDCP):
                 cloudwatch_handler.put_metric_data('dcp-ss2-test-failure', 1)
                 raise
             finally:
+                raise Exception('parth test')
                 runner.cleanup_primary_and_result_bundles()
 
         if time_limit.did_timeout:

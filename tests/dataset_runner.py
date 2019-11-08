@@ -98,6 +98,7 @@ class DatasetRunner:
             else:
                 # == Non-scaling Logic ==
                 self.wait_for_primary_bundles()
+                raise Exception('parth test')
                 self.wait_for_analysis_workflows()
                 self.wait_for_secondary_bundles()
 
