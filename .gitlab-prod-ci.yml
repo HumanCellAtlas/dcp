@@ -8,7 +8,7 @@ before_script:
   - apt-get -y update
   - apt-get -y install jq
   - pip install -r requirements.txt
-  - export DEPLOYMENT_ENV=prod
+  - export CI_COMMIT_REF_NAME=prod
   - export DEPLOYMENT_ENV=$CI_COMMIT_REF_NAME
   - export AWS_DEFAULT_REGION=us-east-1
   - export SWAGGER_URL="https://dss.data.humancellatlas.org/v1/swagger.json"
