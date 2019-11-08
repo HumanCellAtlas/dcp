@@ -2,6 +2,9 @@ image: python:3.6
 
 stages:
   - dcp_wide_test
+  - 1000_cell_test
+  - 100_cell_test
+  - dcp_wide_latest_metadata
 
 before_script:
   - apt-get -y update
@@ -41,3 +44,12 @@ dcp_wide_test_optimus:
     - staging
   script:
     - python -m unittest tests.integration.test_end_to_end_dcp.TestOptimusRun.test_optimus_run
+
+dcp_wide_test_latest_metadata:
+  stage: dcp_wide_latest_metadata
+  only:
+    - integration
+    - staging
+  script:
+    - python -m unittest tests.metadata_smoketests.test_latest_metadata_schema_e2e_dcp.TestLatestMetadataSchemaE2EDcp.test_latest_metadata_smart_seq_2
+    - python -m unittest tests.metadata_smoketests.test_latest_metadata_schema_e2e_dcp.TestLatestMetadataSchemaE2EDcp.test_latest_metadata_10x

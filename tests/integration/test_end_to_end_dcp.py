@@ -3,6 +3,8 @@
 import os
 import re
 import unittest
+
+import openpyxl
 import requests
 
 from ingest.importer.submission import Submission
@@ -124,11 +126,10 @@ class TestSmartSeq2Run(TestEndToEndDCP):
     def _run_update_test(self, runner, *args, **kwargs):
         # given:
         original_submission = runner.submission_envelope
-        update_submission = runner.ingest_api.new_submission(is_update=True)
-        Progress.report(f'Update submission id: {update_submission.envelope_id}')
-        self._update_biomaterials(original_submission, update_submission)
 
         # when:
+        update_submission = self._do_update_submission(runner, original_submission)
+        Progress.report(f"UPDATE submission ID is {update_submission.envelope_id}\n")
         Progress.report('Checking validation status of update submission...')
         WaitFor(update_submission.check_validation).to_return_value(True)
 
@@ -142,16 +143,25 @@ class TestSmartSeq2Run(TestEndToEndDCP):
         self.expected_update_workflow_count = 1
         self._wait_for_analysis_workflows()
 
-    @staticmethod
-    def _update_biomaterials(original_submission, update_submission):
-        biomaterials = original_submission.metadata_documents('biomaterial')
-        for biomaterial in biomaterials:
-            content = biomaterial['content']
-            name = content['biomaterial_core']['biomaterial_name']
-            updated_name = f'UPDATED {name}'
-            content['biomaterial_core']['biomaterial_name'] = updated_name
-            original_uuid = biomaterial["uuid"]["uuid"]
-            update_submission.add_biomaterial(content, update_target_uuid=original_uuid)
+    def _do_update_submission(self, runner, original_submission):
+        update_spreadsheet_content = runner.ingest_broker.download(original_submission.uuid)
+        update_spreadsheet_filename = f'{original_submission.uuid}.xlsx'
+        update_spreadsheet_path = os.path.abspath(os.path.join(os.path.dirname(__file__), update_spreadsheet_filename))
+        with open(update_spreadsheet_path, 'wb') as f:
+            f.write(update_spreadsheet_content)
+
+        update_spreadsheet = openpyxl.load_workbook(update_spreadsheet_path)
+        project_worksheet = update_spreadsheet['Project']
+        if project_worksheet['B4'].value != "project.project_core.project_short_name":
+            raise RuntimeError("Project shortname is no longer in cell project!B4")
+        project_worksheet['B6'] = f"UPDATED {project_worksheet['B6'].value}"
+
+        update_spreadsheet.save(update_spreadsheet_path)
+
+        update_submission_id = runner.ingest_broker.upload(update_spreadsheet_path, is_update=True)
+        update_submission = runner.ingest_api.submission(update_submission_id)
+
+        return update_submission
 
     @staticmethod
     def _complete_submission(update_submission):
