@@ -1,6 +1,13 @@
 # Release Notes
 
 <!-- newest release at the top please) -->
+# 2019/11/07 Prod Release Notes
+## Ingest
+### Version(s):
+#### Ontology 1.0.11
+* New release of HCAO and EFO slim with new assay, sample enrichment and library preparation terms.
+
+
 # 2019/11/05 Prod Release Notes
 ## Ingest
 ### Version(s):

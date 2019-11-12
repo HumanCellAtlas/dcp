@@ -26,6 +26,7 @@ deployed_component_versions:
     ingest-broker: v0.10.2
     ingest-core: v0.10.1
     ingest-exporter: v0.10.1
+    ingest-ontology: 1.0.11
     ingest-staging-manager: v0.5.5
     ingest-state-tracking: v0.7.5
     ingest-validator: v0.6.9
