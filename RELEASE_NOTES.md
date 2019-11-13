@@ -1,5 +1,11 @@
 # Release Notes
 
+# Staging 2019/11/07 Release Notes
+## Ingest
+### Version(s):
+#### Ontology 1.0.11
+* New release of HCAO and EFO slim with new assay, sample enrichment and library preparation terms.
+
 # Staging 2019/10/30
 ## Secondary Analysis
 ### Lira: v0.22.3 -> v0.22.6
