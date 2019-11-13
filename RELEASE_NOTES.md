@@ -1,14 +1,12 @@
 # Release Notes
 
-# Staging 2019/11/07 Release Notes
+# Staging 2019/11/13 Release Notes
 ## Ingest
 ### Version(s):
 #### Core:
 * Deploying and Testing Mongo Migrations bump our used mongo version
 * Feature compatibility 3.4
 * Server 3.6 & Feature compatibility 3.6
-* Deployment failed the DCP staging tests 
-* 2019/11/12 Resolved by restarting the ingest core
 * Server 4.0 & Feature compatibility 4.0
 * Server 4.2 & Feature compatibility 4.2
 
