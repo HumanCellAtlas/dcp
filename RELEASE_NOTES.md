@@ -1,6 +1,12 @@
 # Release Notes
 
 <!-- newest release at the top please) -->
+# 2019/11/14 Prod Hotfix Release Notes
+## Ingest
+### Version(s):
+#### Core 0.11.0
+* Migrate internal mongo database to latest version (4.2)
+
 # 2019/11/07 Prod Release Notes
 ## Ingest
 ### Version(s):
@@ -28,7 +34,7 @@
 * Fix path to final workflow log directory
 
 ## Azul
-### Version: 77e059d62a314db11d4af9818db8929fe0dbfb81 
+### Version: 77e059d62a314db11d4af9818db8929fe0dbfb81
 * cae54095 Fully qualify dynamodb-local image reference (#1380, PR #1381)
 * 3788b6a5 Add -U to `pip` invocation in README (PR #1375)
 * c52d4918 Remove SCEA E-EHCA-1 portal integration (#1372, PR #1373)
@@ -51,7 +57,7 @@
 
 # 2019/10/29 Prod Release Notes
 ## Secondary Analysis
-### Version(s): 
+### Version(s):
 #### Lira: v0.22.2 -> v0.22.3
 * Write the timestamp to inputs for adapters
 * Update the SmartSeq2 query to match mouse data and remove the unnecessary "should" clause

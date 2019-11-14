@@ -24,7 +24,7 @@ deployed_component_versions:
   ingest:
     ingest-accessioner: v0.5.0
     ingest-broker: v0.10.2
-    ingest-core: v0.10.1
+    ingest-core: v0.11.0
     ingest-exporter: v0.10.1
     ingest-ontology: 1.0.11
     ingest-staging-manager: v0.5.5
