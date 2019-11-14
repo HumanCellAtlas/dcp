@@ -11,6 +11,7 @@ from openpyxl import load_workbook
 
 from ..dataset_fixture import DatasetFixture
 from ..dataset_runner import DatasetRunner
+from ..utils import Progress
 
 
 class TestLatestMetadataSchemaE2EDcp(unittest.TestCase):
@@ -75,27 +76,36 @@ class TestLatestMetadataSchemaE2EDcp(unittest.TestCase):
             worksheet = spreadsheet[tab]
 
             for property_column_number in range(1, worksheet.max_column + 1):
+                fully_qualified_metadata_property = worksheet.cell(row=4, column=property_column_number).value
+                property_attributes = schema_template.lookup_property_attributes_in_metadata(
+                    fully_qualified_metadata_property)
+                property_value_type = property_attributes.get('value_type')
                 description_containing_potential_example = worksheet.cell(row=3, column=property_column_number).value
 
                 # If there is an example that is suggested in the description of the property, just use that.
                 # Otherwise, generate an appropriate value based on the type information stored in the SchemaTemplate
                 # object that is passed in.
-                example_matches = re.search(r'For example: (.*)',
+                example_matches_list = re.search(r'For example: Should be one of: (\d+)(,\s*\d+)*',
+                                                 description_containing_potential_example if
+                                                 description_containing_potential_example else "")
+                example_matches = re.search(r'For example: ([^;]*)',
                                             description_containing_potential_example if
                                             description_containing_potential_example else "")
-                if example_matches:
-                    bogus_data = example_matches.group(1)
+
+                if (example_matches or example_matches_list) and property_value_type != "boolean" and \
+                        property_value_type != "integer" and \
+                        property_value_type != "number":
+                    bogus_data = example_matches_list.group(1) if example_matches_list else example_matches.group(1)
                     for row_of_bogus_data in range(6, 6 + lines_of_bogus_data):
                         worksheet.cell(row=row_of_bogus_data, column=property_column_number, value=bogus_data)
+
                 else:
-                    fully_qualified_metadata_property = worksheet.cell(row=4, column=property_column_number).value
-                    property_attributes = schema_template.lookup_property_attributes_in_metadata(
-                        fully_qualified_metadata_property)
-                    property_value_type = property_attributes.get('value_type')
                     if property_value_type == "string" and "description" in fully_qualified_metadata_property:
                         bogus_data = self.faker.sentence()
                     elif property_value_type == "string":
                         bogus_data = self.faker.text().split()[0]
+                    elif property_value_type == "boolean":
+                        bogus_data = "yes" if random.random() < 0.5 else "no"
                     elif property_value_type == "integer" or property_value_type == "number":
                         bogus_data = random.randint(1, 1000000)
                     elif "microscope" in fully_qualified_metadata_property:
@@ -143,7 +153,12 @@ class TestLatestMetadataSchemaE2EDcp(unittest.TestCase):
         """ Run the test given the fixture name which contains all pointer to data and metadata files and specify
         whether to export the bundles for downstream analysis. """
 
-        print("")
+        Progress.report("\n RUNNING LATEST METADATA SCHEMA SMOKETESTS")
         dataset = DatasetFixture(fixture_name, deployment=os.environ['CI_COMMIT_REF_NAME'])
         runner = DatasetRunner(deployment=os.environ['CI_COMMIT_REF_NAME'], export_bundles=export_bundles)
-        runner.run(dataset_fixture=dataset)
+        try:
+            runner.run(dataset_fixture=dataset)
+        except RuntimeError:
+            Progress.report("LATEST METADATA SCHEMA SMOKETESTS FAILED")
+        finally:
+            runner.cleanup_analysis_workflows()
