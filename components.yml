@@ -23,10 +23,10 @@ deployed_component_versions:
     ingest-ui: v0.5.0.rc
   secondary-analysis:
     falcon: v0.4.3
-    lira: v0.22.6
-    adapter-pipelines: v1.1.0
+    lira: v0.22.8
+    adapter-pipelines: v1.3.0
     skylab:
-      smartseq2: smartseq2_v2.4.0
-      optimus: optimus_v1.3.5
+      smartseq2: smartseq2_v2.5.0
+      optimus: optimus_v1.4.0
   data-store: integration-2018-08-15-05-55-50.release
   azul: deployed/integration/2019-05-02__19-17 aa1e0617569f77449cacdd37e59cc771522dafd8
