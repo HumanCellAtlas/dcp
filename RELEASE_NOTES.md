@@ -1,6 +1,63 @@
 # Release Notes
 
 <!-- newest release at the top please) -->
+
+# 2019/11/26 Prod Hotfix Release Notes
+
+## Ingest Service
+### Version(s): 
+### Broker (v0.10.2 -> v0.10.3)
+* Updated schema processing
+* Importer fixes 
+* New file search endpoint
+### Core (v0.11.0 -> v0.11.1)
+* Data migration
+* Delete submission
+### State Tracking (v0.7.5 -> v0.7.6)
+* Updated processing to limit to single submission envelope
+### Validator (v0.6.9 -> v0.6.10)
+* Single submission updates
+* Handling of ontology validation request error
+### UI (v0.11.3 -> v0.11.4)
+* Updates to metadata detail view
+* Submission deletion
+
+## Data Processing Pipelines and Execution Service
+### Version(s): 
+### Lira: v0.22.6 -> v0.22.7
+* Improve the logging by linking the Pub/Sub message Id to the bundle, which helps to debug.
+### Adapter-pipelines: v1.1.0 -> v1.2.0
+* Add default max_retries to SmartSeq2 workflow options
+* Pass pipeline version used by the Lira config into the adapter workflow inputs
+
+## Data Portal - Azul
+### Version(s): 
+### bb0adac45d81e35e329daf981375aa011a36b03f 
+* dcd82371 Set AZUL_DEBUG to 0 on CI; log ES queries only if 2 (#1444, PR #1451)
+* 8800e66a Don't purge fail queues before reindex (#1422, PR #1437)
+* d194dc74 Upgrade HCA CLI dependency to 6.4.0 (#1379, PR #1453)
+* 2910fc5b [R] Ensure that sharing an ES domain uses correct number of shards (#1412, PR #1420)
+* 07634af5 Fix: IT logs requested URL with trailing question mark (#1426)
+* 911a8f2c Set AZUL_DEBUG=1 in `dev` and `sandbox` (#1413, PR #1421)
+* 225699a3 Add support for blank `/integrations?entity_id=` (#1340, PR #1394)
+* ca5fae51 Gitlab boundary allows reading DSS parameter store (#1314, no PR)
+* d53b054d Parallelize delete notifications for integration test (#1410, PR #1419)
+* c408e1ac Update README.md for setup/build instructions (#1384, #1370, PR #1385)
+* 140cfad9 Add support mandatory parameters in validation (#1353, PR #1392)
+* e7eda2b8 [R] Fix: Indexer ignores mismatch between _foo and _foo_types (#1344, PR #1382)
+* 2b1ec338 [R] Add support for `file_core.content_description` (#1364, PR #1377)
+* 355e759b Use DSS parameter store to determine bucket names (#1314, PR #1369)
+* d97597cb [R] Allow sorting on donor count (#1378, PR #1391)
+* f4bf7a04 Include species count in summary (#1388, PR #1393)
+* f67de593 Switch to `GET /bundles/all` (#1313, #1357, #1347, #1174, PR #1371)
+* 5c310943 Add `project.supplementary_links` (#1338, PR #1389)
+* 5ac76ad9 Backport hotfix for #1331 from staging to develop
+* 9e5b706e Remove health endpoint duplication in indexer & service lambdas (#1290, PR #1353)
+* ab8eb600 Disable check_autosquash on Travis (#1386, PR #1387)
+* b9c847fa List all matrix files in manifest (#1226, PR #1286)
+* f0369191 Fix: IT fails at times unless reindex has been run (#1174, PR #1352)
+
+
 # 2019/11/14 Prod Hotfix Release Notes
 ## Ingest
 ### Version(s):
