@@ -2,7 +2,7 @@ awscli
 cromwell-tools>=1.1.2
 faker
 hca>=4.9.0
-hca-ingest
+hca-ingest>=0.6.10
 iso8601
 openpyxl
 requests
