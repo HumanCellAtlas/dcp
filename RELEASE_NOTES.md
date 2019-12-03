@@ -2,6 +2,141 @@
 
 <!-- newest release at the top please) -->
 
+# 2019/12/03 Prod Release Notes
+
+## HCA Metadata
+### No schema changes. Minor changes to issue template.
+### Change(s):
+* Updated schema linter to indicate environment for the OLS API URL
+* Updated travis config to use the environment proper environment when executing the schema linter.
+
+## Data Store Service
+### Version(s): 809d42f949b8c597cf0b8f37be52286c49a51ee3
+### Change(s):
+* 809d42f - (HEAD -> integration, tag: 2019-11-26-17-38-53-integration.release, origin/master, origin/integration, origin/HEAD, master) DSS Checkout Observers: Broad Service accounts (#2618) (10 hours ago)
+* 5e37aa5 - Update dss-events-scribe daemon config (#2628) (32 hours ago)
+* 38cc772 - Bump flashflood to 0.4.3 (#2629) (33 hours ago)
+* 4882e78 - Check Fusillade hotfix - fix broken script (#2625) (4 days ago)
+* 4970b21 - Check Fusillade hotfix - make script executable (#2624) (4 days ago)
+* fb37d68 - Fusillade Check - Add Fusillade-related checks to CI/CD (#2619) (4 days ago)
+* 782e83c - Remove newlines popluating the version in the SSM. (#2617) (5 days ago)
+* 677a234 - (tag: 2019-11-20-23-49-50-staging.release, tag: 2019-11-19-17-40-17-integration.release) Refactor notify v2 event handler (#2607) (8 days ago)
+* ad50b0d - Include event logging info to aid debugging (#2606) (11 days ago)
+* 48d1cc6 - Include `bundle_info` in bundle metadata document (#2604) (11 days ago)
+* d00b7de - Fix API formatting issue (#2582) (11 days ago)
+* c307daf - Refactor _upload_bundle in tests/test_events.py (#2603) (11 days ago)
+* 5bc5b5d - Confirm flashflood writes during journaling/update (#2600) (11 days ago)
+* cc68c49 - Improve jmespath/dss-notify-v2 documentation (#2599) (11 days ago)
+* 3806f54 - Extend the test expectation TTL for notifications (#2601) (12 days ago)
+* 9671e74 - Operational tooling: IAM fixups (#2580) (12 days ago)
+* 64b03a2 - Move check of whether allspark is behind github to prod stage only (#2591) (12 days ago)
+* c797245 - Add docstrings to some events methods (#2598) (13 days ago)
+* dfd75be - [Easy] Fix `get_tombstoned_bundles` docstring (#2597) (13 days ago)
+* ba820a5 - Remove tombstoned bundles from event journals (#2596) (13 days ago)
+* 7680656 - Generalize name of v2 event handler (#2595) (13 days ago)
+* 573e7ac - Private event method should be public (#2594) (13 days ago)
+* 07f2778 - (tag: 2019-11-13-20-30-03-integration.release) Include error message in api logs (#2586) (13 days ago)
+* edd9116 - DSS GitLab: TimeStamps (#2589) (13 days ago)
+* 129d493 - DSS Smoketest: --no-pagination (#2590) (13 days ago)
+* 5bcffc4 - Use dss-ops instead of populate_lambda_ssm_params (#2581) (2 weeks ago)
+* 7bf36ed - (tag: 2019-11-12-23-38-32-integration.release) DSS Security: Pipeline Destination (#2587) (2 weeks ago)
+* 3e3b3b0 - (tag: 2019-11-12-19-57-33-integration.release) Revert timeout increase for dss-index lambda. (2 weeks ago)
+* 74c40c4 - [Easy] Set dss-indexer lambda concurrency to 200; increase timeout by 1 minute. (#2584) (2 weeks ago)
+* 5e0a4a7 - Move tombstone identifiers, update test (#2575) (2 weeks ago)
+* e9dee89 - Only setup fusillade for main branches (#2577) (3 weeks ago)
+* 4fb60e5 - (tag: 2019-11-08-21-32-29-integration.release) Remove unsed imports from event ops (#2574) (3 weeks ago)
+* 05a930c - Add method to list bundle zombies (#2573) (3 weeks ago)
+* 282aeb1 - added resources to help issues (#2572) (3 weeks ago)
+* 8dec6cf - Reorganize test code for storage utilities (#2571) (3 weeks ago)
+* f084e35 - Collect flashflood garbage with s3 lifecycle (#2566) (3 weeks ago)
+* 23396bc - Add IAM auditing functionality to dss-ops script (redux) (#2509) (3 weeks ago)
+* 7507cfa - Vim was only a marginal improvement over vi. (#2564) (3 weeks ago)
+* 02b45aa - Remove duplicated keys in API spec (#2529) (3 weeks ago)
+* 1adf090 - Events journaling and update daemon (#2559) (3 weeks ago)
+* 061e71e - Add service account viewers in staging and prod. (#2560) (4 weeks ago)
+* 3a7721d - Suppress test output on a per-test basis (4 weeks ago)
+* e8d7743 - Suppress test output for passing tests. (4 weeks ago)
+* 5302dca - Update to new staging bucket names. (#2499) (4 weeks ago)
+* 53c89c0 - Add checkout sync operation. (#2557) (4 weeks ago)
+* e516599 - Refactor checkout operations. (#2549) (4 weeks ago)
+* 862c614 - Add new service account direct view access. (#2555) (4 weeks ago)
+* 46b6fb7 - Pin to working version of boto3 for gcp cloud fn. (#2552) (4 weeks ago)
+* a05299c - Improve events operations, bump flashflood to 0.4.1 (#2533) (5 weeks ago)
+* aaa5592 - Method to time limit iterated work (#2534) (5 weeks ago)
+* 2530dbf - Back up collections, subscriptions (#2488) (5 weeks ago)
+* defba62 - Update smoketest to new FlashFlood API (#2545) (5 weeks ago)
+* b82a580 - DSS Infra: dev acm (#2537) (5 weeks ago)
+* 74eec3e - Fix events paging, bump flashflood to 0.4.0 (#2527) (5 weeks ago)
+* d8ad738 - Revert "Gentle refactor of tombstoning code" (#2535) (5 weeks ago)
+* a63b794 - add help to subcommand subparsers (#2531) (5 weeks ago)
+* ef135a3 - Typo fix for dss/operations/secrets.py (#2530) (5 weeks ago)
+* beb6a61 - add links to swagger API docs (#2514) (5 weeks ago)
+* 3f0342a - Update tombstone format for deletion RFC (#2516) (5 weeks ago)
+* 4ae6560 - Hotfix for lambda params (#2526) (6 weeks ago)
+* 9e732f5 - Add event tests to smoketest (#2518) (6 weeks ago)
+* fadfc10 - Remove Visitation and old admin CLI (#2506) (6 weeks ago)
+* f954db3 - Reduce event doc construction concurrency (#2517) (6 weeks ago)
+* 2dbeb29 - Avoid recording tombstones into events (#2515) (6 weeks ago)
+* 05be5e5 - Merge dss/operations/ssm_params.py into dss/operations/lambda_params.py (#2487) (6 weeks ago)
+* 45bfad4 - Fixes for optional reindex notifications (#2505) (7 weeks ago)
+* c0d32ff - DSS Bundle Enumeration: bundle enumeration page breaks (#2498) (7 weeks ago)
+* f16b982 - Optionally send notifications during reindex (#2504) (7 weeks ago)
+* cf5f022 - Add Elasticsearch reindex operation (#2503) (7 weeks ago)
+* 56cd043 - Add Mock Fusillade Server (#2502) (7 weeks ago)
+* 8f72458 - DSS Bundle Enumeration: Test Refactor (#2495) (7 weeks ago)
+* d33a9d1 - Send X-OpenAPI-Paginated-Content-Key even when only one page is present (#2497) (7 weeks ago)
+* 8be83e4 - fixes tombstone issues, refactor tests (#2494) (7 weeks ago)
+* ef483a6 - Incorporate mock Fusillade server into tests (re-merge) (#2490) (8 weeks ago)
+* 23d38f7 - Operation scripting for recording and journaling events (#2481) (8 weeks ago)
+* 4649c73 - Update tombstone_bundles.py [EZ] (#2485) (8 weeks ago)
+* cc152a4 - Update check_deployment_secrets.py (#2486) (8 weeks ago)
+* ba50d4b - Update infrastructure to use dss-ops.py and not set_secret/fetch_secret (redux) (#2475) (8 weeks ago)
+* 3105ad9 - DSS SmokeTest: jmespath support (#2480) (8 weeks ago)
+* 8714844 - [easy] Print response when error handling for security checks. (#2476) (8 weeks ago)
+* 23896cb - added logger.info (#2477) (8 weeks ago)
+* 9b2304f - Avoid mangling key for queued notifications (#2479) (8 weeks ago)
+* 8a4c205 - Fix exception being instantiated but not raised (8 weeks ago)
+* 713a900 - (tag: 2019-10-01-15-33-51-integration.release) Revert "Update infrastructure to use dss-ops.py and not set_secret/fetch_secret (#2370)" (#2474) (8 weeks ago)
+* 5d4c696 - Update infrastructure to use dss-ops.py and not set_secret/fetch_secret (#2370) (8 weeks ago)
+* 6a01f5a - Allow multiple flashflood writes (#2472) (8 weeks ago)
+* cb1c8af - Dss Sync Filter: Integration Test Refactor (#2469) (9 weeks ago)
+* ca40591 - DSS Sync: skip sync on file parts (#2416) (9 weeks ago)
+* 69d412c - In CICD moving fusillade to after deployment (#2465) (9 weeks ago)
+* 12d3837 - Improve security in dss-ops secrets handling (#2451) (9 weeks ago)
+* 4bfe048 - [easy] Add GCP function error handling. (#2463) (9 weeks ago)
+* 5968902 - Add lambda parameter functionality to dss-ops (#2436) (9 weeks ago)
+* ba5f444 - (tag: 2019-09-24-04-02-19-integration.release) Adding fusillade to bundle write operation (#2450) (9 weeks ago)
+* a35044e - Add fusillade stage and setup fusillade step to CI/CD (#2437) (9 weeks ago)
+* e590f25 - Testing upload, get_bundle, and checkout with different replicas. (#2458) (9 weeks ago)
+
+## Data Portal - Azul
+### Version(s): f43fa13f7cf1282f62379509ba32dff48ea0111e
+### Change(s):
+* 1f3a05fd Optimize metadata generator (#1190)
+* 186cb3d2 Blocking 'make reindex'; simplify queue listing (#1425, #1448, PR #1462)
+* 5e322696 Limit AZUL_DEBUG=0 to `make test` on Gitlab and Travis (#1444, #1464, PR #1467)
+* 9814a1b9 Eliminate all imports of `lambdas.{service,indexer}.app` (#1461, PR #1466)
+* 993572d9 Add portal registration API specs (#1197, PR #1225)
+* 93499025 Fix: OpenAPI UI renders incorrect server URL (#1262, PR #1431)
+* 4939a1d2 Convert architecture diagram in README to SVG (PR #1458)
+* 511975c2 Log exceptions even if AZUL_DEBUG is 0 (#1414, PR #1457)
+* e227bae0 Add SCP495 to portals DB (#1455, PR #1456)
+
+## DCP Auth Service
+### Version(s): 0.2.1 to 0.4.0 
+### Change(s):
+* openapi version follows the release version (#326)
+* fixing upgrade_schema (#328)
+* Policies in JSON (#325)
+* updating fusillade yml to include the new fields returned from userinfo (#320)
+* Adding group, role, and scope info from fusillade to userinfo (#306)
+* Backup (#314) (#318)
+* Redirect fix (#315)
+* changing userinfo endpoint is a redirect (#293)
+* adding logout out to openid connect discovery endpoint (#294)
+* Implicit Flow (#289)
+
+
 # 2019/11/26 Prod Hotfix Release Notes
 
 ## Ingest Service
