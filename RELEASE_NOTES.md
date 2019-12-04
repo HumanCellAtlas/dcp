@@ -1,5 +1,53 @@
 # Release Notes
 
+# Staging 2019/12/04 Release Notes
+## Data Store Service
+## Version(s): eee134ae56aba66a27a4660f0031bee10ea0dbaf
+## Change(s):
+* eee134a - (tag: 2019-12-04-02-05-35-integration.release, origin/master, origin/integration, origin/HEAD, master) [easy] Add tests for GET /bundles/all prefixes and syntax checking. (#2664) (2 hours ago)
+* 6fb1efb - Eventually see dynamodb result for subscription owner. (#2666) (3 hours ago)
+* 011a4ee - Documentation the dss-events-scribe (#2656) (6 hours ago)
+* 957c005 - Refactor daemons/dss-events-scribe (#2655) (7 hours ago)
+* 6742ca1 - Define dss-events-scribe infrastructure (#2654) (7 hours ago)
+* 3c9041e - DSS Operations: Bundle Reference List (#2611) (8 hours ago)
+* 044a416 - [easy] Remove check that errors on hot patches. (#2652) (9 hours ago)
+* af800ff - Add GCP_PROJECT_NAME to environment.prod. (#2657) (9 hours ago)
+* f91f7a9 - (tag: 2019-12-03-02-28-05-integration.release) [easy] Lowercase uuid prefixes for GET /bundles/all. (#2649) (27 hours ago)
+* 4b05c1b - [EASY] Add docstrings to scripts (#2633) (6 days ago)
+* a2180f3 - DSS Allspark: Update allspark docker TF version (#2635) (6 days ago)
+
+## Data Processing Pipelines and Execution Service
+## Lira: v0.22.9
+## Change(s):
+* Update Google pubsub batch configuration
+* Update 10x subscription query to match either 10x v2 or v3 sequencing with a 3 prime end bias, or the more specific ontologies for "10x 3' v2 sequencing" and "10x 3' v3 sequencing"
+* Update to pipeline-tools version that adds Optimus chemistry into the hashed inputs
+## Adapter pipelines: v1.3.0
+## Change(s):
+* Pass in chemistry parameter to Optimus analysis workflow
+* Update how the analysis outputs are passed into the submit workflow since the zarr outputs are no longer optional
+## Optimus version: optimus_v1.4.0
+## Change(s):
+* Addition of support for V3 chemistry
+* Addition of input parameter validation step
+* Greatly improved documentation
+* Updates to Zarr outputs:
+  * Addition of a zarr schema version tag (this is v1.0.0)
+  * Updated Zarr schema (see documentation)
+  * Header lengths bug fix: headers are no longer being truncated
+
+## Data Portal - Azul
+## Version(s): 0ea69ebeaa1701f491ec00a4bc992037a5378384
+## Change(s):
+* b57053e6 Backport: Hotfix: `list_dss_bundles` returns tombstoned bundles (#1488)
+* e946c299 Merging Gitlab permissions hotfix from `prod`
+* 2d2138e9 Hotfix: Quote file name in CD header of full manifests (#1266, PR #1268)
+* 5e4e6a46 Sanitize sys.path in envhook.py; defeat PyCharm docrunner.py (#1470, PR #1471)
+* 7938295e Requirements should always be installed with `--update` (#1438, PR #1439)
+* 1171346f Clarify exception to wrap all or none rule for logging statements (PR #1479)
+* 84dcccd4 Mention use of EAFP in contributing guide (PR #1483)
+* df94367e Refactor services & manifest generation (#1242, PR #1477)
+
 # Staging 2019/11/27 Release Notes
 ## HCA Metadata
 ### No schema changes. Minor changes to issue template.
