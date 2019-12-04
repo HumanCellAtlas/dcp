@@ -2,8 +2,8 @@
 
 # Staging 2019/12/04 Release Notes
 ## Data Store Service
-## Version(s): eee134ae56aba66a27a4660f0031bee10ea0dbaf
-## Change(s):
+### Version(s): eee134ae56aba66a27a4660f0031bee10ea0dbaf
+### Change(s):
 * eee134a - (tag: 2019-12-04-02-05-35-integration.release, origin/master, origin/integration, origin/HEAD, master) [easy] Add tests for GET /bundles/all prefixes and syntax checking. (#2664) (2 hours ago)
 * 6fb1efb - Eventually see dynamodb result for subscription owner. (#2666) (3 hours ago)
 * 011a4ee - Documentation the dss-events-scribe (#2656) (6 hours ago)
@@ -17,17 +17,17 @@
 * a2180f3 - DSS Allspark: Update allspark docker TF version (#2635) (6 days ago)
 
 ## Data Processing Pipelines and Execution Service
-## Lira: v0.22.9
-## Change(s):
+### Lira: v0.22.9
+### Change(s):
 * Update Google pubsub batch configuration
 * Update 10x subscription query to match either 10x v2 or v3 sequencing with a 3 prime end bias, or the more specific ontologies for "10x 3' v2 sequencing" and "10x 3' v3 sequencing"
 * Update to pipeline-tools version that adds Optimus chemistry into the hashed inputs
-## Adapter pipelines: v1.3.0
-## Change(s):
+### Adapter pipelines: v1.3.0
+### Change(s):
 * Pass in chemistry parameter to Optimus analysis workflow
 * Update how the analysis outputs are passed into the submit workflow since the zarr outputs are no longer optional
-## Optimus version: optimus_v1.4.0
-## Change(s):
+### Optimus version: optimus_v1.4.0
+### Change(s):
 * Addition of support for V3 chemistry
 * Addition of input parameter validation step
 * Greatly improved documentation
@@ -37,8 +37,8 @@
   * Header lengths bug fix: headers are no longer being truncated
 
 ## Data Portal - Azul
-## Version(s): 0ea69ebeaa1701f491ec00a4bc992037a5378384
-## Change(s):
+### Version(s): 0ea69ebeaa1701f491ec00a4bc992037a5378384
+### Change(s):
 * b57053e6 Backport: Hotfix: `list_dss_bundles` returns tombstoned bundles (#1488)
 * e946c299 Merging Gitlab permissions hotfix from `prod`
 * 2d2138e9 Hotfix: Quote file name in CD header of full manifests (#1266, PR #1268)
