@@ -1,4 +1,4 @@
-.PHONY: test integration-tests scale-tests
+.PHONY: test integration-tests scale-tests metadata-smoketests
 
 ifndef CI_COMMIT_REF_NAME
 $(error Please set environment variable CI_COMMIT_REF_NAME before running make commands)
@@ -13,3 +13,7 @@ integration-tests:
 scale-tests:
 	PYTHONWARNINGS=ignore:ResourceWarning python -m unittest \
 		discover --start-directory tests/scale --top-level-directory . --verbose
+
+metadata-smoketests:
+    PYTHONWARNINGS=ignore:ResourceWarning python -m unittest \
+		discover --start-directory tests/metadata_smoketests --top-level-directory . --verbose

@@ -1,9 +1,11 @@
+awscli
+cromwell-tools>=1.1.2
+faker
+hca>=4.9.0
+hca-ingest>=0.6.10
 iso8601
+openpyxl
 requests
 urllib3
-hca>=4.9.0
-openpyxl
-awscli
-hca-ingest
-cromwell-tools>=1.1.2
 termcolor
+validators

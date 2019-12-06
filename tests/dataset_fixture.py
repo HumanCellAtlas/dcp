@@ -1,13 +1,12 @@
 import json
 import os
-import glob
 
 import openpyxl
 import requests
+import validators
 
 
 class DatasetFixture:
-
     """
     Local test fixture datasets must be laid out as follows:
          dataset-folder/
@@ -33,8 +32,10 @@ class DatasetFixture:
         readme_json_path = os.path.join(self.dataset_path, 'README.json')
         with open(readme_json_path) as json_data:
             self.config = json.load(json_data)
-            self.config["spreadsheet_location"] = self.config["spreadsheet_location"].replace("DEPLOYMENT", self.deployment)
-        self._download_spreadsheet()
+            self.config["spreadsheet_location"] = self.config["spreadsheet_location"].replace("DEPLOYMENT",
+                                                                                              self.deployment)
+        if validators.url(self.config["spreadsheet_location"]):
+            self._download_spreadsheet()
 
     def _download_spreadsheet(self):
         response = requests.get(self.config["spreadsheet_location"])
