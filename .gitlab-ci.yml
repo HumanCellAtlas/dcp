@@ -7,6 +7,7 @@ stages:
   - dcp_wide_latest_metadata
 
 before_script:
+  - date -u
   - apt-get -y update
   - apt-get -y install jq
   - pip install -r requirements.txt
