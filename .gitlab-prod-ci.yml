@@ -6,6 +6,7 @@ stages:
   - cleanup_test_bundles
 
 before_script:
+  - date -u
   - apt-get -y update
   - apt-get -y install jq
   - pip install -r requirements.txt
