@@ -1,5 +1,26 @@
 # Release Notes
 
+# Staging Hot Fix 2019/12/13 Release Notes
+## Ingest
+### Version(s): 
+### Core: 57dd203
+* Changes to have only one open submission per project
+* Project submissions now returns all submissions for all projects with the same UUID
+* Bug fix to not return null references to submissions
+* Project query is case insensitive
+* Submission errors use resource processing as the rest of core
+* Delete submission envelope also deletes submission errors
+
+### UI: fbedb57
+* Hide "Create Submission" button on projects that have an open submission
+* Filter project query to filter out update projects and get unique list of projects by UUID
+* Hide delete button if it will not be possible to delete submission
+* Delete Submission button on: Submission List, Project Page, Submission Detail
+* Show loading icon while deleting
+* Fix Project ID (project_short_name) search.
+* Snyk Security Fixes
+
+
 # Staging 2019/12/04 Release Notes
 ## Data Store Service
 ### Version(s): eee134ae56aba66a27a4660f0031bee10ea0dbaf
