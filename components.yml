@@ -11,7 +11,7 @@ deployed_component_versions:
   # ingest: v0.1.2
   upload: v4.4.3
   metadata-schema: http://api.ingest.data.humancellatlas.org/schemas/search/latestSchemas
-  azul: f43fa13f7cf1282f62379509ba32dff48ea0111e
+  azul: 34b304a9eb8e9559b4b049318e653484f57545a6
   data-browser: 4f57e772d1a1a1d1ce48edcf943bd599d84fafe7
   data-portal: d03ee3cbd3299028688424620cad4f6a2cc88e3c
   secondary-analysis:

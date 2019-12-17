@@ -145,13 +145,16 @@
 
 ## Data Processing Pipelines and Execution Service
 ### Lira: v0.22.9
+### Change(s):
 * Update Google pubsub batch configuration
 * Update 10x subscription query to match either 10x v2 or v3 sequencing with a 3 prime end bias, or the more specific ontologies for "10x 3' v2 sequencing" and "10x 3' v3 sequencing"
 * Update to pipeline-tools version that adds Optimus chemistry into the hashed inputs
 ### Adapter-pipelines: v1.3.0
+### Change(s):
 * Pass in chemistry parameter to Optimus analysis workflow
 * Update how the analysis outputs are passed into the submit workflow since the zarr outputs are no longer optional
 ### Optimus: optimus_v1.4.0:
+### Change(s):
 * Addition of support for V3 chemistry
 * Addition of input parameter validation step
 * Greatly improved documentation
@@ -159,6 +162,18 @@
     * Addition of a zarr schema version tag (this is v1.0.0)
     * Updated Zarr schema (see documentation)
     * Header lengths bug fix: headers are no longer being truncated
+
+## Data Portal - Azul
+### Version(s): 34b304a9eb8e9559b4b049318e653484f57545a6
+### Change(s):
+* b57053e6 Backport: Hotfix: `list_dss_bundles` returns tombstoned bundles (#1488)
+* e946c299 Merging Gitlab permissions hotfix from `prod`
+* 5e4e6a46 Sanitize sys.path in envhook.py; defeat PyCharm docrunner.py (#1470, PR #1471)
+* 7938295e Requirements should always be installed with `--update` (#1438, PR #1439)
+* 1171346f Clarify exception to wrap all or none rule for logging statements (PR #1479)
+* 84dcccd4 Mention use of EAFP in contributing guide (PR #1483)
+* df94367e Refactor services & manifest generation (#1242, PR #1477)
+
 
 # 2019/12/03 Prod Release Notes
 
