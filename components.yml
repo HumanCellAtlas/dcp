@@ -23,13 +23,13 @@ deployed_component_versions:
   ingest:
     ingest-accesioner: v0.5.0.rc
     ingest-archiver: 0.1.1
-    ingest-broker: 8d62167
-    ingest-core: f31fcbd
-    ingest-exporter: 311950c
+    ingest-broker: c452a55
+    ingest-core: 57dd203
+    ingest-exporter: f52fa0f
     ingest-ontology: 1.0.12
     ingest-staging-manager: v0.5.4
     ingest-state-tracking: v0.7.5
-    ingest-ui: 2e1cd40
+    ingest-ui: fbedb57
     ingest-validator: 9ddaeaf
   metadata-schema: http://api.ingest.staging.data.humancellatlas.org/schemas/search/latestSchemas
   upload: v4.4.4
