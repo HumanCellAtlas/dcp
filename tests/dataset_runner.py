@@ -268,7 +268,8 @@ class DatasetRunner:
 
                     # NOTE: this one-bundle-one-workflow mechanism might change in the future
                     if len(workflows) > 1:
-                        raise Exception(f"Bundle {bundle_uuid} triggered more than one workflow: {workflows}")
+                        if all(wf.status == "Running" for wf in workflows):
+                            raise Exception(f"Bundle {bundle_uuid} triggered more than one running workflows: {workflows}")
                     elif len(workflows) == 1:
                         workflow = workflows[0]
                         if workflow.status in ('Failed', 'Aborted', 'Aborting'):
