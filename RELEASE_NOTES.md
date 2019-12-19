@@ -1,5 +1,16 @@
 # Release Notes
 
+# Staging 2019/12/18 Release Notes
+## Azul
+### Version(s): f30e2612ba2fb74dc180157a2dd6f829388f9078
+### Change(s):
+* 3290b086 Update portal icons (#1501, PR #1502)
+* ab90b5f3 Timeout queue waiter before Gitlab times out (#1474, PR #1478)
+* ee57c5e0 Update CONTRIBUTING on rewriting history and merges (PR #1395)
+* 0ea3bffe Fix PyCharm warnings in test code (PR #1500)
+* b7d98abc Separate OpenAPI specs for path and method (#1436, #1454, PR #1449)
+* fb118161 Fix: Blocking reindex exits prematurely (#1490, PR #1496)
+
 # Staging HotFix 2019/12/16 Release Notes
 ## Ingest
 ### Version(s): 
