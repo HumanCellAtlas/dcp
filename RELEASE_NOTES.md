@@ -1,6 +1,6 @@
 # Release Notes
 
-# Staging 2019/12/18 Release Notes
+# Staging 2019/12/19 Release Notes
 ## Azul
 ### Version(s): f30e2612ba2fb74dc180157a2dd6f829388f9078
 ### Change(s):
