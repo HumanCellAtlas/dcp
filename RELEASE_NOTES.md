@@ -2,6 +2,25 @@
 
 <!-- newest release at the top please) -->
 
+# Prod HotFix 2020/02/10 Release Notes
+## DCP
+### Version(s): n/a
+### Change(s):
+* Update the dcp-cli requirement to 7.0.0 to address offline query service errors.
+
+## Secondary-Analysis
+### Version(s): Lira v0.23.1, Adapter v1.3.1, Pipeline-tools v0.59.0
+### Change(s):
+* Lira - Configuration changes update to be using adapter v 1.3.1
+* Adapter - Configuration change to reference new Pipeline tools v 0.59.0
+* Pipeline-tools - Update the dcp-cli requirement to 7.0.0 to address offline query service errors.
+
+## Data portal
+### Version(s): b4d3bf4e29b2ab3e9026bb1ef1ed6245810e4368
+### Change(s):
+* #621 Update Gatsby.js packages to fix security warnings
+* #620 Remediate High serialize-javascript vulnerability
+* #628 Fix broken links in smart-seq2-workflow.md
 # 2019/12/17 Prod Release Notes
 
 ## Ingest Service
