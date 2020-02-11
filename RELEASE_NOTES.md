@@ -1,5 +1,26 @@
 # Release Notes
 
+# Staging HotFix 2020/02/07 Release Notes
+## DCP
+### Version(s): n/a
+### Change(s):
+* Update the dcp-cli requirement to 7.0.0 to address offline query service errors.
+
+## Secondary-Analysis
+### Version(s): Lira v0.23.1, Adapter v1.3.1, Pipeline-tools v0.59.0
+### Change(s):
+* Lira - Configuration changes update to be using adapter v 1.3.1
+* Adapter - Configuration change to reference new Pipeline tools v 0.59.0
+* Pipeline-tools - Update the dcp-cli requirement to 7.0.0 to address offline query service errors.
+
+## Data portal
+### Version(s): b4d3bf4e29b2ab3e9026bb1ef1ed6245810e4368
+### Change(s):
+* #621 Update Gatsby.js packages to fix security warnings
+* #620 Remediate High serialize-javascript vulnerability
+* #628 Fix broken links in smart-seq2-workflow.md
+
+
 # Staging 2019/12/19 Release Notes
 ## Azul
 ### Version(s): f30e2612ba2fb74dc180157a2dd6f829388f9078
@@ -13,7 +34,7 @@
 
 # Staging HotFix 2019/12/16 Release Notes
 ## Ingest
-### Version(s): 
+### Version(s):
 ### Core: 57dd203
 * Changes to have only one open submission per project
 * Project submissions now returns all submissions for all projects with the same UUID
@@ -103,7 +124,7 @@
 * Updated travis config to use the environment proper environment when executing the schema linter.
 
 ## Ingest Service
-### Version(s): 
+### Version(s):
 #### Core (a1078fc -> f31fcbd)
 * Security configuration
 * JWT user credentials inspection
@@ -350,7 +371,7 @@
 * a696d76 Switch sandbox and dev to DSS integration (#1282, #1311)
 * 4fe28c3 Added assertion to validate full manifest file name (#1283, PR #1293)
 * 2545676 Automatically provision Azul/DB health checks in DCP-wide composite #(1150, PR #1150)
-* d3dc27e Validate request parameters (#840, #240, PR #1135) 
+* d3dc27e Validate request parameters (#840, #240, PR #1135)
 * 2fdb8f3 Backport hotfix for #1282 to develop (PR #1287)
 * d100202 Change BDBag column header names from `dos` to `drs` (#1279, PR #1280)  
 * d3562ff Add Github action for labeling new issues `orange`
