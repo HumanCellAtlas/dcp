@@ -11,7 +11,7 @@ deployed_component_versions:
   # ingest: v0.1.2
   azul: f30e2612ba2fb74dc180157a2dd6f829388f9078
   data-store: eee134ae56aba66a27a4660f0031bee10ea0dbaf
-  data-browser: 54e7802c85edbcdcabc8ab1ad35965d1b463f279
+  data-browser: 61057c9c1d4435024cbbd2da962cd23280ea5391
   data-portal: b4d3bf4e29b2ab3e9026bb1ef1ed6245810e4368
   secondary-analysis:
     falcon: v0.4.3
