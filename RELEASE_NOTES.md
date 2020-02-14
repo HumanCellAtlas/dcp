@@ -1,5 +1,14 @@
 # Release Notes
 
+# Staging HotFix 2020/02/13 Release Notes
+
+## Data Browser
+### Version(s): 61057c9c1d4435024cbbd2da962cd23280ea5391
+### Change(s):
+* #825 Allow zarr files to be included in a manifest request
+* #1040 Remediate High handlebars vulnerability
+* #1043 Update packages for security vulnerabilities
+
 # Staging HotFix 2020/02/07 Release Notes
 ## DCP
 ### Version(s): n/a
