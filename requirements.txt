@@ -9,3 +9,5 @@ requests
 urllib3
 termcolor
 validators
+
+rsa>=4.1 # not directly required, pinned by Snyk to avoid a vulnerability
